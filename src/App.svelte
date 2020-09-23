@@ -5,11 +5,9 @@
   import StudyCard from "./StudyCard.svelte";
   import EnrollmentButton from "./EnrollmentButton.svelte";
 
-  console.debug(firefox);
   let ion;
   const unsubscribe = firefox.subscribe((value) => (ion = value));
   onDestroy(unsubscribe);
-  console.debug("ion", ion);
 </script>
 
 <style>
@@ -20,8 +18,9 @@
 </style>
 
 <main>
-  <EnrollmentButton enrolled={ion.enrolled} />
   {#if 'availableStudies' in ion > 0}
+    <EnrollmentButton enrolled={ion.enrolled} />
+
     {#each ion.availableStudies as study}
       <StudyCard
         studyId={study.addon_id}
@@ -29,7 +28,7 @@
         studyEnrolled={ion.activeStudies.includes(study.addon_id)}>
         <span slot="name">{study.name}</span>
         <span slot="authors">{study.authors.name}</span>
-        <img slot="icon" src={study.icons[64]} alt="Study icon" />
+        <!-- img slot="icon" src={study.icons[64]} alt="Study icon" /-->
         <span slot="description">{study.description}</span>
       </StudyCard>
     {/each}

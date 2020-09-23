@@ -5,8 +5,6 @@
 
   const webChannelId = "pioneer";
 
-  console.debug(studyEnrolled);
-
   function toggleStudy() {
     if (studyEnrolled) {
       dispatchFxEvent({ uninstallStudy: studyId });
@@ -16,7 +14,6 @@
   }
 
   function dispatchFxEvent(message) {
-    console.debug(studyEnrolled);
     window.dispatchEvent(
       new window.CustomEvent("WebChannelMessageToChrome", {
         detail: JSON.stringify({
@@ -59,20 +56,20 @@
 
 <article class="study-card">
   <h2>
-    <slot name="name"><span class="missing">Unknown name</span></slot>
+    <slot name="name"><span class="missing"></span></slot>
   </h2>
 
   <div class="authors">
-    <slot name="authors"><span class="missing">Unknown authors</span></slot>
+    <slot name="authors"><span class="missing"></span></slot>
   </div>
 
   <div class="icon">
-    <slot name="icon"><span class="missing">Unknown icon</span></slot>
+    <slot name="icon"><span class="missing"></span></slot>
   </div>
 
   <div class="description">
     <slot name="description">
-      <span class="description">Unknown description</span>
+      <span class="description"></span>
     </slot>
   </div>
 
