@@ -1,61 +1,79 @@
 import { readable } from "svelte/store";
 
-export const firefoxIon = readable(undefined, function start(set) {
-  window.addEventListener("WebChannelMessageToContent", handleEvent);
-  dispathFxEvent("enrolled");
-  return function stop() {
-    window.removeEventListener("WebChannelMessageToContent", handleEvent);
-  };
+const webChannelId = "pioneer";
+
+export const firefox = readable({}, (set) => {
+  console.debug("1");
+  const res = new Promise(function (resolve, reject) {
+    console.debug("2");
+    window.addEventListener("WebChannelMessageToContent", handleEvent);
+    dispatchFxEvent({ enrolled: true });
+
+    let enrolled;
+    let activeStudies;
+    let availableStudies;
+
+    function handleEvent(e) {
+      const key = Object.keys(e.detail.message.data)[0];
+      const value = e.detail.message.data[key];
+
+      console.debug(key, value);
+
+      switch (key) {
+        case "activeStudies":
+          activeStudies = value;
+          resolve({
+            enrolled: enrolled,
+            activeStudies: activeStudies,
+            availableStudies: availableStudies,
+          });
+          break;
+        case "availableStudies":
+          availableStudies = value;
+          dispatchFxEvent({ activeStudies: true });
+          break;
+        case "enrolled":
+          if (value === true) {
+            enrolled = value;
+          }
+          dispatchFxEvent({ availableStudies: true });
+          break;
+        case "enroll":
+          if (value === true) {
+            dispatchFxEvent({ enrolled: true });
+          }
+          break;
+        case "unenroll":
+          if (value === true) {
+            dispatchFxEvent({ enrolled: true });
+          }
+          break;
+        case "installStudy":
+          dispatchFxEvent({ activeStudies: true });
+          break;
+        case "uninstallStudy":
+          dispatchFxEvent({ activeStudies: true });
+          break;
+        default:
+          break;
+      }
+    }
+  });
+
+  res.then((result) => {
+    console.debug("res", result);
+    set(result);
+  });
+  //return () => {};
 });
 
-function dispathFxEvent(message) {
+function dispatchFxEvent(message) {
   window.dispatchEvent(
     new window.CustomEvent("WebChannelMessageToChrome", {
       detail: JSON.stringify({
-        id: "pioneer",
+        id: webChannelId,
         message: message,
       }),
     })
   );
-}
-
-function handleEvent(e) {
-  const key = Object.keys(e.detail.message.data)[0];
-  const value = e.detail.message.data[key];
-
-  let joinButton;
-  let studyAddonId;
-
-  switch (key) {
-    case "activeStudies":
-      activeStudies = value;
-      break;
-    case "availableStudies":
-      availableStudies = value;
-      break;
-    case "enrolled":
-      enrolled = value;
-      dispathFxEvent({ availableStudies: true });
-      break;
-    case "enroll":
-      if (value === true) {
-        enrolled = true;
-        disabled = false;
-      }
-      break;
-    case "unenroll":
-      if (value === true) {
-        enrolled = false;
-        disabled = false;
-      }
-      break;
-    case "installStudy":
-      dispathFxEvent({ activeStudies: true });
-      break;
-    case "uninstallStudy":
-      dispathFxEvent({ activeStudies: true });
-      break;
-    default:
-      break;
-  }
 }

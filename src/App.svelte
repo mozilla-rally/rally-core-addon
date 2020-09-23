@@ -1,15 +1,15 @@
 <script>
-  import { firefoxIon } from "./stores.js";
+  import { firefox } from "./stores.js";
+  import { onDestroy } from "svelte";
 
   import StudyCard from "./StudyCard.svelte";
   import EnrollmentButton from "./EnrollmentButton.svelte";
 
-  const webChannelId = "pioneer";
-
-  let enrolled = false;
-  let disabled = false;
-
-  let availableStudies = [];
+  console.debug(firefox);
+  let ion;
+  const unsubscribe = firefox.subscribe((value) => (ion = value));
+  onDestroy(unsubscribe);
+  console.debug(ion);
 </script>
 
 <style>
@@ -19,17 +19,27 @@
   }
 </style>
 
-<div>
-  <EnrollmentButton {enrolled} />
-  {#each availableStudies as study}
-    <StudyCard
-      studyId={study.addon_id}
-      {enrolled}
-      studyEnrolled={activeStudies.includes(study.addon_id)}>
-      <span slot="name">{study.name}</span>
-      <span slot="authors">{study.authors.name}</span>
-      <img slot="icon" src={study.icons[64]} alt="Study icon" />
-      <span slot="description">{study.description}</span>
-    </StudyCard>
-  {/each}
-</div>
+<main>
+  <EnrollmentButton />
+  {#await ion}
+    <p>...waiting</p>
+  {:then value}
+    {#if 'availableStudies' in value > 0}
+      {#each value.availableStudies as study}
+        <StudyCard
+          studyId={study.addon_id}
+          {value}
+          studyEnrolled={value.activeStudies.includes(study.addon_id)}>
+          <span slot="name">{study.name}</span>
+          <span slot="authors">{study.authors.name}</span>
+          <img slot="icon" src={study.icons[64]} alt="Study icon" />
+          <span slot="description">{study.description}</span>
+        </StudyCard>
+      {/each}
+    {:else}
+      <p>...waiting</p>
+    {/if}
+  {:catch error}
+    <p style="color: red">{error.message}</p>
+  {/await}
+</main>
