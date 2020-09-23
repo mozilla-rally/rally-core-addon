@@ -3,9 +3,7 @@ import { readable } from "svelte/store";
 const webChannelId = "pioneer";
 
 export const firefox = readable({}, (set) => {
-  console.debug("1");
   const res = new Promise(function (resolve, reject) {
-    console.debug("2");
     window.addEventListener("WebChannelMessageToContent", handleEvent);
     dispatchFxEvent({ enrolled: true });
 
@@ -64,7 +62,6 @@ export const firefox = readable({}, (set) => {
     console.debug("res", result);
     set(result);
   });
-  //return () => {};
 });
 
 function dispatchFxEvent(message) {

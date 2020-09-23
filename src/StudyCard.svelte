@@ -1,8 +1,31 @@
 <script>
   export let enrolled = false;
   export let studyEnrolled = false;
+  export let studyId;
 
-  function toggleStudy() {}
+  const webChannelId = "pioneer";
+
+  console.debug(studyEnrolled);
+
+  function toggleStudy() {
+    if (studyEnrolled) {
+      dispatchFxEvent({ uninstallStudy: studyId });
+    } else {
+      dispatchFxEvent({ installStudy: studyId });
+    }
+  }
+
+  function dispatchFxEvent(message) {
+    console.debug(studyEnrolled);
+    window.dispatchEvent(
+      new window.CustomEvent("WebChannelMessageToChrome", {
+        detail: JSON.stringify({
+          id: webChannelId,
+          message: message,
+        }),
+      })
+    );
+  }
 </script>
 
 <style>
