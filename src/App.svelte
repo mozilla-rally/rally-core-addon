@@ -1,5 +1,6 @@
 <script>
   import { firefox } from "./stores.js";
+  import { dispatchFxEvent } from "./stores.js";
   import { onDestroy } from "svelte";
 
   import StudyCard from "./StudyCard.svelte";
@@ -8,6 +9,8 @@
   let ion;
   const unsubscribe = firefox.subscribe((value) => (ion = value));
   onDestroy(unsubscribe);
+
+  dispatchFxEvent({ removeBadgeCallout: true });
 </script>
 
 <style>

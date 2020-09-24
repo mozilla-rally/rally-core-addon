@@ -1,7 +1,6 @@
 <script>
+  import { dispatchFxEvent } from "./stores.js";
   export let enrolled = false;
-
-  const webChannelId = "pioneer";
 
   function toggleEnrolled() {
     if (enrolled) {
@@ -9,17 +8,6 @@
     } else {
       dispatchFxEvent({ enroll: true });
     }
-  }
-
-  function dispatchFxEvent(message) {
-    window.dispatchEvent(
-      new window.CustomEvent("WebChannelMessageToChrome", {
-        detail: JSON.stringify({
-          id: webChannelId,
-          message: message,
-        }),
-      })
-    );
   }
 </script>
 

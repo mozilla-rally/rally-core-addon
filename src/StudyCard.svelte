@@ -1,9 +1,9 @@
 <script>
+  import { dispatchFxEvent } from "./stores.js";
+
   export let enrolled = false;
   export let studyEnrolled = false;
   export let studyId;
-
-  const webChannelId = "pioneer";
 
   function toggleStudy() {
     if (studyEnrolled) {
@@ -11,17 +11,6 @@
     } else {
       dispatchFxEvent({ installStudy: studyId });
     }
-  }
-
-  function dispatchFxEvent(message) {
-    window.dispatchEvent(
-      new window.CustomEvent("WebChannelMessageToChrome", {
-        detail: JSON.stringify({
-          id: webChannelId,
-          message: message,
-        }),
-      })
-    );
   }
 </script>
 
@@ -56,21 +45,19 @@
 
 <article class="study-card">
   <h2>
-    <slot name="name"><span class="missing"></span></slot>
+    <slot name="name"><span class="missing" /></slot>
   </h2>
 
   <div class="authors">
-    <slot name="authors"><span class="missing"></span></slot>
+    <slot name="authors"><span class="missing" /></slot>
   </div>
 
   <div class="icon">
-    <slot name="icon"><span class="missing"></span></slot>
+    <slot name="icon"><span class="missing" /></slot>
   </div>
 
   <div class="description">
-    <slot name="description">
-      <span class="description"></span>
-    </slot>
+    <slot name="description"><span class="description" /></slot>
   </div>
 
   <button disabled={!enrolled} on:click={toggleStudy}>{#if studyEnrolled}

@@ -2,6 +2,17 @@ import { readable } from "svelte/store";
 
 const webChannelId = "pioneer";
 
+export const dispatchFxEvent = (message) => {
+  window.dispatchEvent(
+    new window.CustomEvent("WebChannelMessageToChrome", {
+      detail: JSON.stringify({
+        id: webChannelId,
+        message: message,
+      }),
+    })
+  );
+};
+
 export const firefox = readable({}, async (set) => {
   window.addEventListener("WebChannelMessageToContent", handleEvent);
   dispatchFxEvent({ enrolled: true });
@@ -11,6 +22,7 @@ export const firefox = readable({}, async (set) => {
   let availableStudies;
 
   function handleEvent(e) {
+    console.debug(e.detail.message);
     const key = Object.keys(e.detail.message.data)[0];
     const value = e.detail.message.data[key];
 
@@ -56,14 +68,3 @@ export const firefox = readable({}, async (set) => {
     }
   }
 });
-
-function dispatchFxEvent(message) {
-  window.dispatchEvent(
-    new window.CustomEvent("WebChannelMessageToChrome", {
-      detail: JSON.stringify({
-        id: webChannelId,
-        message: message,
-      }),
-    })
-  );
-}
