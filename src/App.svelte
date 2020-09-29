@@ -21,11 +21,15 @@
 </style>
 
 <main>
-  {#if 'availableStudies' in ion > 0}
+  <header>
+    <h1>Put your data to work for a better internet</h1>
     <EnrollmentButton enrolled={ion.enrolled} />
-
+  </header>
+  {#if 'availableStudies' in ion > 0}
     {#each ion.availableStudies as study}
       <StudyCard
+        imageSrc={study.icons[64]}
+        dataCollectionDetails={study.dataCollectionDetails}
         studyId={study.addon_id}
         enrolled={ion.enrolled}
         studyEnrolled={ion.activeStudies.includes(study.addon_id)}>

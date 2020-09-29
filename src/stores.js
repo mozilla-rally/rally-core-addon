@@ -1,4 +1,5 @@
 import { readable } from "svelte/store";
+const initialValue = __STORE_IMPLEMENTATION__;
 
 const webChannelId = "pioneer";
 
@@ -13,7 +14,7 @@ export const dispatchFxEvent = (message) => {
   );
 };
 
-export const firefox = readable({}, async (set) => {
+export const firefox = readable(initialValue, async (set) => {
   window.addEventListener("WebChannelMessageToContent", handleEvent);
   dispatchFxEvent({ enrolled: true });
 

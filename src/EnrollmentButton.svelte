@@ -11,4 +11,5 @@
   }
 </script>
 
-<button on:click={toggleEnrolled}>{#if enrolled}Leave{:else}Join{/if} Ion</button>
+<button on:click={toggleEnrolled}>{#if enrolled}Leave{:else}Join{/if}
+  Ion</button>
