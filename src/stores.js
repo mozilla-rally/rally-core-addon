@@ -1,5 +1,10 @@
-import { readable } from "svelte/store";
+import { writable } from "svelte/store";
+import { produce } from "immer/dist/immer.cjs.production.min.js";
+
+import api from "./api/web";
 const initialValue = __STORE_IMPLEMENTATION__;
+
+const STORE_KEY = "__STATE__";
 
 const webChannelId = "pioneer";
 
@@ -14,58 +19,97 @@ export const dispatchFxEvent = (message) => {
   );
 };
 
-export const firefox = readable(initialValue, async (set) => {
-  window.addEventListener("WebChannelMessageToContent", handleEvent);
-  dispatchFxEvent({ enrolled: true });
+function createStore(initialState) {
+  // initialize state.
+  const { subscribe, update, set } = writable();
 
-  let enrolled;
-  let activeStudies;
-  let availableStudies;
+  // initialize from the API.
+  api.initialize(STORE_KEY, initialState).then((state) => {
+    set(state);
+  });
 
-  function handleEvent(e) {
-    console.debug(e.detail.message);
-    const key = Object.keys(e.detail.message.data)[0];
-    const value = e.detail.message.data[key];
-
-    switch (key) {
-      case "activeStudies":
-        activeStudies = value;
-
-        const result = {
-          enrolled: enrolled,
-          activeStudies: activeStudies,
-          availableStudies: availableStudies,
-        };
-        set(result);
-        return;
-
-        break;
-      case "availableStudies":
-        availableStudies = value;
-        dispatchFxEvent({ activeStudies: true });
-        break;
-      case "enrolled":
-        enrolled = value;
-        dispatchFxEvent({ availableStudies: true });
-        break;
-      case "enroll":
-        if (value === true) {
-          dispatchFxEvent({ enrolled: true });
+  return {
+    subscribe,
+    set,
+    toggleStudyEnrollment(studyID) {
+      this.produce((draft) => {
+        if (draft.activeStudies.includes(studyID)) {
+          draft.activeStudies = draft.activeStudies.filter(
+            (id) => id !== studyID
+          );
+        } else {
+          draft.activeStudies.push(studyID);
         }
-        break;
-      case "unenroll":
-        if (value === true) {
-          dispatchFxEvent({ enrolled: true });
-        }
-        break;
-      case "installStudy":
-        dispatchFxEvent({ activeStudies: true });
-        break;
-      case "uninstallStudy":
-        dispatchFxEvent({ activeStudies: true });
-        break;
-      default:
-        break;
-    }
-  }
-});
+      });
+    },
+    produce(fcn) {
+      update((draft) => {
+        const nextState = produce(draft, fcn);
+        api.setItem(STORE_KEY, nextState);
+        return nextState;
+      });
+    },
+    setField(key, value) {
+      this.produce((state) => {
+        state[key] = value;
+      });
+    },
+  };
+}
+
+export const store = createStore(initialValue);
+// export const firefox = readable(initialValue, async (set) => {
+//   window.addEventListener("WebChannelMessageToContent", handleEvent);
+//   dispatchFxEvent({ enrolled: true });
+
+//   let enrolled;
+//   let activeStudies;
+//   let availableStudies;
+
+//   function handleEvent(e) {
+//     console.debug(e.detail.message);
+//     const key = Object.keys(e.detail.message.data)[0];
+//     const value = e.detail.message.data[key];
+
+//     switch (key) {
+//       case "activeStudies":
+//         activeStudies = value;
+
+//         const result = {
+//           enrolled: enrolled,
+//           activeStudies: activeStudies,
+//           availableStudies: availableStudies,
+//         };
+//         set(result);
+//         return;
+
+//         break;
+//       case "availableStudies":
+//         availableStudies = value;
+//         dispatchFxEvent({ activeStudies: true });
+//         break;
+//       case "enrolled":
+//         enrolled = value;
+//         dispatchFxEvent({ availableStudies: true });
+//         break;
+//       case "enroll":
+//         if (value === true) {
+//           dispatchFxEvent({ enrolled: true });
+//         }
+//         break;
+//       case "unenroll":
+//         if (value === true) {
+//           dispatchFxEvent({ enrolled: true });
+//         }
+//         break;
+//       case "installStudy":
+//         dispatchFxEvent({ activeStudies: true });
+//         break;
+//       case "uninstallStudy":
+//         dispatchFxEvent({ activeStudies: true });
+//         break;
+//       default:
+//         break;
+//     }
+//   }
+// });

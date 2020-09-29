@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import { dispatchFxEvent } from "./stores.js";
 
   export let enrolled = false;
@@ -7,12 +8,14 @@
   export let imageSrc;
   export let dataCollectionDetails = [];
 
+  const dispatch = createEventDispatcher();
   function toggleStudy() {
-    if (studyEnrolled) {
-      dispatchFxEvent({ uninstallStudy: studyId });
-    } else {
-      dispatchFxEvent({ installStudy: studyId });
-    }
+    dispatch("enroll", studyId);
+    // if (studyEnrolled) {
+    //   dispatchFxEvent({ uninstallStudy: studyId });
+    // } else {
+    //   dispatchFxEvent({ installStudy: studyId });
+    // }
   }
 </script>
 

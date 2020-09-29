@@ -20,12 +20,12 @@ main > header {
   align-items: center;
   justify-content: space-between;
   align-items: center;
-  margin-block-end: 24px;
 }
 
 main > header h1 {
   margin: 0px;
   font-size: 2rem;
+  font-weight: 300;
 }
 
 @media (max-width: 600px) {

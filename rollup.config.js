@@ -5,6 +5,8 @@ import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import replace from "@rollup/plugin-replace";
 
+import STORE_MOCK from "./src/mocks/firefox-mock";
+
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
@@ -42,50 +44,7 @@ export default {
   },
   plugins: [
     replace({
-      __STORE_IMPLEMENTATION__: production
-        ? "{}"
-        : `{
-			enrolled: true,
-			activeStudies: [],
-			availableStudies: [
-			  {
-				name: "Demo Study",
-				icons: {
-				  32: "https://addons.cdn.mozilla.net/user-media/addon_icons/2644/2644632-32.png?modified=4a64e2bc",
-				  64: "https://addons.cdn.mozilla.net/user-media/addon_icons/2644/2644632-64.png?modified=4a64e2bc",
-				  128: "https://addons.cdn.mozilla.net/user-media/addon_icons/2644/2644632-128.png?modified=4a64e2bc",
-				},
-				schema: 1597266497978,
-				authors: {
-				  url:
-					"https://addons.mozilla.org/en-US/firefox/addon/pioneer-v2-example/",
-				  name: "Pioneer Developers",
-				},
-				version: "1.0",
-				addon_id: "pioneer-v2-example@mozilla.org",
-				moreInfo: {
-				  spec:
-					"https://addons.mozilla.org/en-US/firefox/addon/pioneer-v2-example/",
-				},
-				isDefault: false,
-				sourceURI: {
-				  spec:
-					"https://addons.mozilla.org/firefox/downloads/file/3579857/pioneer_v2-1.0-fx.xpi",
-				},
-				studyType: "extension",
-				studyEnded: false,
-				description: "Study purpose: Testing Pioneer.",
-				privacyPolicy: {
-				  spec:
-					"https://addons.mozilla.org/en-US/firefox/addon/pioneer-v2-example/",
-				},
-				joinStudyConsent:
-				  "This study will send an encrypted ping, only when the toolbar icon is clicked.",
-				leaveStudyConsent: "This study cannot be re-joined.",
-				dataCollectionDetails: ["The date and time"],
-			  },
-			],
-		  }`,
+      __STORE_IMPLEMENTATION__: production ? "{}" : JSON.stringify(STORE_MOCK),
     }),
     svelte({
       // enable run-time checks when not in production

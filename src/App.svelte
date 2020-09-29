@@ -1,14 +1,17 @@
 <script>
-  import { firefox } from "./stores.js";
+  import { fly } from "svelte/transition";
+  import { store } from "./stores.js";
   import { dispatchFxEvent } from "./stores.js";
-  import { onDestroy } from "svelte";
 
-  import StudyCard from "./StudyCard.svelte";
   import EnrollmentButton from "./EnrollmentButton.svelte";
+  import Accordion from "./components/Accordion.svelte";
 
-  let ion;
-  const unsubscribe = firefox.subscribe((value) => (ion = value));
-  onDestroy(unsubscribe);
+  import ValueProposition from "./components/copy/ValueProposition.svelte";
+  import HowItWorks from "./components/copy/HowItWorks.svelte";
+
+  import StudyList from "./regions/StudyList.svelte";
+
+  import WhyItMatters from "./components/copy/WhyItMatters.svelte";
 
   dispatchFxEvent({ removeBadgeCallout: true });
 </script>
@@ -17,27 +20,49 @@
   main {
     width: 100%;
     height: 100%;
+    display: grid;
+    grid-auto-flow: row;
+    grid-row-gap: 1rem;
   }
 </style>
 
-<main>
-  <header>
-    <h1>Put your data to work for a better internet</h1>
-    <EnrollmentButton enrolled={ion.enrolled} />
-  </header>
-  {#if 'availableStudies' in ion > 0}
-    {#each ion.availableStudies as study}
-      <StudyCard
-        imageSrc={study.icons[64]}
-        dataCollectionDetails={study.dataCollectionDetails}
-        studyId={study.addon_id}
-        enrolled={ion.enrolled}
-        studyEnrolled={ion.activeStudies.includes(study.addon_id)}>
-        <span slot="name">{study.name}</span>
-        <span slot="authors">{study.authors.name}</span>
-        <!-- img slot="icon" src={study.icons[64]} alt="Study icon" /-->
-        <span slot="description">{study.description}</span>
-      </StudyCard>
-    {/each}
-  {/if}
-</main>
+{#if $store}
+  <main>
+    <header>
+      <h1>Put your data to work for a better internet</h1>
+      <EnrollmentButton
+        enrolled={$store.enrolled}
+        on:click={() => store.setField('enrolled', !$store.enrolled)} />
+    </header>
+
+    <div>
+      <ValueProposition />
+    </div>
+
+    {#if $store.enrolled}
+      <div in:fly={{ duration: 250, y: 5 }}>
+        <Accordion>
+          <span slot="title">How it Works</span>
+          <div slot="content">
+            <HowItWorks />
+          </div>
+        </Accordion>
+        <Accordion>
+          <span slot="title">Your data: why it matters and how we protect it</span>
+          <div slot="content">
+            <WhyItMatters />
+          </div>
+        </Accordion>
+      </div>
+    {:else}
+      <h2>How it Works</h2>
+      <HowItWorks />
+      <h2>Your data: why it matters and how we protect it</h2>
+      <WhyItMatters />
+    {/if}
+
+    {#if 'availableStudies' in $store > 0}
+      <StudyList />
+    {/if}
+  </main>
+{/if}
