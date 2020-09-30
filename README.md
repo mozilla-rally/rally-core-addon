@@ -1,27 +1,19 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+# Ion
 
----
+This is the control panel for Ion studies. It may be run in many contexts:
 
-# svelte app
+- on the web
+- in a cross-browser WebExtension
+- as an about: page in Firefox
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
-
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
-
+The "source of truth" for Ion data is on the [Firefox remote settings server](https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records)
 
 ## Get started
 
 Install the dependencies...
 
 ```bash
-cd svelte-app
+cd ion-svelte
 npm install
 ```
 
@@ -85,7 +77,7 @@ Then, from within your project folder:
 
 ```bash
 cd public
-vercel deploy --name my-project
+vercel deploy --name ion-svelte
 ```
 
 ### With [surge](https://surge.sh/)
@@ -100,5 +92,5 @@ Then, from within your project folder:
 
 ```bash
 npm run build
-surge public my-project.surge.sh
+surge public ion-svelte.surge.sh
 ```
