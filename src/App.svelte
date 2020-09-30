@@ -19,6 +19,10 @@
   dispatchFxEvent({ removeBadgeCallout: true });
 
   let enrollModal = false;
+
+  const closeModal = () => {
+    enrollModal = false;
+  };
 </script>
 
 <style>
@@ -32,7 +36,7 @@
 </style>
 
 {#if enrollModal && !$store.enrolled}
-  <Modal>
+  <Modal on:dismiss={closeModal}>
     <h2 slot="title">Ion Privacy Consent Notice</h2>
     <div slot="body">
       <EnrollmentDisclaimer />
@@ -44,16 +48,13 @@
           store.setField('enrolled', true);
           enrollModal = false;
         }}>Accept and Participate</button>
-      <button
-        on:click={() => {
-          enrollModal = false;
-        }}>Close</button>
+      <button on:click={closeModal}>Close</button>
     </div>
   </Modal>
 {:else if enrollModal}
-  <Modal>
+  <Modal on:dismiss={closeModal}>
     <h2 slot="title">Are you sure you want to leave Ion?</h2>
-    <div slot="body">Leaving Ion. Are you sure?</div>
+    <div slot="body" style="min-height: 100px;">Leaving Ion. Are you sure?</div>
     <div slot="cta">
       <button
         class="primary join-button"
@@ -61,10 +62,7 @@
           store.setField('enrolled', false);
           enrollModal = false;
         }}>Leave Ion</button>
-      <button
-        on:click={() => {
-          enrollModal = false;
-        }}>Close</button>
+      <button on:click={closeModal}>Close</button>
     </div>
   </Modal>
 {/if}

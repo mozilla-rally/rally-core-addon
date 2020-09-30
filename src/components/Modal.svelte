@@ -6,14 +6,6 @@
   const dispatch = createEventDispatcher();
 
   let isOpen = true;
-
-  const open = () => {
-    isOpen = true;
-  };
-
-  const close = () => {
-    isOpen = false;
-  };
 </script>
 
 <style>
@@ -24,6 +16,10 @@
     padding: 2rem;
   }
 
+  .modal-body {
+    padding: 2rem 0rem;
+  }
+
   .cta {
     display: grid;
     grid-auto-flow: column;
@@ -32,10 +28,10 @@
   }
 </style>
 
-<DialogOverlay {isOpen} onDismiss={close}>
+<DialogOverlay {isOpen} onDismiss={() => dispatch('dismiss')}>
   <div
     class="container"
-    in:fly={{ duration: 200, y: 5 }}
+    transition:fly={{ duration: 200, y: 5 }}
     data-svelte-dialog-content
     aria-modal="true"
     role="dialog"
@@ -43,9 +39,11 @@
     <slot name="title">
       <h2>Ion</h2>
     </slot>
-    <slot name="body">
-      <p>I am a dialog</p>
-    </slot>
+    <div class="modal-body">
+      <slot name="body">
+        <p>I am a dialog</p>
+      </slot>
+    </div>
     <div class="cta">
       <slot name="cta">
         <button
