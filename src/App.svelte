@@ -3,9 +3,12 @@
   import { store } from "./stores.js";
   import { dispatchFxEvent } from "./stores.js";
 
+  import Modal from "./components/Modal.svelte";
+
   import EnrollmentButton from "./EnrollmentButton.svelte";
   import Accordion from "./components/Accordion.svelte";
 
+  import EnrollmentDisclaimer from "./components/copy/EnrollmentDisclaimer.svelte";
   import ValueProposition from "./components/copy/ValueProposition.svelte";
   import HowItWorks from "./components/copy/HowItWorks.svelte";
 
@@ -14,6 +17,8 @@
   import WhyItMatters from "./components/copy/WhyItMatters.svelte";
 
   dispatchFxEvent({ removeBadgeCallout: true });
+
+  let enrollModal = false;
 </script>
 
 <style>
@@ -26,13 +31,54 @@
   }
 </style>
 
+{#if enrollModal && !$store.enrolled}
+  <Modal>
+    <h2 slot="title">Ion Privacy Consent Notice</h2>
+    <div slot="body">
+      <EnrollmentDisclaimer />
+    </div>
+    <div slot="cta">
+      <button
+        class="primary join-button"
+        on:click={() => {
+          store.setField('enrolled', true);
+          enrollModal = false;
+        }}>Accept and Participate</button>
+      <button
+        on:click={() => {
+          enrollModal = false;
+        }}>Close</button>
+    </div>
+  </Modal>
+{:else if enrollModal}
+  <Modal>
+    <h2 slot="title">Are you sure you want to leave Ion?</h2>
+    <div slot="body">Leaving Ion. Are you sure?</div>
+    <div slot="cta">
+      <button
+        class="primary join-button"
+        on:click={() => {
+          store.setField('enrolled', false);
+          enrollModal = false;
+        }}>Leave Ion</button>
+      <button
+        on:click={() => {
+          enrollModal = false;
+        }}>Close</button>
+    </div>
+  </Modal>
+{/if}
+
 {#if $store}
   <main>
     <header>
       <h1>Put your data to work for a better internet</h1>
       <EnrollmentButton
         enrolled={$store.enrolled}
-        on:click={() => store.setField('enrolled', !$store.enrolled)} />
+        on:click={() => {
+          // go through the join flow.
+          enrollModal = true;
+        }} />
     </header>
 
     <div>

@@ -87,10 +87,10 @@
     </h3>
 
     <button
-      class="primary join-button"
+      class="{!studyEnrolled ? 'primary' : 'ghost-button'} join-button"
       disabled={!enrolled}
-      on:click={toggleStudy}>{#if studyEnrolled}Leave{:else}Join{/if}
-      Study</button>
+      on:click={toggleStudy}>{#if studyEnrolled}Leave{:else}Enroll{/if}
+    </button>
 
     <div class="authors">
       <slot name="authors"><span class="missing" /></slot>
