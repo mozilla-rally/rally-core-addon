@@ -24,7 +24,8 @@ function createStore(initialState) {
   const { subscribe, update, set } = writable();
 
   // initialize from the API.
-  api.initialize(STORE_KEY, initialState).then((state) => {
+  api.initialize(STORE_KEY, initialState).then(async (state) => {
+    state.availableStudies = await api.getAvailableStudies();
     set(state);
   });
 
