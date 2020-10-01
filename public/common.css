@@ -150,13 +150,13 @@
   color: var(--in-content-page-color);
 }
 
-html|body {
+body {
   font-size: 15px;
   font-weight: normal;
   margin: 0;
 }
 
-html|h1 {
+h1 {
   font-size: 2.5em;
   font-weight: lighter;
   line-height: 1.2;
@@ -165,56 +165,9 @@ html|h1 {
   margin-bottom: 0.5em;
 }
 
-html|hr {
+hr {
   border-style: solid none none none;
   border-color: var(--in-content-border-color);
-}
-
-html|h2 {
-  font-weight: 600;
-  line-height: 1.4em;
-}
-
-.main-content {
-  padding: 40px 28px;
-  overflow: auto;
-}
-
-/* tabpanels and tabs */
-
-xul|tabpanels {
-  appearance: none;
-  border: none;
-  padding: 0;
-  background-color: transparent;
-  color: inherit;
-}
-
-xul|tabs {
-  margin-bottom: 15px;
-  border-block: 1px solid var(--in-content-box-border-color);
-  background-color: var(--in-content-page-background);
-  color: var(--in-content-tab-color);
-}
-
-xul|tab {
-  appearance: none;
-  margin-top: 0;
-  padding: 4px 20px 0 !important;
-  min-height: 44px;
-  color: inherit;
-  background-color: var(--in-content-page-background);
-  border-bottom: 4px solid transparent;
-  transition: background-color 50ms ease 0s;
-}
-
-xul|tab:hover {
-  background-color: var(--in-content-box-background-hover);
-}
-
-xul|tab[selected] {
-  background-color: var(--in-content-box-background-hover);
-  border-bottom-color: var(--in-content-border-highlight);
 }
 
 /* html buttons */
