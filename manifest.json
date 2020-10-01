@@ -35,10 +35,12 @@
     "scripts": ["background.js"]
   },
 
-  "browser_action": {},
+  "browser_action": {
+    "default_icon": "images/ion.svg"
+  },
 
   "options_ui": {
-    "page": "index.html",
+    "page": "public/index.html",
     "open_in_tab": true
   }
 }
