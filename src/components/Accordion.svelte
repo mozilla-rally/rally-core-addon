@@ -41,10 +41,6 @@
     user-select: none;
   }
 
-  .accordion-summary:hover {
-    /* background-color: var(--blue-slate-700); */
-  }
-
   .title {
     align-self: center;
     grid-area: title;
@@ -60,13 +56,6 @@
 
   .carat {
     transition: transform 200ms;
-  }
-
-  .description {
-    grid-area: description;
-    padding-top: 0.5rem;
-    font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.5);
   }
 
   .expanded-content {
@@ -89,9 +78,6 @@
         style="transform: rotate({revealed ? 90 : 0}deg);">
         <CaretRight size="1em" />
       </span>
-      <!-- <div class="description">
-        <slot name="description" />
-      </div> -->
     </div></button>
 
   {#if revealed}
