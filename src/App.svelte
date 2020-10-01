@@ -1,7 +1,6 @@
 <script>
   import { fly } from "svelte/transition";
   import { store } from "./stores.js";
-  import { dispatchFxEvent } from "./stores.js";
 
   import Modal from "./components/Modal.svelte";
   import EnrollmentButton from "./EnrollmentButton.svelte";
