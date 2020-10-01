@@ -4,19 +4,15 @@
   import { dispatchFxEvent } from "./stores.js";
 
   import Modal from "./components/Modal.svelte";
-
   import EnrollmentButton from "./EnrollmentButton.svelte";
   import Accordion from "./components/Accordion.svelte";
 
-  import EnrollmentDisclaimer from "./components/copy/EnrollmentDisclaimer.svelte";
-  import ValueProposition from "./components/copy/ValueProposition.svelte";
-  import HowItWorks from "./components/copy/HowItWorks.svelte";
-
   import StudyList from "./regions/StudyList.svelte";
 
-  import WhyItMatters from "./components/copy/WhyItMatters.svelte";
-
-  dispatchFxEvent({ removeBadgeCallout: true });
+  import EnrollmentDisclaimer from "./copy/EnrollmentDisclaimer.svelte";
+  import ValueProposition from "./copy/ValueProposition.svelte";
+  import HowItWorks from "./copy/HowItWorks.svelte";
+  import WhyItMatters from "./copy/WhyItMatters.svelte";
 
   let enrollModal = false;
 
