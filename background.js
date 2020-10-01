@@ -1,8 +1,6 @@
 function openPage() {
-  const url = browser.runtime.getURL("public/index.html");
-  browser.tabs.create({
-    url,
-  });
+  chrome.runtime.openOptionsPage();
 }
-browser.browserAction.onClicked.addListener(openPage);
+
+chrome.browserAction.onClicked.addListener(openPage);
 openPage();
