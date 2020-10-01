@@ -1,0 +1,44 @@
+{
+  "description": "Example Pioneer v2 core data add-on example.",
+  "author": "Mozilla",
+  "manifest_version": 2,
+  "name": "Pioneer-v2-core",
+  "version": "2.0",
+  "homepage_url": "https://github.com/mozilla-extensions/pioneer-v2-core-example",
+
+  "applications": {
+    "gecko": {
+      "id": "pioneer-v2-core-example@mozilla.org",
+      "strict_min_version": "80.0a1"
+    }
+  },
+
+  "permissions": ["telemetry"],
+
+  "telemetry": {
+    "pioneer_id": true,
+    "study_name": "pioneer-v2-core-example",
+    "ping_type": "pioneer-study",
+    "schemaNamespace": "pioneer-debug",
+    "public_key": {
+      "id": "debug",
+      "key": {
+        "crv": "P-256",
+        "kty": "EC",
+        "x": "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
+        "y": "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE"
+      }
+    }
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "browser_action": {},
+
+  "options_ui": {
+    "page": "index.html",
+    "open_in_tab": true
+  }
+}
