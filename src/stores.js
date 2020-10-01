@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 import { produce } from "immer/dist/immer.cjs.production.min.js";
 
-import api from "./api/web";
+import api from "./api/__API_ENDPOINT__";
 const initialValue = __STORE_IMPLEMENTATION__;
 
 const STORE_KEY = "__STATE__";
@@ -20,11 +20,12 @@ export const dispatchFxEvent = (message) => {
 };
 
 function createStore(initialState) {
-  // initialize state.
+  // initialize the writable store.
   const { subscribe, update, set } = writable();
 
   // initialize from the API.
-  api.initialize(STORE_KEY, initialState).then(async (state) => {
+  api.initialize(STORE_KEY, initialState).then(async (remoteInitialState) => {
+    const state = remoteInitialState || initialState;
     state.availableStudies = await api.getAvailableStudies();
     set(state);
   });
@@ -32,16 +33,37 @@ function createStore(initialState) {
   return {
     subscribe,
     set,
-    toggleStudyEnrollment(studyID) {
-      this.produce((draft) => {
-        if (draft.activeStudies.includes(studyID)) {
-          draft.activeStudies = draft.activeStudies.filter(
-            (id) => id !== studyID
-          );
-        } else {
-          draft.activeStudies.push(studyID);
-        }
-      });
+    updateStudyEnrollment(studyID, enroll = undefined) {
+      api
+        .updateStudyEnrollment(studyID, enroll)
+        .then((outcome) => {
+          // when request lands, update study enrollment in the frontend store.
+          this.produce((draft) => {
+            if (draft.activeStudies.includes(studyID)) {
+              draft.activeStudies = draft.activeStudies.filter(
+                (id) => id !== studyID
+              );
+            } else {
+              draft.activeStudies.push(studyID);
+            }
+          });
+        })
+        .catch((err) => {
+          // FIXME: do something here.
+        });
+    },
+    updateIonEnrollment(enroll = undefined) {
+      api
+        .updateIonEnrollment(enroll)
+        .then((outcome) => {
+          // when the request lands, update study enrollment in the frontend store.
+          this.produce((draft) => {
+            draft.enrolled = enroll === undefined ? !draft.enrolled : enroll;
+          });
+        })
+        .catch((err) => {
+          // FIXME: do something here.
+        });
     },
     produce(fcn) {
       update((draft) => {

@@ -45,7 +45,7 @@
       <button
         class="primary join-button"
         on:click={() => {
-          store.setField('enrolled', true);
+          store.updateIonEnrollment(true);
           enrollModal = false;
         }}>Accept and Participate</button>
       <button on:click={closeModal}>Close</button>
@@ -59,7 +59,7 @@
       <button
         class="primary join-button"
         on:click={() => {
-          store.setField('enrolled', false);
+          store.updateIonEnrollment(false);
           enrollModal = false;
         }}>Leave Ion</button>
       <button on:click={closeModal}>Close</button>

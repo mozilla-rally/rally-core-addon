@@ -20,7 +20,7 @@
       studyId={study.addon_id}
       enrolled={$store.enrolled}
       studyEnrolled={$store.activeStudies.includes(study.addon_id)}
-      on:enroll={() => store.toggleStudyEnrollment(study.addon_id)}>
+      on:enroll={() => store.updateStudyEnrollment(study.addon_id)}>
       <span slot="name">{study.name}</span>
       <span slot="authors">{study.authors.name}</span>
       <span slot="description">{study.description}</span>
