@@ -17,8 +17,26 @@ cd ion-svelte
 npm install
 ```
 
+To run a local webserver (`http://localhost:5000`) for the UI which auto-reloads on file save:
+
+```bash
+npm run dev
+```
+
+When ready, package up for use inside the web extension:
+
+```bash
+npm run build
+```
+
 ...then start [web-ext](https://github.com/mozilla/web-ext):
 
 ```bash
 web-ext run
+```
+
+`web-ext` defaults to Firefox, it can be run with Chrome:
+
+```bash
+web-ext run -t chromium
 ```
