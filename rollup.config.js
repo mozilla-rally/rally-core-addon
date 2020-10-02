@@ -45,7 +45,7 @@ export default {
   plugins: [
     replace({
       __STORE_IMPLEMENTATION__: JSON.stringify(STORE_MOCK),
-      __API_ENDPOINT__: production ? "web-extension" : "web", // FIXME: generalize the api endpoint for other build targets (add-on, etc.)
+      __API_ENDPOINT__: production ? "web-extension" : "web",
     }),
     svelte({
       // enable run-time checks when not in production
