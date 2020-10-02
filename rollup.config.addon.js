@@ -2,7 +2,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const IonCore = require('./IonCore.js');
+import commonjs from "@rollup/plugin-commonjs";
 
-const ionCore = new IonCore();
-ionCore.initialize();
+export default {
+  input: "core-addon/background.js",
+  output: {
+    file: "public/addon-build/background.js"
+  },
+  plugins: [
+    commonjs(),
+  ],
+};
