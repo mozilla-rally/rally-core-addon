@@ -8,9 +8,7 @@ export default function createStore(initialState, api) {
 
   // initialize from the API.
   api.initialize(STORE_KEY, initialState).then(async (remoteInitialState) => {
-    console.log(remoteInitialState, initialState);
     const state = remoteInitialState || initialState;
-    console.log("initial state:", state);
     state.availableStudies = await api.getAvailableStudies();
     set(state);
   });
