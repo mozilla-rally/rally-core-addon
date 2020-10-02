@@ -13,7 +13,7 @@
     }
   },
 
-  "permissions": ["telemetry"],
+  "permissions": ["telemetry", "storage"],
 
   "telemetry": {
     "pioneer_id": true,

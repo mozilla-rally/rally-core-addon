@@ -1,6 +1,7 @@
 <script>
   import { store } from "../stores.js";
   import StudyCard from "../StudyCard.svelte";
+  $: console.log($store);
 </script>
 
 <style>
