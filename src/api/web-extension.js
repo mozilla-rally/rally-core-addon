@@ -17,7 +17,11 @@ export default {
   // use in store instantiation. This assumes that the studies are
   // stored somewhere (i.e. remote settings)
   async getAvailableStudies() {
-    return Promise.resolve(availableStudies);
+    return fetch(
+      "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
+    )
+      .then((req) => req.json())
+      .then((req) => req.data);
   },
 
   // fetch ion enrollment from remote location, if available.
