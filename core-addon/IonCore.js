@@ -7,7 +7,13 @@ module.exports = class IonCore {
     // Whenever the addon icon is clicked, open the control page.
     chrome.browserAction.onClicked.addListener(this._openControlPanel);
     // After installing the addon, make sure to show the control page.
-    chrome.runtime.onInstalled.addListener(this._openControlPanel);
+    chrome.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
+      if (reason !== "install") {
+        // We're only showing this when the addon is installed!
+        return;
+      }
+      this._openControlPanel();
+    });
   }
 
   _openControlPanel() {
