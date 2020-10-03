@@ -1,14 +1,14 @@
 {
-  "description": "Example Pioneer v2 core data add-on example.",
+  "description": "Ion Core add-on.",
   "author": "Mozilla",
   "manifest_version": 2,
-  "name": "Pioneer-v2-core",
+  "name": "Ion Core",
   "version": "2.0",
   "homepage_url": "https://github.com/mozilla-extensions/pioneer-v2-core-example",
 
   "applications": {
     "gecko": {
-      "id": "pioneer-v2-core-example@mozilla.org",
+      "id": "ion-core-addon@mozilla.org",
       "strict_min_version": "80.0a1"
     }
   },
@@ -17,7 +17,7 @@
 
   "telemetry": {
     "pioneer_id": true,
-    "study_name": "pioneer-v2-core-example",
+    "study_name": "ion-core-addon",
     "ping_type": "pioneer-study",
     "schemaNamespace": "pioneer-debug",
     "public_key": {
@@ -32,7 +32,10 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
+      "public/addon-build/background.js"
+    ]
   },
 
   "browser_action": {

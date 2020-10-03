@@ -4,19 +4,24 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public"
+    "start": "sirv public",
+    "build-addon": "rollup -c rollup.config.addon.js",
+    "test-addon": "mocha \"./tests/**/*.js\""
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@rollup/plugin-replace": "^2.3.3",
     "immer": "^7.0.9",
+    "mocha": "^8.1.3",
     "rollup": "^2.3.4",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^6.0.0",
     "rollup-plugin-terser": "^7.0.0",
+    "sinon-chrome": "^3.0.1",
     "svelte": "^3.0.0",
-    "svelte-accessible-dialog": "^2.1.2"
+    "svelte-accessible-dialog": "^2.1.2",
+    "webextension-polyfill": "^0.6.0"
   },
   "dependencies": {
     "sirv-cli": "^1.0.0",

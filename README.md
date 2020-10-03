@@ -10,6 +10,8 @@ The "source of truth" for Ion data is on the [Firefox remote settings server](ht
 
 ## Get started
 
+# Build the UI
+
 Install the dependencies...
 
 ```bash
@@ -39,4 +41,17 @@ web-ext run
 
 ```bash
 web-ext run -t chromium
+```
+
+# Build the Core addon
+With the UI is generated, the addon can finally be built:
+
+```bash
+npm run build-addon
+```
+
+To run test coverage:
+
+```bash
+npm run test-addon
 ```
