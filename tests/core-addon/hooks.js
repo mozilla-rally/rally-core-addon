@@ -9,8 +9,7 @@ var browser = require('sinon-chrome/extensions');
 browser.runtime.id = "testid";
 global.browser = browser;
 
-browser =
-  require("../../node_modules/webextension-polyfill/dist/browser-polyfill.js");
+browser = require("webextension-polyfill");
 
 exports.mochaHooks = {
   beforeAll() {
