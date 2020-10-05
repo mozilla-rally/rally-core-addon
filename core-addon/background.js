@@ -2,7 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const IonCore = require('./IonCore.js');
+var browser = require("../node_modules/webextension-polyfill/dist/browser-polyfill.js");
+const IonCore = require("./IonCore.js");
 
 const ionCore = new IonCore();
 ionCore.initialize();
