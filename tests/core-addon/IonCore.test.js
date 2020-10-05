@@ -13,13 +13,13 @@ describe('IonCore', function () {
 
   describe('_openControlPanel()', function () {
     it('should open the options page', function () {
-      browser.runtime.openOptionsPage.flush();
+      chrome.runtime.openOptionsPage.flush();
       this.ionCore._openControlPanel();
-      assert.ok(browser.runtime.openOptionsPage.calledOnce);
+      assert.ok(chrome.runtime.openOptionsPage.calledOnce);
     });
   });
 
   after(function () {
-    browser.flush();
+    chrome.flush();
   });
 });

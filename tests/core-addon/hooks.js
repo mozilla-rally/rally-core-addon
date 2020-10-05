@@ -2,21 +2,23 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var browser = require('sinon-chrome/extensions');
+const chrome = require('sinon-chrome/extensions');
 // We need to provide the `browser.runtime.id` for sinon-chrome to
 // be happy and play nice with webextension-polyfill. See this issue:
 // https://github.com/mozilla/webextension-polyfill/issues/218
-browser.runtime.id = "testid";
-global.browser = browser;
+chrome.runtime.id = "testid";
+global.chrome = chrome;
 
-browser = require("webextension-polyfill");
+var browser = require("webextension-polyfill");
 
 exports.mochaHooks = {
   beforeAll() {
+    global.chrome = chrome;
     global.browser = browser;
   },
   afterAll() {
-    browser.flush();
+    chrome.flush();
+    delete global.chrome;
     delete global.browser;
   },
 };
