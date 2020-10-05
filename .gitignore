@@ -1,4 +1,5 @@
 /node_modules/
+/public/addon-build/
 /public/build/
 
 .DS_Store
