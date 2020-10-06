@@ -1,10 +1,6 @@
 # Ion
 
-This is the control panel for Ion studies. It may be run in many contexts:
-
-- on the web
-- in a cross-browser WebExtension
-- as an about: page in Firefox
+This is the control panel for Ion studies. It is implemented as a cross-browser WebExtension, using Svelte for the UI.
 
 The "source of truth" for Ion data is on the [Firefox remote settings server](https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records).
 
