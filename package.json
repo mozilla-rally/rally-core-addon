@@ -6,7 +6,7 @@
     "dev": "rollup -c -w",
     "start": "sirv public",
     "build-addon": "rollup -c rollup.config.addon.js",
-    "test-addon": "mocha \"./tests/**/*.js\""
+    "test-addon": "mocha --require  \"./tests/core-addon/hooks.js\" \"./tests/core-addon/*.js\""
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",

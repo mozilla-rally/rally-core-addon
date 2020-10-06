@@ -2,15 +2,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const chrome = require('sinon-chrome/extensions');
 var assert = require('assert');
 
 var IonCore = require('../../core-addon/IonCore');
 
 describe('IonCore', function () {
   before(function () {
-    global.chrome = chrome;
-    console.log(`IonCore is: ${typeof IonCore}`);
     this.ionCore = new IonCore();
   });
 
@@ -24,6 +21,5 @@ describe('IonCore', function () {
 
   after(function () {
     chrome.flush();
-    delete global.chrome;
   });
 });
