@@ -1,4 +1,3 @@
-import availableStudies from "../mocks/available-studies";
 /* 
 
 This API implementation depends on sending messages back to 
@@ -17,11 +16,14 @@ export default {
   // use in store instantiation. This assumes that the studies are
   // stored somewhere (i.e. remote settings)
   async getAvailableStudies() {
-    return fetch(
-      "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
-    )
-      .then((req) => req.json())
-      .then((req) => req.data);
+    try {
+      const request = await fetch(
+        "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
+      );
+      return (await request.json()).data;
+    } catch (err) {
+      console.error(err);
+    }
   },
 
   // fetch ion enrollment from remote location, if available.
@@ -36,12 +38,11 @@ export default {
   // return the app state from the add-on.
   // this is called on store instantiation.
   async getItem(key) {
-    return browser.storage.local
-      .get(key)
-      .then((data) => {
-        return data[key];
-      })
-      .catch(console.error);
+    try {
+      return (await browser.storage.local.get(key))[key];
+    } catch (err) {
+      console.error(err);
+    }
   },
 
   // save the app state in the add-on.
@@ -53,10 +54,14 @@ export default {
   // updates the study enrollment in the add-on, if needed.
   // NOTE: if updating in the app store in the add-on suffices,
   // this should probably just return the OK signal.
-  async updateStudyEnrollment(studyID, enroll) {},
+  async updateStudyEnrollment(studyID, enroll) {
+    return true;
+  },
 
   // updates the overall Ion enrollment in the add-on, if needed.
   // NOTE: if updating in the app store in the add-on suffices,
   // this should probably just return the OK signal.
-  async updateIonEnrollment(studyID, enroll) {},
+  async updateIonEnrollment(studyID, enroll) {
+    return true;
+  },
 };
