@@ -1,8 +1,10 @@
 # Ion
 
-This is the control panel for Ion studies. It is implemented as a cross-browser WebExtension, using Svelte for the UI.
+This is the Core Add-on for Ion studies. It is implemented as a cross-browser WebExtension, using Svelte for the UI.
 
-The "source of truth" for Ion data is on the [Firefox remote settings server](https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records).
+Ion studies may be implemented as add-ons, or built-in to the Core Add-on. An [demo study add-on](https://github.com/mozilla-ion/demo-study-addon) and [demo website landing page](https://github.com/mozilla-ion/mozilla-ion.github.io) are available.
+
+The "source of truth" for Ion study metadata is on the [Firefox remote settings server](https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records).
 
 ## Get started
 
