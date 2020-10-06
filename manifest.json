@@ -13,7 +13,11 @@
     }
   },
 
-  "permissions": ["telemetry"],
+  "permissions": [
+    "telemetry",
+    "storage",
+    "https://firefox.settings.services.mozilla.com/"
+  ],
 
   "telemetry": {
     "pioneer_id": true,

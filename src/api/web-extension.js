@@ -6,32 +6,62 @@ a web extension to store the overall app state whenever it changes.
 */
 export default {
   // initialize the frontend's store from the add-on local storage.
-  async initialize(key) {},
+  async initialize(key) {
+    // get from
+    // returns the last saved app state.
+    return this.getItem(key);
+  },
 
   // fetch available studies from remote location.
   // use in store instantiation. This assumes that the studies are
   // stored somewhere (i.e. remote settings)
-  async getAvailableStudies() {},
+  async getAvailableStudies() {
+    try {
+      const request = await fetch(
+        "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
+      );
+      return (await request.json()).data;
+    } catch (err) {
+      console.error(err);
+    }
+  },
 
   // fetch ion enrollment from remote location, if available.
   // use in the store instantiation.
-  async getIonEnrollment() {},
+  async getIonEnrollment() {
+    // this API function will return Ion enrollment status from a remote source.
+    // use it primarily when instantiating or updating the app store.
+    const state = await this.getItem("__STATE__");
+    state.isEnrolled || false;
+  },
 
   // return the app state from the add-on.
   // this is called on store instantiation.
-  async getItem(key) {},
+  async getItem(key) {
+    try {
+      return (await browser.storage.local.get(key))[key];
+    } catch (err) {
+      console.error(err);
+    }
+  },
 
   // save the app state in the add-on.
   // this fires every time store.produce is called.
-  async setItem(key, value) {},
+  async setItem(key, value) {
+    return browser.storage.local.set({ [key]: value });
+  },
 
   // updates the study enrollment in the add-on, if needed.
   // NOTE: if updating in the app store in the add-on suffices,
   // this should probably just return the OK signal.
-  async updateStudyEnrollment(studyID, enroll) {},
+  async updateStudyEnrollment(studyID, enroll) {
+    return true;
+  },
 
   // updates the overall Ion enrollment in the add-on, if needed.
   // NOTE: if updating in the app store in the add-on suffices,
   // this should probably just return the OK signal.
-  async updateIonEnrollment(studyID, enroll) {},
+  async updateIonEnrollment(studyID, enroll) {
+    return true;
+  },
 };
