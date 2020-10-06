@@ -17,6 +17,8 @@ module.exports = class IonCore {
   }
 
   _openControlPanel() {
-    browser.runtime.openOptionsPage();
+    browser.runtime.openOptionsPage().catch(e => {
+      console.error(`IonCore.js - Unable to open the control panel`, e);
+    });
   }
 }
