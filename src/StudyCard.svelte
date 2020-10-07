@@ -4,6 +4,7 @@
 
   export let enrolled = false;
   export let studyEnrolled = false;
+  export let privacyPolicy = undefined;
   export let studyId;
   export let imageSrc;
   export let dataCollectionDetails = [];
@@ -101,16 +102,16 @@
     <slot name="icon"><span class="missing" /></slot>
   </div>
 
-  <div class="description">
-    <slot name="description"><span class="description" /></slot>
-    <p>
-      You can always find the
-      <a
-        href="https://addons.mozilla.org/en-US/firefox/addon/pioneer-v2-example/">privacy
-        policy</a>
-      at our website.
-    </p>
-  </div>
+  {#if privacyPolicy}
+    <div class="description">
+      <slot name="description"><span class="description" /></slot>
+      <p>
+        You can always find the
+        <a href={privacyPolicy}>privacy policy</a>
+        at our website.
+      </p>
+    </div>
+  {/if}
   {#if dataCollectionDetails.length}
     <div class="data-collection-details">
       <p>This study will collect</p>
