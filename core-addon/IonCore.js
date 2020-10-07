@@ -2,6 +2,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+// The path of the embedded resource used to control Ion options.
+const ION_OPTIONS_PAGE_PATH = "public/index.html";
+
 module.exports = class IonCore {
   initialize() {
     // Whenever the addon icon is clicked, open the control page.
@@ -14,11 +17,109 @@ module.exports = class IonCore {
       }
       this._openControlPanel();
     });
+
+    // Listen for messages from the options page.
+    browser.runtime.onMessage.addListener(
+      (m, s) => this._handleMessage(m, s));
   }
 
   _openControlPanel() {
     browser.runtime.openOptionsPage().catch(e => {
       console.error(`IonCore.js - Unable to open the control panel`, e);
     });
+  }
+
+  /**
+   * Handles messages coming in from the options page.
+   *
+   * @param {Object} message
+   *        The payload of the message.
+   * @param {runtime.MessageSender} sender
+   *        An object containing informations about who sent
+   *        the message.
+   * @returns {Promise} The response to the received message.
+   *          It can be resolved with a value that is sent to the
+   *          `sender`.
+   */
+  _handleMessage(message, sender) {
+    console.log(`IonCore - received message ${message} from ${sender}`);
+
+    // We only expect messages coming from the embedded options page
+    // at this time. Discard anything else and report an error.
+    if (sender.url != browser.runtime.getURL(ION_OPTIONS_PAGE_PATH)) {
+      console.error(`IonCore - received message from unexpected sender`);
+      return Promise.reject();
+    }
+
+    switch (message.type) {
+      case "enrollment": {
+        // Let's not forget to respond `true` to the sender: the UI
+        // is expecting it.
+        return this._sendEnrollmentPing().then(r => true);
+      } break;
+      default:
+        console.error(`IonCore - unexpected message type ${message.type}`);
+        return Promise.reject();
+    }
+  }
+
+  /**
+   * Sends a Pioneer enrollment ping.
+   *
+   * The `creationDate` provided by the telemetry APIs will be used as the timestamp
+   * for considering the user enrolled in pioneer and/or the study.
+   *
+   * @param [studyAddonid=undefined] - optional study id. It's sent in the ping, if
+   *        present, to signal that user enroled in the study.
+   */
+  async _sendEnrollmentPing(studyAddonId) {
+    let options = {
+      studyName: "pioneer-meta",
+      addPioneerId: true,
+      // NOTE - while we're not actually sending useful data in this payload, the current Pioneer v2 Telemetry
+      // pipeline requires that pings are shaped this way so they are routed to the correct environment.
+      //
+      // At the moment, the public key used here isn't important but we do need to use *something*.
+      encryptionKeyId: "discarded",
+      publicKey: {
+        crv: "P-256",
+        kty: "EC",
+        x: "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
+        y: "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE",
+      },
+      schemaName: "pioneer-enrollment",
+      schemaVersion: 1,
+      // Note that the schema namespace directly informs how data is segregated after ingestion.
+      // If this is an enrollment ping for the pioneer program (in contrast to the enrollment to
+      // a specific study), use a meta namespace.
+      schemaNamespace: "pioneer-meta",
+    };
+
+    // If we were provided with a study id, then this is an enrollment to a study.
+    // Send the id alongside with the data and change the schema namespace to simplify
+    // the work on the ingestion pipeline.
+    if (typeof studyAddonId != "undefined") {
+      options.studyName = studyAddonId;
+      // The schema namespace needs to be the study addon id, as we
+      // want to route the ping to the specific study table.
+      options.schemaNamespace = studyAddonId;
+    }
+
+    // For enrollment, we expect to send an empty payload.
+    const payload = {};
+
+    // We intentionally don't wait on the promise returned by
+    // `submitExternalPing`, because that's an internal API only meant
+    // for telemetry tests. Moreover, in order to send a custom schema
+    // name and a custom namespace, we need to ship a custom "experimental"
+    // telemetry API for legacy telemetry.
+    await browser.legacyTelemetryApi
+      .submitEncryptedPing("pioneer-study", payload, options)
+      .then(() => {
+        console.debug(`IonCore._sendEnrollmentPing - options: ${JSON.stringify(options)} payload: ${JSON.stringify(payload)}`);
+      })
+      .catch(error => {
+        console.error(`IonCore._sendEnrollmentPing failed - error: ${error}`);
+      });
   }
 }

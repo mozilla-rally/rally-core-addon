@@ -1,9 +1,42 @@
-/* 
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-This API implementation depends on sending messages back to 
-a web extension to store the overall app state whenever it changes.
+/**
+ * Utility function to build a message to the web-extension.
+ *
+ * @param {String} type
+ *        The type of the message being sent. Unknown types
+ *        will be rejected by the Core Add-on. Valid values
+ *        are: `enrollment` (to enroll in Ion).
+ * @param {Object} payload
+ *        A JSON-serializable object representing the payload
+ *        of the message to be passed to the Core addon.
+ */
+async function sendToCore(type, payload) {
+  const VALID_TYPES = [
+    "enrollment",
+  ];
 
-*/
+  // Make sure `type` is one of the expected values.
+  if (!VALID_TYPES.includes(type)) {
+    console.error(`Ion: sendToCore - unexpected message to core "${type}"`);
+    return Promise.reject();
+  }
+
+  const msg = {
+    type,
+    data: payload
+  };
+
+  return await browser.runtime.sendMessage(msg);
+}
+
+/**
+ * This API implementation depends on sending messages back to
+ * a web extension to store the overall app state whenever it
+ * changes.
+ */
 export default {
   // initialize the frontend's store from the add-on local storage.
   async initialize(key) {
@@ -58,10 +91,18 @@ export default {
     return true;
   },
 
-  // updates the overall Ion enrollment in the add-on, if needed.
-  // NOTE: if updating in the app store in the add-on suffices,
-  // this should probably just return the OK signal.
-  async updateIonEnrollment(studyID, enroll) {
-    return true;
+  /**
+   * Updates the overall Ion enrollment in the add-on.
+   * NOTE: if updating in the app store in the add-on suffices,
+   * this should probably just return the OK signal.
+   *
+   * @param {Boolean} enroll
+   *        `true` if user decided to enroll in the Ion platform,
+   *        `false` otherwise.
+   * TODO: Why can `enroll` be undefined?
+   */
+  async updateIonEnrollment(enroll) {
+    let coercedEnroll = !!enroll;
+    return await sendToCore("enrollment", {});
   },
 };
