@@ -73,6 +73,13 @@
         "description": "Clears the Ion ID stored in the Firefox prefs",
         "parameters": [],
         "async": true
+      },
+      {
+        "name": "generateUUID",
+        "type": "function",
+        "description": "Generate a random UUID using the Firefox APIs",
+        "parameters": [],
+        "async": true
       }
     ]
   }

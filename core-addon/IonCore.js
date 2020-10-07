@@ -55,12 +55,38 @@ module.exports = class IonCore {
       case "enrollment": {
         // Let's not forget to respond `true` to the sender: the UI
         // is expecting it.
-        return this._sendEnrollmentPing().then(r => true);
+        return this._enroll().then(r => true);
       } break;
       default:
         console.error(`IonCore - unexpected message type ${message.type}`);
         return Promise.reject();
     }
+  }
+
+  /**
+   * Enroll in the Ion platform.
+   *
+   * This sets up all the required information (e.g. Ion ID)
+   * and sets the relevant data to the pipeline.
+   *
+   * @returns {Promise} A promise resolved when the enrollment
+   *          is complete (does not block on data upload).
+   */
+  async _enroll() {
+    // Generate a proper random UUID.
+    const uuid = await browser.legacyTelemetryApi.generateUUID();
+
+    // Store it locally for future use.
+    await browser.storage.local.set({ionId: uuid});
+
+    // The telemetry API, before sending a ping, reads the
+    // ion id from a pref. It no value is set, the API will
+    // throw and nothing will be sent. This means, at enrollment,
+    // we need set the value of that required pref.
+    await browser.legacyTelemetryApi.setIonID(uuid);
+
+    // Finally send the ping.
+    await this._sendEnrollmentPing();
   }
 
   /**

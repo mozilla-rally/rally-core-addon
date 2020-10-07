@@ -8,6 +8,13 @@ const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 const { TelemetryController } = ChromeUtils.import(
   "resource://gre/modules/TelemetryController.jsm"
 );
+const { XPCOMUtils } = ChromeUtils.import(
+  "resource://gre/modules/XPCOMUtils.jsm"
+);
+
+XPCOMUtils.defineLazyServiceGetters(this, {
+  gUUIDGenerator: ["@mozilla.org/uuid-generator;1", "nsIUUIDGenerator"],
+});
 
 // The pref that contains the Ion ID within Firefox. Unfortunately
 // the telemetry APIs require this, therefore it needs to be set in
@@ -33,6 +40,10 @@ this.legacyTelemetryApi = class extends ExtensionAPI {
         },
         async clearIonID() {
           Services.prefs.clearUserPref(PREF_ION_ID);
+        },
+        async generateUUID() {
+          let str = gUUIDGenerator.generateUUID().toString();
+          return str.substring(1, str.length - 1);
         }
       }
     }
