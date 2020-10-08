@@ -93,16 +93,12 @@ export default {
 
   /**
    * Updates the overall Ion enrollment in the add-on.
-   * NOTE: if updating in the app store in the add-on suffices,
-   * this should probably just return the OK signal.
    *
    * @param {Boolean} enroll
    *        `true` if user decided to enroll in the Ion platform,
    *        `false` otherwise.
-   * TODO: Why can `enroll` be undefined?
    */
   async updateIonEnrollment(enroll) {
-    let coercedEnroll = !!enroll;
-    return await sendToCore("enrollment", {});
+    return await sendToCore(enroll ? "enrollment" : "unenrollment", {});
   },
 };
