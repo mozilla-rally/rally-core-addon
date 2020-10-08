@@ -10,7 +10,8 @@
 
   const dispatch = createEventDispatcher();
   function toggleStudy() {
-    dispatch("enroll", studyId);
+    // Bubble up the "enroll" event to the `StudyList` component.
+    dispatch("enroll", {studyId: studyId, enroll: !studyEnrolled});
     // if (studyEnrolled) {
     //   dispatchFxEvent({ uninstallStudy: studyId });
     // } else {

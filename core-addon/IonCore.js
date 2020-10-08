@@ -57,6 +57,11 @@ module.exports = class IonCore {
         // is expecting it.
         return this._enroll().then(r => true);
       } break;
+      case "study-enrollment": {
+        // Let's not forget to respond `true` to the sender: the UI
+        // is expecting it.
+        return this._enrollStudy(message.data.studyID).then(r => true);
+      } break;
       default:
         console.error(`IonCore - unexpected message type ${message.type}`);
         return Promise.reject();
@@ -87,6 +92,21 @@ module.exports = class IonCore {
 
     // Finally send the ping.
     await this._sendEnrollmentPing();
+  }
+
+  /**
+   * Enroll in an Ion Study.
+   *
+   * This sends the required pings,
+   *
+   * @returns {Promise} A promise resolved when the enrollment
+   *          is complete (does not block on data upload).
+   */
+  async _enrollStudy(studyAddonId) {
+    // TODO: Validate the study id?
+
+    // Finally send the ping.
+    await this._sendEnrollmentPing(studyAddonId);
   }
 
   /**

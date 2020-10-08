@@ -28,11 +28,17 @@ export default function createStore(initialState, api) {
         state[key] = value;
       });
     },
-    async updateStudyEnrollment(studyID, enroll = undefined) {
+    async updateStudyEnrollment(studyID, enroll) {
+      // Enforce the truthyness of `enroll`, to make sure
+      // it's always a boolean.
+      let coercedEnroll = !!enroll;
+      console.debug(
+        `Ion - changing study ${studyID} enrollment to ${coercedEnroll}`);
+
       let outcome;
       // send study enrollment message
       try {
-        outcome = await api.updateStudyEnrollment(studyID, enroll);
+        outcome = await api.updateStudyEnrollment(studyID, coercedEnroll);
       } catch (err) {
         console.error(err);
       }

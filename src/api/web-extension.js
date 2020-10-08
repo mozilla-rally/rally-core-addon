@@ -16,6 +16,7 @@
 async function sendToCore(type, payload) {
   const VALID_TYPES = [
     "enrollment",
+    "study-enrollment",
   ];
 
   // Make sure `type` is one of the expected values.
@@ -84,11 +85,19 @@ export default {
     return browser.storage.local.set({ [key]: value });
   },
 
-  // updates the study enrollment in the add-on, if needed.
-  // NOTE: if updating in the app store in the add-on suffices,
-  // this should probably just return the OK signal.
+  /**
+   * Updates the study enrollment.
+   *
+   * @param {Boolean} enroll
+   *        `true` if user decided to enroll in an Ion Study,
+   *        `false` if user opted out.
+   */
+
   async updateStudyEnrollment(studyID, enroll) {
-    return true;
+    const msg = enroll ? "study-enrollment" : "study-unenrollment";
+    return await sendToCore(msg, {
+      studyID
+    });
   },
 
   /**
