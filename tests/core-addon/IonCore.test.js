@@ -110,7 +110,7 @@ describe('IonCore', function () {
       assert.equal(submitArgs[2].schemaNamespace, "pioneer-meta");
     });
 
-    it('dispatchers study-enrollment messages', async function () {
+    it('dispatches study-enrollment messages', async function () {
       // Mock the URL of the options page.
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
