@@ -42,13 +42,11 @@ module.exports = class IonCore {
    *          `sender`.
    */
   _handleMessage(message, sender) {
-    console.log(`IonCore - received message ${message} from ${sender}`);
-
     // We only expect messages coming from the embedded options page
     // at this time. Discard anything else and report an error.
     if (sender.url != browser.runtime.getURL(ION_OPTIONS_PAGE_PATH)) {
-      console.error(`IonCore - received message from unexpected sender`);
-      return Promise.reject();
+      return Promise.reject(
+        new Error("IonCore - received message from unexpected sender"));
     }
 
     switch (message.type) {
@@ -63,8 +61,8 @@ module.exports = class IonCore {
         return this._enrollStudy(message.data.studyID).then(r => true);
       } break;
       default:
-        console.error(`IonCore - unexpected message type ${message.type}`);
-        return Promise.reject();
+        return Promise.reject(
+          new Error(`IonCore - unexpected message type ${message.type}`));
     }
   }
 
