@@ -48,5 +48,17 @@
   "options_ui": {
     "page": "public/index.html",
     "open_in_tab": true
+  },
+
+  "experiment_apis": {
+    "legacyTelemetryApi": {
+      "schema": "core-addon/telemetry/LegacyTelemetryApi.schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "core-addon/telemetry/LegacyTelemetryApi.js",
+        "events": [],
+        "paths": [["legacyTelemetryApi"]]
+      }
+    }
   }
 }

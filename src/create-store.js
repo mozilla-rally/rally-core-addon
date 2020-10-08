@@ -28,11 +28,17 @@ export default function createStore(initialState, api) {
         state[key] = value;
       });
     },
-    async updateStudyEnrollment(studyID, enroll = undefined) {
+    async updateStudyEnrollment(studyID, enroll) {
+      // Enforce the truthyness of `enroll`, to make sure
+      // it's always a boolean.
+      let coercedEnroll = !!enroll;
+      console.debug(
+        `Ion - changing study ${studyID} enrollment to ${coercedEnroll}`);
+
       let outcome;
       // send study enrollment message
       try {
-        outcome = await api.updateStudyEnrollment(studyID, enroll);
+        outcome = await api.updateStudyEnrollment(studyID, coercedEnroll);
       } catch (err) {
         console.error(err);
       }
@@ -49,18 +55,23 @@ export default function createStore(initialState, api) {
         });
       }
     },
-    async updateIonEnrollment(enroll = undefined) {
+    async updateIonEnrollment(enroll) {
+      // Enforce the truthyness of `enroll`, to make sure
+      // it's always a boolean.
+      let coercedEnroll = !!enroll;
+      console.debug(`Ion - changing enrollment to ${coercedEnroll}`);
+
       let outcome;
       // send the ion enrollment message
       try {
-        outcome = await api.updateIonEnrollment(enroll);
+        outcome = await api.updateIonEnrollment(coercedEnroll);
       } catch (err) {
         console.log(err);
       }
       // if ion enrollment is successful, update frontend.
       if (outcome) {
         this.produce((draft) => {
-          draft.enrolled = enroll === undefined ? !draft.enrolled : enroll;
+          draft.enrolled = coercedEnroll;
         });
       }
     },

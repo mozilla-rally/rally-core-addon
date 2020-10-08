@@ -1,0 +1,86 @@
+[
+  {
+    "namespace": "legacyTelemetryApi",
+    "description": "experimental API extensions submit legacy telemetry",
+    "functions": [
+      {
+        "name": "submitEncryptedPing",
+        "type": "function",
+        "description": "Submits an encrypted ping using Legacy Telemetry in Firefox",
+        "parameters": [
+          {
+            "name": "type",
+            "type": "string"
+          },
+          {
+            "name": "payload",
+            "$ref": "extensionTypes.PlainJSONValue",
+            "description": "The payload of the legacy telemetry ping."
+          },
+          {
+            "name": "options",
+            "type": "object",
+            "properties": {
+              "studyName": {
+                "type": "string",
+                "description": "The study name to use"
+              },
+              "addPioneerId": {
+                "type": "boolean",
+                "description": "Whether or not the ping should contain the Pioneer ID"
+              },
+              "encryptionKeyId": {
+                "type": "string",
+                "description": "The public key ID to use"
+              },
+              "publicKey": {
+                "type": "object",
+                "description": "The public key to use (JSON Web Key)",
+                "additionalProperties": { "type": "any" }
+              },
+              "schemaName": {
+                "type": "string",
+                "description": "The schema name to use"
+              },
+              "schemaNamespace": {
+                "type": "string",
+                "description": "The schema namespace to use"
+              },
+              "schemaVersion": {
+                "type": "number",
+                "description": "The schema version to use"
+              }
+            }
+          }
+        ],
+        "async": true
+      },
+      {
+        "name": "setIonID",
+        "type": "function",
+        "description": "Saves the Ion ID in the Firefox prefs",
+        "parameters": [
+          {
+            "name": "type",
+            "type": "string"
+          }
+        ],
+        "async": true
+      },
+      {
+        "name": "clearIonID",
+        "type": "function",
+        "description": "Clears the Ion ID stored in the Firefox prefs",
+        "parameters": [],
+        "async": true
+      },
+      {
+        "name": "generateUUID",
+        "type": "function",
+        "description": "Generate a random UUID using the Firefox APIs",
+        "parameters": [],
+        "async": true
+      }
+    ]
+  }
+]
