@@ -40,10 +40,10 @@ npm run build-addon
 ...then start [web-ext](https://github.com/mozilla/web-ext):
 
 ```bash
-web-ext run
+web-ext run --pref=extensions.experiments.enabled=true -f nightly
 ```
 
-`web-ext` defaults to Firefox, it can be run with Chrome:
+`web-ext` uses Nightly Firefox above, it can be run with Chrome:
 
 ```bash
 web-ext run -t chromium
