@@ -19,6 +19,7 @@
       dataCollectionDetails={study.dataCollectionDetails}
       studyId={study.addon_id}
       enrolled={$store.enrolled}
+      privacyPolicy={study.privacyPolicy.spec}
       studyEnrolled={$store.activeStudies.includes(study.addon_id)}
       on:enroll={(e) => {
         const eventData = e.detail;
