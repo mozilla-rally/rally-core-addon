@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+    <meta name="author" content="Ion Teeam" />
+    <meta name="description" content="Ion" />
+    <meta name="keywords" content="mozilla,data" />
+    <link href="common.css" rel="stylesheet" />
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        --dreamy-box: 0 1px 2px rgba(0, 0, 0, 0.07),
+          0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 0, 0, 0.07),
+          0 8px 16px rgba(0, 0, 0, 0.07), 0 16px 32px rgba(0, 0, 0, 0.07),
+          0 32px 64px rgba(0, 0, 0, 0.07);
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: max-content max-content auto;
+        justify-items: center;
+        justify-content: center;
+        align-content: stretch;
+        align-items: start;
+        grid-row-gap: 8rem;
+        background: linear-gradient(
+          to top right,
+          hsl(290, 80%, 10%),
+          hsl(340, 50%, 20%)
+        );
+      }
+
+      header,
+      main {
+        grid-column: content;
+      }
+
+      main {
+        text-align: center;
+      }
+
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @keyframes fade-down {
+        0% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        100% {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @keyframes plain-fade {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      svg {
+        animation: fade-in 1s;
+      }
+
+      h1 {
+        font-weight: 700;
+        font-size: 6rem;
+        text-align: center;
+        max-width: 600px;
+        margin: 0px;
+        padding-top: 8rem;
+        color: hsl(290, 80%, 97%);
+        animation: fade-in 750ms;
+        line-height: 1.2;
+      }
+
+      a,
+      a:visited {
+        font-size: 2.5rem;
+        padding: 3rem 4rem;
+        background: linear-gradient(
+          to top right,
+          hsl(260, 60%, 40%),
+          hsl(290, 60%, 40%)
+        );
+        color: white;
+        border-radius: 2rem;
+        cursor: pointer;
+        transition: background 200ms, transform 100ms;
+        animation: plain-fade 750ms;
+        animation-fill-mode: forwards;
+        box-shadow: var(--dreamy-box);
+      }
+
+      a:hover {
+        text-decoration: none;
+        transform: translateY(-2.5px);
+        color: white;
+      }
+
+      a:active,
+      a:focus,
+      a:active:hover {
+        color: white;
+      }
+
+      p {
+        opacity: 0;
+        text-align: center;
+        padding: 0px;
+        margin: 0px;
+        margin-bottom: 3rem;
+        line-height: 1.5;
+        font-size: 1.5rem;
+        background: linear-gradient(
+          to top right,
+          hsla(290, 80%, 10%, 0.25),
+          hsla(310, 50%, 20%, 0.25)
+        );
+        padding: 2rem;
+        border-radius: 1rem;
+        width: max-content;
+        animation: plain-fade 750ms;
+        animation-fill-mode: forwards;
+        align-self: end;
+        box-shadow: var(--dreamy-box);
+        max-width: 600px;
+      }
+
+      code {
+        color: hsla(290, 80%, 80%);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      <svg
+        width="60"
+        height="72"
+        viewBox="0 0 60 72"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="Gradient1">
+            <stop class="stop1" offset="0%" stop-color="hsl(300, 40%, 60%)" />
+            <stop class="stop3" offset="100%" stop-color="#E31587" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M59.4983 40.1657C59.518 39.8746 59.518 39.5825 59.4983 39.2914V38.88C57.7462 31.7734 53.4475 25.6039 47.4582 21.6C45.7848 20.5543 44.7309 18.7215 44.6488 16.7143V5.14285C44.6488 2.30253 42.4028 0 39.6321 0H20.1672C17.3966 0 15.1505 2.30253 15.1505 5.14285V16.7143C15.1533 18.8136 14.0886 20.7626 12.3411 21.8571C6.47322 25.8668 2.27076 31.9715 0.55184 38.9828V39.6C0.5327 39.788 0.5327 39.9776 0.55184 40.1657C0.210726 41.8584 0.0259623 43.5803 0 45.3085C0.0391746 56.5178 6.36433 66.7044 16.2542 71.4857C16.9421 71.8273 17.6971 72.0032 18.4615 72H41.388C42.1524 72.0032 42.9074 71.8273 43.5953 71.4857C53.5113 66.765 59.8948 56.6188 60 45.4114C59.9985 43.6503 59.8305 41.8935 59.4983 40.1657ZM18.01 29.88C22.4076 26.9099 25.0921 21.9063 25.1839 16.5086V10.2857H34.6154V16.7143C34.7073 22.1121 37.3917 27.1156 41.7893 30.0857C45.7043 32.7742 48.4683 36.8956 49.515 41.6057V42.7371C43.4932 46.6327 35.5856 45.333 31.0535 39.7028C26.1398 34.9055 18.9597 33.4614 12.6421 36C14.0053 33.6631 15.8345 31.6477 18.01 30.0857V29.88Z"
+          fill="url(#Gradient1)"
+        />
+      </svg>
+      <br />
+      Put your data to work for a better internet.
+    </h1>
+    <a
+      tabindex="0"
+      href="https://github.com/mozilla-ion/ion-core-addon/releases/download/0.1/ion_demo_study-2.0.xpi"
+      >Install the Ion Web Extension</a
+    >
+    <p>
+      Note: for this demoware, you're going to need to run Nightly & set
+      <code>xpinstall.signatures.required = false</code> in
+      <code>about:config</code>.
+    </p>
+  </body>
+</html>
