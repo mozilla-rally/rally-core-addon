@@ -29,6 +29,13 @@ When ready, package up for use inside the web extension:
 npm run build
 ```
 
+# Build the Core addon
+With the UI is generated, the addon can finally be built:
+
+```bash
+npm run build-addon
+```
+
 ...then start [web-ext](https://github.com/mozilla/web-ext):
 
 ```bash
@@ -41,15 +48,16 @@ web-ext run
 web-ext run -t chromium
 ```
 
-# Build the Core addon
-With the UI is generated, the addon can finally be built:
-
-```bash
-npm run build-addon
-```
-
 To run test coverage:
 
 ```bash
 npm run test-addon
 ```
+
+To generate an installable extension file:
+
+```bash
+web-ext build
+```
+
+The output will be a `.zip` file in `web-ext-artifacts/` - this should be renamed to `.xpi` for Firefox and `.crx` for Chrome.
