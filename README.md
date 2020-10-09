@@ -23,14 +23,15 @@ To run a local webserver (`http://localhost:5000`) for the UI which auto-reloads
 npm run dev
 ```
 
+# Build the Core addon
+
 When ready, package up for use inside the web extension:
 
 ```bash
 npm run build
 ```
 
-# Build the Core addon
-With the UI is generated, the addon can finally be built:
+Build the local version of the addon:
 
 ```bash
 npm run build-addon
