@@ -108,22 +108,27 @@ module.exports = class IonCore {
   }
 
   /**
-   * Sends a Pioneer enrollment ping.
+   * Sends an empty Ion ping with the provided info.
    *
-   * The `creationDate` provided by the telemetry APIs will be used as the timestamp
-   * for considering the user enrolled in pioneer and/or the study.
+   * @param {String} payloadType
+   *        The type of the encrypted payload. This will define the
+   *        `schemaName` of the ping.
    *
-   * @param [studyAddonid=undefined] - optional study id. It's sent in the ping, if
-   *        present, to signal that user enroled in the study.
+   * @param {String} namespace
+   *        The namespace to route the ping. This will define the
+   *        `schemaNamespace` and `studyName` properties of the ping.
    */
-  async _sendEnrollmentPing(studyAddonId) {
+  async _sendEmptyPing(payloadType, namespace) {
     let options = {
-      studyName: "pioneer-meta",
+      studyName: namespace,
       addPioneerId: true,
-      // NOTE - while we're not actually sending useful data in this payload, the current Pioneer v2 Telemetry
-      // pipeline requires that pings are shaped this way so they are routed to the correct environment.
+      // NOTE - while we're not actually sending useful data in
+      // this payload, the current Ion v2 Telemetry pipeline requires
+      // that pings are shaped this way so they are routed to the correct
+      // environment.
       //
-      // At the moment, the public key used here isn't important but we do need to use *something*.
+      // At the moment, the public key used here isn't important but we do
+      // need to use *something*.
       encryptionKeyId: "discarded",
       publicKey: {
         crv: "P-256",
@@ -131,23 +136,14 @@ module.exports = class IonCore {
         x: "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
         y: "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE",
       },
-      schemaName: "pioneer-enrollment",
+      schemaName: payloadType,
       schemaVersion: 1,
-      // Note that the schema namespace directly informs how data is segregated after ingestion.
-      // If this is an enrollment ping for the pioneer program (in contrast to the enrollment to
-      // a specific study), use a meta namespace.
-      schemaNamespace: "pioneer-meta",
+      // Note that the schema namespace directly informs how data is
+      // segregated after ingestion.
+      // If this is an enrollment ping for the pioneer program (in contrast
+      // to the enrollment to a specific study), use a meta namespace.
+      schemaNamespace: namespace,
     };
-
-    // If we were provided with a study id, then this is an enrollment to a study.
-    // Send the id alongside with the data and change the schema namespace to simplify
-    // the work on the ingestion pipeline.
-    if (typeof studyAddonId != "undefined") {
-      options.studyName = studyAddonId;
-      // The schema namespace needs to be the study addon id, as we
-      // want to route the ping to the specific study table.
-      options.schemaNamespace = studyAddonId;
-    }
 
     // For enrollment, we expect to send an empty payload.
     const payload = {};
@@ -165,5 +161,29 @@ module.exports = class IonCore {
       .catch(error => {
         console.error(`IonCore._sendEnrollmentPing failed - error: ${error}`);
       });
+  }
+
+  /**
+   * Sends a Pioneer enrollment ping.
+   *
+   * The `creationDate` provided by the telemetry APIs will be used as the
+   * timestamp for considering the user enrolled in pioneer and/or the study.
+   *
+   * @param {String} [studyAddonid=undefined]
+   *        optional study id. It's sent in the ping, if present, to signal
+   *        that user enroled in the study.
+   */
+  async _sendEnrollmentPing(studyAddonId) {
+    // If we were provided with a study id, then this is an enrollment to a study.
+    // Send the id alongside with the data and change the schema namespace to simplify
+    // the work on the ingestion pipeline.
+    if (typeof studyAddonId != "undefined") {
+      return await this._sendEmptyPing("pioneer-enrollment", studyAddonId);
+    }
+
+    // Note that the schema namespace directly informs how data is segregated after ingestion.
+    // If this is an enrollment ping for the pioneer program (in contrast to the enrollment to
+    // a specific study), use a meta namespace.
+    return await this._sendEmptyPing("pioneer-enrollment", "pioneer-meta");
   }
 }
