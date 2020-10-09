@@ -126,8 +126,13 @@ describe('IonCore', function () {
       // Use the spy to record the arguments of submitEncryptedPing.
       let telemetrySpy =
         sinon.spy(chrome.legacyTelemetryApi, "submitEncryptedPing");
-      // Make sure to mock the local storage calls as well.
-      chrome.storage.local.set.yields();
+
+      // Return an empty object from the local storage. Note that this
+      // needs to use `browser` and must use `callsArgWith` to guarantee
+      // that the promise resolves, due to a bug in sinon-chrome. See
+      // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
+      browser.storage.local.get.callsArgWith(1, {}).resolves();
+      chrome.storage.local.get.yields({});
 
       // Provide a valid study enrollment message.
       const FAKE_STUDY_ID = "test@ion-studies.com";

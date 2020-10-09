@@ -2,10 +2,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+const Storage = require("./Storage.js");
+
 // The path of the embedded resource used to control Ion options.
 const ION_OPTIONS_PAGE_PATH = "public/index.html";
 
 module.exports = class IonCore {
+  constructor() {
+    this._storage = new Storage();
+  }
+
   initialize() {
     // Whenever the addon icon is clicked, open the control page.
     browser.browserAction.onClicked.addListener(this._openControlPanel);
@@ -80,7 +86,7 @@ module.exports = class IonCore {
     const uuid = await browser.legacyTelemetryApi.generateUUID();
 
     // Store it locally for future use.
-    await browser.storage.local.set({ionId: uuid});
+    await this._storage.setIonID(uuid);
 
     // The telemetry API, before sending a ping, reads the
     // ion id from a pref. It no value is set, the API will
@@ -102,6 +108,9 @@ module.exports = class IonCore {
    */
   async _enrollStudy(studyAddonId) {
     // TODO: Validate the study id?
+
+    // Record that user activated this study.
+    await this._storage.appendActivatedStudy(studyAddonId);
 
     // Finally send the ping.
     await this._sendEnrollmentPing(studyAddonId);
