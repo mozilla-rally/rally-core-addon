@@ -186,4 +186,18 @@ module.exports = class IonCore {
     // a specific study), use a meta namespace.
     return await this._sendEmptyPing("pioneer-enrollment", "pioneer-meta");
   }
+
+  /**
+   * Sends a Ion deletion-request ping.
+   *
+   * @param {String} studyAddonid
+   *        It's sent in the ping to signal that user unenroled from a study.
+   */
+  async _sendDeletionPing(studyAddonId) {
+    if (typeof studyAddonId == "undefined") {
+      throw new Error("IonCore - the deletion-request ping requires a study id");
+    }
+
+    return await this._sendEmptyPing("deletion-request", studyAddonId);
+  }
 }
