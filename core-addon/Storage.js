@@ -12,17 +12,14 @@ module.exports = class Storage {
   }
 
   /**
-   * Adds a study id to the stored list of activated studies.
+   * Get the list of study ids user took part to.
    *
-   * @param {String} studyId
-   *        The id of the study to add to the list. If the id
-   *        is already present, this function is a no-op.
    * @returns {Promise} resolved with the list of activated studies
    *          if the study is added to the list, rejected on errors.
    */
-  async appendActivatedStudy(studyId) {
+  async getActivatedStudies() {
     // Attempt to retrieve any previously stored study ids.
-    let storedIds = await browser.storage.local.get("activatedStudies").then(
+    return await browser.storage.local.get("activatedStudies").then(
         stored => {
           // This branch will be hit even if `activatedStudies` was never
           // stored (e.g. this is the first save). Make sure to account for
@@ -34,6 +31,20 @@ module.exports = class Storage {
           return [];
         }
       );
+  }
+
+  /**
+   * Adds a study id to the stored list of activated studies.
+   *
+   * @param {String} studyId
+   *        The id of the study to add to the list. If the id
+   *        is already present, this function is a no-op.
+   * @returns {Promise} resolved with the list of activated studies
+   *          if the study is added to the list, rejected on errors.
+   */
+  async appendActivatedStudy(studyId) {
+    // Attempt to retrieve any previously stored study ids.
+    let storedIds = await this.getActivatedStudies();
 
     // If the study id is already present bail out.
     if (storedIds.includes(studyId)) {
@@ -46,5 +57,9 @@ module.exports = class Storage {
     await browser.storage.local.set({activatedStudies: storedIds});
 
     return storedIds;
+  }
+
+  async clearActivatedStudies() {
+    return await browser.storage.local.remove("activatedStudies");
   }
 };

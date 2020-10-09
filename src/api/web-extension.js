@@ -17,6 +17,7 @@ async function sendToCore(type, payload) {
   const VALID_TYPES = [
     "enrollment",
     "study-enrollment",
+    "unenrollment",
   ];
 
   // Make sure `type` is one of the expected values.

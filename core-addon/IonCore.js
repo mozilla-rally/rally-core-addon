@@ -66,6 +66,9 @@ module.exports = class IonCore {
         // is expecting it.
         return this._enrollStudy(message.data.studyID).then(r => true);
       } break;
+      case "unenrollment": {
+        return this._unenroll().then(r => true);
+      } break;
       default:
         return Promise.reject(
           new Error(`IonCore - unexpected message type ${message.type}`));
@@ -114,6 +117,36 @@ module.exports = class IonCore {
 
     // Finally send the ping.
     await this._sendEnrollmentPing(studyAddonId);
+  }
+
+  /**
+   * Unenroll from the Ion platform.
+   *
+   * This clears all the stored data (e.g. Ion ID)
+   * and sends the relevant deletion requests to the pipeline.
+   *
+   * @returns {Promise} A promise resolved when the unenrollment
+   *          is complete (does not block on data upload).
+   */
+  async _unenroll() {
+    // Read the list of the studies user activated throughout
+    // their stay on the Ion platform and send a deletion request
+    // for each of them.
+    let studyList = await this._storage.getActivatedStudies();
+    for (let studyId of studyList) {
+      await this._sendDeletionPing(studyId);
+    }
+
+    // Clear locally stored Ion ID.
+    await this._storage.clearIonID();
+
+    // The telemetry API, before sending a ping, reads the
+    // ion id from a pref. We're good to clear this after sending
+    // the deletion pings.
+    await browser.legacyTelemetryApi.clearIonID();
+
+    // Finally clear the list of studies user took part in.
+    await this._storage.clearActivatedStudies();
   }
 
   /**
