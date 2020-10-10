@@ -233,10 +233,10 @@ module.exports = class IonCore {
    * Sends a Ion deletion-request ping.
    *
    * @param {String} studyAddonid
-   *        It's sent in the ping to signal that user unenroled from a study.
+   *        It's sent in the ping to signal that user unenrolled from a study.
    */
   async _sendDeletionPing(studyAddonId) {
-    if (typeof studyAddonId == "undefined") {
+    if (typeof studyAddonId === undefined) {
       throw new Error("IonCore - the deletion-request ping requires a study id");
     }
 
