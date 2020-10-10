@@ -2,10 +2,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+const Storage = require("./Storage.js");
+
 // The path of the embedded resource used to control Ion options.
 const ION_OPTIONS_PAGE_PATH = "public/index.html";
 
 module.exports = class IonCore {
+  constructor() {
+    this._storage = new Storage();
+  }
+
   initialize() {
     // Whenever the addon icon is clicked, open the control page.
     browser.browserAction.onClicked.addListener(this._openControlPanel);
@@ -60,6 +66,9 @@ module.exports = class IonCore {
         // is expecting it.
         return this._enrollStudy(message.data.studyID).then(r => true);
       } break;
+      case "unenrollment": {
+        return this._unenroll().then(r => true);
+      } break;
       default:
         return Promise.reject(
           new Error(`IonCore - unexpected message type ${message.type}`));
@@ -80,7 +89,7 @@ module.exports = class IonCore {
     const uuid = await browser.legacyTelemetryApi.generateUUID();
 
     // Store it locally for future use.
-    await browser.storage.local.set({ionId: uuid});
+    await this._storage.setIonID(uuid);
 
     // The telemetry API, before sending a ping, reads the
     // ion id from a pref. It no value is set, the API will
@@ -103,27 +112,65 @@ module.exports = class IonCore {
   async _enrollStudy(studyAddonId) {
     // TODO: Validate the study id?
 
+    // Record that user activated this study.
+    await this._storage.appendActivatedStudy(studyAddonId);
+
     // Finally send the ping.
     await this._sendEnrollmentPing(studyAddonId);
   }
 
   /**
-   * Sends a Pioneer enrollment ping.
+   * Unenroll from the Ion platform.
    *
-   * The `creationDate` provided by the telemetry APIs will be used as the timestamp
-   * for considering the user enrolled in pioneer and/or the study.
+   * This clears all the stored data (e.g. Ion ID)
+   * and sends the relevant deletion requests to the pipeline.
    *
-   * @param [studyAddonid=undefined] - optional study id. It's sent in the ping, if
-   *        present, to signal that user enroled in the study.
+   * @returns {Promise} A promise resolved when the unenrollment
+   *          is complete (does not block on data upload).
    */
-  async _sendEnrollmentPing(studyAddonId) {
+  async _unenroll() {
+    // Read the list of the studies user activated throughout
+    // their stay on the Ion platform and send a deletion request
+    // for each of them.
+    let studyList = await this._storage.getActivatedStudies();
+    for (let studyId of studyList) {
+      await this._sendDeletionPing(studyId);
+    }
+
+    // Clear locally stored Ion ID.
+    await this._storage.clearIonID();
+
+    // The telemetry API, before sending a ping, reads the
+    // ion id from a pref. We're good to clear this after sending
+    // the deletion pings.
+    await browser.legacyTelemetryApi.clearIonID();
+
+    // Finally clear the list of studies user took part in.
+    await this._storage.clearActivatedStudies();
+  }
+
+  /**
+   * Sends an empty Ion ping with the provided info.
+   *
+   * @param {String} payloadType
+   *        The type of the encrypted payload. This will define the
+   *        `schemaName` of the ping.
+   *
+   * @param {String} namespace
+   *        The namespace to route the ping. This will define the
+   *        `schemaNamespace` and `studyName` properties of the ping.
+   */
+  async _sendEmptyPing(payloadType, namespace) {
     let options = {
-      studyName: "pioneer-meta",
+      studyName: namespace,
       addPioneerId: true,
-      // NOTE - while we're not actually sending useful data in this payload, the current Pioneer v2 Telemetry
-      // pipeline requires that pings are shaped this way so they are routed to the correct environment.
+      // NOTE - while we're not actually sending useful data in
+      // this payload, the current Ion v2 Telemetry pipeline requires
+      // that pings are shaped this way so they are routed to the correct
+      // environment.
       //
-      // At the moment, the public key used here isn't important but we do need to use *something*.
+      // At the moment, the public key used here isn't important but we do
+      // need to use *something*.
       encryptionKeyId: "discarded",
       publicKey: {
         crv: "P-256",
@@ -131,23 +178,14 @@ module.exports = class IonCore {
         x: "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
         y: "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE",
       },
-      schemaName: "pioneer-enrollment",
+      schemaName: payloadType,
       schemaVersion: 1,
-      // Note that the schema namespace directly informs how data is segregated after ingestion.
-      // If this is an enrollment ping for the pioneer program (in contrast to the enrollment to
-      // a specific study), use a meta namespace.
-      schemaNamespace: "pioneer-meta",
+      // Note that the schema namespace directly informs how data is
+      // segregated after ingestion.
+      // If this is an enrollment ping for the pioneer program (in contrast
+      // to the enrollment to a specific study), use a meta namespace.
+      schemaNamespace: namespace,
     };
-
-    // If we were provided with a study id, then this is an enrollment to a study.
-    // Send the id alongside with the data and change the schema namespace to simplify
-    // the work on the ingestion pipeline.
-    if (typeof studyAddonId != "undefined") {
-      options.studyName = studyAddonId;
-      // The schema namespace needs to be the study addon id, as we
-      // want to route the ping to the specific study table.
-      options.schemaNamespace = studyAddonId;
-    }
 
     // For enrollment, we expect to send an empty payload.
     const payload = {};
@@ -165,5 +203,43 @@ module.exports = class IonCore {
       .catch(error => {
         console.error(`IonCore._sendEnrollmentPing failed - error: ${error}`);
       });
+  }
+
+  /**
+   * Sends a Pioneer enrollment ping.
+   *
+   * The `creationDate` provided by the telemetry APIs will be used as the
+   * timestamp for considering the user enrolled in pioneer and/or the study.
+   *
+   * @param {String} [studyAddonid=undefined]
+   *        optional study id. It's sent in the ping, if present, to signal
+   *        that user enroled in the study.
+   */
+  async _sendEnrollmentPing(studyAddonId) {
+    // If we were provided with a study id, then this is an enrollment to a study.
+    // Send the id alongside with the data and change the schema namespace to simplify
+    // the work on the ingestion pipeline.
+    if (typeof studyAddonId != "undefined") {
+      return await this._sendEmptyPing("pioneer-enrollment", studyAddonId);
+    }
+
+    // Note that the schema namespace directly informs how data is segregated after ingestion.
+    // If this is an enrollment ping for the pioneer program (in contrast to the enrollment to
+    // a specific study), use a meta namespace.
+    return await this._sendEmptyPing("pioneer-enrollment", "pioneer-meta");
+  }
+
+  /**
+   * Sends a Ion deletion-request ping.
+   *
+   * @param {String} studyAddonid
+   *        It's sent in the ping to signal that user unenrolled from a study.
+   */
+  async _sendDeletionPing(studyAddonId) {
+    if (typeof studyAddonId === undefined) {
+      throw new Error("IonCore - the deletion-request ping requires a study id");
+    }
+
+    return await this._sendEmptyPing("deletion-request", studyAddonId);
   }
 }

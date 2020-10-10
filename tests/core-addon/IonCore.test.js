@@ -126,8 +126,13 @@ describe('IonCore', function () {
       // Use the spy to record the arguments of submitEncryptedPing.
       let telemetrySpy =
         sinon.spy(chrome.legacyTelemetryApi, "submitEncryptedPing");
-      // Make sure to mock the local storage calls as well.
-      chrome.storage.local.set.yields();
+
+      // Return an empty object from the local storage. Note that this
+      // needs to use `browser` and must use `callsArgWith` to guarantee
+      // that the promise resolves, due to a bug in sinon-chrome. See
+      // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
+      browser.storage.local.get.callsArgWith(1, {}).resolves();
+      chrome.storage.local.get.yields({});
 
       // Provide a valid study enrollment message.
       const FAKE_STUDY_ID = "test@ion-studies.com";
@@ -147,6 +152,54 @@ describe('IonCore', function () {
       assert.equal(submitArgs[2].studyName, FAKE_STUDY_ID);
       assert.equal(submitArgs[2].encryptionKeyId, "discarded");
       assert.equal(submitArgs[2].schemaName, "pioneer-enrollment");
+      assert.equal(submitArgs[2].schemaNamespace, FAKE_STUDY_ID);
+    });
+
+    it('dispatches unenrollment messages', async function () {
+      // Mock the URL of the options page.
+      const TEST_OPTIONS_URL = "install.sample.html";
+      chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
+
+      // Create a mock for the telemetry API.
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      chrome.legacyTelemetryApi = {
+        generateUUID: async function() { return FAKE_UUID; },
+        setIonID: async function(uuid) {},
+        clearIonID: async function() {},
+        submitEncryptedPing: async function(type, payload, options) {},
+      };
+      let telemetryMock = sinon.mock(chrome.legacyTelemetryApi);
+      // Use the spy to record the arguments of submitEncryptedPing.
+      let telemetrySpy =
+        sinon.spy(chrome.legacyTelemetryApi, "submitEncryptedPing");
+
+      // Return an empty object from the local storage. Note that this
+      // needs to use `browser` and must use `callsArgWith` to guarantee
+      // that the promise resolves, due to a bug in sinon-chrome. See
+      // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
+      const FAKE_STUDY_ID = "test@ion-studies.com";
+      browser.storage.local.get
+        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
+        .resolves();
+      browser.storage.local.remove.yields();
+
+      // Provide a valid study enrollment message.
+      await this.ionCore._handleMessage(
+        {type: "unenrollment", data: {}},
+        {url: TEST_OPTIONS_URL}
+      );
+
+      // We expect to store the fake ion ID...
+      telemetryMock.expects("clearIonID").calledOnce;
+      // ... to submit a ping with the expected type ...
+      const submitArgs = telemetrySpy.getCall(0).args;
+      assert.equal(submitArgs[0], "pioneer-study");
+      // ... an empty payload ...
+      assert.equal(Object.keys(submitArgs[1]).length, 0);
+      // ... and a specific set of options.
+      assert.equal(submitArgs[2].studyName, FAKE_STUDY_ID);
+      assert.equal(submitArgs[2].encryptionKeyId, "discarded");
+      assert.equal(submitArgs[2].schemaName, "deletion-request");
       assert.equal(submitArgs[2].schemaNamespace, FAKE_STUDY_ID);
     });
   });
