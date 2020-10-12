@@ -78,15 +78,15 @@ describe('IonCore', function () {
 
       // Create a mock for the telemetry API.
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
-      chrome.legacyTelemetryApi = {
+      chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
         setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
-      let telemetryMock = sinon.mock(chrome.legacyTelemetryApi);
+      let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
       // Use the spy to record the arguments of submitEncryptedPing.
       let telemetrySpy =
-        sinon.spy(chrome.legacyTelemetryApi, "submitEncryptedPing");
+        sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
       // Make sure to mock the local storage calls as well.
       chrome.storage.local.set.yields();
 
@@ -117,15 +117,15 @@ describe('IonCore', function () {
 
       // Create a mock for the telemetry API.
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
-      chrome.legacyTelemetryApi = {
+      chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
         setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
-      let telemetryMock = sinon.mock(chrome.legacyTelemetryApi);
+      let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
       // Use the spy to record the arguments of submitEncryptedPing.
       let telemetrySpy =
-        sinon.spy(chrome.legacyTelemetryApi, "submitEncryptedPing");
+        sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
 
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
@@ -162,16 +162,16 @@ describe('IonCore', function () {
 
       // Create a mock for the telemetry API.
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
-      chrome.legacyTelemetryApi = {
+      chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
         setIonID: async function(uuid) {},
         clearIonID: async function() {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
-      let telemetryMock = sinon.mock(chrome.legacyTelemetryApi);
+      let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
       // Use the spy to record the arguments of submitEncryptedPing.
       let telemetrySpy =
-        sinon.spy(chrome.legacyTelemetryApi, "submitEncryptedPing");
+        sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
 
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee

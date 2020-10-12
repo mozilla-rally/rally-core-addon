@@ -21,11 +21,11 @@ XPCOMUtils.defineLazyServiceGetters(this, {
 // prefs even though it will be stored in the standard addon storage area.
 const PREF_ION_ID = "toolkit.telemetry.pioneerId";
 
-this.legacyTelemetryApi = class extends ExtensionAPI {
+this.firefoxPrivilegedApi = class extends ExtensionAPI {
   getAPI(context) {
     var self = this;
     return {
-      legacyTelemetryApi: {
+      firefoxPrivilegedApi: {
         async submitEncryptedPing(type, payload, options) {
           console.debug(`Ion - Sending ping through legacy telemetry (${type})`);
 
