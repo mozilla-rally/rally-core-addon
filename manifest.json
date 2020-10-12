@@ -51,13 +51,13 @@
   },
 
   "experiment_apis": {
-    "legacyTelemetryApi": {
-      "schema": "core-addon/telemetry/LegacyTelemetryApi.schema.json",
+    "firefoxPrivilegedApi": {
+      "schema": "core-addon/FirefoxPrivilegedApi.schema.json",
       "parent": {
         "scopes": ["addon_parent"],
-        "script": "core-addon/telemetry/LegacyTelemetryApi.js",
+        "script": "core-addon/FirefoxPrivilegedApi.js",
         "events": [],
-        "paths": [["legacyTelemetryApi"]]
+        "paths": [["firefoxPrivilegedApi"]]
       }
     }
   }

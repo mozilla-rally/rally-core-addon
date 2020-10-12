@@ -86,7 +86,7 @@ module.exports = class IonCore {
    */
   async _enroll() {
     // Generate a proper random UUID.
-    const uuid = await browser.legacyTelemetryApi.generateUUID();
+    const uuid = await browser.firefoxPrivilegedApi.generateUUID();
 
     // Store it locally for future use.
     await this._storage.setIonID(uuid);
@@ -95,7 +95,7 @@ module.exports = class IonCore {
     // ion id from a pref. It no value is set, the API will
     // throw and nothing will be sent. This means, at enrollment,
     // we need set the value of that required pref.
-    await browser.legacyTelemetryApi.setIonID(uuid);
+    await browser.firefoxPrivilegedApi.setIonID(uuid);
 
     // Finally send the ping.
     await this._sendEnrollmentPing();
@@ -143,7 +143,7 @@ module.exports = class IonCore {
     // The telemetry API, before sending a ping, reads the
     // ion id from a pref. We're good to clear this after sending
     // the deletion pings.
-    await browser.legacyTelemetryApi.clearIonID();
+    await browser.firefoxPrivilegedApi.clearIonID();
 
     // Finally clear the list of studies user took part in.
     await this._storage.clearActivatedStudies();
@@ -195,7 +195,7 @@ module.exports = class IonCore {
     // for telemetry tests. Moreover, in order to send a custom schema
     // name and a custom namespace, we need to ship a custom "experimental"
     // telemetry API for legacy telemetry.
-    await browser.legacyTelemetryApi
+    await browser.firefoxPrivilegedApi
       .submitEncryptedPing("pioneer-study", payload, options)
       .then(() => {
         console.debug(`IonCore._sendEnrollmentPing - options: ${JSON.stringify(options)} payload: ${JSON.stringify(payload)}`);

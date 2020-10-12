@@ -92,11 +92,16 @@ export default {
    * @param {Boolean} enroll
    *        `true` if user decided to enroll in an Ion Study,
    *        `false` if user opted out.
+   * @returns {Boolean} `true` if the enrollment status was successfully
+   *          updated, `false` otherwise.
    */
 
   async updateStudyEnrollment(studyID, enroll) {
-    const msg = enroll ? "study-enrollment" : "study-unenrollment";
-    return await sendToCore(msg, {
+    if (!enroll) {
+      console.debug("Ion Core has nothing to do on study-unenrollment");
+      return true;
+    }
+    return await sendToCore("study-enrollment", {
       studyID
     });
   },
@@ -107,6 +112,8 @@ export default {
    * @param {Boolean} enroll
    *        `true` if user decided to enroll in the Ion platform,
    *        `false` otherwise.
+   * @returns {Boolean} `true` if the enrollment status was successfully
+   *          updated, `false` otherwise.
    */
   async updateIonEnrollment(enroll) {
     return await sendToCore(enroll ? "enrollment" : "unenrollment", {});

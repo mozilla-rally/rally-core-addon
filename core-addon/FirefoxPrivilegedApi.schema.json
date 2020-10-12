@@ -1,7 +1,7 @@
 [
   {
-    "namespace": "legacyTelemetryApi",
-    "description": "experimental API extensions submit legacy telemetry",
+    "namespace": "firefoxPrivilegedApi",
+    "description": "experimental API extensions for exposing privileged Firefox APIs",
     "functions": [
       {
         "name": "submitEncryptedPing",
