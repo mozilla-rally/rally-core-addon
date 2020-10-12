@@ -5,19 +5,13 @@
   export let enrolled = false;
   export let studyEnrolled = false;
   export let privacyPolicy = undefined;
-  export let studyId;
   export let imageSrc;
   export let dataCollectionDetails = [];
 
   const dispatch = createEventDispatcher();
   function toggleStudy() {
     // Bubble up the "enroll" event to the `StudyList` component.
-    dispatch("enroll", {studyId: studyId, enroll: !studyEnrolled});
-    // if (studyEnrolled) {
-    //   dispatchFxEvent({ uninstallStudy: studyId });
-    // } else {
-    //   dispatchFxEvent({ installStudy: studyId });
-    // }
+    dispatch("enroll");
   }
 </script>
 
@@ -27,7 +21,6 @@
     border: 1px solid transparent;
     border-radius: 4px;
     box-shadow: var(--card-shadow);
-    /* margin: 0 0 8px; */
     padding: calc(var(--card-padding) - 1px);
     transition: box-shadow 150ms;
   }
@@ -46,7 +39,6 @@
     grid-area: title;
     padding: 0px;
     margin: 0px;
-    /* border-bottom: 1px solid #ff3e00; */
   }
 
   img {
@@ -74,10 +66,6 @@
   }
   .missing {
     color: #999;
-  }
-
-  .data-collection-details {
-    /* padding-top: 1rem; */
   }
 </style>
 

@@ -21,16 +21,7 @@
       enrolled={$store.enrolled}
       privacyPolicy={study.privacyPolicy.spec}
       studyEnrolled={$store.activeStudies.includes(study.addon_id)}
-      on:enroll={(e) => {
-        const eventData = e.detail;
-        if (!eventData
-          || typeof eventData != "object"
-          || !eventData.studyId) {
-          console.error("Invalid enrollment event data");
-          return;
-        }
-        store.updateStudyEnrollment(eventData.studyId, eventData.enroll);
-      }}>
+      on:enroll={() => store.updateStudyEnrollment(study.addon_id, !$store.activeStudies.includes(study.addon_id))}>
       <span slot="name">{study.name}</span>
       <span slot="authors">{study.authors.name}</span>
       <span slot="description">{study.description}</span>

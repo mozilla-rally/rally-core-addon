@@ -66,7 +66,7 @@ export default function createStore(initialState, api) {
       try {
         outcome = await api.updateIonEnrollment(coercedEnroll);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
       // if ion enrollment is successful, update frontend.
       if (outcome) {

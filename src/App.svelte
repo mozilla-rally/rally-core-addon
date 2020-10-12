@@ -100,7 +100,7 @@
       <WhyItMatters />
     {/if}
 
-    {#if 'availableStudies' in $store > 0}
+    {#if $store.availableStudies}
       <StudyList />
     {/if}
   </main>
