@@ -27,6 +27,10 @@ module.exports = class IonCore {
     // Listen for messages from the options page.
     browser.runtime.onMessage.addListener(
       (m, s) => this._handleMessage(m, s));
+
+    // Asynchronously get the available studies. We don't need to wait
+    // for this to finish, the UI can handle the wait.
+    this.availableStudies = this._fetchAvailableStudies();
   }
 
   _openControlPanel() {
@@ -60,6 +64,9 @@ module.exports = class IonCore {
         // Let's not forget to respond `true` to the sender: the UI
         // is expecting it.
         return this._enroll().then(r => true);
+      } break;
+      case "get-studies": {
+        return this.availableStudies;
       } break;
       case "study-enrollment": {
         // Let's not forget to respond `true` to the sender: the UI
@@ -241,5 +248,25 @@ module.exports = class IonCore {
     }
 
     return await this._sendEmptyPing("deletion-request", studyAddonId);
+  }
+
+  /**
+   * Fetch the available studies.
+   *
+   * This loads the studies from the Firefox Remote Settings service.
+   *
+   * @returns {Promise(Array<Object>)} resolved with an array of studies
+   *          objects, or an empty array on failures.
+   */
+  async _fetchAvailableStudies() {
+    try {
+      const request = await fetch(
+        "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
+      );
+      return (await request.json()).data;
+    } catch (err) {
+      console.error(err);
+      return [];
+    }
   }
 }
