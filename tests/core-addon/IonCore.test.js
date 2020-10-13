@@ -8,7 +8,24 @@ var sinon = require('sinon');
 var IonCore = require('../../core-addon/IonCore');
 
 describe('IonCore', function () {
+  // A fake study id to use in the tests when looking for a
+  // "known" study.
+  FAKE_STUDY_ID = "test@ion-studies.com";
+
   beforeEach(function () {
+    // NodeJS doesn't support "fetch" so we need to mock it
+    // manually (or use a third party package). This isn't too
+    // bad, as we can just return our `FAKE_STUDY_ID`.
+    global.fetch = () => Promise.resolve({
+      json() {
+        return {
+          "data": [{
+            "addon_id": FAKE_STUDY_ID
+          }]
+        }
+      }
+    });
+
     this.ionCore = new IonCore();
   });
 
@@ -135,7 +152,6 @@ describe('IonCore', function () {
       chrome.storage.local.get.yields({});
 
       // Provide a valid study enrollment message.
-      const FAKE_STUDY_ID = "test@ion-studies.com";
       await this.ionCore._handleMessage(
         {type: "study-enrollment", data: { studyID: FAKE_STUDY_ID}},
         {url: TEST_OPTIONS_URL}
@@ -177,7 +193,6 @@ describe('IonCore', function () {
       // needs to use `browser` and must use `callsArgWith` to guarantee
       // that the promise resolves, due to a bug in sinon-chrome. See
       // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
-      const FAKE_STUDY_ID = "test@ion-studies.com";
       browser.storage.local.get
         .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
         .resolves();
@@ -204,7 +219,17 @@ describe('IonCore', function () {
     });
   });
 
+  describe('_enrollStudy()', function () {
+    it('rejects unknown study ids', function () {
+      assert.rejects(
+        this.ionCore._enrollStudy("unknown-test-study-id@ion.com"),
+        { message: "IonCore._enrollStudy - Unknown study unknown-test-study-id@ion.com"}
+      );
+    });
+  });
+
   afterEach(function () {
+    delete global.fetch;
     chrome.flush();
   });
 });

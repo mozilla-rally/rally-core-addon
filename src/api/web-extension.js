@@ -2,13 +2,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import browser from "webextension-polyfill";
+
 /**
  * Utility function to build a message to the web-extension.
  *
  * @param {String} type
  *        The type of the message being sent. Unknown types
- *        will be rejected by the Core Add-on. Valid values
- *        are: `enrollment` (to enroll in Ion).
+ *        will be rejected by the Core Add-on. See the
+ *        `VALID_TYPES` in the implementation for a list of
+ *        valid values.
  * @param {Object} payload
  *        A JSON-serializable object representing the payload
  *        of the message to be passed to the Core addon.
@@ -16,6 +19,7 @@
 async function sendToCore(type, payload) {
   const VALID_TYPES = [
     "enrollment",
+    "get-studies",
     "study-enrollment",
     "unenrollment",
   ];
@@ -51,14 +55,7 @@ export default {
   // use in store instantiation. This assumes that the studies are
   // stored somewhere (i.e. remote settings)
   async getAvailableStudies() {
-    try {
-      const request = await fetch(
-        "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
-      );
-      return (await request.json()).data;
-    } catch (err) {
-      console.error(err);
-    }
+    return await sendToCore("get-studies", {});
   },
 
   // fetch ion enrollment from remote location, if available.

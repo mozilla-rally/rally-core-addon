@@ -10,6 +10,10 @@ const ION_OPTIONS_PAGE_PATH = "public/index.html";
 module.exports = class IonCore {
   constructor() {
     this._storage = new Storage();
+
+    // Asynchronously get the available studies. We don't need to wait
+    // for this to finish, the UI can handle the wait.
+    this._availableStudies = this._fetchAvailableStudies();
   }
 
   initialize() {
@@ -61,6 +65,9 @@ module.exports = class IonCore {
         // is expecting it.
         return this._enroll().then(r => true);
       } break;
+      case "get-studies": {
+        return this._availableStudies;
+      } break;
       case "study-enrollment": {
         // Let's not forget to respond `true` to the sender: the UI
         // is expecting it.
@@ -110,7 +117,12 @@ module.exports = class IonCore {
    *          is complete (does not block on data upload).
    */
   async _enrollStudy(studyAddonId) {
-    // TODO: Validate the study id?
+    // We only expect to enroll in known studies.
+    let knownStudies = await this._availableStudies;
+    if (!knownStudies.map(s => s.addon_id).includes(studyAddonId)) {
+      return Promise.reject(
+        new Error(`IonCore._enrollStudy - Unknown study ${studyAddonId}`));
+    }
 
     // Record that user activated this study.
     await this._storage.appendActivatedStudy(studyAddonId);
@@ -241,5 +253,25 @@ module.exports = class IonCore {
     }
 
     return await this._sendEmptyPing("deletion-request", studyAddonId);
+  }
+
+  /**
+   * Fetch the available studies.
+   *
+   * This loads the studies from the Firefox Remote Settings service.
+   *
+   * @returns {Promise(Array<Object>)} resolved with an array of studies
+   *          objects, or an empty array on failures.
+   */
+  async _fetchAvailableStudies() {
+    try {
+      const request = await fetch(
+        "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
+      );
+      return (await request.json()).data;
+    } catch (err) {
+      console.error(err);
+      return [];
+    }
   }
 }
