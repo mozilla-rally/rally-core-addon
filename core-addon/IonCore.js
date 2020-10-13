@@ -10,10 +10,15 @@ const ION_OPTIONS_PAGE_PATH = "public/index.html";
 module.exports = class IonCore {
   constructor() {
     this._storage = new Storage();
+    // Keep track of the task updating the state of available
+    // studies.
+    this._updateInstalledTask = null;
 
     // Asynchronously get the available studies. We don't need to wait
     // for this to finish, the UI can handle the wait.
-    this._availableStudies = this._fetchAvailableStudies();
+    this._availableStudies =
+      this._fetchAvailableStudies()
+          .then(studies => this.runUpdateInstalledStudiesTask(studies));
   }
 
   initialize() {
@@ -31,6 +36,17 @@ module.exports = class IonCore {
     // Listen for messages from the options page.
     browser.runtime.onMessage.addListener(
       (m, s) => this._handleMessage(m, s));
+
+    // Listen for addon install/uninstall and keep the studies
+    // installation state up to date.
+    let addonStateHandler = async () => {
+      let studies = await this._availableStudies;
+      // Update the studies list.
+      this._availableStudies = this._availableStudies.then(
+        studies => this.runUpdateInstalledStudiesTask(studies));
+    };
+    browser.management.onInstalled.addListener(addonStateHandler);
+    browser.management.onUninstalled.addListener(addonStateHandler);
   }
 
   _openControlPanel() {
@@ -253,6 +269,60 @@ module.exports = class IonCore {
     }
 
     return await this._sendEmptyPing("deletion-request", studyAddonId);
+  }
+
+  /**
+   * An utility function to run a task for updating the status
+   * of the available addons.
+   *
+   * Note that this is needed in order to prevent races between
+   * multiple callers of this functions (e.g. init, addon install,
+   * addon uninstall).
+   *
+   * @param {Array<Object>} studies
+   *        An array containing objects describing Ion studies.
+   * @returns {Promise(Array<Object>)} resolved with an array of studies
+   *          objects, or an empty array on failures. Each study object
+   *          has at least the `addon_id` and `ionInstalled` properties.
+   */
+  async runUpdateInstalledStudiesTask(studies) {
+    // We're already updating the state of the studies.
+    if (this._updateInstalledTask) {
+      return this._updateInstalledTask;
+    }
+
+    // Make sure to clear |_updateInstalledTask| once done.
+    let clear = studies => {
+      this._updateInstalledTask = null;
+      return studies;
+    };
+    // Since there's no archive cleaning task running, start it.
+    this._updateInstalledTask =
+      this._updateInstalledStudies(studies).then(clear, clear);
+    return this._updateInstalledTask;
+  }
+
+  /**
+   * Update the `ionInstalled` property for the available studies.
+   *
+   * @returns {Promise(Array<Object>)} resolved with an array of studies
+   *          objects, or an empty array on failures. Each study object
+   *          has at least the `addon_id` and `ionInstalled` properties.
+   */
+  async _updateInstalledStudies(studies) {
+    console.debug("IonCore._updateInstalledStudies");
+
+    // If we were able to fetch studies definitions, see if any
+    // of them were installed. Start by getting the list of installed
+    // addons.
+    let installedAddonsIds =
+      await browser.management.getAll().then(addons =>
+        addons.filter(a => a.type == "extension")
+              .map(a => a.id));
+    return studies.map(s => {
+      s.ionInstalled = installedAddonsIds.includes(s.addon_id);
+      return s;
+    });
   }
 
   /**
