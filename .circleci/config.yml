@@ -7,9 +7,23 @@
 version: 2.1
 
 jobs:
-  build:
+  Build:
     docker:
       - image: cimg/node:14.13.1
     steps:
       - checkout
-      - run: node --version
+      - run:
+          name: Build the Control Panel
+          command: npm run build
+      - run:
+          name: Build the Addon
+          command: npm run build-addon
+
+  Addon unit tests:
+    docker:
+      - image: cimg/node:14.13.1
+    steps:
+      - checkout
+      - run:
+          name: MochaJS unit tests
+          command: npm run test-addon
