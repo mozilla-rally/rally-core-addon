@@ -291,6 +291,45 @@ describe('IonCore', function () {
     });
   });
 
+  describe('_sendMessageToStudy()', function () {
+    it('rejects on unknown message types', async function () {
+      assert.rejects(
+        this.ionCore._sendMessageToStudy(
+          "unknown-test-study-id@ion.com", "uninstall", {}
+        ),
+        { message: "IonCore._sendMessageToStudy - \"unknown-test-study-id@ion.com\" is not a known Ion study"}
+      );
+    });
+
+    it('rejects on target study ids', async function () {
+      assert.rejects(
+        this.ionCore._sendMessageToStudy(FAKE_STUDY_ID, "unknown-type-test", {}),
+        { message: "IonCore._sendMessageToStudy - unexpected message \"unknown-type-test\" to study \"test@ion-studies.com\""}
+      );
+    });
+
+    it('properly dispatches messages to studies', async function () {
+      let TEST_PAYLOAD = { "someKey": "testValue" };
+
+      // Make sure the function yields during tests!
+      chrome.runtime.sendMessage.yields();
+
+      let response =
+        await this.ionCore._sendMessageToStudy(FAKE_STUDY_ID, "uninstall", TEST_PAYLOAD);
+
+      assert.ok(
+        chrome.runtime.sendMessage.withArgs(
+          FAKE_STUDY_ID,
+          sinon.match({type: "uninstall", data: TEST_PAYLOAD}),
+          // We're not providing any option.
+          {},
+          // This is the callback hidden away by webextension-polyfill.
+          sinon.match.any
+        ).calledOnce
+      );
+    });
+  });
+
   afterEach(function () {
     delete global.fetch;
     chrome.flush();

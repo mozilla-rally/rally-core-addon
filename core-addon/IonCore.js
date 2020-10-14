@@ -178,6 +178,46 @@ module.exports = class IonCore {
   }
 
   /**
+   * Sends a message to an available Ion study.
+   *
+   * @param {String} studyId
+   *        The id of the Ion study, as assigned by the platform
+   *        it is deployed on (e.g. a Firefox Addon Id).
+   * @param {String} type
+   *        The type of the message to send. Check `VALID_TYPES`
+   *        for a list of supported types.
+   * @param {Object} payload
+   *        A JSON-serializable object with the message payload.
+   * @returns {Promise} resolved with the response from the study
+   *          if the message was correctly sent, rejected otherwise.
+   */
+  async _sendMessageToStudy(studyId, type, payload) {
+    const VALID_TYPES = [
+      "uninstall",
+    ];
+
+    // Make sure `type` is one of the expected values.
+    if (!VALID_TYPES.includes(type)) {
+      return Promise.reject(
+        new Error(`IonCore._sendMessageToStudy - unexpected message "${type}" to study "${studyId}"`));
+    }
+
+    // Validate the studyId against the list of known studies.
+    let studyList = await this._storage.getActivatedStudies();
+    if (!studyList.includes(studyId)) {
+      return Promise.reject(
+        new Error(`IonCore._sendMessageToStudy - "${studyId}" is not a known Ion study`));
+    }
+
+    const msg = {
+      type,
+      data: payload
+    };
+
+    return await browser.runtime.sendMessage(studyId, msg, {});
+  }
+
+  /**
    * Sends an empty Ion ping with the provided info.
    *
    * @param {String} payloadType
