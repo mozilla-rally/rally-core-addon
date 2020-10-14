@@ -4,21 +4,22 @@
 
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
+import replace from '@rollup/plugin-replace';
 
-export default {
+export default (cliArgs) => ({
   input: "core-addon/background.js",
   output: {
     file: "public/addon-build/background.js"
   },
   plugins: [
-    // If you have external dependencies installed from
-    // npm, you'll most likely need these plugins. In
-    // some cases you'll need additional configuration -
-    // consult the documentation for details:
-    // https://github.com/rollup/plugins/tree/master/packages/commonjs
+    replace({
+      __AVAILABLE_ION_STUDIES__ : cliArgs['config-local-studies'] ? 
+        "'/public/locally-available-studies.json'" : 
+        "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records'"
+    }),
     resolve({
       browser: true,
     }),
     commonjs(),
   ],
-};
+});
