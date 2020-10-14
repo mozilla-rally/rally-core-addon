@@ -44,7 +44,7 @@ jobs:
           command: npm install
       - run:
           name: Run web-ext lint
-          command: web-ext lint
+          command: npm run lint-addon
 
 workflows:
   version: 2
