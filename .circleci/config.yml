@@ -13,6 +13,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install the dependencies
+          command: npm install
+      - run:
           name: Build the Control Panel
           command: npm run build
       - run:
