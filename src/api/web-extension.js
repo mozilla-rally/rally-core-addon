@@ -21,6 +21,7 @@ async function sendToCore(type, payload) {
     "enrollment",
     "get-studies",
     "study-enrollment",
+    "study-unenrollment",
     "unenrollment",
   ];
 
@@ -95,7 +96,7 @@ export default {
 
   async updateStudyEnrollment(studyID, enroll) {
     if (!enroll) {
-      console.debug("Ion Core has nothing to do on study-unenrollment");
+      const unenrollmentResponse = await sendToCore("study-unenrollment", { studyID })
       return true;
     }
     

@@ -59,6 +59,20 @@ module.exports = class Storage {
     return storedIds;
   }
 
+  async removeActivatedStudy(studyId) {
+    let storedIds = await this.getActivatedStudies();
+    if (!storedIds.includes(studyId)) {
+      return storedIds;
+    }
+
+    storedIds = storedIds.filter(s => s !== studyId);
+
+    // Store the updated list.
+    await browser.storage.local.set({activatedStudies: storedIds});
+
+    return storedIds;
+  }
+
   async clearActivatedStudies() {
     return await browser.storage.local.remove("activatedStudies");
   }
