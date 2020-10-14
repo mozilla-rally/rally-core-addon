@@ -164,7 +164,6 @@ module.exports = class IonCore {
 
     await this._storage.removeActivatedStudy(studyAddonId);
     await this._sendDeletionPing(studyAddonId);
-
   }
 
   /**
