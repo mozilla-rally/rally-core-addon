@@ -98,9 +98,18 @@ export default {
       console.debug("Ion Core has nothing to do on study-unenrollment");
       return true;
     }
-    return await sendToCore("study-enrollment", {
+    
+    const enrollResponse = await sendToCore("study-enrollment", {
       studyID
     });
+
+    // Fetch the study add-on and attempt to install it.
+    const studies = await this.getAvailableStudies();
+    const studyMetadata = studies.find(s => s.addon_id === studyID);
+
+    window.location.href = studyMetadata.sourceURI.spec;
+
+    return enrollResponse;
   },
 
   /**
