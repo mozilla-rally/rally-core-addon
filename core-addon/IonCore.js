@@ -169,8 +169,15 @@ module.exports = class IonCore {
       return Promise.reject(
         new Error(`IonCore._unenrollStudy - Unknown study ${studyAddonId}`));
     }
-    
-    // FIXME: pass message to add-on to remove itself.
+
+    // Attempt to send an uninstall message, but move on if the
+    // delivery fails: studies will not be able to send anything
+    // without the Ion Core anyway.
+    try {
+      await this._sendMessageToStudy(studyAddonId, "uninstall", {});
+    } catch (e) {
+      console.error(`IonCore._unenroll - Unable to uninstall ${studyAddonId}`, e);
+    }
 
     await this._storage.removeActivatedStudy(studyAddonId);
     await this._sendDeletionPing(studyAddonId);
