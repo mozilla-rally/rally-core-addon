@@ -107,8 +107,8 @@ export default {
     const studies = await this.getAvailableStudies();
     const studyMetadata = studies.find(s => s.addon_id === studyID);
 
-    // This triggers the install by directing the browser toward the sourceURI,
-    // like a link click.
+    // This triggers the install by directing the page toward the sourceURI,
+    // which is the study add-on's xpi.
     window.location.href = studyMetadata.sourceURI.spec;
 
     return enrollResponse;
