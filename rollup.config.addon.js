@@ -6,15 +6,16 @@ import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import replace from '@rollup/plugin-replace';
 
-export default (cliArgs) => ({
+export default (cliArgs) => {
+  return {
   input: "core-addon/background.js",
   output: {
     file: "public/addon-build/background.js"
   },
   plugins: [
     replace({
-      __AVAILABLE_ION_STUDIES__ : cliArgs['config-local-studies'] ? 
-        "'/public/locally-available-studies.json'" : 
+      __AVAILABLE_ION_STUDIES__ : cliArgs['config-study-list-url'] ? 
+        `'${cliArgs['config-study-list-url']}'` : 
         "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records'"
     }),
     resolve({
@@ -22,4 +23,4 @@ export default (cliArgs) => ({
     }),
     commonjs(),
   ],
-});
+}};
