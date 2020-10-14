@@ -39,9 +39,7 @@ jobs:
       - image: cimg/node:14.13.1
     steps:
       - checkout
-      - run:
-          name: Install the dependencies
-          command: npm install
+      - Build
       - run:
           name: Run web-ext lint
           command: npm run lint-addon
