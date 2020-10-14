@@ -194,12 +194,19 @@ module.exports = class IonCore {
    *          is complete (does not block on data upload).
    */
   async _unenroll() {
-    // Read the list of the studies user activated throughout
-    // their stay on the Ion platform and send a deletion request
-    // for each of them.
-    let studyList = await this._storage.getActivatedStudies();
-    for (let studyId of studyList) {
-      await this._sendDeletionPing(studyId);
+    // Uninstall all known studies that are still installed.
+    let installedStudies = (await this._availableStudies)
+    .filter(s => s.ionInstalled)
+    .map(s => s.addon_id);
+    for (let studyId of installedStudies) {
+      // Attempt to send an uninstall message to each study, but
+      // move on if the delivery fails: studies will not be able
+      // to send anything without the Ion Core anyway.
+      try {
+        await this._sendMessageToStudy(studyId, "uninstall", {});
+      } catch (e) {
+        console.error(`IonCore._unenroll - Unable to uninstall ${studyId}`, e);
+      }
     }
 
     // Clear locally stored Ion ID.
@@ -212,6 +219,46 @@ module.exports = class IonCore {
 
     // Finally clear the list of studies user took part in.
     await this._storage.clearActivatedStudies();
+  }
+
+    /**
+   * Sends a message to an available Ion study.
+   *
+   * @param {String} studyId
+   *        The id of the Ion study, as assigned by the platform
+   *        it is deployed on (e.g. a Firefox Addon Id).
+   * @param {String} type
+   *        The type of the message to send. Check `VALID_TYPES`
+   *        for a list of supported types.
+   * @param {Object} payload
+   *        A JSON-serializable object with the message payload.
+   * @returns {Promise} resolved with the response from the study
+   *          if the message was correctly sent, rejected otherwise.
+   */
+  async _sendMessageToStudy(studyId, type, payload) {
+    const VALID_TYPES = [
+      "uninstall",
+    ];
+
+    // Make sure `type` is one of the expected values.
+    if (!VALID_TYPES.includes(type)) {
+      return Promise.reject(
+        new Error(`IonCore._sendMessageToStudy - unexpected message "${type}" to study "${studyId}"`));
+    }
+
+    // Validate the studyId against the list of known studies.
+    let studyList = await this._storage.getActivatedStudies();
+    if (!studyList.includes(studyId)) {
+      return Promise.reject(
+        new Error(`IonCore._sendMessageToStudy - "${studyId}" is not a known Ion study`));
+    }
+
+    const msg = {
+      type,
+      data: payload
+    };
+
+    return await browser.runtime.sendMessage(studyId, msg, {});
   }
 
   /**
