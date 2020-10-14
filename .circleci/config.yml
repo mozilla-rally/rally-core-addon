@@ -28,6 +28,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install the dependencies
+          command: npm install
+      - run:
           name: MochaJS unit tests
           command: npm run test-addon
 
