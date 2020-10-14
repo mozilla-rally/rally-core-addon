@@ -157,6 +157,21 @@ module.exports = class IonCore {
    *          is complete (does not block on data upload).
    */
   async _unenroll() {
+    // Uninstall all known studies that are still installed.
+    let installedStudies = (await this._availableStudies)
+      .filter(s => s.ionInstalled)
+      .map(s => s.addon_id);
+    for (let studyId of installedStudies) {
+      // Attempt to send an uninstall message to each study, but
+      // move on if the delivery fails: studies will not be able
+      // to send anything without the Ion Core anyway.
+      try {
+        await this._sendMessageToStudy(studyId, "uninstall", {});
+      } catch (e) {
+        console.error(`IonCore._unenroll - Unable to uninstall ${studyId}`, e);
+      }
+    }
+
     // Read the list of the studies user activated throughout
     // their stay on the Ion platform and send a deletion request
     // for each of them.

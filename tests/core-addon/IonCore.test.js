@@ -221,6 +221,7 @@ describe('IonCore', function () {
         .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
         .resolves();
       browser.storage.local.remove.yields();
+      chrome.runtime.sendMessage.yields();
 
       // Provide a valid study enrollment message.
       await this.ionCore._handleMessage(
@@ -240,6 +241,18 @@ describe('IonCore', function () {
       assert.equal(submitArgs[2].encryptionKeyId, "discarded");
       assert.equal(submitArgs[2].schemaName, "deletion-request");
       assert.equal(submitArgs[2].schemaNamespace, FAKE_STUDY_ID);
+      // We also expect an "uninstall" message to be dispatched to
+      // the one study marked as installed.
+      assert.ok(
+        chrome.runtime.sendMessage.withArgs(
+          FAKE_STUDY_ID,
+          sinon.match({type: "uninstall", data: {}}),
+          // We're not providing any option.
+          {},
+          // This is the callback hidden away by webextension-polyfill.
+          sinon.match.any
+        ).calledOnce
+      );
     });
   });
 
