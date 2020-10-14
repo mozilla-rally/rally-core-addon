@@ -26,7 +26,7 @@ module.exports = class IonCore {
       this._fetchAvailableStudies()
           .then(studies => this.runUpdateInstalledStudiesTask(studies));
   }
-
+ 
   initialize() {
     // Whenever the addon icon is clicked, open the control page.
     browser.browserAction.onClicked.addListener(this._openControlPanel);
@@ -94,6 +94,11 @@ module.exports = class IonCore {
         // Let's not forget to respond `true` to the sender: the UI
         // is expecting it.
         return this._enrollStudy(message.data.studyID).then(r => true);
+      } break;
+      case "study-unenrollment": {
+        // Let's not forget to respond `true` to the sender: the UI
+        // is expecting it.
+        return this._unenrollStudy(message.data.studyID).then(r => true);
       } break;
       case "unenrollment": {
         return this._unenroll().then(r => true);
@@ -196,8 +201,8 @@ module.exports = class IonCore {
   async _unenroll() {
     // Uninstall all known studies that are still installed.
     let installedStudies = (await this._availableStudies)
-    .filter(s => s.ionInstalled)
-    .map(s => s.addon_id);
+      .filter(s => s.ionInstalled)
+      .map(s => s.addon_id);
     for (let studyId of installedStudies) {
       // Attempt to send an uninstall message to each study, but
       // move on if the delivery fails: studies will not be able
@@ -207,6 +212,14 @@ module.exports = class IonCore {
       } catch (e) {
         console.error(`IonCore._unenroll - Unable to uninstall ${studyId}`, e);
       }
+    }
+
+    // Read the list of the studies user activated throughout
+    // their stay on the Ion platform and send a deletion request
+    // for each of them.
+    let studyList = await this._storage.getActivatedStudies();
+    for (let studyId of studyList) {
+      await this._sendDeletionPing(studyId);
     }
 
     // Clear locally stored Ion ID.
@@ -221,7 +234,7 @@ module.exports = class IonCore {
     await this._storage.clearActivatedStudies();
   }
 
-    /**
+  /**
    * Sends a message to an available Ion study.
    *
    * @param {String} studyId
