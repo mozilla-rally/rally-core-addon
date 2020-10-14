@@ -87,6 +87,7 @@ describe('Storage', function () {
       assert.ok(!storedIds.includes(TEST_ADDON_ID));
       assert.ok(storedIds.includes('something-else'));
     });
+
     it('should remove the same id only once', async function () {
       const TEST_ADDON_ID = "test-id@ion.com";
       // Return an empty object from the local storage. Note that this
