@@ -72,6 +72,7 @@ describe('Storage', function () {
       assert.equal(storedIds.length, 0);
       assert.ok(!storedIds.includes(TEST_ADDON_ID));
     });
+
     it('should pass through same studies if addon id is not in activated studies', async function () {
       const TEST_ADDON_ID = "test-id@ion.com";
       // Return an empty object from the local storage. Note that this
