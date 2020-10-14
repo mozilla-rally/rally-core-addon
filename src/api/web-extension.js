@@ -96,8 +96,7 @@ export default {
 
   async updateStudyEnrollment(studyID, enroll) {
     if (!enroll) {
-      const unenrollmentResponse = await sendToCore("study-unenrollment", { studyID })
-      return true;
+      return await sendToCore("study-unenrollment", { studyID });
     }
     
     const enrollResponse = await sendToCore("study-enrollment", {

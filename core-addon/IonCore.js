@@ -161,9 +161,9 @@ module.exports = class IonCore {
     }
     
     // FIXME: pass message to add-on to remove itself.
-    
+
     await this._storage.removeActivatedStudy(studyAddonId);
-    await this._sendDeletionPing(studyId);
+    await this._sendDeletionPing(studyAddonId);
 
   }
 
