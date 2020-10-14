@@ -21,6 +21,7 @@ async function sendToCore(type, payload) {
     "enrollment",
     "get-studies",
     "study-enrollment",
+    "study-unenrollment",
     "unenrollment",
   ];
 
@@ -95,12 +96,22 @@ export default {
 
   async updateStudyEnrollment(studyID, enroll) {
     if (!enroll) {
-      console.debug("Ion Core has nothing to do on study-unenrollment");
-      return true;
+      return await sendToCore("study-unenrollment", { studyID });
     }
-    return await sendToCore("study-enrollment", {
+    
+    const enrollResponse = await sendToCore("study-enrollment", {
       studyID
     });
+
+    // Fetch the study add-on and attempt to install it.
+    const studies = await this.getAvailableStudies();
+    const studyMetadata = studies.find(s => s.addon_id === studyID);
+
+    // This triggers the install by directing the page toward the sourceURI,
+    // which is the study add-on's xpi.
+    window.location.href = studyMetadata.sourceURI.spec;
+
+    return enrollResponse;
   },
 
   /**

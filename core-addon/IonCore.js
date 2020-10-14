@@ -89,6 +89,11 @@ module.exports = class IonCore {
         // is expecting it.
         return this._enrollStudy(message.data.studyID).then(r => true);
       } break;
+      case "study-unenrollment": {
+        // Let's not forget to respond `true` to the sender: the UI
+        // is expecting it.
+        return this._unenrollStudy(message.data.studyID).then(r => true);
+      } break;
       case "unenrollment": {
         return this._unenroll().then(r => true);
       } break;
@@ -145,6 +150,30 @@ module.exports = class IonCore {
 
     // Finally send the ping.
     await this._sendEnrollmentPing(studyAddonId);
+  }
+
+  /**
+   * Unenroll in an Ion Study.
+   *
+   * This sends the required pings.
+   *
+   * @returns {Promise} A promise resolved when the unenrollment
+   *          is complete (does not block on data upload).
+   *          NOTE: this does NOT trigger the study add-on to
+   *          uninstall itself at the moment.
+   */
+  async _unenrollStudy(studyAddonId) {
+    // We only expect to unenroll in known studies.
+    let knownStudies = await this._availableStudies;
+    if (!knownStudies.map(s => s.addon_id).includes(studyAddonId)) {
+      return Promise.reject(
+        new Error(`IonCore._unenrollStudy - Unknown study ${studyAddonId}`));
+    }
+    
+    // FIXME: pass message to add-on to remove itself.
+
+    await this._storage.removeActivatedStudy(studyAddonId);
+    await this._sendDeletionPing(studyAddonId);
   }
 
   /**
