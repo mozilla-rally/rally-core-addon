@@ -152,6 +152,16 @@ module.exports = class IonCore {
     await this._sendEnrollmentPing(studyAddonId);
   }
 
+  /**
+   * Unenroll in an Ion Study.
+   *
+   * This sends the required pings.
+   *
+   * @returns {Promise} A promise resolved when the unenrollment
+   *          is complete (does not block on data upload).
+   *          NOTE: this does NOT trigger the study add-on to
+   *          uninstall itself at the moment.
+   */
   async _unenrollStudy(studyAddonId) {
     // We only expect to unenroll in known studies.
     let knownStudies = await this._availableStudies;
