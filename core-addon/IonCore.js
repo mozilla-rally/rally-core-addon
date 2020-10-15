@@ -47,6 +47,25 @@ module.exports = class IonCore {
     };
     browser.management.onInstalled.addListener(addonStateHandler);
     browser.management.onUninstalled.addListener(addonStateHandler);
+
+    // Listen for incoming messages from the studies.
+    //
+    // ***IMPORTANT***:
+    //
+    // `_handleExternalMessage` is async, even though
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onMessage
+    // discourages that. The reason why it's discouraged is that by being async
+    // the handler function would *always* return a Promise, telling the
+    // WebExtensions framework that the message was handled, and thus preventing
+    // other registered listeners to get the message. For our case, this is
+    // not a problem, because:
+    //
+    //  - we always handle all the messages (always reject or resolve);
+    //  - we only expect to have one listener (`_handleExternalMessage`).
+    //
+    // We want the handler to be async to conveniently handle all the
+    // asynchronous calls and updates to the studies list.
+    browser.runtime.onMessageExternal.addListener(this._handleExternalMessage);
   }
 
   _openControlPanel() {
@@ -100,6 +119,38 @@ module.exports = class IonCore {
       default:
         return Promise.reject(
           new Error(`IonCore - unexpected message type ${message.type}`));
+    }
+  }
+
+  /**
+   * Handles messages coming in from studies.
+   *
+   * IMPORTANT: This is `async` and will always handle all the
+   * external messages coming from the studies. It will not allow
+   * any other registered listener to catch messages. See
+   * the notes at the listener registration site.
+   *
+   * @param {Object} message
+   *        The payload of the message.
+   * @param {runtime.MessageSender} sender
+   *        An object containing informations about who sent
+   *        the message.
+   * @returns {Promise} The response to the received message.
+   *          It can be resolved with a value that is sent to the
+   *          `sender`.
+   */
+  async _handleExternalMessage(message, sender) {
+    // We only expect messages coming from known ion studies.
+    let knownStudies = await this._availableStudies;
+    if (!knownStudies.map(s => s.addon_id).includes(sender.id)) {
+      return Promise.reject(
+        new Error(`IonCore._handleExternalMessage - unexpected sender ${sender.id}`));
+    }
+
+    switch (message.type) {
+      default:
+        return Promise.reject(
+          new Error(`IonCore._handleExternalMessage - unexpected message type ${message.type}`));
     }
   }
 

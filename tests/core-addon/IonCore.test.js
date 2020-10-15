@@ -316,6 +316,30 @@ describe('IonCore', function () {
     });
   });
 
+  describe('_handleExternalMessage()', function () {
+    it('rejects unknown messages', function () {
+      // Provide an unknown message type and a valid sender:
+      // it should fail due to the unexpected type.
+      assert.rejects(
+        this.ionCore._handleExternalMessage(
+          {type: "test-unknown-type", data: {}},
+          {id: FAKE_STUDY_ID}
+        ),
+        { message: "IonCore._handleExternalMessage - unexpected message type test-unknown-type"}
+      );
+    });
+
+    it('rejects unknown senders', function () {
+      assert.rejects(
+        this.ionCore._handleExternalMessage(
+          {type: "irrelevant-as-fails-earlier", data: {}},
+          {id: "unknown-test-study-id"}
+        ),
+        { message: "IonCore._handleExternalMessage - unexpected sender unknown-test-study-id"}
+      );
+    });
+  });
+
   describe('_enrollStudy()', function () {
     it('rejects unknown study ids', function () {
       assert.rejects(
