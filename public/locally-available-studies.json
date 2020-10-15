@@ -1,0 +1,37 @@
+{
+  "data": [
+    {
+      "name": "Ion Base Study",
+      "icons": {
+        "32": "https://addons.cdn.mozilla.net/user-media/addon_icons/2644/2644632-32.png?modified=4a64e2bc",
+        "64": "https://addons.cdn.mozilla.net/user-media/addon_icons/2644/2644632-64.png?modified=4a64e2bc",
+        "128": "https://addons.cdn.mozilla.net/user-media/addon_icons/2644/2644632-128.png?modified=4a64e2bc"
+      },
+      "schema": 1597266497978,
+      "authors": {
+        "url": "https://addons.mozilla.org/en-US/firefox/addon/pioneer-v2-example/",
+        "name": "Pioneer Developers"
+      },
+      "version": "1.0",
+      "addon_id": "pioneer-v2-example@mozilla.org",
+      "moreInfo": {
+        "spec": "https://addons.mozilla.org/en-US/firefox/addon/pioneer-v2-example/"
+      },
+      "isDefault": false,
+      "sourceURI": {
+        "spec": "/public/ion-base-addon.xpi"
+      },
+      "studyType": "extension",
+      "studyEnded": false,
+      "description": "Study purpose: Testing Pioneer.",
+      "privacyPolicy": {
+        "spec": "https://addons.mozilla.org/en-US/firefox/addon/pioneer-v2-example/"
+      },
+      "joinStudyConsent": "This study will send an encrypted ping, only when the toolbar icon is clicked.",
+      "leaveStudyConsent": "This study cannot be re-joined.",
+      "dataCollectionDetails": ["The date and time"],
+      "id": "0eb02750-7159-4f09-96ae-5c7cb7424e89",
+      "last_modified": 1597280277565
+    }
+  ]
+}

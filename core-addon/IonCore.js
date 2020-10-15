@@ -7,8 +7,21 @@ const Storage = require("./Storage.js");
 // The path of the embedded resource used to control Ion options.
 const ION_OPTIONS_PAGE_PATH = "public/index.html";
 
+// NOTE: if this URL ever changes, you will have to update the domain in
+// the permissions in manifest.json.
+const ION_DEFAULT_ARGS = {
+  availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
+}
+
 module.exports = class IonCore {
-  constructor() {
+   /**
+  * @param {Object} args arguments passed in from the user.
+  * @param {String} args.availablStudiesURI the URI where the available Ion studies 
+  *             information is listed.
+  */
+  constructor(args = {}) {
+    this._userArguments = {...ION_DEFAULT_ARGS, ...args};
+
     this._storage = new Storage();
     // Keep track of the task updating the state of available
     // studies.
@@ -20,7 +33,6 @@ module.exports = class IonCore {
       this._fetchAvailableStudies()
           .then(studies => this.runUpdateInstalledStudiesTask(studies));
   }
-
   initialize() {
     // Whenever the addon icon is clicked, open the control page.
     browser.browserAction.onClicked.addListener(this._openControlPanel);
@@ -426,9 +438,7 @@ module.exports = class IonCore {
    */
   async _fetchAvailableStudies() {
     try {
-      const request = await fetch(
-        "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
-      );
+      const request = await fetch(this._userArguments.availableStudiesURI);
       return (await request.json()).data;
     } catch (err) {
       console.error(err);
