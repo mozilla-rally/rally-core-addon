@@ -6,6 +6,6 @@ window.browser = require("webextension-polyfill");
 const IonCore = require("./IonCore.js");
 
 const ionCore = new IonCore({
-    availableStudiesURI: __AVAILABLE_ION_STUDIES__
+    availableStudiesURI: __ION_STUDIES_LIST__
 });
 ionCore.initialize();

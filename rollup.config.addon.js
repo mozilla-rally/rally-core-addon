@@ -14,7 +14,7 @@ export default (cliArgs) => {
   },
   plugins: [
     replace({
-      __AVAILABLE_ION_STUDIES__ : cliArgs['config-study-list-url'] ? 
+      __ION_STUDIES_LIST__ : cliArgs['config-study-list-url'] ? 
         `'${cliArgs['config-study-list-url']}'` : 
         "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records'"
     }),
