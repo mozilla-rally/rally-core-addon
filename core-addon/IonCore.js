@@ -7,6 +7,8 @@ const Storage = require("./Storage.js");
 // The path of the embedded resource used to control Ion options.
 const ION_OPTIONS_PAGE_PATH = "public/index.html";
 
+// NOTE: if this URL ever changes, you will have to update the domain in
+// the permissions in manifest.json.
 const ION_DEFAULT_ARGS = {
   availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
 }
