@@ -3,7 +3,7 @@
 ## First-time
 
 Since the core extension requires special Firefox-only privileges, it must use the Mozilla signing infrastructure.
-This requires that the github repo is cloned to the `github.com/mozilla-extensions` organization, and have a working `.taskcluster.yml`
+This requires that the github repo is cloned to the `github.com/mozilla-extensions` organization, and have a working `.taskcluster.yml` file in the repository.
 
 The Mozilla Taskcluster CI will then automatically start working for this new clone.
 
