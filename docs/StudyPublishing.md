@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-Starting with a github repository containing your extension (such as https://github.com/mozilla-ion/ion-basic-study):
+Starting with a github repository containing your study extension (such as [the Ion Basic Study](https://github.com/mozilla-ion/ion-basic-study)):
 
 - create account on https://addons.mozilla.org
 - run `web-ext build` to generate your extension in `web-ext-artifacts/`
