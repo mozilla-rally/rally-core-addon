@@ -12,14 +12,14 @@
         "url": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
         "name": "Ion Developers"
       },
-      "version": "2.0",
+      "version": "2.1",
       "addon_id": "ion-basic-study@mozilla.org",
       "moreInfo": {
         "spec": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/"
       },
       "isDefault": false,
       "sourceURI": {
-        "spec": "https://addons.mozilla.org/firefox/downloads/file/3659906/ion_basic_study-2.0-fx.xpi"
+        "spec": "https://addons.mozilla.org/firefox/downloads/file/3661128/ion_basic_study-2.1-fx.xpi"
       },
       "studyType": "extension",
       "studyEnded": false,
