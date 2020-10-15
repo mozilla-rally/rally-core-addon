@@ -112,12 +112,12 @@ describe('IonCore', function () {
       );
     });
 
-    it('dispatchers enrollment messages', async function () {
+    it('dispatches enrollment messages', async function () {
       // Mock the URL of the options page.
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
 
-      // Create a mock for the telemetry API.
+      // Create a mock for the privileged API.
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
@@ -125,11 +125,11 @@ describe('IonCore', function () {
         submitEncryptedPing: async function(type, payload, options) {},
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
-      // Use the spy to record the arguments of submitEncryptedPing.
-      let telemetrySpy =
-        sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
       // Make sure to mock the local storage calls as well.
       chrome.storage.local.set.yields();
+
+      let dataCollectionSpy =
+        sinon.spy(this.ionCore._dataCollection, "sendEnrollmentPing");
 
       // Provide a valid enrollment message.
       await this.ionCore._handleMessage(
@@ -137,18 +137,10 @@ describe('IonCore', function () {
         {url: TEST_OPTIONS_URL}
       );
 
-      // We expect to store the fake ion ID...
+      // We expect to store the fake ion ID.
       telemetryMock.expects("setIonID").withArgs([FAKE_UUID]).calledOnce;
-      // ... to submit a ping with the expected type ...
-      const submitArgs = telemetrySpy.getCall(0).args;
-      assert.equal(submitArgs[0], "pioneer-study");
-      // ... an empty payload ...
-      assert.equal(Object.keys(submitArgs[1]).length, 0);
-      // ... and a specific set of options.
-      assert.equal(submitArgs[2].studyName, "pioneer-meta");
-      assert.equal(submitArgs[2].encryptionKeyId, "discarded");
-      assert.equal(submitArgs[2].schemaName, "pioneer-enrollment");
-      assert.equal(submitArgs[2].schemaNamespace, "pioneer-meta");
+
+      assert.ok(this.ionCore._dataCollection.sendEnrollmentPing.calledOnce);
     });
 
     it('dispatches study-enrollment messages', async function () {
@@ -164,9 +156,9 @@ describe('IonCore', function () {
         submitEncryptedPing: async function(type, payload, options) {},
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
-      // Use the spy to record the arguments of submitEncryptedPing.
-      let telemetrySpy =
-        sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
+
+      let dataCollectionSpy =
+        sinon.spy(this.ionCore._dataCollection, "sendEnrollmentPing");
 
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
@@ -181,18 +173,12 @@ describe('IonCore', function () {
         {url: TEST_OPTIONS_URL}
       );
 
-      // We expect to store the fake ion ID...
+      // We expect to store the fake ion ID.
       telemetryMock.expects("setIonID").withArgs([FAKE_UUID]).calledOnce;
-      // ... to submit a ping with the expected type ...
-      const submitArgs = telemetrySpy.getCall(0).args;
-      assert.equal(submitArgs[0], "pioneer-study");
-      // ... an empty payload ...
-      assert.equal(Object.keys(submitArgs[1]).length, 0);
-      // ... and a specific set of options.
-      assert.equal(submitArgs[2].studyName, FAKE_STUDY_ID);
-      assert.equal(submitArgs[2].encryptionKeyId, "discarded");
-      assert.equal(submitArgs[2].schemaName, "pioneer-enrollment");
-      assert.equal(submitArgs[2].schemaNamespace, FAKE_STUDY_ID);
+
+      assert.ok(
+        this.ionCore._dataCollection.sendEnrollmentPing.withArgs(FAKE_STUDY_ID).calledOnce
+      );
     });
 
     it('dispatches unenrollment messages', async function () {
@@ -209,9 +195,9 @@ describe('IonCore', function () {
         submitEncryptedPing: async function(type, payload, options) {},
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
-      // Use the spy to record the arguments of submitEncryptedPing.
-      let telemetrySpy =
-        sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
+
+      let dataCollectionSpy =
+        sinon.spy(this.ionCore._dataCollection, "sendDeletionPing");
 
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
@@ -232,15 +218,9 @@ describe('IonCore', function () {
       // We expect to store the fake ion ID...
       telemetryMock.expects("clearIonID").calledOnce;
       // ... to submit a ping with the expected type ...
-      const submitArgs = telemetrySpy.getCall(0).args;
-      assert.equal(submitArgs[0], "pioneer-study");
-      // ... an empty payload ...
-      assert.equal(Object.keys(submitArgs[1]).length, 0);
-      // ... and a specific set of options.
-      assert.equal(submitArgs[2].studyName, FAKE_STUDY_ID);
-      assert.equal(submitArgs[2].encryptionKeyId, "discarded");
-      assert.equal(submitArgs[2].schemaName, "deletion-request");
-      assert.equal(submitArgs[2].schemaNamespace, FAKE_STUDY_ID);
+      assert.ok(
+        this.ionCore._dataCollection.sendDeletionPing.withArgs(FAKE_STUDY_ID).calledOnce
+      );
       // We also expect an "uninstall" message to be dispatched to
       // the one study marked as installed.
       assert.ok(
@@ -268,9 +248,9 @@ describe('IonCore', function () {
         submitEncryptedPing: async function(type, payload, options) {},
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
-      // Use the spy to record the arguments of submitEncryptedPing.
-      let telemetrySpy =
-        sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
+
+      let dataCollectionSpy =
+        sinon.spy(this.ionCore._dataCollection, "sendDeletionPing");
 
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
@@ -291,15 +271,9 @@ describe('IonCore', function () {
       // We expect to store the fake ion ID...
       telemetryMock.expects("setIonID").withArgs([FAKE_UUID]).calledOnce;
       // ... to submit a ping with the expected type ...
-      const submitArgs = telemetrySpy.getCall(0).args;
-      assert.equal(submitArgs[0], "pioneer-study");
-      // ... an empty payload ...
-      assert.equal(Object.keys(submitArgs[1]).length, 0);
-      // ... and a specific set of options.
-      assert.equal(submitArgs[2].studyName, FAKE_STUDY_ID);
-      assert.equal(submitArgs[2].encryptionKeyId, "discarded");
-      assert.equal(submitArgs[2].schemaName, "deletion-request");
-      assert.equal(submitArgs[2].schemaNamespace, FAKE_STUDY_ID);
+      assert.ok(
+        this.ionCore._dataCollection.sendDeletionPing.withArgs(FAKE_STUDY_ID).calledOnce
+      );
 
       // Make sure that we're generating an uninstall message for
       // this study.
