@@ -150,6 +150,13 @@ module.exports = class IonCore {
     }
 
     switch (message.type) {
+      case "telemetry-ping": {
+        const data = message.data;
+        return await this._dataCollection.sendPing(
+          data.payloadType, data.payload, data.namespace,
+          data.keyId, data.key
+        );
+      } break;
       default:
         return Promise.reject(
           new Error(`IonCore._handleExternalMessage - unexpected message type ${message.type}`));
