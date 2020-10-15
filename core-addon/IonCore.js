@@ -26,7 +26,6 @@ module.exports = class IonCore {
       this._fetchAvailableStudies()
           .then(studies => this.runUpdateInstalledStudiesTask(studies));
   }
- 
   initialize() {
     // Whenever the addon icon is clicked, open the control page.
     browser.browserAction.onClicked.addListener(this._openControlPanel);
