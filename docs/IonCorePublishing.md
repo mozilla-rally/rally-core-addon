@@ -23,7 +23,7 @@ Producing a production-signed extension
 ---------------------------------------
 
 Production signing requires sign-off from addons and releng.
-See the #addons-pipeline channel on Slack for assitance.
+See the #addons-pipeline channel on Slack for assistance.
 
 Publishing the Ion Core Extension
 ---------------------------------
