@@ -12,6 +12,11 @@ const ION_DEFAULT_ARGS = {
 }
 
 module.exports = class IonCore {
+   /**
+  * @param {Object} args arguments passed in from the user.
+  * @param {String} args.availablStudiesURI the URI where the available Ion studies 
+  *             information is listed.
+  */
   constructor(args = {}) {
     this._userArguments = {...ION_DEFAULT_ARGS, ...args};
 
