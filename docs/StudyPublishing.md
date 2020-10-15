@@ -17,7 +17,7 @@ It may take some time for your extension to be reviewed and available for downlo
     - TODO link to README.md instead of repeating ourselves?
 - There is also a RemoteSettings dev server you may use for local testing / QA
     - https://remote-settings.readthedocs.io/en/latest/tutorial-dev-server.html
-- Updates to the staging and production servers must recieve sign off
+- Updates to the staging and production servers must receive sign off
     - current reviewers are @knowtheory and @rhelmer
 
 ## Updating the Study Extension
