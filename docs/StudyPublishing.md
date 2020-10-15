@@ -6,7 +6,7 @@ Starting with a github repository containing your study extension (such as [the 
 
 - create account on https://addons.mozilla.org
 - run `web-ext build` to generate your extension in `web-ext-artifacts/`
-- upload your extension
+- upload the resulting `.zip` file in `web-ext-artifacts/` to addons.mozilla.org
 
 It may take some time for your extension to be reviewed and available for download.
 
