@@ -15,48 +15,28 @@ module.exports = class DataCollection {
    *        `schemaNamespace` and `studyName` properties of the ping.
    */
   async _sendEmptyPing(payloadType, namespace) {
-    let options = {
-      studyName: namespace,
-      addPioneerId: true,
-      // NOTE - while we're not actually sending useful data in
-      // this payload, the current Ion v2 Telemetry pipeline requires
-      // that pings are shaped this way so they are routed to the correct
-      // environment.
-      //
-      // At the moment, the public key used here isn't important but we do
-      // need to use *something*.
-      encryptionKeyId: "discarded",
-      publicKey: {
-        crv: "P-256",
-        kty: "EC",
-        x: "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
-        y: "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE",
-      },
-      schemaName: payloadType,
-      schemaVersion: 1,
-      // Note that the schema namespace directly informs how data is
-      // segregated after ingestion.
-      // If this is an enrollment ping for the pioneer program (in contrast
-      // to the enrollment to a specific study), use a meta namespace.
-      schemaNamespace: namespace,
+    // NOTE - while we're not actually sending useful data in
+    // this payload, the current Ion v2 Telemetry pipeline requires
+    // that pings are shaped this way so they are routed to the correct
+    // environment.
+    //
+    // At the moment, the public key used here isn't important but we do
+    // need to use *something*.
+    const publicKey = {
+      crv: "P-256",
+      kty: "EC",
+      x: "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
+      y: "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE",
     };
 
-    // For enrollment, we expect to send an empty payload.
-    const payload = {};
-
-    // We intentionally don't wait on the promise returned by
-    // `submitExternalPing`, because that's an internal API only meant
-    // for telemetry tests. Moreover, in order to send a custom schema
-    // name and a custom namespace, we need to ship a custom "experimental"
-    // telemetry API for legacy telemetry.
-    await browser.firefoxPrivilegedApi
-      .submitEncryptedPing("pioneer-study", payload, options)
-      .then(() => {
-        console.debug(`IonCore._sendEnrollmentPing - options: ${JSON.stringify(options)} payload: ${JSON.stringify(payload)}`);
-      })
-      .catch(error => {
-        console.error(`IonCore._sendEnrollmentPing failed - error: ${error}`);
-      });
+    await this.sendPing(
+      payloadType,
+      // We expect to send an empty payload.
+      {},
+      namespace,
+      "discarded",
+      publicKey
+    );
   }
 
   /**
@@ -95,5 +75,54 @@ module.exports = class DataCollection {
     }
 
     return await this._sendEmptyPing("deletion-request", studyAddonId);
+  }
+
+  /**
+   * Send a ping using the Firefox legacy telemetry.
+   *
+   * @param {String} payloadType
+   *        The type of the encrypted payload. This will define the
+   *        `schemaName` of the ping.
+   * @param {Object} payload
+   *        A JSON-serializable payload to be sent with the ping.
+   * @param {String} namespace
+   *        The namespace to route the ping. This will define the
+   *        `schemaNamespace` and `studyName` properties of the ping.
+   * @param {String} keyId
+   *        The id of the key used to encrypt the payload.
+   * @param {Object} key
+   *        The key used to encrypt the payload, for example:
+   *        {
+   *          crv: "P-256", kty: "EC",
+   *          x: "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
+   *          y: "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE",
+   *        }
+   */
+  async sendPing(payloadType, payload, namespace, keyId, key) {
+    let options = {
+      studyName: namespace,
+      addPioneerId: true,
+      encryptionKeyId: keyId,
+      publicKey: key,
+      schemaName: payloadType,
+      schemaVersion: 1,
+      // Note that the schema namespace directly informs how data is
+      // segregated after ingestion.
+      schemaNamespace: namespace,
+    };
+
+    // We intentionally don't wait on the promise returned by
+    // `submitExternalPing`, because that's an internal API only meant
+    // for telemetry tests. Moreover, in order to send a custom schema
+    // name and a custom namespace, we need to ship a custom "experimental"
+    // telemetry API for legacy telemetry.
+    await browser.firefoxPrivilegedApi
+      .submitEncryptedPing("pioneer-study", payload, options)
+      .then(() => {
+        console.debug(`DataCollection.sendPing - options: ${JSON.stringify(options)} payload: ${JSON.stringify(payload)}`);
+      })
+      .catch(error => {
+        console.error(`DataCollection.sendPing failed - error: ${error}`);
+      });
   }
 };
