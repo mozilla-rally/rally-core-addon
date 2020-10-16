@@ -19,6 +19,12 @@ https://firefox-ci-tc.services.mozilla.com/tasks/ZcZWnI5pT4K_1ycCX3l7iw
 
 Click the "Artifacts" link to find a link to the signed XPI `public/build/ion_core.xpi`.
 
+## Testing the QA-signed extension
+
+To test the QA-signed extension in Firefox, you must be running the Nightly release or an unbranded build (there are equivalents for Release and Beta), then navigate to `about:config` and create a new boolean pref named `xpinstall.signatures.dev-root` and set it to `true`.
+
+NOTE - this will cause production-signed extensions (such as those from addons.mozilla.org) to not load. To allow these, set `xpinstall.signatures.required` pref to `false`.
+
 ## Producing a production-signed extension
 
 Production signing requires sign-off from addons and releng.
