@@ -15,7 +15,7 @@ It may take some time for your extension to be reviewed and available for downlo
 
 ## Update RemoteSettings Server
 
-The Ion Core add-on checks the Firefox RemoteSettings server for a list of the currently-approved studies.
+The Ion Core extension checks the Firefox RemoteSettings server for a list of the currently-approved studies.
 
 For local testing, see: https://github.com/mozilla-ion/ion-core-addon#building-and-testing-a-study-locally
 There is also a RemoteSettings dev server you may use for local testing / QA: https://remote-settings.readthedocs.io/en/latest/tutorial-dev-server.html
@@ -29,5 +29,7 @@ First, refer to the [Build your extension](#build-your-extension) section. Make 
 Once you have your extension ready to publish, the usual addons.mozilla.org update process applies - log in to https://addons.mozilla.org and navigate to the "Developer Hub", then follow the instructions to update your extension.
 
 NOTE - you may publish as a "pre-release" which will prevent existing users from updating until QA is complete.
+
+It may take some time for your updated extension to be reviewed and available for download.
 
 You must update the available studies, which come from the Firefox RemoteSettings server. Refer to the [Update RemoteSettings Server](#updating-remotesettings-server) section.
