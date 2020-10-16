@@ -13,11 +13,10 @@ It may take some time for your extension to be reviewed and available for downlo
 ## Update RemoteSettings Server
 
 - The Ion Core add-on checks the Firefox RemoteSettings server for a list of the currently-approved studies.
-- For local testing, modify `public/locally-available-studies.json` and `npm run local-build-addon`, then `web-ext run --pref=extensions.experiments.enabled=true -f nightly`
-    - TODO link to README.md instead of repeating ourselves?
+- For local testing, see: https://github.com/mozilla-ion/ion-core-addon#building-and-testing-a-study-locally
 - There is also a RemoteSettings dev server you may use for local testing / QA
     - https://remote-settings.readthedocs.io/en/latest/tutorial-dev-server.html
-- Updates to the staging and production servers must receive sign off
+- Updates to the staging and production RemoteSettings servers must receive sign off
     - current reviewers are @knowtheory and @rhelmer
 
 ## Updating the Study Extension
