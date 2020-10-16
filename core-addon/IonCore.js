@@ -79,7 +79,8 @@ module.exports = class IonCore {
     //
     // We want the handler to be async to conveniently handle all the
     // asynchronous calls and updates to the studies list.
-    browser.runtime.onMessageExternal.addListener(this._handleExternalMessage);
+    browser.runtime.onMessageExternal.addListener(
+      async (m, s) => this._handleExternalMessage(m, s));
   }
 
   _openControlPanel() {
