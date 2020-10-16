@@ -11,7 +11,7 @@ NOTE - this must be a clone and not a fork (TODO - file/link to bug on TC side a
 
 ## Finding the QA-signed extension
 
-A good CI run will look like:
+Taskcluster CI output can be found in GitHub Actions:
 https://github.com/mozilla-extensions/ion-core-addon/runs/1249808119
 
 The "dep-signing-ion_core" task will link to the completed build on Taskcluster:
