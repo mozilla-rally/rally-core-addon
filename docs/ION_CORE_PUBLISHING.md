@@ -1,6 +1,6 @@
 # Ion Core Extension Publishing HOWTO
 
-## First-time
+## Getting started
 
 Since the core extension requires special Firefox-only privileges, it must use the Mozilla signing infrastructure.
 This requires that the github repo is cloned to the `github.com/mozilla-extensions` organization, and have a working `.taskcluster.yml` file in the repository.
