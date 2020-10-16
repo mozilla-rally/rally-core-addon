@@ -53,7 +53,7 @@ module.exports = class DataCollection {
     // If we were provided with a study id, then this is an enrollment to a study.
     // Send the id alongside with the data and change the schema namespace to simplify
     // the work on the ingestion pipeline.
-    if (typeof studyAddonId != "undefined") {
+    if (studyAddonId !== undefined) {
       return await this._sendEmptyPing("pioneer-enrollment", studyAddonId);
     }
 
@@ -70,7 +70,7 @@ module.exports = class DataCollection {
    *        It's sent in the ping to signal that user unenrolled from a study.
    */
   async sendDeletionPing(studyAddonId) {
-    if (typeof studyAddonId === undefined) {
+    if (studyAddonId === undefined) {
       throw new Error("IonCore - the deletion-request ping requires a study id");
     }
 
@@ -91,11 +91,16 @@ module.exports = class DataCollection {
    * @param {String} keyId
    *        The id of the key used to encrypt the payload.
    * @param {Object} key
-   *        The key used to encrypt the payload, for example:
+   *        The JSON Web Key (JWK) used to encrypt the payload.
+   *        See the RFC 7517 https://tools.ietf.org/html/rfc7517
+   *        for additional information. For example:
+   *
    *        {
-   *          crv: "P-256", kty: "EC",
-   *          x: "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
-   *          y: "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE",
+   *          "kty":"EC",
+   *          "crv":"P-256",
+   *          "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+   *          "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0",
+   *          "kid":"Public key used in JWS spec Appendix A.3 example"
    *        }
    */
   async sendPing(payloadType, payload, namespace, keyId, key) {

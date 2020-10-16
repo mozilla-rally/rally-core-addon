@@ -135,7 +135,7 @@ module.exports = class IonCore {
    * @param {Object} message
    *        The payload of the message.
    * @param {runtime.MessageSender} sender
-   *        An object containing informations about who sent
+   *        An object containing information about who sent
    *        the message.
    * @returns {Promise} The response to the received message.
    *          It can be resolved with a value that is sent to the
@@ -151,10 +151,9 @@ module.exports = class IonCore {
 
     switch (message.type) {
       case "telemetry-ping": {
-        const data = message.data;
+        const {payloadType, payload, namespace, keyId, key} = message.data;
         return await this._dataCollection.sendPing(
-          data.payloadType, data.payload, data.namespace,
-          data.keyId, data.key
+          payloadType, payload, namespace, keyId, key
         );
       } break;
       default:

@@ -312,6 +312,53 @@ describe('IonCore', function () {
         { message: "IonCore._handleExternalMessage - unexpected sender unknown-test-study-id"}
       );
     });
+
+    it('dispatches telemetry-ping messages', async function () {
+      // Create a mock for the telemetry API.
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      chrome.firefoxPrivilegedApi = {
+        generateUUID: async function() { return FAKE_UUID; },
+        setIonID: async function(uuid) {},
+        submitEncryptedPing: async function(type, payload, options) {},
+      };
+      let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
+
+      let dataCollectionSpy =
+        sinon.spy(this.ionCore._dataCollection, "sendPing");
+
+      const SENT_PING = {
+        payloadType: "test-telemetry-ping",
+        payload: {
+          testData: 37
+        },
+        namespace: "test-namespace",
+        keyId: "some-id",
+        key: {
+          kty:"EC",
+          crv:"P-256",
+          x:"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+          y:"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0",
+          kid:"Public key used in JWS spec Appendix A.3 example"
+        }
+      };
+
+      // Provide a valid study enrollment message.
+      await this.ionCore._handleExternalMessage(
+        {type: "telemetry-ping", data: SENT_PING},
+        {id: FAKE_STUDY_ID}
+      );
+
+      assert.ok(
+        this.ionCore._dataCollection.sendPing
+            .withArgs(
+              SENT_PING.payloadType,
+              sinon.match(SENT_PING.payload),
+              SENT_PING.namespace,
+              SENT_PING.keyId,
+              sinon.match(SENT_PING.key)
+            ).calledOnce
+      );
+    });
   });
 
   describe('_enrollStudy()', function () {
