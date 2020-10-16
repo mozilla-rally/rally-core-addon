@@ -19,21 +19,18 @@ https://firefox-ci-tc.services.mozilla.com/tasks/ZcZWnI5pT4K_1ycCX3l7iw
 
 Click the "Artifacts" link to find a link to the signed XPI `public/build/ion_core.xpi`.
 
-Producing a production-signed extension
----------------------------------------
+## Producing a production-signed extension
 
 Production signing requires sign-off from addons and releng.
 See the #addon-pipeline channel on Slack for assistance.
 
-Publishing the Ion Core Extension
----------------------------------
+## Publishing the Ion Core Extension
 
 TODO - for now we are publishing the signed XPI as a github release, but in the future it will move to addons.mozilla.org
 
 Upload the signed add-on to a github release, and point "Install" button on the static site in `docs/index.html` at the github release. An example of this would be:
 https://github.com/mozilla-ion/ion-core-addon/releases/download/2.1/ion_core-2.1.xpi
 
-Updating the Core Extension
----------------------------
+## Updating the Core Extension
 
 Push to the `github.com/mozilla-extensions` clone, and refer to the [Finding the QA-signed extension](#finding-the-qa-signed-extension) and subsequent sections.
