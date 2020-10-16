@@ -32,4 +32,4 @@ NOTE - you may publish as a "pre-release" which will prevent existing users from
 
 It may take some time for your updated extension to be reviewed and available for download.
 
-You must update the available studies, which come from the Firefox RemoteSettings server. Refer to the [Update RemoteSettings Server](#updating-remotesettings-server) section.
+You must update the available studies, which come from the Firefox RemoteSettings server. Refer to the [Update RemoteSettings Server](#update-remotesettings-server) section.
