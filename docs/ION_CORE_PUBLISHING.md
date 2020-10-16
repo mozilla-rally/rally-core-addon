@@ -30,7 +30,8 @@ Publishing the Ion Core Extension
 
 TODO - for now we are publishing the signed XPI as a github release, but in the future it will move to addons.mozilla.org
 
-Upload the signed add-on as a github release, and point the static site in `docs/index.html` at the Core XPI file to the new github release.
+Upload the signed add-on to a github release, and point "Install" button on the static site in `docs/index.html` at the github release. An example of this would be:
+https://github.com/mozilla-ion/ion-core-addon/releases/download/2.1/ion_core-2.1.xpi
 
 Updating the Core Extension
 ---------------------------
