@@ -23,14 +23,14 @@ Producing a production-signed extension
 ---------------------------------------
 
 Production signing requires sign-off from addons and releng.
-See the #addons-pipeline channel on Slack for assistance.
+See the #addon-pipeline channel on Slack for assistance.
 
 Publishing the Ion Core Extension
 ---------------------------------
 
 TODO - for now we are publishing the signed XPI as a github release, but in the future it will move to addons.mozilla.org
 
-Upload the signed add-on as a github release, and point the static site in `docs/index.html` at the Core XPI file on github.
+Upload the signed add-on as a github release, and point the static site in `docs/index.html` at the Core XPI file to the new github release.
 
 Updating the Core Extension
 ---------------------------
