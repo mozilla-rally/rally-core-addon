@@ -1,4 +1,4 @@
-# Study Extension HOWTO
+# Study Extension Publishing HOWTO
 
 ## Getting Started
 
