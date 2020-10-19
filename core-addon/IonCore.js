@@ -34,7 +34,10 @@ module.exports = class IonCore {
     this._availableStudies =
       this._fetchAvailableStudies()
           .then(studies => this.runUpdateInstalledStudiesTask(studies));
+
+    this._connectionPort = null;
   }
+
   initialize() {
     // Whenever the addon icon is clicked, open the control page.
     browser.browserAction.onClicked.addListener(this._openControlPanel);
@@ -48,8 +51,8 @@ module.exports = class IonCore {
     });
 
     // Listen for messages from the options page.
-    browser.runtime.onMessage.addListener(
-      (m, s) => this._handleMessage(m, s));
+    browser.runtime.onConnect.addListener(
+      p => this._onPortConnected(p));
 
     // Listen for addon install/uninstall and keep the studies
     // installation state up to date.
@@ -89,46 +92,65 @@ module.exports = class IonCore {
   }
 
   /**
+   * Handle incoming connections from the Options page.
+   *
+   * @param {runtime.Port}
+   *        The port for which the connection notification was received.
+   */
+  _onPortConnected(port) {
+    const sender = port.sender;
+    if ((sender.id != browser.runtime.id)
+      || (sender.url != browser.runtime.getURL(ION_OPTIONS_PAGE_PATH))) {
+      console.error("IonCore - received message from unexpected sender");
+      port.disconnect();
+      return;
+    }
+
+    this._connectionPort = port;
+
+    this._connectionPort.onMessage.addListener(
+      m => this._handleMessage(m));
+
+    // The onDisconnect event is fired if there's no receiving
+    // end or in case of any other error. Log an error and clear
+    // the port in that case.
+    this._connectionPort.onDisconnect.addListener(e => {
+      console.error("IonCore - there was an error connecting to the page", e);
+      this._connectionPort = null;
+    });
+  }
+
+  /**
    * Handles messages coming in from the options page.
    *
    * @param {Object} message
    *        The payload of the message.
-   * @param {runtime.MessageSender} sender
-   *        An object containing informations about who sent
-   *        the message.
-   * @returns {Promise} The response to the received message.
-   *          It can be resolved with a value that is sent to the
-   *          `sender`.
+   * @returns {Promise} only used in tests to wait on messages to
+   *          be dispatched.
    */
-  _handleMessage(message, sender) {
+  _handleMessage(message) {
     // We only expect messages coming from the embedded options page
-    // at this time. Discard anything else and report an error.
-    if (sender.url != browser.runtime.getURL(ION_OPTIONS_PAGE_PATH)) {
-      return Promise.reject(
-        new Error("IonCore - received message from unexpected sender"));
-    }
+    // at this time. We check for the sender in `_onPortConnected`.
 
     switch (message.type) {
       case "enrollment": {
-        // Let's not forget to respond `true` to the sender: the UI
-        // is expecting it.
-        return this._enroll().then(r => true);
+        return this._enroll();
       } break;
       case "get-studies": {
-        return this._availableStudies;
+        this._availableStudies.then(studies => {
+          this._connectionPort.postMessage(
+            {type: "get-studies-response", data: studies});
+        });
+        return Promise.resolve();
       } break;
       case "study-enrollment": {
-        // Let's not forget to respond `true` to the sender: the UI
-        // is expecting it.
-        return this._enrollStudy(message.data.studyID).then(r => true);
+        return this._enrollStudy(message.data.studyID);
       } break;
       case "study-unenrollment": {
-        // Let's not forget to respond `true` to the sender: the UI
-        // is expecting it.
-        return this._unenrollStudy(message.data.studyID).then(r => true);
+        return this._unenrollStudy(message.data.studyID);
       } break;
       case "unenrollment": {
-        return this._unenroll().then(r => true);
+        return this._unenroll();
       } break;
       default:
         return Promise.reject(
