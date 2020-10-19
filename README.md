@@ -74,3 +74,7 @@ Then run:
 - `web-ext run --pref=extensions.experiments.enabled=true -f nightly`
 
 To walk through the Core Add-On experience with your study.
+
+## Developing new frontend components
+
+The Core Add-On uses Storybook to assist in isolated component work. If you're building a new component, look at the examples in `/stories`. To run the storybook, run `npm run storybook`.
