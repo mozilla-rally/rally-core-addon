@@ -97,7 +97,9 @@
       </div>
     </div>
 
-    <div class="mzp-c-button-download-container">
+    <div
+      class="mzp-c-button-download-container"
+      style="width: 185px; display: grid; margin: auto;">
       <Button size="xl" product on:click={() => dispatch('get-started')}>
         Get Started
       </Button>
