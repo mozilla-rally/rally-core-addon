@@ -4,6 +4,8 @@ import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import replace from "@rollup/plugin-replace";
+import postcss from 'rollup-plugin-postcss';
+import copy from 'rollup-plugin-copy';
 
 import STORE_MOCK from "./src/mocks/firefox-mock";
 
@@ -33,7 +35,7 @@ function serve() {
     },
   };
 }
-
+console.error('BUILDING!')
 export default {
   input: "src/main.js",
   output: {
@@ -46,6 +48,14 @@ export default {
     replace({
       __STORE_IMPLEMENTATION__: JSON.stringify(STORE_MOCK),
       __API_ENDPOINT__: production ? "web-extension" : "web",
+    }),
+    postcss({
+      extract: 'external.css'
+    }),
+    copy({
+      targets: [
+        { src: 'node_modules/@mozilla-protocol/core/protocol/fonts/*', dest: 'public/fonts/'}
+      ]
     }),
     svelte({
       // enable run-time checks when not in production
