@@ -3,7 +3,7 @@
 
   const studies = [
     {
-      case: "Not enrolled in either ion nor study",
+      case: "Not enrolled in Ion nor study",
       icon:
         "https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png",
       dataCollectionDetails: ["The date and time"],
