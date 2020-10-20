@@ -1,6 +1,5 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { dispatchFxEvent } from "./stores.js";
 
   export let enrolled = false;
   export let studyEnrolled = false;
