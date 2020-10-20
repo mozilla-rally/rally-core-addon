@@ -69,13 +69,50 @@ describe('IonCore', function () {
     it('listens for clicks and messages', function () {
       this.ionCore.initialize();
       assert.ok(chrome.browserAction.onClicked.addListener.calledOnce);
-      assert.ok(chrome.runtime.onMessage.addListener.calledOnce);
+      assert.ok(chrome.runtime.onConnect.addListener.calledOnce);
     });
 
     it('listens for addon state changes', function () {
       this.ionCore.initialize();
       assert.ok(chrome.management.onInstalled.addListener.calledOnce);
       assert.ok(chrome.management.onUninstalled.addListener.calledOnce);
+    });
+  });
+
+  describe('_onPortConnected()', function () {
+    it('rejects unknown sender addon', function () {
+      let fakePort = {
+         sender: {
+          id: "unknown-addon",
+         },
+         disconnect: sinon.spy(),
+      };
+
+      // Provide an unknown message type and a valid origin:
+      // it should fail due to the unexpected type.
+      this.ionCore._onPortConnected(fakePort);
+
+      assert.ok(fakePort.disconnect.calledOnce);
+    });
+
+    it('rejects unknown sender url', function () {
+      // Mock the URL of the options page.
+      const TEST_OPTIONS_URL = "install.sample.html";
+      chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
+
+      let fakePort = {
+         sender: {
+          id: FAKE_STUDY_ID,
+          url: "unknown-url.html"
+         },
+         disconnect: sinon.spy(),
+      };
+
+      // Provide an unknown message type and a valid origin:
+      // it should fail due to the unexpected type.
+      this.ionCore._onPortConnected(fakePort);
+
+      assert.ok(fakePort.disconnect.calledOnce);
     });
   });
 
@@ -89,26 +126,9 @@ describe('IonCore', function () {
       // it should fail due to the unexpected type.
       assert.rejects(
         this.ionCore._handleMessage(
-          {type: "test-unknown-type", data: {}},
-          {url: TEST_OPTIONS_URL}
+          {type: "test-unknown-type", data: {}}
         ),
         { message: "IonCore - unexpected message type test-unknown-type"}
-      );
-    });
-
-    it('rejects unknown senders', function () {
-      // Mock the URL of the options page.
-      const TEST_OPTIONS_URL = "install.sample.html";
-      chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
-
-      // Provide an unknown message type and a valid origin:
-      // it should fail due to the unexpected type.
-      assert.rejects(
-        this.ionCore._handleMessage(
-          {type: "enroll", data: {}},
-          {url: "unkown-sender-url.html"}
-        ),
-        { message: "IonCore - received message from unexpected sender"}
       );
     });
 
@@ -133,8 +153,7 @@ describe('IonCore', function () {
 
       // Provide a valid enrollment message.
       await this.ionCore._handleMessage(
-        {type: "enrollment", data: {}},
-        {url: TEST_OPTIONS_URL}
+        {type: "enrollment", data: {}}
       );
 
       // We expect to store the fake ion ID.
@@ -169,8 +188,7 @@ describe('IonCore', function () {
 
       // Provide a valid study enrollment message.
       await this.ionCore._handleMessage(
-        {type: "study-enrollment", data: { studyID: FAKE_STUDY_ID}},
-        {url: TEST_OPTIONS_URL}
+        {type: "study-enrollment", data: { studyID: FAKE_STUDY_ID}}
       );
 
       // We expect to store the fake ion ID.
@@ -211,8 +229,7 @@ describe('IonCore', function () {
 
       // Provide a valid study enrollment message.
       await this.ionCore._handleMessage(
-        {type: "unenrollment", data: {}},
-        {url: TEST_OPTIONS_URL}
+        {type: "unenrollment", data: {}}
       );
 
       // We expect to store the fake ion ID...
@@ -264,8 +281,7 @@ describe('IonCore', function () {
 
       // Provide a valid study unenrollment message.
       await this.ionCore._handleMessage(
-        {type: "study-unenrollment", data: { studyID: FAKE_STUDY_ID}},
-        {url: TEST_OPTIONS_URL}
+        {type: "study-unenrollment", data: { studyID: FAKE_STUDY_ID}}
       );
 
       // We expect to store the fake ion ID...

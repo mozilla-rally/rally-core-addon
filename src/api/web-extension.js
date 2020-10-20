@@ -7,6 +7,9 @@ import browser from "webextension-polyfill";
 /**
  * Utility function to build a message to the web-extension.
  *
+ * @param {runtime.Port} port
+ *        The connection port to communicate with the background
+ *        script.
  * @param {String} type
  *        The type of the message being sent. Unknown types
  *        will be rejected by the Core Add-on. See the
@@ -16,7 +19,7 @@ import browser from "webextension-polyfill";
  *        A JSON-serializable object representing the payload
  *        of the message to be passed to the Core addon.
  */
-async function sendToCore(type, payload) {
+async function sendToCore(port, type, payload) {
   const VALID_TYPES = [
     "enrollment",
     "get-studies",
@@ -27,8 +30,8 @@ async function sendToCore(type, payload) {
 
   // Make sure `type` is one of the expected values.
   if (!VALID_TYPES.includes(type)) {
-    console.error(`Ion: sendToCore - unexpected message to core "${type}"`);
-    return Promise.reject();
+    return Promise.reject(
+      new Error(`Ion: sendToCore - unexpected message to core "${type}"`));
   }
 
   const msg = {
@@ -36,7 +39,29 @@ async function sendToCore(type, payload) {
     data: payload
   };
 
-  return await browser.runtime.sendMessage(msg);
+  port.postMessage(msg);
+}
+
+/**
+ * Wait for a message coming on a port.
+ *
+ * @param {runtime.Port} port
+ *        The communication port to expect the message on.
+ * @param {String} type
+ *        The name of the message to wait for.
+ * @returns {Promise} resolved with the content of the response
+ *          when the message arrives.
+ */
+async function waitForCoreResponse(port, type) {
+  return await new Promise(resolve => {
+    let handler = msg => {
+      if (msg.type === type) {
+        port.onMessage.removeListener(handler);
+        resolve(msg.data);
+      }
+    };
+    port.onMessage.addListener(handler);
+  });
 }
 
 /**
@@ -45,9 +70,24 @@ async function sendToCore(type, payload) {
  * changes.
  */
 export default {
+  // The connection end used to communicate with the background script
+  // of this addon. See the MDN documentation for more info:
+  // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/Port
+  _connectionPort: null,
+
   // initialize the frontend's store from the add-on local storage.
   async initialize(key) {
-    // get from
+    this._connectionPort =
+      browser.runtime.connect({name: "ion-options-page"});
+
+    // The onDisconnect event is fired if there's no receiving
+    // end or in case of any other error. Log an error and clear
+    // the port in that case.
+    this._connectionPort.onDisconnect.addListener(e => {
+      console.error("Ion - there was an error connecting to the background script", e);
+      this._connectionPort = null;
+    });
+
     // returns the last saved app state.
     return this.getItem(key);
   },
@@ -56,7 +96,11 @@ export default {
   // use in store instantiation. This assumes that the studies are
   // stored somewhere (i.e. remote settings)
   async getAvailableStudies() {
-    return await sendToCore("get-studies", {});
+    let response =
+      waitForCoreResponse(this._connectionPort, "get-studies-response");
+
+    await sendToCore(this._connectionPort, "get-studies", {});
+    return await response;
   },
 
   // fetch ion enrollment from remote location, if available.
@@ -96,12 +140,13 @@ export default {
 
   async updateStudyEnrollment(studyID, enroll) {
     if (!enroll) {
-      return await sendToCore("study-unenrollment", { studyID });
+      return await sendToCore(
+        this._connectionPort, "study-unenrollment", { studyID }
+      ).then(r => true);
     }
-    
-    const enrollResponse = await sendToCore("study-enrollment", {
-      studyID
-    });
+
+    await sendToCore(
+      this._connectionPort, "study-enrollment", { studyID });
 
     // Fetch the study add-on and attempt to install it.
     const studies = await this.getAvailableStudies();
@@ -111,7 +156,7 @@ export default {
     // which is the study add-on's xpi.
     window.location.href = studyMetadata.sourceURI.spec;
 
-    return enrollResponse;
+    return true;
   },
 
   /**
@@ -124,6 +169,9 @@ export default {
    *          updated, `false` otherwise.
    */
   async updateIonEnrollment(enroll) {
-    return await sendToCore(enroll ? "enrollment" : "unenrollment", {});
+    await sendToCore(
+      this._connectionPort, enroll ? "enrollment" : "unenrollment", {});
+
+    return true;
   },
 };
