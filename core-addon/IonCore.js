@@ -25,17 +25,12 @@ module.exports = class IonCore {
 
     this._storage = new Storage();
     this._dataCollection = new DataCollection();
-    // Keep track of the task updating the state of available
-    // studies.
-    this._updateInstalledTask = null;
 
     // Asynchronously get the available studies. We don't need to wait
     // for this to finish, the UI can handle the wait.
-    // TODO: we don't really need "runUpdateINstall..." anymore, because
-    // we're synching up with the addon install/uninstall events.
     this._availableStudies =
       this._fetchAvailableStudies()
-          .then(studies => this.runUpdateInstalledStudiesTask(studies));
+          .then(studies => this._updateInstalledStudies(studies));
 
     this._connectionPort = null;
   }
@@ -401,37 +396,6 @@ module.exports = class IonCore {
     };
 
     return await browser.runtime.sendMessage(studyId, msg, {});
-  }
-
-  /**
-   * An utility function to run a task for updating the status
-   * of the available addons.
-   *
-   * Note that this is needed in order to prevent races between
-   * multiple callers of this functions (e.g. init, addon install,
-   * addon uninstall).
-   *
-   * @param {Array<Object>} studies
-   *        An array containing objects describing Ion studies.
-   * @returns {Promise(Array<Object>)} resolved with an array of studies
-   *          objects, or an empty array on failures. Each study object
-   *          has at least the `addon_id` and `ionInstalled` properties.
-   */
-  async runUpdateInstalledStudiesTask(studies) {
-    // We're already updating the state of the studies.
-    if (this._updateInstalledTask) {
-      return this._updateInstalledTask;
-    }
-
-    // Make sure to clear |_updateInstalledTask| once done.
-    let clear = studies => {
-      this._updateInstalledTask = null;
-      return studies;
-    };
-    // Since there's no archive cleaning task running, start it.
-    this._updateInstalledTask =
-      this._updateInstalledStudies(studies).then(clear, clear);
-    return this._updateInstalledTask;
   }
 
   /**

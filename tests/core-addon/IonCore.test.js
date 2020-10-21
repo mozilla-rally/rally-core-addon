@@ -411,13 +411,13 @@ describe('IonCore', function () {
     });
   });
 
-  describe('runUpdateInstalledStudiesTask()', function () {
+  describe('_updateInstalledStudies()', function () {
     it('adds the ionInstalled property', async function () {
       // We don't expect any update task to be running now.
       assert.equal(this.ionCore._updateInstalledTask, null);
       // Kick off an update task.
       let studies =
-        await this.ionCore.runUpdateInstalledStudiesTask(FAKE_STUDY_LIST);
+        await this.ionCore._updateInstalledStudies(FAKE_STUDY_LIST);
       assert.equal(studies.length, 2);
       // Check that the FAKE_STUDY_ID is marked as installed (as per
       // our fake data, see the beginning of this file).
