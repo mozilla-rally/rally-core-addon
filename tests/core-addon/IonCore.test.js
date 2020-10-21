@@ -45,6 +45,11 @@ describe('IonCore', function () {
     });
 
     this.ionCore = new IonCore();
+
+    // Mock the channel to the UI.
+    this.ionCore._connectionPort = {
+      postMessage: async () => Promise.resolve(),
+    };
   });
 
   describe('_openControlPanel()', function () {
@@ -145,6 +150,12 @@ describe('IonCore', function () {
         submitEncryptedPing: async function(type, payload, options) {},
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
+
+      // Return an empty object from the local storage. Note that this
+      // needs to use `browser` and must use `callsArgWith` to guarantee
+      // that the promise resolves, due to a bug in sinon-chrome. See
+      // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
+      browser.storage.local.get.callsArgWith(1, {}).resolves();
       // Make sure to mock the local storage calls as well.
       chrome.storage.local.set.yields();
 
@@ -186,10 +197,8 @@ describe('IonCore', function () {
       browser.storage.local.get.callsArgWith(1, {}).resolves();
       chrome.storage.local.get.yields({});
 
-      // Provide a valid study enrollment message.
-      await this.ionCore._handleMessage(
-        {type: "study-enrollment", data: { studyID: FAKE_STUDY_ID}}
-      );
+      // Attempt to enroll to a study.
+      await this.ionCore._enrollStudy(FAKE_STUDY_ID);
 
       // We expect to store the fake ion ID.
       telemetryMock.expects("setIonID").withArgs([FAKE_UUID]).calledOnce;
