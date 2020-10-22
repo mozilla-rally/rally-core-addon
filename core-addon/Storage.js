@@ -3,8 +3,42 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 module.exports = class Storage {
+  /**
+   * Gets the stored value from the local browser storage.
+   *
+   * @param {String} key
+   *        The name of the key to retrieve data from.
+   */
+  async getItem(key) {
+    try {
+      return (await browser.storage.local.get(key))[key];
+    } catch (err) {
+      console.error(`Storage - failed to read ${key} from the local storage`, error);
+      return Promise.resolve();
+    }
+  }
+
+  /**
+   * Store a value in the local browser storage.
+   *
+   * @param {String} key
+   *        The name of the key to store data into.
+   * @param {<Primitive Type> or Array} value
+   *        The value to store. It can be any of the primitive
+   *        types (e.g. numbers, booleans) or Array types. See
+   *        the documentation for additional information:
+   *        https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/StorageArea/set
+   */
+  async setItem(key, value) {
+    return browser.storage.local.set({ [key]: value });
+  }
+
+  async getIonID() {
+    return await this.getItem("ionId");
+  }
+
   async setIonID(uuid) {
-    return await browser.storage.local.set({ionId: uuid});
+    return await this.setItem("ionId", uuid);
   }
 
   async clearIonID() {
@@ -19,16 +53,12 @@ module.exports = class Storage {
    */
   async getActivatedStudies() {
     // Attempt to retrieve any previously stored study ids.
-    return await browser.storage.local.get("activatedStudies").then(
+    return await this.getItem("activatedStudies").then(
         stored => {
           // This branch will be hit even if `activatedStudies` was never
           // stored (e.g. this is the first save). Make sure to account for
           // that case by returning an empty array.
-          return stored.activatedStudies || [];
-        },
-        error => {
-          console.error("Storage - failed to read from the local storage", error);
-          return [];
+          return stored || [];
         }
       );
   }

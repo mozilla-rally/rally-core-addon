@@ -20,8 +20,8 @@
       studyId={study.addon_id}
       enrolled={$store.enrolled}
       privacyPolicy={study.privacyPolicy.spec}
-      studyEnrolled={$store.activeStudies.includes(study.addon_id)}
-      on:enroll={() => store.updateStudyEnrollment(study.addon_id, !$store.activeStudies.includes(study.addon_id))}>
+      studyEnrolled={study.ionInstalled}
+      on:enroll={() => store.updateStudyEnrollment(study.addon_id, !study.ionInstalled)}>
       <span slot="name">{study.name}</span>
       <span slot="authors">{study.authors.name}</span>
       <span slot="description">{study.description}</span>

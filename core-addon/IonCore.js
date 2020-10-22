@@ -25,15 +25,12 @@ module.exports = class IonCore {
 
     this._storage = new Storage();
     this._dataCollection = new DataCollection();
-    // Keep track of the task updating the state of available
-    // studies.
-    this._updateInstalledTask = null;
 
     // Asynchronously get the available studies. We don't need to wait
     // for this to finish, the UI can handle the wait.
     this._availableStudies =
       this._fetchAvailableStudies()
-          .then(studies => this.runUpdateInstalledStudiesTask(studies));
+          .then(studies => this._updateInstalledStudies(studies));
 
     this._connectionPort = null;
   }
@@ -56,14 +53,13 @@ module.exports = class IonCore {
 
     // Listen for addon install/uninstall and keep the studies
     // installation state up to date.
-    let addonStateHandler = async () => {
-      let studies = await this._availableStudies;
-      // Update the studies list.
-      this._availableStudies = this._availableStudies.then(
-        studies => this.runUpdateInstalledStudiesTask(studies));
-    };
-    browser.management.onInstalled.addListener(addonStateHandler);
-    browser.management.onUninstalled.addListener(addonStateHandler);
+    browser.management.onInstalled.addListener(
+      info => this._handleAddonLifecycle(info, true));
+    // The only reason why we need to listen for uninstallation events
+    // is to catch studies being uninstalled outside of the control
+    // panel.
+    browser.management.onUninstalled.addListener(
+      info => this._handleAddonLifecycle(info, false));
 
     // Listen for incoming messages from the studies.
     //
@@ -90,6 +86,47 @@ module.exports = class IonCore {
     browser.runtime.openOptionsPage().catch(e => {
       console.error(`IonCore.js - Unable to open the control panel`, e);
     });
+  }
+
+  /**
+   * React to studies installation and uninstallation.
+   *
+   * @param {ExtensionInfo} info
+   *        The information about the addon that triggered the event.
+   * @param {Boolean} installed
+   *        `true` if the addon was installed, `false` otherwise.
+   * @returns {Promise} resolved when the new state is completely
+   *          handled.
+   */
+  async _handleAddonLifecycle(info, installed) {
+    // Don't do anything if we received an updated from an addon
+    // that's not an Ion study.
+    let knownStudies = await this._availableStudies;
+    if (!knownStudies.map(s => s.addon_id).includes(info.id)) {
+      console.debug(
+        `IonCore._handleAddonLifecycle - non-study addon ${info.id} was ${installed ? "installed" : "uninstalled"}`
+      );
+      return;
+    }
+
+    // Update the available studies list with the installation
+    // information.
+    this._availableStudies = Promise.resolve(knownStudies.map(s => {
+        if (s.addon_id == info.id) {
+          s.ionInstalled = installed;
+        }
+        return s;
+      })
+    );
+
+    if (installed) {
+      await this._enrollStudy(info.id);
+    } else {
+      // Handle the case of addons being uninstalled manually.
+      await this._unenrollStudy(info.id);
+    }
+
+    await this._sendStateUpdateToUI();
   }
 
   /**
@@ -135,23 +172,21 @@ module.exports = class IonCore {
 
     switch (message.type) {
       case "enrollment": {
-        return this._enroll();
+        return this._enroll()
+                   .then(r => this._sendStateUpdateToUI());
       } break;
       case "get-studies": {
-        this._availableStudies.then(studies => {
-          this._connectionPort.postMessage(
-            {type: "get-studies-response", data: studies});
-        });
-        return Promise.resolve();
-      } break;
-      case "study-enrollment": {
-        return this._enrollStudy(message.data.studyID);
+        return this._sendStateUpdateToUI();
       } break;
       case "study-unenrollment": {
+        // We still need to handle this message, even if we're catching
+        // addon "uninstall" events: we want users to be able to uninstall
+        // from the control panel.
         return this._unenrollStudy(message.data.studyID);
       } break;
       case "unenrollment": {
-        return this._unenroll();
+        return this._unenroll()
+                   .then(r => this._sendStateUpdateToUI());
       } break;
       default:
         return Promise.reject(
@@ -266,7 +301,8 @@ module.exports = class IonCore {
 
     // Attempt to send an uninstall message, but move on if the
     // delivery fails: studies will not be able to send anything
-    // without the Ion Core anyway.
+    // without the Ion Core anyway. Moreover, they might have been
+    // removed manually from the addons pages (e.g. about:addons).
     try {
       await this._sendMessageToStudy(studyAddonId, "uninstall", {});
     } catch (e) {
@@ -363,37 +399,6 @@ module.exports = class IonCore {
   }
 
   /**
-   * An utility function to run a task for updating the status
-   * of the available addons.
-   *
-   * Note that this is needed in order to prevent races between
-   * multiple callers of this functions (e.g. init, addon install,
-   * addon uninstall).
-   *
-   * @param {Array<Object>} studies
-   *        An array containing objects describing Ion studies.
-   * @returns {Promise(Array<Object>)} resolved with an array of studies
-   *          objects, or an empty array on failures. Each study object
-   *          has at least the `addon_id` and `ionInstalled` properties.
-   */
-  async runUpdateInstalledStudiesTask(studies) {
-    // We're already updating the state of the studies.
-    if (this._updateInstalledTask) {
-      return this._updateInstalledTask;
-    }
-
-    // Make sure to clear |_updateInstalledTask| once done.
-    let clear = studies => {
-      this._updateInstalledTask = null;
-      return studies;
-    };
-    // Since there's no archive cleaning task running, start it.
-    this._updateInstalledTask =
-      this._updateInstalledStudies(studies).then(clear, clear);
-    return this._updateInstalledTask;
-  }
-
-  /**
    * Update the `ionInstalled` property for the available studies.
    *
    * @returns {Promise(Array<Object>)} resolved with an array of studies
@@ -432,5 +437,58 @@ module.exports = class IonCore {
       console.error(err);
       return [];
     }
+  }
+
+  /**
+   * Send a message with the latest state to the UI.
+   *
+   * The state has the following format:
+   *
+   * ```js
+   * {
+   *  // The enrollment as a Boolean indicating if user joined
+   *  // the platform.
+   *  enrolled: true,
+   *  // An array with a list of studies, fetched from our servers,
+   *  // and integrated with the install status.
+   *  availableStudies: [
+   *    {
+   *      name: "Demo Study",
+   *      icons: { ... },
+   *      schema: ...,
+   *      authors { ... },
+   *      version: "1.0",
+   *      addon_id: "demo-study@ion.org",
+   *      moreInfo: { ... },
+   *      isDefault: false,
+   *      sourceURI: { ... },
+   *      studyType: "extension",
+   *      studyEnded: false,
+   *      description: "Some nice description",
+   *      privacyPolicy: { ... },
+   *      joinStudyConsent: "...",
+   *      leaveStudyConsent: "...",
+   *      dataCollectionDetails: [ ... ],
+   *      id:"...",
+   *      last_modified: ...,
+   *      // Whether or not the study is currently installed.
+   *      ionInstalled: false
+   *    },
+   *  ]
+   * }
+   * ```
+   */
+  async _sendStateUpdateToUI() {
+    let enrolled = !!(await this._storage.getIonID());
+    let availableStudies = await this._availableStudies;
+
+    const newState = {
+      enrolled,
+      availableStudies,
+    };
+
+    // Send a message to the UI to update the list of studies.
+    this._connectionPort.postMessage(
+      {type: "update-state", data: newState});
   }
 }

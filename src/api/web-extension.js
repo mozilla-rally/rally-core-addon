@@ -76,9 +76,17 @@ export default {
   _connectionPort: null,
 
   // initialize the frontend's store from the add-on local storage.
-  async initialize(key) {
+  async initialize() {
+    // _stateChangeCallbacks holds all the callbacks we want to execute
+    // once the background sends a message with a new state.
+    this._stateChangeCallbacks = [];
+
+    // initialize the connection port.
     this._connectionPort =
       browser.runtime.connect({name: "ion-options-page"});
+
+    this._connectionPort.onMessage.addListener(
+      m => this._handleMessage(m));
 
     // The onDisconnect event is fired if there's no receiving
     // end or in case of any other error. Log an error and clear
@@ -88,8 +96,8 @@ export default {
       this._connectionPort = null;
     });
 
-    // returns the last saved app state.
-    return this.getItem(key);
+    // Ask explicitly for the current state.
+    return this.getAvailableStudies();
   },
 
   // fetch available studies from remote location.
@@ -97,26 +105,18 @@ export default {
   // stored somewhere (i.e. remote settings)
   async getAvailableStudies() {
     let response =
-      waitForCoreResponse(this._connectionPort, "get-studies-response");
+      waitForCoreResponse(this._connectionPort, "update-state");
 
     await sendToCore(this._connectionPort, "get-studies", {});
     return await response;
   },
 
-  // fetch ion enrollment from remote location, if available.
-  // use in the store instantiation.
-  async getIonEnrollment() {
-    // this API function will return Ion enrollment status from a remote source.
-    // use it primarily when instantiating or updating the app store.
-    const state = await this.getItem("__STATE__");
-    state.isEnrolled || false;
-  },
-
   // return the app state from the add-on.
   // this is called on store instantiation.
-  async getItem(key) {
+  async getItem() {
     try {
-      return (await browser.storage.local.get(key))[key];
+      // TODO can this be removed?
+      return await browser.storage.local.get();
     } catch (err) {
       console.error(err);
     }
@@ -140,16 +140,15 @@ export default {
 
   async updateStudyEnrollment(studyID, enroll) {
     if (!enroll) {
+      // Trigger addon uninstallation.
       return await sendToCore(
         this._connectionPort, "study-unenrollment", { studyID }
       ).then(r => true);
     }
 
-    await sendToCore(
-      this._connectionPort, "study-enrollment", { studyID });
-
     // Fetch the study add-on and attempt to install it.
-    const studies = await this.getAvailableStudies();
+    const state = await this.getAvailableStudies();
+    const studies = state.availableStudies;
     const studyMetadata = studies.find(s => s.addon_id === studyID);
 
     // This triggers the install by directing the page toward the sourceURI,
@@ -174,4 +173,38 @@ export default {
 
     return true;
   },
+
+  /**
+   * Handle messages coming from the background script.
+   *
+   * @param {Object} message
+   *        The incoming message, with the following structure:
+   * ```js
+   * {
+   *  type: "message-type",
+   *  data: { ... },
+   * }
+   * ```
+   */
+  async _handleMessage(message) {
+    switch (message.type) {
+      case "update-state": {
+        // update the UI.
+        this._stateChangeCallbacks.forEach(callback => callback(message.data));
+      } break;
+      default:
+        return Promise.reject(
+          new Error(`Ion - unexpected message type ${message.type}`));
+    }
+  },
+
+  /**
+   * Handle state updates from the background script.
+   *
+   * @param {Function} callback
+   *        A function that has the new state as an argument.
+   */
+  onNextState(callback) {
+    this._stateChangeCallbacks.push(callback);
+  }
 };

@@ -12,6 +12,16 @@ describe('Storage', function () {
     this.storage = new Storage();
   });
 
+  describe('getItem()', async function () {
+    it('should return undefined on errors', async function () {
+      chrome.storage.local.get.rejects();
+
+      let stored = await this.storage.getItem("irrelevant-key");
+
+      assert.ok(stored === undefined);
+    });
+  });
+
   describe('appendActivatedStudy()', async function () {
     it('should correctly append studies on first run', async function () {
       const TEST_ADDON_ID = "test-id@ion.com";
