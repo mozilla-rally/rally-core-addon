@@ -1,3 +1,41 @@
+<style>
+  h2 {
+    font-size: 38px;
+  }
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 2em;
+    margin-top: 2em;
+  }
+
+  h4 {
+    font-size: 16px;
+    margin-bottom: 0px;
+    margin-top: 2em;
+  }
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink-50);
+  }
+
+  h3,
+  h4 {
+    font-family: "Metropolis";
+  }
+
+  p,
+  ul {
+    color: var(--color-marketing-gray-70);
+  }
+
+  hr {
+    border-top: 2px dotted var(--color-marketing-gray-50);
+    margin-bottom: 2rem;
+  }
+</style>
+
 <h2>Our Privacy Consent Notice</h2>
 
 <p>
@@ -6,8 +44,6 @@
 </p>
 
 <hr />
-
-<h3>Ion Privacy Notice</h3>
 
 <p>
   Pioneer is an experimental initiative led by Mozilla to better understand how
@@ -32,15 +68,19 @@
 
 <h4>Demographic data</h4>
 
-We collect optional, self-reported demographic data from Pioneer participants,
-including their age, gender, race/ethnicity, education level, household income,
-and zip code.
+<p>
+  We collect optional, self-reported demographic data from Pioneer participants,
+  including their age, gender, race/ethnicity, education level, household
+  income, and zip code.
+</p>
 
 <h4>Technical data</h4>
 
-We collect basic information about your device’s operating system. When Firefox
-sends data to us, your IP address is temporarily collected as part of our server
-logs.
+<p>
+  We collect basic information about your device’s operating system. When
+  Firefox sends data to us, your IP address is temporarily collected as part of
+  our server logs.
+</p>
 
 <h4>Interaction data</h4>
 <p>
@@ -64,10 +104,17 @@ logs.
 </p>
 
 <ul>
-  • To determine which participants meet the criteria to be available to
-  participate in particular research studies • To ensure our data sets are
-  representative of the many users of Firefox • To improve our existing products
-  and services • To create and develop new products
+  <li>
+    To determine which participants meet the criteria to be available to
+    participate in particular research studies
+  </li>
+  <li>
+    To ensure our data sets are representative of the many users of Firefox
+  </li>
+  <li>
+    To improve our existing products and services • To create and develop new
+    products
+  </li>
 </ul>
 
 <h3>Who We May Disclose Information To</h3>
