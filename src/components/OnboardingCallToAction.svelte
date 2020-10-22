@@ -6,13 +6,13 @@
 <style>
   .onboarding-cta-container {
     height: 430px;
-    background: linear-gradient(to top, rgb(249, 249, 251) 65%, transparent);
+    background: linear-gradient(to top, rgb(249, 249, 251) 55%, transparent);
     position: sticky;
     width: 100%;
     bottom: 0;
     width: 100%;
     display: grid;
-    grid-template-rows: [blank] 1fr [call-to-action] 1fr [steps] 1fr;
+    grid-template-rows: [blank] 2fr [call-to-action] 1fr [steps] 1fr;
     align-items: center;
   }
 
