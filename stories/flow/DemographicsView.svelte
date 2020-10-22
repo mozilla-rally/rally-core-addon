@@ -11,17 +11,19 @@
   onMount(() => {
     mounted = true;
   });
+
+  let results;
 </script>
 
 {#if mounted}
   <div in:fly={{ duration: 800, y: 5 }}>
     <Layout>
-      <Main>
-        <Demographics />
+      <Main padForOnboarding>
+        <Demographics bind:results />
       </Main>
       <OnboardingCallToAction step={3}>
         <CallToAction
-          on:save={() => console.log('save')}
+          on:save={() => console.log('save', results)}
           on:skip={() => console.log('skip')} />
       </OnboardingCallToAction>
     </Layout>

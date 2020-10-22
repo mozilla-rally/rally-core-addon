@@ -1,15 +1,19 @@
 <script>
   export let step = 1;
   export let totalSteps = 3;
+  export let transparent = false;
+
+  $: style = transparent ? `--background: none` : undefined;
 </script>
 
 <style>
   .onboarding-cta-container {
-    height: 430px;
-    background: linear-gradient(to top, rgb(249, 249, 251) 55%, transparent);
-    position: sticky;
-    width: 100%;
+    --background: linear-gradient(to top, rgb(249, 249, 251) 55%, transparent);
+    height: var(--onboarding-cta-height);
+    background: var(--background);
+    position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
     display: grid;
     grid-template-rows: [blank] 2fr [call-to-action] 1fr [steps] 1fr;
@@ -38,7 +42,7 @@
   }
 </style>
 
-<div class="onboarding-cta-container">
+<div class="onboarding-cta-container" {style}>
   <div class="onboarding-cta-inner">
     <slot />
   </div>

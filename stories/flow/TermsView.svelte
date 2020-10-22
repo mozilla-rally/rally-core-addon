@@ -16,7 +16,7 @@
 {#if mounted}
   <div in:fly={{ duration: 800, y: 5 }}>
     <Layout>
-      <Main>
+      <Main padForOnboarding>
         <Terms />
       </Main>
       <OnboardingCallToAction step={2}>

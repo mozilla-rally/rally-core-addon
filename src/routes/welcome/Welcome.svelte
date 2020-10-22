@@ -12,7 +12,7 @@
 <style>
   .mzp-c-call-out {
     background-color: transparent;
-    min-height: 100vh;
+    min-height: calc(100vh - 2.5rem);
     padding: 0px;
   }
 
