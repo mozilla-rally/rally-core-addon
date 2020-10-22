@@ -1,5 +1,6 @@
 import WelcomeView from './WelcomeView.svelte';
 import TermsView from './TermsView.svelte';
+import DemographicsView from './DemographicsView.svelte';
 
 export default {
     title: "Core Add-On Onboarding Flow",
@@ -14,4 +15,8 @@ export default {
 
   export const Terms = () => ({
       Component: TermsView
+  })
+
+  export const Demographics = () => ({
+    Component: DemographicsView
   })
