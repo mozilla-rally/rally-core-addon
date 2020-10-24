@@ -225,9 +225,9 @@
         {schema[question].label}
       </legend>
 
-      <div class="mzp-c-choices" class:mzp-is-error={!$zipValidity.valid}>
+      <div class="mzp-c-choices">
         {#if schema[question].type === 'text'}
-          <div class="mzp-c-choice">
+          <div class="mzp-c-choice" class:mzp-is-error={!$zipValidity.valid}>
             <input
               use:validateZip={results[question]}
               type="text"

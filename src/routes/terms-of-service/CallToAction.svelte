@@ -24,13 +24,6 @@
     align-items: center;
   }
 
-  .call-note {
-    font-size: 14px;
-    justify-self: end;
-    font-style: italic;
-    color: var(--color-blue-50);
-  }
-
   .arrow {
     width: 0px;
     height: 0px;
@@ -49,7 +42,7 @@
     Cancel
   </Button>
   {#if showArrow === true}
-    <div transition:fade={{ duration: 500 }} class="call-note">
+    <div transition:fade={{ duration: 500 }} class="shortcut-callout">
       please read through before accepting
     </div>
     <div class="arrow">
