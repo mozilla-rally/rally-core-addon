@@ -4,7 +4,7 @@
   import Layout from "../../src/components/Layout.svelte";
   import Main from "../../src/components/Main.svelte";
   import Demographics from "../../src/routes/demographics/Body.svelte";
-  import OnboardingCallToAction from "../../src/components/OnboardingCallToAction.svelte";
+  import OnboardingCTAContainer from "../../src/components/OnboardingCTAContainer.svelte";
   import CallToAction from "../../src/routes/demographics/CallToAction.svelte";
 
   let mounted = false;
@@ -21,11 +21,11 @@
       <Main padForOnboarding>
         <Demographics bind:results />
       </Main>
-      <OnboardingCallToAction step={3}>
+      <OnboardingCTAContainer step={3}>
         <CallToAction
           on:save={() => console.log('save', results)}
           on:skip={() => console.log('skip')} />
-      </OnboardingCallToAction>
+      </OnboardingCTAContainer>
     </Layout>
   </div>
 {/if}

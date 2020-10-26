@@ -4,7 +4,7 @@
   import Layout from "../../src/components/Layout.svelte";
   import Main from "../../src/components/Main.svelte";
   import Terms from "../../src/routes/terms-of-service/OnboardingTOC.svelte";
-  import OnboardingCallToAction from "../../src/components/OnboardingCallToAction.svelte";
+  import OnboardingCTAContainer from "../../src/components/OnboardingCTAContainer.svelte";
   import CallToAction from "../../src/routes/terms-of-service/CallToAction.svelte";
 
   let mounted = false;
@@ -19,11 +19,11 @@
       <Main padForOnboarding>
         <Terms />
       </Main>
-      <OnboardingCallToAction step={2}>
+      <OnboardingCTAContainer step={2}>
         <CallToAction
           on:accept={() => console.log('accept')}
           on:cancel={() => console.log('cancel')} />
-      </OnboardingCallToAction>
+      </OnboardingCTAContainer>
     </Layout>
   </div>
 {/if}

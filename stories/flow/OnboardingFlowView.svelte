@@ -5,7 +5,7 @@
   import Welcome from "../../src/routes/welcome/Welcome.svelte";
   import Demographics from "../../src/routes/demographics/Body.svelte";
   import TermsOfService from "../../src/routes/terms-of-service/OnboardingTOC.svelte";
-  import OnboardingCallToAction from "../../src/components/OnboardingCallToAction.svelte";
+  import OnboardingCTAContainer from "../../src/components/OnboardingCTAContainer.svelte";
 
   import DemographicsCallToAction from "../../src/routes/demographics/CallToAction.svelte";
   import TermsCallToAction from "../../src/routes/terms-of-service/CallToAction.svelte";
@@ -44,7 +44,7 @@
           <Demographics bind:results />
         {/if}
       </Main>
-      <OnboardingCallToAction
+      <OnboardingCTAContainer
         step={step(which)}
         transparent={which === 'welcome'}>
         {#if which === 'terms'}
@@ -62,7 +62,7 @@
             }}
             on:skip={() => send('welcome')} />
         {/if}
-      </OnboardingCallToAction>
+      </OnboardingCTAContainer>
     </Layout>
   </div>
 {/if}

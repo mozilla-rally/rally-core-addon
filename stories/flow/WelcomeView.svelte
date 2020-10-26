@@ -5,7 +5,7 @@
   import Main from "../../src/components/Main.svelte";
   import Welcome from "../../src/routes/welcome/Welcome.svelte";
   import FirstRunArrow from "../../src/routes/welcome/FirstRunArrow.svelte";
-  import OnboardingCallToAction from "../../src/components/OnboardingCallToAction.svelte";
+  import OnboardingCTAContainer from "../../src/components/OnboardingCTAContainer.svelte";
 
   let mounted = false;
   onMount(() => {
@@ -22,7 +22,7 @@
         <Welcome on:get-started={() => console.log('get started')} {firstRun} />
       </div>
     </Main>
-    <OnboardingCallToAction step={1} transparent />
+    <OnboardingCTAContainer step={1} transparent />
   </Layout>
   {#if firstRun}
     <FirstRunArrow />
