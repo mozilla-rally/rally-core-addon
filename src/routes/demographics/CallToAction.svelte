@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { fade } from "svelte/transition";
+  import { fade, fly } from "svelte/transition";
   import Arrow02 from "../../components/Arrow02.svelte";
   import Button from "../../components/Button.svelte";
 
@@ -14,14 +14,13 @@
   } else {
     showArrow = true;
   }
+
+  let intro = false;
 </script>
 
 <style>
   .call-flow {
-    display: grid;
     grid-template-columns: max-content max-content auto 0px;
-    grid-gap: 1rem;
-    align-items: center;
   }
 
   .arrow {
@@ -34,16 +33,25 @@
 
 <svelte:window bind:scrollY />
 
-<div class="call-flow">
+<div
+  class="call-flow"
+  in:fly={{ duration: 200, y: 5 }}
+  out:fly={{ duration: 200, y: -5 }}
+  on:introend={() => {
+    intro = true;
+  }}>
   <Button size="xl" product on:click={() => dispatch('save')}>
     Save & Continue
   </Button>
   <Button size="xl" product secondary on:click={() => dispatch('skip')}>
-    Cancel
+    Skip for Now
   </Button>
-  {#if showArrow === true}
-    <div transition:fade={{ duration: 500 }} class="shortcut-callout">
-      please read through before accepting
+  {#if showArrow & intro}
+    <div
+      transition:fade={{ duration: 500 }}
+      class="shortcut-callout"
+      style="text-align: right;">
+      all 7 questions are optional; they help researchers parse data
     </div>
     <div class="arrow">
       <Arrow02 />

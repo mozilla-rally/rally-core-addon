@@ -1,6 +1,7 @@
 import WelcomeView from './WelcomeView.svelte';
 import TermsView from './TermsView.svelte';
 import DemographicsView from './DemographicsView.svelte';
+import OnboardingFlowView from './OnboardingFlowView.svelte'
 
 export default {
     title: "Core Add-On Onboarding Flow",
@@ -33,3 +34,7 @@ export const Demographics = () => ({
   Component: DemographicsView
 })
 Demographics.storyName = "3. Demographics Survey";
+
+export const OnboardingFlow = () => ({
+  Component: OnboardingFlowView
+})

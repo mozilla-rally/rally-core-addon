@@ -53,9 +53,11 @@
   }
 </style>
 
-<section class="mzp-c-call-out" in:fly={{ duration: 400, y: 5 }}>
-  <div class="mzp-l-content ">
-    <div style="width: 60px; margin: auto; padding-bottom: 1rem;">
+<section class="mzp-c-call-out">
+  <div class="mzp-l-content" in:fly={{ duration: 800, y: 5 }}>
+    <div
+      style="width: 60px; margin: auto; padding-bottom: 1rem;"
+      in:fly={{ duration: 800, y: 5 }}>
       <Logo />
     </div>
     <h2 class="mzp-c-call-out-title mzp-has-zap-1">
@@ -98,6 +100,7 @@
     </div>
 
     <div
+      in:fly={{ duration: 800, y: 5 }}
       class="mzp-c-button-download-container"
       style="width: 185px; display: grid; margin: auto;">
       <Button size="xl" product on:click={() => dispatch('get-started')}>

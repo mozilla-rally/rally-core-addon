@@ -1,5 +1,5 @@
 <script>
-  import { draw, fly, fade } from "svelte/transition";
+  import { draw, fly } from "svelte/transition";
   export let delay = 0;
 </script>
 
@@ -14,11 +14,11 @@
     stroke="url(#paint0_linear)"
     stroke-width="2"
     in:draw={{ duration: 1000, delay }}
-    out:draw={{ duration: 500, delay }}
+    out:draw|local={{ duration: 500, delay }}
     stroke-linecap="round" />
   <g
     in:fly={{ x: 10, y: 5, delay: 800 + delay, opacity: 0 }}
-    out:fly={{ duration: 350, delay, x: 20, y: 10 }}>
+    out:fly|local={{ duration: 350, delay, x: 20, y: 10 }}>
     <path
       d="M16.7936 6.80449C16.2329 5.50077 15.0019 2.53349 15.5375 1.87833C16.1876 1.08304 17.9814 1.6468 20.0777 2.08646C21.8484 2.45783 24.5709 2.9662 24.3878 4.0835C24.2626 4.84797 21.9746 4.79424 20.8596 6.12262C20.0794 7.05222 19.8038 9.26208 19.0255 9.56392C18.2472 9.86577 17.3544 8.10822 16.7936 6.80449Z"
       fill="#F53A68" />

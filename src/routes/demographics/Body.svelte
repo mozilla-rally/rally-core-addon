@@ -67,6 +67,7 @@
     age: {
       key: "age",
       label: "1. What is your age?",
+      columns: true,
       values: [
         { key: "19-24", label: "19-24 years old" },
         { key: "25-34", label: "25-34 years old" },
@@ -81,6 +82,7 @@
       key: "gender",
       label: "2. What is your gender?",
       type: "single",
+      columns: true,
       values: [
         { key: "male", label: "Male" },
         { key: "female", label: "Female" },
@@ -101,14 +103,15 @@
       key: "race",
       label: "4. What is your race?",
       type: "multi",
+      columns: true,
       values: [
         { key: "white", label: "White" },
         {
           key: "american_indian_or_alaska_native",
           label: "American Indian or Alaska Native",
         },
-        { key: "chines", label: "Neither choice describes me" },
-        { key: "filipino", label: "Decline to identify" },
+        { key: "chinese", label: "Chinese" },
+        { key: "filipino", label: "Filipino" },
         { key: "asian_indian", label: "Asian Indian" },
         { key: "vietnamese", label: "Vietnamese" },
         { key: "korean", label: "Korean" },
@@ -160,6 +163,7 @@
       label:
         "6. What is your household's combined annual income during the past 12 months?",
       type: "single",
+      columns: 3,
       values: [
         { key: "0-24999", label: "$0 - $24,999" },
         { key: "25000-49999", label: "$25,000 - $49,999" },
@@ -200,75 +204,65 @@
   }, {});
 </script>
 
-<style>
-  .mzp-c-choice {
-    display: flex;
-    grid-gap: 1rem;
-    align-items: center;
-  }
-</style>
+<div in:fly={{ duration: 800, y: 5 }}>
+  <h2>Let's set up your profile</h2>
 
-<h2>Let's set up your profile</h2>
+  <p>
+    Don’t worry, it’s completely annonymous; it’s used by researchers to lorem
+    ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+    incididunt ut.
+  </p>
 
-<p>
-  Don’t worry, it’s completely annonymous; it’s used by researchers to lorem
-  ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-  incididunt ut.
-</p>
+  <hr />
 
-<!-- radio question. Bind to survey object. -->
+  <form class="mzp-c-form">
+    {#each Object.keys(results) as question}
+      <fieldset class="mzp-c-field-set">
+        <legend class="mzp-c-field-label" for={schema[question].key}>
+          {schema[question].label}
+        </legend>
 
-<form class="mzp-c-form">
-  {#each Object.keys(results) as question}
-    <fieldset class="mzp-c-field-set">
-      <legend class="mzp-c-field-label" for={schema[question].key}>
-        {schema[question].label}
-      </legend>
-
-      <div class="mzp-c-choices">
-        {#if schema[question].type === 'text'}
-          <div class="mzp-c-choice" class:mzp-is-error={!$zipValidity.valid}>
-            <input
-              use:validateZip={results[question]}
-              type="text"
-              bind:value={results[question]} />
-            {#if $zipValidity.dirty && !$zipValidity.valid}
-              <span
-                class="mzp-c-fieldnote"
-                transition:fly={{ duration: 300, y: 5 }}>
-                {$zipValidity.message}
-              </span>
-            {/if}
-          </div>
-        {:else}
-          {#each schema[question].values as answer}
-            <div class="mzp-c-choice">
-              {#if schema[question].type === 'single'}
-                <input
-                  class="mzp-c-choice-control"
-                  type="radio"
-                  id="answer-{answer.key}"
-                  bind:group={results[question]}
-                  value={answer.key} />
-              {:else if schema[question].type === 'multi'}
-                <input
-                  class="mzp-c-choice-control"
-                  type="checkbox"
-                  id="answer-{answer.key}"
-                  bind:group={results[question]}
-                  value={answer.key} />
+        <div class="mzp-c-choices">
+          {#if schema[question].type === 'text'}
+            <div class="mzp-c-choice" class:mzp-is-error={!$zipValidity.valid}>
+              <input
+                use:validateZip={results[question]}
+                type="text"
+                bind:value={results[question]} />
+              {#if $zipValidity.dirty && !$zipValidity.valid}
+                <span
+                  class="mzp-c-fieldnote"
+                  transition:fly={{ duration: 300, y: 5 }}>
+                  {$zipValidity.message}
+                </span>
               {/if}
-              <label class="mzp-c-choice-label" for="answer-{answer.key}">
-                {answer.label}
-              </label>
             </div>
-          {/each}
-        {/if}
-      </div>
-    </fieldset>
-  {/each}
-</form>
-
-<!-- checkbox question. Bind to survey object. -->
-
-<!-- text box question -->
+          {:else}
+            {#each schema[question].values as answer}
+              <div class="mzp-c-choice">
+                {#if schema[question].type === 'single'}
+                  <input
+                    class="mzp-c-choice-control"
+                    type="radio"
+                    id="answer-{answer.key}"
+                    bind:group={results[question]}
+                    value={answer.key} />
+                {:else if schema[question].type === 'multi'}
+                  <input
+                    class="mzp-c-choice-control"
+                    type="checkbox"
+                    id="answer-{answer.key}"
+                    bind:group={results[question]}
+                    value={answer.key} />
+                {/if}
+                <label class="mzp-c-choice-label" for="answer-{answer.key}">
+                  {answer.label}
+                </label>
+              </div>
+            {/each}
+          {/if}
+        </div>
+      </fieldset>
+    {/each}
+  </form>
+</div>

@@ -1,6 +1,6 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import { fade } from "svelte/transition";
+  import { onMount, createEventDispatcher } from "svelte";
+  import { fade, fly } from "svelte/transition";
   import Arrow01 from "../../components/Arrow01.svelte";
   import Button from "../../components/Button.svelte";
 
@@ -14,14 +14,18 @@
   } else {
     showArrow = true;
   }
+
+  // let mounted = false;
+  // onMount(() => {
+  //   mounted = true;
+  // });
+
+  let intro = false;
 </script>
 
 <style>
   .call-flow {
-    display: grid;
     grid-template-columns: max-content max-content auto 0px;
-    grid-gap: 1rem;
-    align-items: center;
   }
 
   .arrow {
@@ -34,15 +38,24 @@
 
 <svelte:window bind:scrollY />
 
-<div class="call-flow">
+<div
+  class="call-flow"
+  in:fly={{ duration: 200, y: 5 }}
+  out:fly={{ duration: 200, y: -5 }}
+  on:introend={() => {
+    intro = true;
+  }}>
   <Button size="xl" product on:click={() => dispatch('accept')}>
     Accept and Participate
   </Button>
   <Button size="xl" product secondary on:click={() => dispatch('cancel')}>
     Cancel
   </Button>
-  {#if showArrow === true}
-    <div transition:fade={{ duration: 500 }} class="shortcut-callout">
+  {#if showArrow && intro}
+    <div
+      transition:fade={{ duration: 400 }}
+      class="shortcut-callout"
+      style="text-align: right;">
       please read through before accepting
     </div>
     <div class="arrow">
