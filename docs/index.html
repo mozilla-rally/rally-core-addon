@@ -154,6 +154,25 @@
         font-weight: 600;
       }
     </style>
+    <script type="text/javascript">
+      // Always install this handler:
+      //
+      // - if the addon is already installed, it will respond to the message
+      //   we'll send on page load;
+      // - if the addon is not installed, it will send a message as soon as
+      //   it gets installed.
+      window.addEventListener("web-check-response", event => {
+        console.debug("Ion - 'web-check-response' message received from the Core Addon");
+        document.getElementById("installButton").style.display = "none";
+        document.getElementById("installedBlob").style.display = "block";
+      });
+
+      // Dispatch a 'web-check' event as soon as the page is loaded:
+      // if the addon is already installed, we will receive a response.
+      window.onload = () => {
+        window.dispatchEvent(new CustomEvent("web-check", { detail: {} }));
+      }
+    </script>
   </head>
   <body>
     <h1>
@@ -179,15 +198,19 @@
       Put your data to work for a better internet.
     </h1>
     <a
+      id="installButton"
       tabindex="0"
       href="https://github.com/mozilla-ion/ion-core-addon/releases/download/2.1/ion_core-2.1.xpi"
       >Install the Ion Web Extension</a
     >
+    <div id="installedBlob" style="display: none">
+      Congratulations! Ion is installed and ready!
+    </div>
     <div>
       <b style="text-transform: uppercase">Note</b> – this is demoware. You're
       going to need to run Nightly and set in <code>about:config</code> the
       following:
-      <ul>        
+      <ul>
         <li>
           <code>xpinstall.signatures.required = false</code>
         </li>
