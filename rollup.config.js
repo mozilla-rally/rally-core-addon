@@ -35,7 +35,7 @@ function serve() {
     },
   };
 }
-console.error('BUILDING!')
+
 export default {
   input: "src/main.js",
   output: {
