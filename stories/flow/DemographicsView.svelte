@@ -1,9 +1,8 @@
 <script>
   import { onMount } from "svelte";
-  import { fly } from "svelte/transition";
   import Layout from "../../src/components/Layout.svelte";
   import Main from "../../src/components/Main.svelte";
-  import Demographics from "../../src/routes/demographics/Body.svelte";
+  import Demographics from "../../src/routes/demographics/Content.svelte";
   import OnboardingCTAContainer from "../../src/components/OnboardingCTAContainer.svelte";
   import CallToAction from "../../src/routes/demographics/CallToAction.svelte";
 
@@ -16,7 +15,7 @@
 </script>
 
 {#if mounted}
-  <div in:fly={{ duration: 800, y: 5 }}>
+  <div>
     <Layout>
       <Main padForOnboarding>
         <Demographics bind:results />

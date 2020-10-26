@@ -3,7 +3,7 @@
   import { fly } from "svelte/transition";
   import Layout from "../../src/components/Layout.svelte";
   import Main from "../../src/components/Main.svelte";
-  import Welcome from "../../src/routes/welcome/Welcome.svelte";
+  import Welcome from "../../src/routes/welcome/Content.svelte";
   import FirstRunArrow from "../../src/routes/welcome/FirstRunArrow.svelte";
   import OnboardingCTAContainer from "../../src/components/OnboardingCTAContainer.svelte";
 
