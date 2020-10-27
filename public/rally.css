@@ -62,3 +62,75 @@ main hr {
   border-top: 1px dashed var(--color-black);
   margin-bottom: 2rem;
 }
+
+.radius-sm {
+  border-radius: 4px;
+}
+
+.body-copy {
+  color: var(--color-marketing-gray-70);
+}
+
+.text-head-sm {
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -1%;
+  font-weight: 700;
+}
+
+.text-body-xs {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--color-marketing-gray-60);
+}
+
+.text-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-body-md {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.text-display-xxs {
+  font-size: 1rem;
+  line-height: 1.1;
+}
+
+.text-display-xs {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.text-display-sm {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.text-display-md {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.text-display-lg {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.text-display-xl {
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+
+.text-display-xxl {
+  font-size: 4rem;
+  font-weight: 700;
+}
