@@ -1,5 +1,5 @@
 <script>
-  import { onMount, createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from "svelte";
   import { fade, fly } from "svelte/transition";
   import Arrow01 from "../../components/Arrow01.svelte";
   import Button from "../../components/Button.svelte";
@@ -14,11 +14,6 @@
   } else {
     showArrow = true;
   }
-
-  // let mounted = false;
-  // onMount(() => {
-  //   mounted = true;
-  // });
 
   let intro = false;
 </script>
