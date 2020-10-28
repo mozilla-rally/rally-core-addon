@@ -42,6 +42,17 @@
     ]
   },
 
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mozilla-ion.github.io/*"
+      ],
+      "js": [
+        "public/addon-build/content-script.js"
+      ]
+    }
+  ],
+
   "browser_action": {
     "default_icon": "images/ion.svg"
   },

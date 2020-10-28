@@ -20,6 +20,7 @@ describe('IonCore', function () {
       "addon_id": FAKE_STUDY_ID_NOT_INSTALLED
     }
   ];
+  FAKE_WEBSITE = "https://test.website";
 
   beforeEach(function () {
     // Force the sinon-chrome stubbed API to resolve its promise
@@ -44,7 +45,9 @@ describe('IonCore', function () {
       }
     });
 
-    this.ionCore = new IonCore();
+    this.ionCore = new IonCore({
+      website: FAKE_WEBSITE
+    });
 
     // Mock the channel to the UI.
     this.ionCore._connectionPort = {
@@ -382,6 +385,22 @@ describe('IonCore', function () {
               SENT_PING.keyId,
               sinon.match(SENT_PING.key)
             ).calledOnce
+      );
+    });
+  });
+
+  describe('_handleWebMessage()', function () {
+    it('rejects unknown websites', function () {
+      assert.rejects(
+        this.ionCore._handleWebMessage({}, {url: "https://unknown.example.com"}),
+        { message: "IonCore - received message from unexpected URL https://unknown.example.com"}
+      );
+    });
+
+    it('rejects unknown addon ids', function () {
+      assert.rejects(
+        this.ionCore._handleWebMessage({}, {url: FAKE_WEBSITE, id: "unknown-test-id"}),
+        { message: "IonCore - received message from an unexpected webextension unknown-test-id"}
       );
     });
   });

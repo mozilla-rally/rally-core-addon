@@ -8,17 +8,19 @@ const DataCollection = require("./DataCollection.js");
 // The path of the embedded resource used to control Ion options.
 const ION_OPTIONS_PAGE_PATH = "public/index.html";
 
-// NOTE: if this URL ever changes, you will have to update the domain in
-// the permissions in manifest.json.
 const ION_DEFAULT_ARGS = {
-  availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records"
+  // NOTE: if this URL ever changes, you will have to update the domain in
+  // the permissions in manifest.json.
+  availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records",
+  website: "https://mozilla-ion.github.io",
 }
 
 module.exports = class IonCore {
    /**
   * @param {Object} args arguments passed in from the user.
-  * @param {String} args.availablStudiesURI the URI where the available Ion studies 
+  * @param {String} args.availableStudiesURI the URI where the available Ion studies
   *             information is listed.
+  * @param {String} args.website the URL of the platform website.
   */
   constructor(args = {}) {
     this._userArguments = {...ION_DEFAULT_ARGS, ...args};
@@ -80,6 +82,10 @@ module.exports = class IonCore {
     // asynchronous calls and updates to the studies list.
     browser.runtime.onMessageExternal.addListener(
       async (m, s) => this._handleExternalMessage(m, s));
+
+    // Listen for messages from the Website.
+    browser.runtime.onMessage.addListener(
+      (m, s) => this._handleWebMessage(m, s));
   }
 
   _openControlPanel() {
@@ -229,6 +235,63 @@ module.exports = class IonCore {
       default:
         return Promise.reject(
           new Error(`IonCore._handleExternalMessage - unexpected message type ${message.type}`));
+    }
+  }
+
+  /**
+   * Handles messages coming in from the external website.
+   *
+   * @param {Object} message
+   *        The payload of the message.
+   * @param {runtime.MessageSender} sender
+   *        An object containing information about who sent
+   *        the message.
+   * @returns {Promise} The response to the received message.
+   *          It can be resolved with a value that is sent to the
+   *          `sender` or rejected in case of errors.
+   */
+  _handleWebMessage(message, sender) {
+    console.log(`IonCore - received web message ${message} from ${sender}`);
+
+    try {
+      let platformURL = new URL(this._userArguments.website);
+      let senderURL = new URL(sender.url);
+
+      if (platformURL.origin != senderURL.origin) {
+        return Promise.reject(
+          new Error(`IonCore - received message from unexpected URL ${sender.url}`));
+      }
+    } catch (ex) {
+      return Promise.reject(
+        new Error(`IonCore - cannot validate sender URL ${sender.url}`));
+    }
+
+    // We should have received the message from our core addon.
+    if (sender.id !== browser.runtime.id) {
+      return Promise.reject(
+        new Error(`IonCore - received message from an unexpected webextension ${sender.id}`));
+    }
+
+    // ** IMPORTANT **
+    //
+    // The website should *NOT EVER* be trusted. Other addons could be
+    // injecting content scripts there too, impersonating the website
+    // and performing requests on its behalf.
+    //
+    // Do not ever add other features or messages here without thinking
+    // thoroughly of the implications: can the message be used to leak
+    // information out? Can it be used to mess with studies?
+    //
+    // The `web-check` message should be safe: any installed addon with
+    // the `management` privileges could check for the presence of the
+    // core addon and expose that to the web. By exposing this ourselves
+    // through content scripts enabled on our domain, we don't make things
+    // worse.
+    if (message.type && message.type === "web-check") {
+      return Promise.resolve({
+        type: "web-check-response",
+        data: {}
+      });
     }
   }
 
