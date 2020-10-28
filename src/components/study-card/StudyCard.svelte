@@ -1,8 +1,14 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { slide } from "svelte/transition";
   import Button from "../Button.svelte";
   import DataCollected from "../icons/DataCollected.svelte";
   import Details from "../icons/Details.svelte";
+
+  import AccordionButton from "../accordion/AccordionButton.svelte";
+  import Accordion from "../accordion/Accordion.svelte";
+
+  let revealed = false;
 
   export let endDate;
   export let joined = false;
@@ -41,20 +47,12 @@
   }
 
   .study-card-container {
+    --icon-size: 40px;
+    --gap: 1.5rem;
+    --left-pad: calc(var(--icon-size) + var(--gap));
     background-color: var(--color-white);
-    width: 660px;
-    padding: 1rem;
-    box-shadow: var(--box-shadow-xs);
-    /* display: grid;
-    grid-column-gap: 1.5rem;
-    grid-row-gap: 1.5rem;
-    grid-template-columns: 40px auto max-content;
-    grid-template-rows: auto auto auto auto auto;
-    grid-template-areas:
-      "image title cta"
-      "empty description description description description description description"
-      "empty data-collected data-collected data-collected details details details"
-      "tags tags tags tags tags tags privacy-policy"; */
+    padding: 1.25rem;
+    box-shadow: var(--rally-box-shadow-xs);
   }
 
   .study-card-header {
@@ -78,15 +76,12 @@
   }
 
   h3 {
-    grid-area: title;
-    /* font-size: 1.5rem; */
     margin: 0px;
-    padding: 0px;
-    font-size: 24px;
+    grid-area: title;
   }
 
   .study-card-body {
-    padding-left: calc(1.5rem + 40px);
+    padding-left: var(--left-pad);
     display: grid;
     grid-template-columns: auto auto;
     padding-bottom: 1.25rem;
@@ -95,6 +90,10 @@
 
   .study-card-description {
     grid-column: 1 / span 2;
+  }
+
+  .study-card-description h4 {
+    padding-bottom: 0.5rem;
   }
 
   h4 {
@@ -169,48 +168,56 @@
       <div class="study-card-author text-body-xs">
         by
         <slot name="author">author</slot>
-      </div>
-      <div class="study-card-date text-body-xs">
-        ends
+        | Ends:
         {months[endDate.getMonth()]}
         {endDate.getDate()},
         {endDate.getFullYear()}
       </div>
     </div>
     <div class="study-card-cta">
-      <Button product>
+      <Button product={!joined} leave={joined}>
         {#if joined}Leave Study{:else}Join Study{/if}
       </Button>
     </div>
   </div>
-  <div class="study-card-body">
-    <div class="study-card-description body-copy text-body-sm">
-      <h4 class="text-display-xxs">Study Description</h4>
-      <slot name="description">
-        <p>description missing</p>
-      </slot>
+  {#if joined}
+    <div style="padding-bottom: 1.5rem; padding-left: var(--left-pad);">
+      <AccordionButton bind:revealed>
+        <span class="text-body-sm">View More Information</span>
+      </AccordionButton>
     </div>
+  {/if}
 
-    {#if dataCollectionDetails.length}
-      <div
-        class="study-card-section  study-card-collected body-copy text-body-sm">
-        <DataCollected />
-        <h4 class="text-display-xxs">Data Collected</h4>
-        <ul class="study-card-section-body body-copy text-body-sm">
-          {#each dataCollectionDetails as detail}
-            <li>{detail}</li>
-          {/each}
-        </ul>
+  {#if revealed || !joined}
+    <div class="study-card-body" transition:slide={{ duration: 200 }}>
+      <div class="study-card-description body-copy text-body-sm">
+        <h4 class="text-display-xxs">Study Description</h4>
+        <slot name="description">
+          <p>description missing</p>
+        </slot>
       </div>
-    {/if}
-    <div class="study-card-section study-card-details body-copy text-body-sm">
-      <Details />
-      <h4 class="text-display-xxs">Details</h4>
-      <div class="study-card-section-body">
-        <slot name="details">more details</slot>
+      {#if dataCollectionDetails.length}
+        <div
+          class="study-card-section  study-card-collected body-copy text-body-sm">
+          <DataCollected />
+          <h4 class="text-display-xxs">Data Collected</h4>
+          <ul
+            class="mzp-u-list-styled study-card-section-body body-copy text-body-sm">
+            {#each dataCollectionDetails as detail}
+              <li>{detail}</li>
+            {/each}
+          </ul>
+        </div>
+      {/if}
+      <div class="study-card-section study-card-details body-copy text-body-sm">
+        <Details />
+        <h4 class="text-display-xxs">Details</h4>
+        <div class="study-card-section-body">
+          <slot name="details">more details</slot>
+        </div>
       </div>
     </div>
-  </div>
+  {/if}
 
   <hr />
 

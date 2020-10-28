@@ -41,6 +41,7 @@
       <Button {size} product secondary disabled>product / secondary</Button>
       <Button {size} neutral>neutral</Button>
       <Button {size} neutral disabled>neutral</Button>
+      <Button {size} leave>leave</Button>
     </section>
   {/each}
 </div>

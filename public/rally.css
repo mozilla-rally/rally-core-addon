@@ -4,6 +4,12 @@
   --onboarding-cta-offset: calc(var(--onboarding-cta-height) - 230px);
 }
 
+.gafc {
+  display: grid;
+  align-items: center;
+  grid-auto-flow: column;
+}
+
 .shortcut-callout {
   font-size: 14px;
   justify-self: end;
@@ -88,16 +94,19 @@ main hr {
 .text-body-sm {
   font-size: 0.875rem;
   line-height: 1.5;
+  font-weight: 400;
 }
 
 .text-body-md {
   font-size: 1rem;
   line-height: 1.5;
+  font-weight: 400;
 }
 
 .text-body-lg {
   font-size: 1.125rem;
   line-height: 1.5;
+  font-weight: 400;
 }
 
 .text-display-xxs {
@@ -133,4 +142,24 @@ main hr {
 .text-display-xxl {
   font-size: 4rem;
   font-weight: 700;
+}
+
+/* extended button states */
+
+.mzp-t-leave {
+  background-color: var(--color-marketing-gray-20);
+  color: var(--color-red-60);
+  border-color: var(--color-marketing-gray-20);
+}
+
+.mzp-t-leave:hover {
+  border-color: var(--color-red-60);
+  color: white;
+  background-color: var(--color-red-60);
+}
+
+/* other design system tweaks */
+
+ul.mzp-u-list-styled {
+  margin-left: 1rem;
 }

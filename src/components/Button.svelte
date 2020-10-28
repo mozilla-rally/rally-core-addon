@@ -10,6 +10,8 @@
   export let product = false;
   export let secondary = false;
   export let dark = false;
+  export let leave = false;
+
   export let disabled = false;
 
   const forwardAll = forwardEvents(getComponent());
@@ -19,6 +21,7 @@
   $: neutralClass = neutral ? `mzp-t-neutral` : undefined;
   $: secondaryClass = secondary ? `mzp-t-secondary` : undefined;
   $: darkClass = dark ? `mzp-t-dark` : undefined;
+  $: leaveClass = leave ? `mzp-t-leave` : undefined;
   $: classSet = [
     "mzp-c-button",
     sizeClass,
@@ -26,6 +29,7 @@
     neutralClass,
     darkClass,
     secondaryClass,
+    leaveClass,
   ]
     .filter((t) => t)
     .join(" ");

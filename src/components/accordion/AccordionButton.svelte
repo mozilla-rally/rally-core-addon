@@ -4,9 +4,10 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { slide } from "svelte/transition";
-  import CaretRight from "./icons/CaretRight.svelte";
+  import CaretRight from "../icons/CaretRight.svelte";
 
-  let revealed = false;
+  export let revealed = false;
+  export let flattened = false;
 
   export const expand = (v = false) => {
     revealed = v;
@@ -14,21 +15,14 @@
 </script>
 
 <style>
-  section {
-    box-sizing: border-box;
-    cursor: pointer;
-  }
-
   .accordion-summary {
+    cursor: pointer;
     background-color: transparent;
     border: none;
-    color: white;
     width: 100%;
     text-align: left;
     padding: 0;
     margin: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
     font-weight: 700;
     display: grid;
     grid-template-columns: auto 2rem;
@@ -36,8 +30,6 @@
     grid-template-areas:
       "title carat"
       "description _";
-    padding-bottom: 1rem;
-    padding-top: 1rem;
     transition: background-color 100ms;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -58,32 +50,16 @@
     justify-self: end;
     transition: transform 200ms;
   }
-
-  .expanded-content {
-    box-sizing: border-box;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
 </style>
 
-<section class:revealed>
-  <button
-    on:click={() => {
-      expand(!revealed);
-    }}
-    class="accordion-summary">
-    <div class="title">
-      <slot name="title">Channel</slot>
-      <span
-        class="carat gafc"
-        style="transform: rotate({revealed ? 90 : 0}deg);">
-        <CaretRight size="1em" />
-      </span>
-    </div></button>
-
-  {#if revealed}
-    <div transition:slide={{ duration: 200 }} class="expanded-content">
-      <slot name="content" />
-    </div>
-  {/if}
-</section>
+<button
+  on:click={() => {
+    expand(!revealed);
+  }}
+  class="accordion-summary">
+  <div class="title">
+    <slot>Channel</slot>
+    <span class="carat gafc" style="transform: rotate({revealed ? 90 : 0}deg);">
+      <CaretRight size="1em" />
+    </span>
+  </div></button>
