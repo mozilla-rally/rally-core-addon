@@ -204,6 +204,36 @@
   }, {});
 </script>
 
+<style>
+  [class="mzp-c-choice"] {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  label,
+  input {
+    cursor: pointer;
+  }
+
+  input[type="text"] {
+    cursor: auto;
+  }
+
+  .mzp-c-choice-control[type="radio"] + label::before {
+    transform: translateY(0.13rem);
+  }
+
+  .mzp-c-choice-control[type="checkbox"] + label::before {
+    transform: translateY(0.13rem);
+  }
+
+  legend {
+    color: var(--color-ink-50);
+    font-size: 1rem;
+  }
+</style>
+
 <div in:fly={{ duration: 800, y: 5 }}>
   <h2>Let's set up your profile</h2>
 
@@ -224,7 +254,9 @@
 
         <div class="mzp-c-choices">
           {#if schema[question].type === 'text'}
-            <div class="mzp-c-choice" class:mzp-is-error={!$zipValidity.valid}>
+            <div
+              class="mzp-c-choice mzp-c-choice-text"
+              class:mzp-is-error={!$zipValidity.valid}>
               <input
                 use:validateZip={results[question]}
                 type="text"

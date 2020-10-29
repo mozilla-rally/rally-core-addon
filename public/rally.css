@@ -43,6 +43,13 @@ h6 {
   color: var(--color-ink-50);
 }
 
+p,
+div,
+ul,
+ol {
+  color: var(--color-marketing-black-70);
+}
+
 main h3,
 main h4 {
   font-family: "Metropolis";
