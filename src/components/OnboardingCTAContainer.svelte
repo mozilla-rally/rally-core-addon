@@ -9,7 +9,11 @@
 <style>
   .onboarding-cta-container {
     pointer-events: none;
-    --background: linear-gradient(to top, rgb(249, 249, 251) 55%, transparent);
+    --background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(249, 249, 251) 45%
+    );
     height: var(--onboarding-cta-height);
     background: var(--background);
     position: fixed;

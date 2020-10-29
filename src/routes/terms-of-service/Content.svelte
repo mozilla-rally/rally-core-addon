@@ -35,7 +35,7 @@
   }
 
   hr {
-    border-top: 2px dotted var(--color-marketing-gray-50);
+    border-top: 1px dashed var(--color-black);
     margin-bottom: 2rem;
   }
 </style>

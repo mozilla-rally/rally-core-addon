@@ -33,9 +33,13 @@ main h4 {
   margin-bottom: 0px;
   margin-top: 2em;
 }
-main h2,
-main h3,
-main h4 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--color-ink-50);
 }
 
@@ -45,6 +49,6 @@ main h4 {
 }
 
 main hr {
-  border-top: 2px dotted var(--color-marketing-gray-50);
+  border-top: 1px dashed var(--color-black);
   margin-bottom: 2rem;
 }
