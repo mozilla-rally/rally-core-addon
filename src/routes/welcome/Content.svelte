@@ -5,7 +5,8 @@
   import Graph from "./Graph.svelte";
   import Profile from "./Profile.svelte";
   import Study from "./Study.svelte";
-  import Logo from "../../components/Logo.svelte";
+  import Logo from "../../components/MozillaRallyLogo.svelte";
+  import ExternalLink from "../../components/icons/ExternalLink.svelte";
   const dispatch = createEventDispatcher();
 </script>
 
@@ -19,16 +20,33 @@
   .mzp-l-content {
     padding-left: 0px;
     padding-right: 0px;
+    /* this is Main + required padding to meet 120px */
+    padding-top: 80px;
+  }
+
+  .mzp-c-call-out-title {
+    margin-bottom: 12px;
   }
   .how-it-works {
+    margin-top: 24px;
     text-align: center;
+  }
+
+  .how-it-works a {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: center;
+    grid-column-gap: 0.25rem;
   }
 
   .ion-three-cards {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-content: space-between;
+    grid-template-columns: auto auto auto;
+    justify-content: space-evenly;
     justify-items: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
   }
 
   .ion-card-container {
@@ -49,20 +67,17 @@
 
   .ion-card-description {
     padding: 0.75rem;
+    padding-bottom: 0px;
     align-self: start;
   }
 </style>
 
 <section class="mzp-c-call-out">
   <div class="mzp-l-content" in:fly={{ duration: 800, y: 5 }}>
-    <div
-      style="width: 60px; margin: auto; padding-bottom: 1rem;"
+    <h2
+      class="mzp-c-call-out-title mzp-has-zap-1"
       in:fly={{ duration: 800, y: 5 }}>
       <Logo />
-    </div>
-    <h2 class="mzp-c-call-out-title mzp-has-zap-1">
-      Welcome to Mozilla
-      <strong>Rally</strong>!
     </h2>
 
     <p
@@ -72,13 +87,7 @@
       A data contribution platform for people to support causes they believe in
     </p>
 
-    <div class="how-it-works"><a href="example.com">how it works</a></div>
-    <!-- cards -->
-
-    <div
-      in:fly={{ duration: 400, y: 10 }}
-      class="ion-three-cards"
-      style="padding-top: 3rem; padding-bottom: 3rem;">
+    <div in:fly={{ duration: 400, y: 10 }} class="ion-three-cards">
       <div class="ion-card-container">
         <div class="ion-card">
           <Graph />
@@ -106,6 +115,10 @@
       <Button size="xl" product on:click={() => dispatch('get-started')}>
         Get Started
       </Button>
+      <div class="how-it-works">
+        <a href="example.com">how it works
+          <ExternalLink /></a>
+      </div>
     </div>
   </div>
 </section>
