@@ -67,6 +67,7 @@
     age: {
       key: "age",
       label: "1. What is your age?",
+      type: "multi",
       columns: true,
       values: [
         { key: "19-24", label: "19-24 years old" },
@@ -205,10 +206,21 @@
 </script>
 
 <style>
+  /* this selects only checkbox or radio */
   [class="mzp-c-choice"] {
     display: flex;
     align-items: center;
     cursor: pointer;
+    gap: 1rem;
+  }
+
+  .mzp-c-choice {
+    padding-bottom: 8px;
+  }
+
+  .mzp-c-choice-label {
+    font-weight: normal;
+    font-size: 1rem;
   }
 
   label,
@@ -219,18 +231,48 @@
   input[type="text"] {
     cursor: auto;
   }
+  .mzp-c-choice-control[type="radio"] + label,
+  .mzp-c-choice-control[type="checkbox"] + label {
+    margin-left: 0.5rem;
+  }
 
+  /* correct for Protocol's radio and checkbox misalignments */
   .mzp-c-choice-control[type="radio"] + label::before {
-    transform: translateY(0.13rem);
+    transform: translateY(0.25rem);
   }
 
   .mzp-c-choice-control[type="checkbox"] + label::before {
-    transform: translateY(0.13rem);
+    transform: translateY(0.25rem);
+  }
+
+  .mzp-c-choice-control[type="checkbox"]:checked + label::after {
+    transform: translateY(0.215rem) rotate(45deg);
   }
 
   legend {
     color: var(--color-ink-50);
     font-size: 1rem;
+  }
+
+  fieldset {
+    /* position: inherit; */
+    padding-bottom: 60px;
+  }
+
+  .mzp-c-choices {
+    width: 100%;
+    padding-bottom: 0px;
+    padding-left: 1rem;
+  }
+
+  .two-columns {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: max-content max-content;
+    grid-template-rows: repeat(var(--rows, 3), max-content);
+    justify-content: start;
+    width: max-content;
+    grid-column-gap: 4rem;
   }
 </style>
 
@@ -252,7 +294,10 @@
           {schema[question].label}
         </legend>
 
-        <div class="mzp-c-choices">
+        <div
+          class="mzp-c-choices"
+          class:two-columns={schema[question].columns}
+          style="--rows: {schema[question].values ? Math.ceil(schema[question].values.length / 2) : 0}">
           {#if schema[question].type === 'text'}
             <div
               class="mzp-c-choice mzp-c-choice-text"
