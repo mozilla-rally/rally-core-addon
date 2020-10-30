@@ -1,19 +1,35 @@
 <script>
+  import { onMount } from "svelte";
   export let step = 1;
   export let totalSteps = 3;
   export let transparent = false;
 
-  $: style = transparent ? `--background: none` : undefined;
+  let scrollY = 0;
+  let innerHeight = 0;
+  let bodyHeight = 0;
+  onMount(() => {
+    bodyHeight = document.body.clientHeight;
+  });
+
+  let PX_OFFSET = 130;
+
+  $: gradient = Math.min(1, (bodyHeight - (scrollY + innerHeight)) / PX_OFFSET);
+
+  $: style = transparent
+    ? `--background: none`
+    : `
+--background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(249, 249, 251, ${gradient}) 45%
+  );
+`;
 </script>
 
 <style>
   .onboarding-cta-container {
     pointer-events: none;
-    --background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgb(249, 249, 251) 45%
-    );
+    background-blend-mode: screen;
     height: var(--onboarding-cta-height);
     background: var(--background);
     position: fixed;
@@ -56,6 +72,8 @@
     transition: opacity 200ms;
   }
 </style>
+
+<svelte:window bind:scrollY bind:innerHeight />
 
 <div class="onboarding-cta-container" {style}>
   <div class="onboarding-cta-inner">

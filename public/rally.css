@@ -1,6 +1,7 @@
 :root {
   --content-width: 660px;
-  --onboarding-cta-height: 430px;
+  --onboarding-cta-height: 434px;
+  --onboarding-cta-offset: calc(var(--onboarding-cta-height) - 230px);
 }
 
 .shortcut-callout {

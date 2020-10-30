@@ -2,15 +2,6 @@
   import { writable } from "svelte/store";
   import { fly } from "svelte/transition";
 
-  function requiredValidator() {
-    return function required(value) {
-      return (
-        (value !== undefined && value !== null && value !== "") ||
-        "This field is required"
-      );
-    };
-  }
-
   function zipcodeIsValid() {
     return function zipcodeValid(value) {
       if (Number.isNaN(Number(value)) || value.length > 5)
@@ -257,6 +248,10 @@
   fieldset {
     /* position: inherit; */
     padding-bottom: 60px;
+  }
+
+  fieldset:last-child {
+    padding-bottom: 0px;
   }
 
   .mzp-c-choices {

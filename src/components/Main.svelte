@@ -13,6 +13,6 @@
 </style>
 
 <main
-  style="--bottom-pad: {padForOnboarding ? 'var(--onboarding-cta-height)' : '0px'}">
+  style="--bottom-pad: {padForOnboarding ? 'var(--onboarding-cta-offset)' : '0px'}">
   <slot />
 </main>
