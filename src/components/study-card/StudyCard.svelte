@@ -4,14 +4,15 @@
   import Button from "../Button.svelte";
   import DataCollected from "../icons/DataCollected.svelte";
   import Details from "../icons/Details.svelte";
+  import CheckCircle from "../icons/CheckCircle.svelte";
 
   import AccordionButton from "../accordion/AccordionButton.svelte";
-  import Accordion from "../accordion/Accordion.svelte";
 
   let revealed = false;
 
   export let endDate;
   export let joined = false;
+  export let joinedDate = undefined;
   export let privacyPolicy = undefined;
   export let imageSrc;
   export let dataCollectionDetails = [];
@@ -37,6 +38,10 @@
     "Nov",
     "Dec",
   ];
+
+  function niceDate(dt) {
+    return `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
+  }
 </script>
 
 <style>
@@ -65,19 +70,13 @@
   }
 
   .study-card-header-info {
-    width: max-content;
     grid-area: title;
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: max-content max-content;
-    grid-template-areas:
-      "title title"
-      "author date";
   }
 
   h3 {
     margin: 0px;
     grid-area: title;
+    width: 100%;
   }
 
   .study-card-body {
@@ -86,6 +85,7 @@
     grid-template-columns: auto auto;
     padding-bottom: 1.25rem;
     grid-row-gap: 1.5rem;
+    grid-column-gap: 1.5rem;
   }
 
   .study-card-description {
@@ -102,9 +102,29 @@
     margin: 0px;
   }
 
-  .study-card-date {
-    align-self: end;
+  .study-card-cta {
+    justify-self: end;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 0px;
+  }
+
+  .study-card-joined-date {
+    margin-top: 0.75rem;
+    font-size: 12px;
     text-align: right;
+    color: var(--color-ink-30);
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    grid-column-gap: 0.25rem;
+  }
+
+  .study-card-joined-date-symbol {
+    font-size: 1rem;
+    color: var(--color-green-60);
   }
 
   .study-card-section {
@@ -130,15 +150,18 @@
     grid-template-columns: auto max-content;
     align-items: center;
     padding-top: 1rem;
+    grid-column-gap: 3rem;
   }
 
   .study-card-tags {
     display: flex;
-    column-gap: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .study-card-privacy-policy {
     font-size: 14px;
+    align-self: start;
   }
 
   .tag {
@@ -169,15 +192,28 @@
         by
         <slot name="author">author</slot>
         | Ends:
-        {months[endDate.getMonth()]}
-        {endDate.getDate()},
-        {endDate.getFullYear()}
+        {niceDate(endDate)}
       </div>
     </div>
     <div class="study-card-cta">
-      <Button product={!joined} leave={joined}>
+      <Button
+        product={!joined}
+        leave={joined}
+        on:click={() => {
+          if (joined) dispatch('leave');
+          else dispatch('join');
+        }}>
         {#if joined}Leave Study{:else}Join Study{/if}
       </Button>
+      {#if joined}
+        <div class="study-card-joined-date">
+          joined on
+          {niceDate(joinedDate)}
+          <div class="study-card-joined-date-symbol gafc">
+            <CheckCircle />
+          </div>
+        </div>
+      {/if}
     </div>
   </div>
   {#if joined}
