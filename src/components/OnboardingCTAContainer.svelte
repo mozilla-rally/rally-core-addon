@@ -9,6 +9,12 @@
   let bodyHeight = 0;
   onMount(() => {
     bodyHeight = document.body.clientHeight;
+    // observe ANY resizes of the browser window, the view port,
+    // or whatever, and update the bodyHeight accordingly.
+    const resizer = new ResizeObserver(([e]) => {
+      bodyHeight = e.contentRect.height;
+    });
+    resizer.observe(document.body);
   });
 
   let PX_OFFSET = 130;
