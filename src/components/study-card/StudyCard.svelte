@@ -77,6 +77,12 @@
     margin: 0px;
     grid-area: title;
     width: 100%;
+    font-family: Inter;
+  }
+
+  h3,
+  h4 {
+    font-family: Inter;
   }
 
   .study-card-body {

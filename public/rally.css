@@ -48,6 +48,7 @@ h4,
 h5,
 h6 {
   color: var(--color-ink-50);
+  margin: 0px;
 }
 
 p,

@@ -4,8 +4,8 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { onMount } from "svelte";
-  import Layout from "../../src/components/Layout.svelte";
-  import Main from "../../src/components/Main.svelte";
+  import Layout from "../../src/components/layouts/OnboardingLayout.svelte";
+  import Body from "../../src/components/layouts/OnboardingBody.svelte";
   import Demographics from "../../src/routes/demographics/Content.svelte";
   import OnboardingCTAContainer from "../../src/components/OnboardingCTAContainer.svelte";
   import CallToAction from "../../src/routes/demographics/CallToAction.svelte";
@@ -21,9 +21,9 @@
 {#if mounted}
   <div>
     <Layout>
-      <Main padForOnboarding>
+      <Body padForOnboarding>
         <Demographics bind:results />
-      </Main>
+      </Body>
       <OnboardingCTAContainer step={3}>
         <CallToAction
           on:save={() => console.log('save', results)}
