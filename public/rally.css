@@ -1,0 +1,62 @@
+:root {
+  --content-width: 660px;
+  --onboarding-cta-height: 434px;
+  --onboarding-cta-offset: calc(var(--onboarding-cta-height) - 230px);
+}
+
+.shortcut-callout {
+  font-size: 14px;
+  justify-self: end;
+  font-style: italic;
+  color: var(--color-blue-50);
+}
+
+.call-flow {
+  display: grid;
+  grid-gap: 1rem;
+  align-items: center;
+  position: absolute;
+  width: var(--content-width);
+}
+
+main h2 {
+  font-size: 38px;
+}
+
+main h3 {
+  font-size: 20px;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+main h4 {
+  font-size: 16px;
+  margin-bottom: 0px;
+  margin-top: 2em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-ink-50);
+}
+
+p,
+div,
+ul,
+ol {
+  color: var(--color-marketing-gray-70);
+}
+
+main h3,
+main h4 {
+  font-family: "Metropolis";
+}
+
+main hr {
+  border-top: 1px dashed var(--color-black);
+  margin-bottom: 2rem;
+}
