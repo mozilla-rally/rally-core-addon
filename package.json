@@ -9,6 +9,7 @@
     "local-build-addon": "rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json",
     "test-addon": "mocha --require  \"./tests/core-addon/hooks.js\" \"./tests/core-addon/*.js\"",
     "lint-addon": "web-ext lint",
+    "lint-js": "eslint .",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

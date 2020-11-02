@@ -24,12 +24,6 @@ module.exports = {
       env: {
         mocha: true,
       },
-      globals: {
-        FAKE_WEBSITE: true,
-        FAKE_STUDY_ID: true,
-        FAKE_STUDY_ID_NOT_INSTALLED: true,
-        FAKE_STUDY_LIST: true
-      }
     },
   ],
   parserOptions: {
