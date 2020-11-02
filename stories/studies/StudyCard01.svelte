@@ -11,11 +11,12 @@
   .study-card-set {
     width: 660px;
     display: grid;
+    margin: auto;
     /* grid-auto-flow: row;
     grid-row-gap: 1rem; */
-    grid-template-columns: 660px 660px;
+    grid-auto-flow: row;
     align-items: start;
-    grid-gap: 1rem;
+    grid-gap: 4rem;
   }
 </style>
 
