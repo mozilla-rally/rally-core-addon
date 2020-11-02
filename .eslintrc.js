@@ -24,6 +24,9 @@ module.exports = {
       env: {
         mocha: true,
       },
+      extends: [
+        "plugin:mocha/recommended",
+      ],
     },
   ],
   parserOptions: {
@@ -32,6 +35,7 @@ module.exports = {
   },
   plugins: [
     "import",
+    "mocha",
   ],
   root: true,
   rules: {
