@@ -8,6 +8,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:import/warnings",
+    "plugin:node/recommended",
   ],
   globals: {
     ChromeUtils: false,
@@ -28,6 +29,10 @@ module.exports = {
         "plugin:mocha/recommended",
       ],
     },
+    {
+      files: ["*.svelte"],
+      processor: "svelte3/svelte3",
+    },
   ],
   parserOptions: {
     ecmaVersion: 2021,
@@ -36,9 +41,18 @@ module.exports = {
   plugins: [
     "import",
     "mocha",
+    "node",
+    "svelte3",
   ],
   root: true,
   rules: {
+    "node/no-deprecated-api": "error",
+    "node/no-extraneous-require": "off",
+    "node/no-missing-import": "off",
+    "node/no-unpublished-import": "off",
+    "node/no-unpublished-require": "off",
+    "node/no-unsupported-features/es-syntax": "off",
+
     "no-unused-vars": [ "error", { vars: "all", args: "none", ignoreRestSiblings: false } ],
     "no-var": "off", // TODO: "warn",
     "prefer-const": "off", // TODO: "warn",
