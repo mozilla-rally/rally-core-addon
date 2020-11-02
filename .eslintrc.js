@@ -35,8 +35,8 @@ module.exports = {
   ],
   root: true,
   rules: {
+    "no-unused-vars": [ "error", { vars: "all", args: "none", ignoreRestSiblings: false } ],
     "no-var": "off", // TODO: "warn",
     "prefer-const": "off", // TODO: "warn",
-    "no-unused-vars": [ "error", { vars: "all", args: "none", ignoreRestSiblings: false } ],
   },
 };

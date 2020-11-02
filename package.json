@@ -10,6 +10,7 @@
     "test-addon": "mocha --require  \"./tests/core-addon/hooks.js\" \"./tests/core-addon/*.js\"",
     "lint-addon": "web-ext lint",
     "lint-js": "eslint .",
+    "lint": "npm run lint-addon && npm run lint-js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
