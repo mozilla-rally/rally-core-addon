@@ -152,6 +152,22 @@ main hr {
 
 /* extended button states */
 
+.mzp-c-button.mzp-t-compact {
+  padding: 1px 10px;
+}
+
+.mzp-c-button.mzp-t-error {
+  background-color: var(--color-red-80);
+  border-color: var(--color-red-80);
+  color: var(--color-white);
+}
+
+.mzp-c-button.mzp-t-error:hover {
+  background-color: var(--color-red-90);
+  border-color: var(--color-red-90);
+  color: var(--color-white);
+}
+
 .mzp-c-button.mzp-t-icon {
   border-radius: 50%;
   width: max-content;

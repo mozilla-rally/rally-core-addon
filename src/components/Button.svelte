@@ -5,6 +5,9 @@
 
   import { get_current_component as getComponent } from "svelte/internal";
   import { forwardEvents } from "./forwardEvents";
+  // TODO: once this PR lands, let's refactor this
+  // to have (1) a size prop and (2) a variant prop.
+  // variant can be a string or array of strings.
   export let size = "md";
   export let neutral = false;
   export let product = false;
@@ -13,6 +16,12 @@
   export let leave = false;
   export let icon = false;
   export let text = false;
+
+  // used in CTAs for error notifications.
+  export let error = false;
+
+  // used for very compact, small buttons.
+  export let compact = false;
 
   export let disabled = false;
 
@@ -26,6 +35,8 @@
   $: leaveClass = leave ? `mzp-t-leave` : undefined;
   $: iconClass = icon ? "mzp-t-icon" : undefined;
   $: textClass = text ? "mzp-t-secondary mzp-t-text" : undefined;
+  $: errorClass = error ? "mzp-t-error" : undefined;
+  $: compactClass = compact ? "mzp-t-compact" : undefined;
   $: classSet = [
     "mzp-c-button",
     sizeClass,
@@ -36,6 +47,8 @@
     leaveClass,
     textClass,
     iconClass,
+    errorClass,
+    compactClass,
   ]
     .filter((t) => t)
     .join(" ");
