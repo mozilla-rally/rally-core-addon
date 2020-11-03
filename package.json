@@ -53,7 +53,7 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "description": "This is the Core Add-on for Ion studies. It is implemented as a cross-browser WebExtension, using Svelte for the UI.",
+  "description": "This is the Ion Core Add-on: a cross-browser WebExtension that allows users to participate to Ion studies.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mozilla-ion/ion-core-addon.git"
