@@ -1,10 +1,12 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { slide } from "svelte/transition";
+  import Header from "./Header.svelte";
   import Button from "../Button.svelte";
   import DataCollected from "../icons/DataCollected.svelte";
   import Details from "../icons/Details.svelte";
   import CheckCircle from "../icons/CheckCircle.svelte";
+  import niceDate from "./nice-date";
 
   import AccordionButton from "../accordion/AccordionButton.svelte";
 
@@ -23,34 +25,9 @@
     // Bubble up the "enroll" event to the `StudyList` component.
     dispatch("enroll");
   }
-
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  function niceDate(dt) {
-    return `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
-  }
 </script>
 
 <style>
-  .grid {
-    display: grid;
-    grid-template-columns: 40px auto max-content;
-    grid-gap: 1.5rem;
-  }
-
   .study-card-container {
     --icon-size: 40px;
     --gap: 1.5rem;
@@ -58,26 +35,6 @@
     background-color: var(--color-white);
     padding: 1.25rem;
     box-shadow: var(--rally-box-shadow-xs);
-  }
-
-  .study-card-header {
-    grid-template-areas: "image title cta";
-    margin-bottom: 28px;
-  }
-
-  .study-card-image {
-    grid-area: image;
-  }
-
-  .study-card-header-info {
-    grid-area: title;
-  }
-
-  h3 {
-    margin: 0px;
-    grid-area: title;
-    width: 100%;
-    font-family: Inter;
   }
 
   h3,
@@ -188,40 +145,37 @@
 </style>
 
 <div class="study-card-container radius-sm">
-  <div class="study-card-header grid">
-    <img class="study-card-image" width="40" alt="study icon" src={imageSrc} />
-    <div class="study-card-header-info">
-      <h3 class="text-head-sm">
-        <slot name="name">Study</slot>
-      </h3>
-      <div class="study-card-author text-body-xs">
-        by
-        <slot name="author">author</slot>
-        | Ends:
-        {niceDate(endDate)}
-      </div>
-    </div>
-    <div class="study-card-cta">
-      <Button
-        product={!joined}
-        leave={joined}
-        on:click={() => {
-          if (joined) dispatch('leave');
-          else dispatch('join');
-        }}>
-        {#if joined}Leave Study{:else}Join Study{/if}
-      </Button>
-      {#if joined}
-        <div class="study-card-joined-date">
-          joined on
-          {niceDate(joinedDate)}
-          <div class="study-card-joined-date-symbol gafc">
-            <CheckCircle />
+  <Header {endDate}>
+    <img
+      slot="study-icon"
+      class="study-card-image"
+      width="40"
+      alt="study icon"
+      src={imageSrc} />
+    <span slot="study-name"><slot name="name">Study Title</slot></span>
+    <span slot="study-author"><slot name="author">Study Author</slot></span>
+    <span slot="study-cta">
+      <div class="study-card-cta">
+        <Button
+          product={!joined}
+          leave={joined}
+          on:click={() => {
+            if (joined) dispatch('leave');
+            else dispatch('join');
+          }}>
+          {#if joined}Leave Study{:else}Join Study{/if}
+        </Button>
+        {#if joined}
+          <div class="study-card-joined-date">
+            joined on
+            {niceDate(joinedDate)}
+            <div class="study-card-joined-date-symbol gafc">
+              <CheckCircle />
+            </div>
           </div>
-        </div>
-      {/if}
-    </div>
-  </div>
+        {/if}
+      </div></span>
+  </Header>
   {#if joined}
     <div style="padding-bottom: 1.5rem; padding-left: var(--left-pad);">
       <AccordionButton bind:revealed>

@@ -2,6 +2,11 @@
   --content-width: 660px;
   --onboarding-cta-height: 434px;
   --onboarding-cta-offset: calc(var(--onboarding-cta-height) - 230px);
+
+  /* --------- shared component variables ---------- */
+  /* study card variables */
+  --study-card-header-columns: 40px auto max-content;
+  --study-card-header-areas: "image title cta";
 }
 
 .gafc {
@@ -147,6 +152,27 @@ main hr {
 
 /* extended button states */
 
+.mzp-c-button.mzp-t-icon {
+  border-radius: 50%;
+  width: max-content;
+  height: max-content;
+  padding: 1em;
+  display: grid;
+  place-items: center;
+}
+
+.mzp-c-button.mzp-t-secondary.mzp-t-text {
+  background-color: transparent;
+  border-color: transparent;
+  color: black;
+}
+
+.mzp-c-button.mzp-t-secondary.mzp-t-text:hover {
+  background-color: #ededf0;
+  border-color: #ededf0;
+  color: black;
+}
+
 .mzp-t-leave {
   background-color: var(--color-marketing-gray-20);
   color: var(--color-red-60);
@@ -159,8 +185,24 @@ main hr {
   background-color: var(--color-red-60);
 }
 
+.mzp-t-leave.mzp-t-product {
+  background-color: var(--color-red-60);
+  color: white;
+  border-color: var(--color-red-60);
+}
+
+.mzp-t-leave.mzp-t-product:hover {
+  background-color: var(--color-red-70);
+  border-color: var(--color-red-70);
+}
+
 /* other design system tweaks */
 
 ul.mzp-u-list-styled {
   margin-left: 1rem;
+}
+
+/* --------- shared component styles ---------- */
+
+.study-card-header {
 }

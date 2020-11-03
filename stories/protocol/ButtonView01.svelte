@@ -4,6 +4,7 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import Button from "../../src/components/Button.svelte";
+  import Details from "../../src/components/icons/Details.svelte";
 </script>
 
 <style>
@@ -41,7 +42,34 @@
       <Button {size} product secondary disabled>product / secondary</Button>
       <Button {size} neutral>neutral</Button>
       <Button {size} neutral disabled>neutral</Button>
+      <Button {size} text product>text</Button>
+      <Button {size} text product disabled>text</Button>
       <Button {size} leave>leave</Button>
+      <Button {size} leave disabled>leave</Button>
+      <Button {size} icon>
+        <Details />
+      </Button>
+      <Button {size} icon disabled>
+        <Details />
+      </Button>
+      <Button {size} icon product>
+        <Details />
+      </Button>
+      <Button {size} icon product disabled>
+        <Details />
+      </Button>
+      <Button {size} icon product secondary>
+        <Details />
+      </Button>
+      <Button {size} icon product secondary disabled>
+        <Details />
+      </Button>
+      <Button {size} icon text>
+        <Details />
+      </Button>
+      <Button {size} icon text disabled>
+        <Details />
+      </Button>
     </section>
   {/each}
 </div>

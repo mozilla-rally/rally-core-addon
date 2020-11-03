@@ -49,7 +49,8 @@
     "svelte": "^3.29.0",
     "svelte-accessible-dialog": "^2.1.2",
     "svelte-loader": "^2.13.6",
-    "webextension-polyfill": "^0.6.0"
+    "webextension-polyfill": "^0.6.0",
+    "micromodal": "^0.4.6"
   },
   "dependencies": {
     "sirv-cli": "^1.0.0",

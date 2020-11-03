@@ -11,6 +11,8 @@
   export let secondary = false;
   export let dark = false;
   export let leave = false;
+  export let icon = false;
+  export let text = false;
 
   export let disabled = false;
 
@@ -22,6 +24,8 @@
   $: secondaryClass = secondary ? `mzp-t-secondary` : undefined;
   $: darkClass = dark ? `mzp-t-dark` : undefined;
   $: leaveClass = leave ? `mzp-t-leave` : undefined;
+  $: iconClass = icon ? "mzp-t-icon" : undefined;
+  $: textClass = text ? "mzp-t-secondary mzp-t-text" : undefined;
   $: classSet = [
     "mzp-c-button",
     sizeClass,
@@ -30,6 +34,8 @@
     darkClass,
     secondaryClass,
     leaveClass,
+    textClass,
+    iconClass,
   ]
     .filter((t) => t)
     .join(" ");
