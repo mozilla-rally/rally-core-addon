@@ -9,8 +9,12 @@
     "local-build-addon": "rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json",
     "test-addon": "mocha --require  \"./tests/core-addon/hooks.js\" \"./tests/core-addon/*.js\"",
     "lint-addon": "web-ext lint",
+<<<<<<< HEAD
     "lint-js": "eslint .",
     "lint": "npm-run-all lint-*",
+=======
+    "lint-css": "stylelint 'public/*.css' '.storybook/*.css' 'src/**/*.svelte' 'stories/**/*.svelte'",
+>>>>>>> 8ab06ed... Add lint-css package.json script
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "test": "npm run test-addon"
