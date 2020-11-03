@@ -49,8 +49,8 @@ jobs:
           name: Build the Addon
           command: npm run build-addon
       - run:
-          name: Run web-ext lint
-          command: npm run lint-addon
+          name: Run linting
+          command: npm run lint
 
 workflows:
   version: 2
