@@ -1,6 +1,6 @@
 {
   "extends": "stylelint-config-standard",
-  "ignoreFiles": ["public/build/bundle.css"],
+  "ignoreFiles": ["public/build/*.css"],
   "rules": {
     "color-hex-case": null,
     "color-hex-length": null,
