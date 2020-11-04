@@ -254,12 +254,12 @@
   }
 
   fieldset:last-child {
-    padding-bottom: 0px;
+    padding-bottom: 0;
   }
 
   .mzp-c-choices {
     width: 100%;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     padding-left: 1rem;
   }
 
@@ -295,7 +295,7 @@
         <div
           class="mzp-c-choices"
           class:two-columns={schema[question].columns}
-          style="--rows: {schema[question].values ? Math.ceil(schema[question].values.length / 2) : 0}">
+          style="--rows: {schema[question].values ? Math.ceil(schema[question].values.length / 2) : 0};">
           {#if schema[question].type === 'text'}
             <div
               class="mzp-c-choice mzp-c-choice-text"

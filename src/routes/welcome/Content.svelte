@@ -18,12 +18,12 @@
   .mzp-c-call-out {
     background-color: transparent;
     min-height: calc(100vh - 2.5rem);
-    padding: 0px;
+    padding: 0;
   }
 
   .mzp-l-content {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
     /* this is Main + required padding to meet 120px */
     padding-top: 80px;
   }
@@ -65,13 +65,13 @@
     background-color: white;
     padding: 1rem;
     display: grid;
-    box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.1);
+    box-shadow: 0 1px 4px rgba(12, 12, 13, 0.1);
     border-radius: 4px;
   }
 
   .ion-card-description {
     padding: 0.75rem;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     align-self: start;
   }
 </style>
@@ -87,7 +87,7 @@
     <p
       class="mzp-c-call-out-desc"
       style="color: var(--color-light-gray-90);
-    ">
+">
       A data contribution platform for people to support causes they believe in
     </p>
 

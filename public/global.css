@@ -21,11 +21,10 @@ main > header {
   grid-template-columns: auto max-content;
   align-items: center;
   justify-content: space-between;
-  align-items: center;
 }
 
 main > header h1 {
-  margin: 0px;
+  margin: 0;
   font-size: 2rem;
   font-weight: 300;
 }
@@ -47,7 +46,6 @@ main > header h1 {
   margin-block-end: 24px;
 }
 
-#summary,
 #summary,
 #details p,
 #data p {
@@ -202,8 +200,8 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 .gafc {
