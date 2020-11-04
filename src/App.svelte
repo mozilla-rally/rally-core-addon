@@ -31,7 +31,6 @@
   // set firstRun = !enrolled.
   let firstRun;
   $: if ($store && firstRun === undefined) {
-    console.log(!$store.enrolled);
     firstRun = !$store.enrolled;
   }
 </script>
