@@ -29,7 +29,6 @@
 
   // As soon as the store has its initial value, let's
   // set firstRun = !enrolled.
-  let view;
   let firstRun;
   $: if ($store && firstRun === undefined) {
     console.log(!$store.enrolled);

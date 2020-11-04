@@ -8,7 +8,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import replace from "@rollup/plugin-replace";
-import postcss from 'rollup-plugin-postcss';
 import copy from 'rollup-plugin-copy';
 
 import STORE_MOCK from "./src/mocks/firefox-mock";
