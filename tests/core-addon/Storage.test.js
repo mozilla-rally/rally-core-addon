@@ -3,7 +3,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 var assert = require('assert');
-var sinon = require('sinon');
 
 var Storage = require('../../core-addon/Storage');
 
@@ -12,7 +11,7 @@ describe('Storage', function () {
     this.storage = new Storage();
   });
 
-  describe('getItem()', async function () {
+  describe('getItem()', function () {
     it('should return undefined on errors', async function () {
       chrome.storage.local.get.rejects();
 
@@ -22,7 +21,7 @@ describe('Storage', function () {
     });
   });
 
-  describe('appendActivatedStudy()', async function () {
+  describe('appendActivatedStudy()', function () {
     it('should correctly append studies on first run', async function () {
       const TEST_ADDON_ID = "test-id@ion.com";
       // Return an empty object from the local storage. Note that this
@@ -68,7 +67,7 @@ describe('Storage', function () {
     });
   });
 
-  describe('removeActivatedStudy()', async function () {
+  describe('removeActivatedStudy()', function () {
     it('should correctly remove on read errors', async function () {
       const TEST_ADDON_ID = "test-id@ion.com";
       // Return an empty object from the local storage. Note that this

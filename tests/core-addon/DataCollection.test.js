@@ -7,11 +7,11 @@ var sinon = require('sinon');
 
 var DataCollection = require('../../core-addon/DataCollection');
 
-describe('DataCollection', function () {
-  // A fake study id to use in the tests when looking for a
-  // "known" study.
-  FAKE_STUDY_ID = "test@ion-studies.com";
+// A fake study id to use in the tests when looking for a
+// "known" study.
+const FAKE_STUDY_ID = "test@ion-studies.com";
 
+describe('DataCollection', function () {
   beforeEach(function () {
     this.dataCollection = new DataCollection();
   });

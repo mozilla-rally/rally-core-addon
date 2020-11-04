@@ -7,21 +7,21 @@ var sinon = require('sinon');
 
 var IonCore = require('../../core-addon/IonCore');
 
-describe('IonCore', function () {
-  // A fake study id to use in the tests when looking for a
-  // "known" study.
-  FAKE_STUDY_ID = "test@ion-studies.com";
-  FAKE_STUDY_ID_NOT_INSTALLED = "test-not-installed@ion-studies.com";
-  FAKE_STUDY_LIST = [
-    {
-      "addon_id": FAKE_STUDY_ID
-    },
-    {
-      "addon_id": FAKE_STUDY_ID_NOT_INSTALLED
-    }
-  ];
-  FAKE_WEBSITE = "https://test.website";
+// A fake study id to use in the tests when looking for a
+// "known" study.
+const FAKE_STUDY_ID = "test@ion-studies.com";
+const FAKE_STUDY_ID_NOT_INSTALLED = "test-not-installed@ion-studies.com";
+const FAKE_STUDY_LIST = [
+  {
+    "addon_id": FAKE_STUDY_ID
+  },
+  {
+    "addon_id": FAKE_STUDY_ID_NOT_INSTALLED
+  }
+];
+const FAKE_WEBSITE = "https://test.website";
 
+describe('IonCore', function () {
   beforeEach(function () {
     // Force the sinon-chrome stubbed API to resolve its promise
     // in tests. Without the next two lines, tests querying the
@@ -162,8 +162,7 @@ describe('IonCore', function () {
       // Make sure to mock the local storage calls as well.
       chrome.storage.local.set.yields();
 
-      let dataCollectionSpy =
-        sinon.spy(this.ionCore._dataCollection, "sendEnrollmentPing");
+      sinon.spy(this.ionCore._dataCollection, "sendEnrollmentPing");
 
       // Provide a valid enrollment message.
       await this.ionCore._handleMessage(
@@ -190,8 +189,7 @@ describe('IonCore', function () {
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
 
-      let dataCollectionSpy =
-        sinon.spy(this.ionCore._dataCollection, "sendEnrollmentPing");
+      sinon.spy(this.ionCore._dataCollection, "sendEnrollmentPing");
 
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
@@ -226,8 +224,7 @@ describe('IonCore', function () {
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
 
-      let dataCollectionSpy =
-        sinon.spy(this.ionCore._dataCollection, "sendDeletionPing");
+      sinon.spy(this.ionCore._dataCollection, "sendDeletionPing");
 
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
@@ -278,8 +275,7 @@ describe('IonCore', function () {
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
 
-      let dataCollectionSpy =
-        sinon.spy(this.ionCore._dataCollection, "sendDeletionPing");
+      sinon.spy(this.ionCore._dataCollection, "sendDeletionPing");
 
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
@@ -349,10 +345,8 @@ describe('IonCore', function () {
         setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
-      let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
 
-      let dataCollectionSpy =
-        sinon.spy(this.ionCore._dataCollection, "sendPing");
+      sinon.spy(this.ionCore._dataCollection, "sendPing");
 
       const SENT_PING = {
         payloadType: "test-telemetry-ping",
@@ -476,8 +470,7 @@ describe('IonCore', function () {
       // Make sure the function yields during tests!
       chrome.runtime.sendMessage.yields();
 
-      let response =
-        await this.ionCore._sendMessageToStudy(FAKE_STUDY_ID, "uninstall", TEST_PAYLOAD);
+      await this.ionCore._sendMessageToStudy(FAKE_STUDY_ID, "uninstall", TEST_PAYLOAD);
 
       assert.ok(
         chrome.runtime.sendMessage.withArgs(
