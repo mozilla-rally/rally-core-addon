@@ -53,12 +53,11 @@ export default {
       __STORE_IMPLEMENTATION__: JSON.stringify(STORE_MOCK),
       __API_ENDPOINT__: production ? "web-extension" : "web",
     }),
-    postcss({
-      extract: 'external.css'
-    }),
     copy({
       targets: [
-        { src: 'node_modules/@mozilla-protocol/core/protocol/fonts/*', dest: 'public/fonts/'}
+        { src: 'node_modules/@mozilla-protocol/core/protocol/fonts/*', dest: 'public/fonts/'},
+        { src: 'node_modules/@mozilla-protocol/core/protocol/css/protocol.css', dest: 'public/build/'},
+        { src: 'node_modules/@mozilla-protocol/core/protocol/css/protocol-extra.css', dest: 'public/build/'}
       ]
     }),
     svelte({
