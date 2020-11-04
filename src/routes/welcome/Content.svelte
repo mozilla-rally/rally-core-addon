@@ -1,5 +1,5 @@
 <script>
-  import { fade, fly } from "svelte/transition";
+  import { fly } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
   import Button from "../../components/Button.svelte";
   import Graph from "./Graph.svelte";

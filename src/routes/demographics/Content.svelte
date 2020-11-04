@@ -68,7 +68,6 @@
         { key: "55-64", label: "55-64 years old" },
         { key: "> 65", label: "65 years and older" },
       ],
-      type: "single",
     },
     gender: {
       key: "gender",
