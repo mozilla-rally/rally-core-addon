@@ -23,7 +23,6 @@ const PREF_ION_ID = "toolkit.telemetry.pioneerId";
 
 this.firefoxPrivilegedApi = class extends ExtensionAPI {
   getAPI(context) {
-    var self = this;
     return {
       firefoxPrivilegedApi: {
         async submitEncryptedPing(type, payload, options) {
@@ -42,6 +41,7 @@ this.firefoxPrivilegedApi = class extends ExtensionAPI {
           Services.prefs.clearUserPref(PREF_ION_ID);
         },
         async generateUUID() {
+          // eslint-disable-next-line no-undef
           let str = gUUIDGenerator.generateUUID().toString();
           return str.substring(1, str.length - 1);
         }

@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { fly } from "svelte/transition";
-  import { DialogOverlay, DialogContent } from "svelte-accessible-dialog";
+  import { DialogOverlay } from "svelte-accessible-dialog";
 
   const dispatch = createEventDispatcher();
 

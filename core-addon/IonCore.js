@@ -177,23 +177,19 @@ module.exports = class IonCore {
     // at this time. We check for the sender in `_onPortConnected`.
 
     switch (message.type) {
-      case "enrollment": {
+      case "enrollment":
         return this._enroll()
                    .then(r => this._sendStateUpdateToUI());
-      } break;
-      case "get-studies": {
+      case "get-studies":
         return this._sendStateUpdateToUI();
-      } break;
-      case "study-unenrollment": {
+      case "study-unenrollment":
         // We still need to handle this message, even if we're catching
         // addon "uninstall" events: we want users to be able to uninstall
         // from the control panel.
         return this._unenrollStudy(message.data.studyID);
-      } break;
-      case "unenrollment": {
+      case "unenrollment":
         return this._unenroll()
                    .then(r => this._sendStateUpdateToUI());
-      } break;
       default:
         return Promise.reject(
           new Error(`IonCore - unexpected message type ${message.type}`));
@@ -231,7 +227,7 @@ module.exports = class IonCore {
         return await this._dataCollection.sendPing(
           payloadType, payload, namespace, keyId, key
         );
-      } break;
+      }
       default:
         return Promise.reject(
           new Error(`IonCore._handleExternalMessage - unexpected message type ${message.type}`));

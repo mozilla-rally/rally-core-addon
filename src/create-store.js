@@ -2,7 +2,7 @@ import { writable } from "svelte/store";
 
 export default function createStore(initialState, api) {
   // initialize the writable store.
-  const { subscribe, update, set } = writable();
+  const { subscribe, set } = writable();
 
   // initialize from the API.
   api.initialize(initialState).then(async (remoteInitialState) => {

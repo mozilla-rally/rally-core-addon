@@ -13,7 +13,7 @@ module.exports = class Storage {
     try {
       return (await browser.storage.local.get(key))[key];
     } catch (err) {
-      console.error(`Storage - failed to read ${key} from the local storage`, error);
+      console.error(`Storage - failed to read ${key} from the local storage`, err);
       return Promise.resolve();
     }
   }
