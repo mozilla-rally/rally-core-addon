@@ -62,7 +62,7 @@
     age: {
       key: "age",
       label: "1. What is your age?",
-      type: "multi",
+      type: "single",
       columns: true,
       values: [
         { key: "19-24", label: "19-24 years old" },
