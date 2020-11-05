@@ -1,5 +1,6 @@
 /node_modules/
 /public/addon-build/
 /public/build/
+/public/fonts/
 
 .DS_Store
