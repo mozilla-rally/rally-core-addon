@@ -426,8 +426,6 @@ describe('IonCore', function () {
 
   describe('_updateInstalledStudies()', function () {
     it('adds the ionInstalled property', async function () {
-      // We don't expect any update task to be running now.
-      assert.equal(this.ionCore._updateInstalledTask, undefined);
       // Kick off an update task.
       let studies =
         await this.ionCore._updateInstalledStudies(FAKE_STUDY_LIST);
