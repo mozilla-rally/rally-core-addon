@@ -61,12 +61,8 @@ module.exports = {
     "notice/notice":[ "error", { mustMatch: "This Source Code Form is subject to the terms of the Mozilla Public", "templateFile": "copyright.txt" } ],
 
     "eol-last": "warn",
-    "eqeqeq": "off", // TODO: "warn",
     "no-unused-vars": [ "error", { vars: "all", args: "none", ignoreRestSiblings: false } ],
     "no-var": "off", // TODO: "warn",
-    "no-warning-comments": "off", // TODO: "warn",
     "prefer-const": "off", // TODO: "warn",
-    "quotes": "off", // TODO: [ "error", "double" ],
-    "semi": [ "off", "always" ], // TODO: Set up prettier?
   },
 };
