@@ -1,4 +1,8 @@
 <script>
+  /* This Source Code Form is subject to the terms of the Mozilla Public
+   * License, v. 2.0. If a copy of the MPL was not distributed with this
+   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
   import { onMount } from "svelte";
   export let step = 1;
   export let totalSteps = 3;
@@ -7,6 +11,7 @@
   let scrollY = 0;
   let innerHeight = 0;
   let bodyHeight = 0;
+
   onMount(() => {
     bodyHeight = document.body.clientHeight;
     // observe ANY resizes of the browser window, the view port,

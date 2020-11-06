@@ -1,4 +1,8 @@
 <script>
+  /* This Source Code Form is subject to the terms of the Mozilla Public
+   * License, v. 2.0. If a copy of the MPL was not distributed with this
+   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
   import { get_current_component as getComponent } from "svelte/internal";
   import { forwardEvents } from "./forwardEvents";
   export let size = "md";
@@ -6,7 +10,6 @@
   export let product = false;
   export let secondary = false;
   export let dark = false;
-
   export let disabled = false;
 
   const forwardAll = forwardEvents(getComponent());
