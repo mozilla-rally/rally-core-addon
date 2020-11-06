@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var assert = require('assert');
+var assert = require('assert').strict;
 var sinon = require('sinon');
 
 var IonCore = require('../../core-addon/IonCore');
@@ -426,8 +426,6 @@ describe('IonCore', function () {
 
   describe('_updateInstalledStudies()', function () {
     it('adds the ionInstalled property', async function () {
-      // We don't expect any update task to be running now.
-      assert.equal(this.ionCore._updateInstalledTask, null);
       // Kick off an update task.
       let studies =
         await this.ionCore._updateInstalledStudies(FAKE_STUDY_LIST);
