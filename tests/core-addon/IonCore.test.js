@@ -483,6 +483,20 @@ describe('IonCore', function () {
     });
   });
 
+  describe('_updateDemographics()', function () {
+    it('properly saves data to the local storage', async function () {
+      let TEST_SURVEY_DATA = { "someKey": "testValue" };
+
+      await this.ionCore._updateDemographics(TEST_SURVEY_DATA);
+
+      assert.ok(
+        browser.storage.local.set.withArgs(
+          sinon.match({"demographicsData": TEST_SURVEY_DATA})
+        ).calledOnce
+      );
+    });
+  });
+
   afterEach(function () {
     delete global.fetch;
     chrome.flush();

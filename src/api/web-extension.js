@@ -26,6 +26,7 @@ async function sendToCore(port, type, payload) {
     "study-enrollment",
     "study-unenrollment",
     "unenrollment",
+    "update-demographics",
   ];
 
   // Make sure `type` is one of the expected values.
@@ -172,6 +173,17 @@ export default {
       this._connectionPort, enroll ? "enrollment" : "unenrollment", {});
 
     return true;
+  },
+
+  /**
+   * Updates the stored version of the demographics data.
+   *
+   * @param {Object} data
+   *        A JSON-serializable object containing the demographics
+   *        information submitted by the user.
+   */
+  async updateDemographicSurvey(data) {
+    await sendToCore(this._connectionPort, "update-demographics", data);
   },
 
   /**

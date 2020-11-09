@@ -72,7 +72,7 @@
           <DemographicsCallToAction
             on:save={() => {
               // Submit Demographics here.
-              // store.updateDemographicSurvey(results)
+              store.updateDemographicSurvey(results);
               // move to the main view.
               finishOnboarding();
             }}
