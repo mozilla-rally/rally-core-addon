@@ -19,7 +19,7 @@
 
   h4 {
     font-size: 16px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     margin-top: 2em;
   }
   h2,
@@ -30,7 +30,9 @@
 
   h3,
   h4 {
-    font-family: "Metropolis";
+    font-family: "Metropolis", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol";
   }
 
   p,

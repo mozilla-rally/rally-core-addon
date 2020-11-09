@@ -140,14 +140,11 @@
     --card-outline-color: var(--grey-60);
 
     scrollbar-color: rgba(249, 249, 250, 0.4) rgba(20, 20, 25, 0.3);
+    font: message-box;
+    appearance: none;
+    background-color: var(--in-content-page-background);
+    color: var(--in-content-page-color);
   }
-}
-
-:root {
-  font: message-box;
-  appearance: none;
-  background-color: var(--in-content-page-background);
-  color: var(--in-content-page-color);
 }
 
 body {
@@ -175,6 +172,7 @@ hr {
 html|button {
   padding: 3px;
   font: inherit;
+  min-width: 79px;
 }
 
 /* xul buttons and menulists */
@@ -338,9 +336,6 @@ xul|search-textbox {
   border-radius: 2px;
   color: inherit;
   background-color: var(--in-content-box-background);
-}
-
-xul|search-textbox {
   min-height: 32px;
   padding-inline: 8px;
 }
@@ -720,7 +715,7 @@ xul|*.text-link:-moz-focusring {
 }
 
 xul|checkbox:-moz-focusring > .checkbox-check,
-html|input[type="checkbox"]:-moz-focusring + html|label:before,
+html|input[type="checkbox"]:-moz-focusring + html|label::before,
 xul|radio[focused="true"] > .radio-check,
 xul|tab:-moz-focusring > .tab-middle > .tab-text {
   outline: 2px solid rgba(0, 149, 221, 0.5);
@@ -743,11 +738,6 @@ xul|search-textbox::part(search-sign) {
   fill-opacity: 0.8;
   list-style-image: url(chrome://global/skin/icons/search-textbox.svg);
   margin-inline-end: 5px;
-}
-
-html|button {
-  /* XUL button min-width */
-  min-width: 79px;
 }
 
 html|input[type="email"],

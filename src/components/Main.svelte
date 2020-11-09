@@ -10,13 +10,13 @@
   main {
     width: var(--content-width);
     margin: auto;
-    padding: 0px;
+    padding: 0;
     padding-top: 2.5rem;
-    padding-bottom: var(--bottom-pad, 0px);
+    padding-bottom: var(--bottom-pad, 0);
   }
 </style>
 
 <main
-  style="--bottom-pad: {padForOnboarding ? 'var(--onboarding-cta-offset)' : '0px'}">
+  style="--bottom-pad: {padForOnboarding ? 'var(--onboarding-cta-offset)' : '0px'};">
   <slot />
 </main>

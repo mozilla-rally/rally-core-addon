@@ -24,12 +24,12 @@
 
 <style>
   .call-flow {
-    grid-template-columns: max-content max-content auto 0px;
+    grid-template-columns: max-content max-content auto 0;
   }
 
   .arrow {
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
     display: inline-block;
     transform: translateY(-129px);
   }

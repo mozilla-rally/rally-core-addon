@@ -39,8 +39,8 @@
 
   h3 {
     grid-area: title;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
   }
 
   img {

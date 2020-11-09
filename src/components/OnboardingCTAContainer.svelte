@@ -94,7 +94,7 @@
     {#each Array.from({ length: totalSteps }).map((_, i) => i) as s}
       <div
         class="onboarding-cta-step"
-        style="opacity: {s + 1 === step ? '1' : '.25'}" />
+        style="opacity: {s + 1 === step ? '1' : '.25'};" />
     {/each}
   </div>
 </div>

@@ -21,7 +21,7 @@
   }
 
   .modal-body {
-    padding: 2rem 0rem;
+    padding: 2rem 0;
   }
 
   .cta {
