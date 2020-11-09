@@ -9,9 +9,6 @@
   let consented = false;
 </script>
 
-<style>
-</style>
-
 <Layout>
   <main>
     <Button

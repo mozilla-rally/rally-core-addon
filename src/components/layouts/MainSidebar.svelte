@@ -8,8 +8,8 @@
 <style>
   .sidebar {
     position: sticky;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     height: 100vh;
     background-color: var(--color-light-gray-20);
     width: 15rem;

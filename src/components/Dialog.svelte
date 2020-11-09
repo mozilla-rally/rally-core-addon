@@ -68,7 +68,7 @@
   }
 
   .modal-body {
-    padding: 2rem 0rem;
+    padding: 2rem 0;
   }
 
   .cta {
@@ -79,7 +79,7 @@
   }
 
   button {
-    padding: 0px;
+    padding: 0;
     background-color: transparent;
     border: none;
     line-height: 1;

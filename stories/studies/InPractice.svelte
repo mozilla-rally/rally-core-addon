@@ -77,7 +77,7 @@
             </StudyCardHeader>
           {:else}Leave this Study?{/if}
         </div>
-        <div style="padding-bottom: 90px" slot="body">
+        <div style="padding-bottom: 90px;" slot="body">
           {#if !joined}
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

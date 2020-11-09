@@ -15,7 +15,9 @@
     width: var(--width);
     box-shadow: var(--rally-box-shadow-xs);
     /* taken from Figma. Is there a display style we have now that matches? */
-    font-family: "Inter";
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
     font-style: normal;
     font-weight: 600;
     font-size: 15px;

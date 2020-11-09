@@ -17,14 +17,18 @@
 
   .study-card-author {
     /* explicitly set this field to prevent Zilla in some contexts */
-    font-family: inter;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
   }
 
   h3 {
-    margin: 0px;
+    margin: 0;
     grid-area: title;
     width: 100%;
-    font-family: Inter;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
   }
 </style>
 

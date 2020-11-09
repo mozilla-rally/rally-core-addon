@@ -60,9 +60,6 @@
   }
   .carat {
     justify-self: end;
-  }
-
-  .carat {
     transition: transform 200ms;
   }
 

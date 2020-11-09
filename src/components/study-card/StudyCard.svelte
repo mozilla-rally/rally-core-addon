@@ -38,10 +38,6 @@
     box-shadow: var(--rally-box-shadow-xs);
   }
 
-  h4 {
-    font-family: Inter;
-  }
-
   .study-card-body {
     padding-left: var(--left-pad);
     display: grid;
@@ -63,6 +59,9 @@
     letter-spacing: -0.2px;
     color: var(--color-marketing-gray-80);
     margin: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
   }
 
   .study-card-cta {
