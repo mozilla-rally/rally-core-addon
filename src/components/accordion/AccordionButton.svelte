@@ -3,11 +3,9 @@
    * License, v. 2.0. If a copy of the MPL was not distributed with this
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-  import { slide } from "svelte/transition";
   import CaretRight from "../icons/CaretRight.svelte";
 
   export let revealed = false;
-  export let flattened = false;
 
   export const expand = (v = false) => {
     revealed = v;

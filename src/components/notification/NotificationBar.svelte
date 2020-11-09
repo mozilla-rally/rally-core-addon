@@ -1,4 +1,7 @@
 <script>
+  /* This Source Code Form is subject to the terms of the Mozilla Public
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
   export let width;
   export let level = "info"; // info, error.
   $: style = width ? `--width: ${width}` : undefined;
@@ -7,11 +10,12 @@
 <style>
   aside {
     --width: max-content;
+
     padding: 8px 14px;
     width: var(--width);
     box-shadow: var(--rally-box-shadow-xs);
     /* taken from Figma. Is there a display style we have now that matches? */
-    font-family: Inter;
+    font-family: "Inter";
     font-style: normal;
     font-weight: 600;
     font-size: 15px;

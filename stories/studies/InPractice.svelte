@@ -1,4 +1,7 @@
 <script>
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
   import Layout from "../../src/routes/Layout.svelte";
   import StudyCard from "../../src/components/study-card/StudyCard.svelte";
   import StudyCardHeader from "../../src/components/study-card/Header.svelte";
@@ -6,7 +9,6 @@
   import Button from "../../src/components/Button.svelte";
   let joined = false;
   let joinModal = false;
-  let leaveModal = false;
 </script>
 
 <style>

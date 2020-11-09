@@ -1,4 +1,7 @@
 <script>
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
   import { createEventDispatcher } from "svelte";
   import { slide } from "svelte/transition";
   import Header from "./Header.svelte";
@@ -21,10 +24,7 @@
   export let tags = [];
 
   const dispatch = createEventDispatcher();
-  function toggleStudy() {
-    // Bubble up the "enroll" event to the `StudyList` component.
-    dispatch("enroll");
-  }
+
 </script>
 
 <style>
@@ -32,12 +32,12 @@
     --icon-size: 40px;
     --gap: 1.5rem;
     --left-pad: calc(var(--icon-size) + var(--gap));
+
     background-color: var(--color-white);
     padding: 1.25rem;
     box-shadow: var(--rally-box-shadow-xs);
   }
 
-  h3,
   h4 {
     font-family: Inter;
   }
@@ -62,7 +62,7 @@
   h4 {
     letter-spacing: -0.2px;
     color: var(--color-marketing-gray-80);
-    margin: 0px;
+    margin: 0;
   }
 
   .study-card-cta {
@@ -71,7 +71,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
-    height: 0px;
+    height: 0;
   }
 
   .study-card-joined-date {
@@ -137,8 +137,8 @@
   }
 
   hr {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     border: none;
     border-bottom: 1px solid #c4c4c4;
   }
