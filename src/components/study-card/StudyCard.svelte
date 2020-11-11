@@ -154,10 +154,6 @@
     border-bottom: 1px solid #c4c4c4;
   }
 
-  :global(.study-card-container a) {
-    color: var(--color-marketing-gray-90);
-  }
-
 </style>
 
 <div class="study-card-container radius-sm">
@@ -167,7 +163,7 @@
       class="study-card-image"
       width="60"
       alt="study icon"
-      src={imageSrc} />
+      src={imageSrc || "/default-study-icon.png"} />
     <span slot="study-name"><slot name="name">Study Title</slot></span>
     <span slot="study-author"><slot name="author">Study Author</slot></span>
     <span slot="study-cta">

@@ -217,3 +217,17 @@ main hr {
 ul.mzp-u-list-styled {
   margin-left: 1rem;
 }
+
+/* special global component styles
+
+We'll use these global styles until we can assure use of :global in Svelte components again.
+
+See #141: https://github.com/mozilla-ion/ion-core-addon/issues/141
+
+*/
+
+/* study card: make all anchor tags a marketing gray color */
+.study-card-container a,
+.study-card-container a:hover {
+  color: var(--color-marketing-gray-90);
+}

@@ -32,12 +32,10 @@
     {joined}
     endDate={new Date(2020, 11, 5)}
     joinedDate={new Date(2021, 8, 9)}
-    imageSrc="https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png"
     dataCollectionDetails={['the date and time', 'number of browser tabs open', 'the time of day when the browser is first used, additional thoughts', 'the temperature outside near the data center where their data will be stored', 'the date and time', 'number of browser tabs open', 'the time of day when the browser is first used, additional thoughts']}
     tags={['artificial intelligence', 'misinformation', 'quantified self', 'ad trackers', 'facebook', 'another label']}
     privacyPolicy={'/'}>
-    <span slot="name">Very, very long Study 1a.05 (extended title to make a very
-      concise point)</span>
+    <span slot="name">Very, very long Study 1a.05 (long title, and also this doesn't have study icon)</span>
     <span slot="author">The Mozilla Foundation, The Mozilla Corporation, and
       others</span>
     <p slot="description">
