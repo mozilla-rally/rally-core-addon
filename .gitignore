@@ -3,4 +3,9 @@
 /public/build/
 /public/fonts/
 
+# Hide stylesheets moved from node_modules to
+# this directory to be served directly
+public/protocol-extra.css
+public/protocol.css
+
 .DS_Store
