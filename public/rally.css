@@ -5,7 +5,7 @@
 
   /* --------- shared component variables ---------- */
   /* study card variables */
-  --study-card-header-columns: 40px auto max-content;
+  --study-card-header-columns: 60px auto max-content;
   --study-card-header-areas: "image title cta";
 }
 

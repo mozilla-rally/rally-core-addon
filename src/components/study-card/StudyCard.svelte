@@ -29,8 +29,8 @@
 
 <style>
   .study-card-container {
-    --icon-size: 40px;
-    --gap: 1.5rem;
+    --icon-size: 60px;
+    --gap: 20px;
     --left-pad: calc(var(--icon-size) + var(--gap));
 
     background-color: var(--color-white);
@@ -94,12 +94,16 @@
     align-self: start;
     grid-template-columns: 20px auto;
     grid-template-rows: auto auto;
-    grid-column-gap: 0.5rem;
+    grid-column-gap: 6px;
     grid-row-gap: 0.5rem;
     align-items: center;
     grid-template-areas:
       "icon title"
       "icon body";
+  }
+
+  .study-card-subheader {
+    color: var(--color-ink-50);
   }
 
   .study-card-section-body {
@@ -121,6 +125,11 @@
     gap: 0.5rem;
   }
 
+  .study-card-icon {
+    display: contents;
+    color: var(--color-ink-50);
+  }
+
   .study-card-privacy-policy {
     font-size: 14px;
     align-self: start;
@@ -129,10 +138,13 @@
   .tag {
     background-color: var(--background, var(--color-marketing-gray-80));
     color: var(--text, var(--color-white));
-    padding: 0.25rem;
+    padding: 1px 4px;
     font-size: 12px;
+    line-height: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
     text-transform: uppercase;
-    line-height: 1;
   }
 
   hr {
@@ -141,6 +153,11 @@
     border: none;
     border-bottom: 1px solid #c4c4c4;
   }
+
+  :global(.study-card-container a) {
+    color: var(--color-marketing-gray-90);
+  }
+
 </style>
 
 <div class="study-card-container radius-sm">
@@ -148,7 +165,7 @@
     <img
       slot="study-icon"
       class="study-card-image"
-      width="40"
+      width="60"
       alt="study icon"
       src={imageSrc} />
     <span slot="study-name"><slot name="name">Study Title</slot></span>
@@ -186,16 +203,18 @@
   {#if revealed || !joined}
     <div class="study-card-body" transition:slide={{ duration: 200 }}>
       <div class="study-card-description body-copy text-body-sm">
-        <h4 class="text-display-xxs">Study Description</h4>
+        <h4 class="study-card-subheader text-display-xxs">Study Description</h4>
         <slot name="description">
           <p>description missing</p>
         </slot>
       </div>
       {#if dataCollectionDetails.length}
         <div
-          class="study-card-section  study-card-collected body-copy text-body-sm">
-          <DataCollected />
-          <h4 class="text-display-xxs">Data Collected</h4>
+          class="study-card-section study-card-collected body-copy text-body-sm">
+          <span class='study-card-icon'>
+            <DataCollected />
+          </span>
+          <h4 class="study-card-subheader text-display-xxs">Data Collected</h4>
           <ul
             class="mzp-u-list-styled study-card-section-body body-copy text-body-sm">
             {#each dataCollectionDetails as detail}
@@ -205,8 +224,10 @@
         </div>
       {/if}
       <div class="study-card-section study-card-details body-copy text-body-sm">
-        <Details />
-        <h4 class="text-display-xxs">Details</h4>
+        <span class='study-card-icon'>
+          <Details />
+        </span>
+        <h4 class="study-card-subheader text-display-xxs">Details</h4>
         <div class="study-card-section-body">
           <slot name="details">more details</slot>
         </div>

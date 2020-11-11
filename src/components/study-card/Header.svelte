@@ -10,7 +10,7 @@
 <style>
   .study-card-header {
     display: grid;
-    grid-gap: 1.5rem;
+    grid-gap: 20px;
     margin-bottom: 28px;
     grid-template-columns: var(--study-card-header-columns);
   }
@@ -20,12 +20,14 @@
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
+    color: var(--color-ink-50);
   }
 
   h3 {
     margin: 0;
     grid-area: title;
     width: 100%;
+    padding-top: 8px;
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
