@@ -566,5 +566,7 @@ module.exports = class IonCore {
   async _updateDemographics(data) {
     await this._storage.setItem("demographicsData", data)
       .catch(e => console.error(`IonCore._updateDemographics - failed to save data`, e));
+
+    return await this._dataCollection.sendDemographicSurveyPing(data);
   }
 }

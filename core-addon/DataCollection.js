@@ -156,4 +156,68 @@ module.exports = class DataCollection {
         console.error(`DataCollection.sendPing failed - error: ${error}`);
       });
   }
+
+  /**
+   * Sends a demographic-survey ping.
+   *
+   * @param {Object} data
+   *        A JSON-serializable object containing the demographics
+   *        information submitted by the user..
+   */
+  async sendDemographicSurveyPing(data) {
+    const FIELD_MAPPING = {
+      "age": "age",
+      "gender": "gender",
+      "hispanicLatinoSpanishOrigin": "origin",
+      "school": "education",
+      "income": "income",
+      "zipCode": "zipCode",
+    };
+
+    // Important: the following code flattens out arrays and nested
+    // structures (for example, "race": ["a", "b"] becomes in the
+    // payload "races": {"a": true, "b": true}). We do this for two
+    // reasons:
+    //
+    // - Analysts won't have to do string checks (e.g. "races".contain("samoan"))
+    //   which is error prone, given that any term could be mispelled and
+    //   contain typos. With this approach data points will have their own
+    //   column (e.g. "races_samoan") and the stored boolean value indicates
+    //   whether or not that race was reported.
+    // - This future-proofs data by rationalizing it in terms of how
+    //   Glean wants it.
+
+    let processed = {};
+
+    // Map all the fields but "race" (because that has multiple
+    // possible values).
+    for (let originalField in FIELD_MAPPING) {
+      if (originalField in data) {
+        const newName = FIELD_MAPPING[originalField];
+        if (!(newName in processed)) {
+          processed[newName] = {};
+        }
+        processed[newName][data[originalField]] = true;
+      }
+    }
+
+    // Note: "race" gets renamed to "races" and has multiple
+    // values.
+    if ("race" in data) {
+      for (let race of data["race"]) {
+        if (!("races" in processed)) {
+          processed["races"] = {};
+        }
+        processed["races"][race] = true;
+      }
+    }
+
+    return await this.sendPing(
+      "demographic-survey",
+      processed,
+      "pioneer-core",
+      CORE_ENCRYPTION_KEY_ID,
+      CORE_ENCRYPTION_JWK,
+    );
+  }
 };
