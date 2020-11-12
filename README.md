@@ -71,7 +71,7 @@ Then run:
 
 - `npm run build`
 - `npm run local-build-addon`
-- `web-ext run --pref=extensions.experiments.enabled=true -f nightly`
+- `web-ext run`
 
 To walk through the Core Add-On experience with your study.
 
