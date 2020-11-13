@@ -8,8 +8,6 @@
 
   // positioning elements.
   export let location;
-  export let xOffset;
-  export let yOffset;
 
   // if specified, set the width variable.
   $: style = width ? `--width: ${width}` : undefined;

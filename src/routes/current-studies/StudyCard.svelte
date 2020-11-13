@@ -36,16 +36,18 @@ const dispatch = createEventDispatcher();
 
 let joinModal = false;
 
+function triggerJoinEvent() {
+    // send CTA click event to parent.
+    dispatch('cta-clicked');
+    joinModal = true;
+}
+
 </script>
 
 <StudyCard
     {joined}
-    on:join={() => {
-    joinModal = true;
-    }}
-    on:leave={() => {
-    joinModal = true;
-    }}
+    on:join={triggerJoinEvent}
+    on:leave={triggerJoinEvent}
     {endDate}
     {joinedDate}
     {dataCollectionDetails}
@@ -120,7 +122,7 @@ let joinModal = false;
         leave={joined}
         on:click={() => {
             joined = !joined;
-            // send event to parent.
+            // send join event to parent.
             dispatch(joined ? "join" : "leave");
             joinModal = false;
         }}>

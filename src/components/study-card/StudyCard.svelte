@@ -172,8 +172,7 @@
           product={!joined}
           leave={joined}
           on:click={() => {
-            if (joined) dispatch('leave');
-            else dispatch('join');
+            dispatch(joined ? 'leave' : 'join');
           }}>
           {#if joined}Leave Study{:else}Join Study{/if}
         </Button>

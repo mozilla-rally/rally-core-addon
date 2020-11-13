@@ -16,7 +16,7 @@
   function showNotification() {
     notification = setTimeout(() => {
       notification = false;
-    }, 5000)
+    }, 3000)
   }
 
   $: console.log(notification)
@@ -50,8 +50,6 @@
       title="Rally's First Example Study"
       author="the Rally Team"
       {joined}
-      on:join={() => { joined = true; }}
-      on:leave={() => { joined = false; }}
       endDate={new Date(2021, 5, 5)}
       joinedDate={new Date(2020, 12, 5)}
       description={`
@@ -62,6 +60,11 @@ This study is a a simple scaffold. Researchers can add any description they pref
       detailsDirectName="Rally Team Website"
       detailsDirectLink="/"
       privacyPolicyLink={'/'}
+      on:cta-clicked={() => {
+        // kill any notifications that might be present.
+        clearTimeout(notification);
+        notification = false;
+      }}
       on:join={() => {
           joined = true;
           showNotification();
