@@ -35,7 +35,13 @@
 </style>
 
 <div class="study-card-header grid">
-  <slot name="study-icon" />
+  <slot name="study-icon">
+    <img
+    class="study-card-image"
+    width="60"
+    alt="study icon"
+    src="/default-study-icon.png" />
+  </slot>
   <div class="study-card-header-info">
     <h3 class="text-head-sm">
       <slot name="study-name">Study</slot>

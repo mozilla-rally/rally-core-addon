@@ -2,8 +2,16 @@
   /* This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+  import { scale } from 'svelte/transition'
   export let width;
   export let level = "info"; // info, error.
+
+  // positioning elements.
+  export let location;
+  export let xOffset;
+  export let yOffset;
+
+  // if specified, set the width variable.
   $: style = width ? `--width: ${width}` : undefined;
 </script>
 
@@ -62,9 +70,55 @@
     align-items: center;
     align-content: center;
   }
+
+  .notification-floating {
+    position: fixed;
+    --pad: 16px;
+    --x-pad: var(--pad);
+    --y-pad: var(--pad);
+    --x-offset: 0;
+    --y-offset: 0;
+  }
+
+  .notification-floating-bottom, .notification-floating-bottom-center {
+    bottom: var(--y-pad);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .notification-floating-bottom-right {
+    right: var(--x-pad);
+    bottom: var(--y-pad);
+  }
+
+  .notification-floating-bottom-left {
+    left: var(--x-pad);
+    bottom: var(--y-pad);
+  }
+
+  .notification-floating-top, .notification-floating-top-center {
+    top: var(--y-pad);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .notification-floating-top-left {
+    left: var(--x-pad);
+    top: var(--y-pad);
+  }
+
+  .notification-floating-top-right {
+    right: var(--x-pad);
+    top: var(--y-pad);
+  }
 </style>
 
-<aside {style} class="radius-sm notification-{level}">
+<aside 
+  transition:scale={{duration: 200, start: .98, opacity: 0}}
+  style="
+  {style};
+  " class="radius-sm notification-{level} 
+    {location !== undefined ? `notification-floating notification-floating-${location}` : ''}">
   <div class="icon centered">
     <slot name="icon" />
   </div>

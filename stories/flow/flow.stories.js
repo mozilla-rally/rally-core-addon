@@ -5,10 +5,11 @@
 import WelcomeView from './WelcomeView.svelte';
 import TermsView from './TermsView.svelte';
 import DemographicsView from './DemographicsView.svelte';
-import OnboardingFlowView from './OnboardingFlowView.svelte'
+import OnboardingFlowView from './OnboardingFlowView.svelte';
+import MainFlowView from './MainFlowView.svelte';
 
 export default {
-  title: "Core Add-On Onboarding Flow",
+  title: "Core Add-On User Flows",
 };
 
 export const WelcomeFirstRun = () => ({
@@ -42,3 +43,8 @@ Demographics.storyName = "3. Demographics Survey";
 export const OnboardingFlow = () => ({
   Component: OnboardingFlowView
 });
+
+export const MainFlow = () => ({
+  Component: MainFlowView
+
+})

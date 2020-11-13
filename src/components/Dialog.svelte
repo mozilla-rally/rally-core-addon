@@ -63,7 +63,6 @@
     width: 580px;
     background-color: var(--color-white);
     padding: 20px;
-    padding-top: 30px;
     box-shadow: var(--box-shadow-lg);
   }
 

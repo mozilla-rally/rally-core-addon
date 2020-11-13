@@ -2,7 +2,7 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-  import NotificationBar from "../../src/components/notification/NotificationBar.svelte";
+  import NotificationElement from "../../src/components/notification/NotificationElement.svelte";
   import Check from "../../src/components/icons/Check.svelte";
   import Alert from "../../src/components/icons/Alert.svelte";
   import Button from "../../src/components/Button.svelte";
@@ -18,14 +18,14 @@
 </style>
 
 <div>
-  <NotificationBar>
+  <NotificationElement>
     <span style="display: contents;" slot="icon">
       <Check />
     </span>
     <span slot="body">successfully joined study</span>
-  </NotificationBar>
+  </NotificationElement>
 
-  <NotificationBar level="error">
+  <NotificationElement level="error">
     <span style="display: contents;" slot="icon">
       <Alert />
     </span>
@@ -33,5 +33,5 @@
     <span slot="cta">
       <Button size="sm" error compact>Try Again</Button>
     </span>
-  </NotificationBar>
+  </NotificationElement>
 </div>

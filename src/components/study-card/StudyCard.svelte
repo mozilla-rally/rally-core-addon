@@ -18,7 +18,7 @@
   export let endDate;
   export let joined = false;
   export let joinedDate = undefined;
-  export let privacyPolicy = undefined;
+  export let privacyPolicyLink = undefined;
   export let imageSrc;
   export let dataCollectionDetails = [];
   export let tags = [];
@@ -33,9 +33,9 @@
     --gap: 20px;
     --left-pad: calc(var(--icon-size) + var(--gap));
 
-    background-color: var(--color-white);
     padding: 1.25rem;
     box-shadow: var(--rally-box-shadow-xs);
+    background: var(--color-white) url('texture.png') repeat;
   }
 
   .study-card-body {
@@ -241,7 +241,7 @@
     </div>
 
     <div class="study-card-privacy-policy">
-      <a href={privacyPolicy}>privacy policy</a>
+      <a href={privacyPolicyLink}>privacy policy</a>
     </div>
   </div>
 </div>
