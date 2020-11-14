@@ -15,6 +15,8 @@ let location = 'bottom';
 function setLocation(loc) {
     return () => { location = loc; }
 }
+
+let xOffset = 0;
 </script>
 
 <style>
@@ -29,15 +31,18 @@ function setLocation(loc) {
 </style>
 
 
-
 <OnboardingLayout>
     <OnboardingBody>
         <TOC />
     </OnboardingBody>
 </OnboardingLayout>
 
+<NotificationElement location="top-left">
+    <span slot="body">this one will stay here</span>
+</NotificationElement>
+
 {#key location}
-    <NotificationElement location={location}>
+    <NotificationElement location={location} xOffset="{xOffset}px">
         <span style="display: contents;" slot="icon">
         <Check />
         </span>
@@ -46,6 +51,9 @@ function setLocation(loc) {
 {/key}
 
 <div class='controls'>
+    <div>
+        <input type="range" bind:value={xOffset} min=0 max=200 />
+    </div>
     <Button on:click={setLocation('bottom')}>bottom</Button>
     <Button on:click={setLocation('bottom-left')}>bottom-left</Button>
     <Button on:click={setLocation('bottom-right')}>bottom-right</Button>

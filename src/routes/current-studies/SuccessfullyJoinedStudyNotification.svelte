@@ -5,9 +5,11 @@
 
 import Notification from '../../components/notification/NotificationElement.svelte';
 import Check from '../../components/icons/Check.svelte';
+export let xOffset;
+export let location = "top";
 
 </script>
-<Notification location="top">
+<Notification {location} {xOffset}>
     <span style="display: contents;" slot="icon">
     <Check />
     </span>

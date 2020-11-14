@@ -6,11 +6,25 @@
   export let width;
   export let level = "info"; // info, error.
 
+  export let xOffset;
+  export let yOffset;
+
   // positioning elements.
   export let location;
 
   // if specified, set the width variable.
-  $: style = width ? `--width: ${width}` : undefined;
+
+  function makeStyle({width, xOffset, yOffset}) {
+    let styles = [
+      width ? `--width: ${width}` : undefined,
+      xOffset ? `--x-offset: ${xOffset}` : undefined,
+      yOffset ? `--y-offset: ${yOffset}` : undefined,
+    ]
+    return styles.filter(d=> d !== undefined).join('; ');
+  }
+
+  $: style = makeStyle({width, xOffset, yOffset});
+  
 </script>
 
 <style>
@@ -72,15 +86,21 @@
   .notification-floating {
     position: fixed;
     --pad: 20px;
-    --x-pad: var(--pad);
-    --y-pad: var(--pad);
-    --x-offset: 0;
-    --y-offset: 0;
+    /* stylelint-disable */
+    --x-offset: 0px;
+    --y-offset: 0px;
+    /* stylelint-enable */
+    --x-pad: calc(var(--pad) + var(--x-offset));
+    --y-pad: calc(var(--pad) + var(--y-offset));
+
+
+    /* --y-pad: calc(var(--pad, 20px) + var(--y-offset, 0)); */
+
   }
 
   .notification-floating-bottom, .notification-floating-bottom-center {
     bottom: var(--y-pad);
-    left: 50%;
+    left: calc(50% + var(--x-offset));
     transform: translateX(-50%);
   }
 
@@ -96,7 +116,7 @@
 
   .notification-floating-top, .notification-floating-top-center {
     top: var(--y-pad);
-    left: 50%;
+    left: calc(50% + var(--x-offset));
     transform: translateX(-50%);
   }
 

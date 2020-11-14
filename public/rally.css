@@ -3,6 +3,10 @@
   --onboarding-cta-height: 434px;
   --onboarding-cta-offset: calc(var(--onboarding-cta-height) - 230px);
 
+  --main-sidebar-width: 15rem;
+  --main-notification-offset: calc(
+    var(--main-sidebar-width) * 0.5 + var(--content-width) * 0.5
+  );
   /* --------- shared component variables ---------- */
   /* study card variables */
   --study-card-header-columns: 60px auto max-content;
