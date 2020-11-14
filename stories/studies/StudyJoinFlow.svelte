@@ -19,7 +19,6 @@
     }, 3000)
   }
 
-  $: console.log(notification)
 </script>
 
 <style>
