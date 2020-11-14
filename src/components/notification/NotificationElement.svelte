@@ -92,10 +92,6 @@
     /* stylelint-enable */
     --x-pad: calc(var(--pad) + var(--x-offset));
     --y-pad: calc(var(--pad) + var(--y-offset));
-
-
-    /* --y-pad: calc(var(--pad, 20px) + var(--y-offset, 0)); */
-
   }
 
   .notification-floating-bottom, .notification-floating-bottom-center {
