@@ -13,7 +13,7 @@
     "lint": "npm-run-all lint-*",
     "lint-css": "stylelint 'public/*.css' '.storybook/*.css' 'src/**/*.svelte' 'stories/**/*.svelte'",
     "storybook": "start-storybook -p 6006 -s public/",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook -s public/",
     "test": "npm run test-addon"
   },
   "devDependencies": {
