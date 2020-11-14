@@ -71,7 +71,7 @@
 
   .notification-floating {
     position: fixed;
-    --pad: 16px;
+    --pad: 20px;
     --x-pad: var(--pad);
     --y-pad: var(--pad);
     --x-offset: 0;
@@ -113,9 +113,7 @@
 
 <aside 
   transition:scale={{duration: 200, start: .98, opacity: 0}}
-  style="
-  {style};
-  " class="radius-sm notification-{level} 
+  style={style} class="radius-sm notification-{level} 
     {location !== undefined ? `notification-floating notification-floating-${location}` : ''}">
   <div class="icon centered">
     <slot name="icon" />
