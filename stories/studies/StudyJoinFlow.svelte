@@ -7,8 +7,8 @@
   import OnboardingLayout from '../../src/components/layouts/OnboardingLayout.svelte';
   import OnboardingBody from '../../src/components/layouts/OnboardingBody.svelte';
   import StudyCard from "../../src/routes/current-studies/StudyCard.svelte";
-  import NotificationElement from '../../src/components/notification/NotificationElement.svelte';
-  import Check from '../../src/components/icons/Check.svelte';
+  import SuccessfullyJoinedStudyNotification from '../../src/routes/current-studies/SuccessfullyJoinedStudyNotification.svelte';
+  import SuccessfullyLeftStudyNotification from '../../src/routes/current-studies/SuccessfullyLeftStudyNotification.svelte';
 
   let joined = false;
 
@@ -75,12 +75,11 @@ This study is a a simple scaffold. Researchers can add any description they pref
     />
   {#if notification}
     {#key notification}
-      <NotificationElement location="top">
-        <span style="display: contents;" slot="icon">
-        <Check />
-        </span>
-        <span slot="body">successfully {joined ? "joined" : "left"} study</span>
-      </NotificationElement>
+      {#if joined}
+        <SuccessfullyJoinedStudyNotification />
+      {:else}
+        <SuccessfullyLeftStudyNotification />
+      {/if}
     {/key}
   {/if}
   </div>
