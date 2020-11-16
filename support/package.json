@@ -1,0 +1,20 @@
+{
+  "name": "@mozilla/rally",
+  "version": "0.0.1",
+  "scripts": {},
+  "devDependencies": {},
+  "dependencies": {},
+  "description": "The Rally partner support library.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mozilla-ion/ion-core-addon.git",
+    "directory": "support"
+  },
+  "keywords": [],
+  "author": "Mozilla Rally team",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/mozilla-ion/ion-core-addon/issues"
+  },
+  "homepage": "https://github.com/mozilla-ion/ion-core-addon#readme"
+}
