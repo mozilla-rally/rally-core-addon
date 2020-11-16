@@ -5,9 +5,9 @@
 const CORE_ADDON_ID = "ion-core-addon@mozilla.org";
 const ION_SIGNUP_URL = "https://mozilla-ion.github.io/ion-core-addon/";
 
-module.exports = class Ion {
+module.exports = class Rally {
   /**
-   * Initialize the Ion library.
+   * Initialize the Rally library.
    *
    * @param {String} keyId
    *        The id of the key used to encrypt outgoing data.
@@ -25,15 +25,15 @@ module.exports = class Ion {
    *        }
    */
   async initialize(keyId, key) {
-    console.debug("Ion.initialize");
+    console.debug("Rally.initialize");
 
     this._validateEncryptionKey(keyId, key);
 
     this._keyId = keyId;
     this._key = key;
 
-    await this._checkIonCore().then(
-        () => console.debug("Ion.initialize - Found Ion Core")
+    await this._checkRallyCore().then(
+        () => console.debug("Rally.initialize - Found the Core Add-on")
       ).catch(
         async () => await browser.tabs.create({ url: ION_SIGNUP_URL })
       );
@@ -43,7 +43,7 @@ module.exports = class Ion {
       (m, s) => this._handleExternalMessage(m, s));
 
     // We went through the whole init process, it's now safe
-    // to use the Ion public APIs.
+    // to use the Rally public APIs.
     this._initialized = true;
   }
 
@@ -53,11 +53,11 @@ module.exports = class Ion {
    * @returns {Promise} resolved if the core addon was found and
    *          communication was successful, rejected otherwise.
    */
-  async _checkIonCore() {
+  async _checkRallyCore() {
     try {
       return await browser.management.get(CORE_ADDON_ID);
     } catch (ex) {
-      console.error("Ion._checkIonCore - core addon not found", ex);
+      console.error("Rally._checkRallyCore - core addon not found", ex);
       return Promise.reject(ex);
     }
 
@@ -82,7 +82,7 @@ module.exports = class Ion {
     // We only expect messages coming from the core addon.
     if (sender.id != CORE_ADDON_ID) {
       return Promise.reject(
-        new Error(`Ion._handleExternalMessage - unexpected sender ${sender.id}`));
+        new Error(`Rally._handleExternalMessage - unexpected sender ${sender.id}`));
     }
 
     switch (message.type) {
@@ -90,7 +90,7 @@ module.exports = class Ion {
         return browser.management.uninstallSelf({showConfirmDialog: false});
       default:
         return Promise.reject(
-          new Error(`Ion._handleExternalMessage - unexpected message type ${message.type}`));
+          new Error(`Rally._handleExternalMessage - unexpected message type ${message.type}`));
     }
   }
 
@@ -117,16 +117,16 @@ module.exports = class Ion {
    */
   _validateEncryptionKey(keyId, key) {
     if (typeof keyId !== "string") {
-      throw new Error(`Ion._validateEncryptionKey - Invalid encryption key id ${keyId}`);
+      throw new Error(`Rally._validateEncryptionKey - Invalid encryption key id ${keyId}`);
     }
 
     if (typeof key !== "object") {
-      throw new Error(`Ion._validateEncryptionKey - Invalid encryption key ${key}`);
+      throw new Error(`Rally._validateEncryptionKey - Invalid encryption key ${key}`);
     }
   }
 
   /**
-   * Submit an encrypted ping through the Ion Core addon.
+   * Submit an encrypted ping through the Rally Core addon.
    *
    * @param {String} payloadType
    *        The type of the encrypted payload. This will define the
@@ -136,7 +136,7 @@ module.exports = class Ion {
    */
   async sendPing(payloadType, payload) {
     if (!this._initialized) {
-      console.error("Ion.sendPing - Not initialzed, call `initialize()`");
+      console.error("Rally.sendPing - Not initialzed, call `initialize()`");
       return;
     }
 
@@ -165,7 +165,7 @@ module.exports = class Ion {
       }
       await browser.runtime.sendMessage(CORE_ADDON_ID, msg, {});
     } catch (ex) {
-      console.error(`Ion.sendPing - error while sending ${payloadType}`, ex);
+      console.error(`Rally.sendPing - error while sending ${payloadType}`, ex);
     }
   }
 }
