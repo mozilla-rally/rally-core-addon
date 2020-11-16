@@ -6,10 +6,11 @@
   import Layout from "../components/layouts/MainLayout.svelte";
   import Body from "../components/layouts/MainBody.svelte";
   import Sidebar from "./Sidebar.svelte";
+
 </script>
 
 <Layout>
-  <Sidebar />
+  <Sidebar on:change-view />
   <Body>
     <slot />
   </Body>

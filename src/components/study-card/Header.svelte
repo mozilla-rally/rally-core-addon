@@ -49,8 +49,10 @@
     <div class="study-card-author text-body-xs">
       by
       <slot name="study-author">author</slot>
+      {#if endDate}
       | Ends:
-      {niceDate(endDate)}
+        {niceDate(endDate)}
+      {/if}
     </div>
   </div>
   <slot name="study-cta" />

@@ -35,7 +35,7 @@
 
     padding: 1.25rem;
     box-shadow: var(--rally-box-shadow-xs);
-    background: var(--color-white) url('texture.png') repeat;
+    background: url('texture.png'), var(--color-white) repeat;
   }
 
   .study-card-body {
@@ -178,8 +178,12 @@
         </Button>
         {#if joined}
           <div class="study-card-joined-date">
-            joined on
-            {niceDate(joinedDate)}
+            {#if joinedDate}
+              joined on
+              {niceDate(joinedDate)}
+            {:else}
+              joined
+            {/if}
             <div class="study-card-joined-date-symbol gafc">
               <CheckCircle />
             </div>
@@ -222,7 +226,7 @@
         <span class='study-card-icon'>
           <Details />
         </span>
-        <h4 class="study-card-subheader text-display-xxs">Details</h4>
+        <h4 class="study-card-subheader text-display-xxs">Additional Details</h4>
         <div class="study-card-section-body">
           <slot name="details">more details</slot>
         </div>

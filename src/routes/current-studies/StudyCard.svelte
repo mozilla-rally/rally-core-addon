@@ -75,7 +75,7 @@ function triggerJoinEvent() {
     <!-- override the dialog Zilla font setting. -->
     <div slot="title">
         {#if !joined}
-        <StudyCardHeader endDate={new Date(2020, 5, 5)}>
+        <StudyCardHeader {endDate}>
             <img
             slot="study-icon"
             class="study-card-image"
@@ -121,9 +121,8 @@ function triggerJoinEvent() {
         product
         leave={joined}
         on:click={() => {
-            joined = !joined;
             // send join event to parent.
-            dispatch(joined ? "join" : "leave");
+            dispatch(!joined ? "join" : "leave");
             joinModal = false;
         }}>
         {#if joined}Leave Study{:else}Join Study{/if}

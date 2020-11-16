@@ -4,6 +4,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
   import { createEventDispatcher, onMount, onDestroy } from "svelte";
   import { fly, fade } from "svelte/transition";
+  import Portal from './Portal.svelte';
   import Close from "./icons/Close.svelte";
   import MicroModal from "micromodal";
 
@@ -98,39 +99,41 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div id="modal-1" aria-hidden="true" transition:fade={{ duration: 200 }}>
-  <div
-    tabindex="-1"
-    data-micromodal-close
-    class="overlay"
-    on:click={dismissParent}>
+<Portal>
+  <div id="modal-1" aria-hidden="true" transition:fade={{ duration: 200 }}>
     <div
-      transition:fly={{ duration: 200, y: 5 }}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-1-title"
-      class="container radius-sm mzp-t-mozilla">
-      <header>
-        <h2 class="mzp-t-mozilla">
-          <slot name="title">Title.</slot>
-        </h2>
-        <button on:click={onDismiss}>
-          <Close />
-        </button>
-      </header>
+      tabindex="-1"
+      data-micromodal-close
+      class="overlay"
+      on:click={dismissParent}>
+      <div
+        transition:fly={{ duration: 200, y: 5 }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-1-title"
+        class="container radius-sm mzp-t-mozilla">
+        <header>
+          <h2 class="mzp-t-mozilla">
+            <slot name="title">Title.</slot>
+          </h2>
+          <button on:click={onDismiss}>
+            <Close />
+          </button>
+        </header>
 
-      <div class="modal-body">
-        <slot name="body">
-          <p>I am a dialog</p>
-        </slot>
-      </div>
-      <!-- [4] -->
-      <div class="cta">
-        <slot name="cta">
-          <button on:click={onAccept}>Accept</button>
-          <button on:click={onCancel}>Cancel</button>
-        </slot>
+        <div class="modal-body">
+          <slot name="body">
+            <p>I am a dialog</p>
+          </slot>
+        </div>
+        <!-- [4] -->
+        <div class="cta">
+          <slot name="cta">
+            <button on:click={onAccept}>Accept</button>
+            <button on:click={onCancel}>Cancel</button>
+          </slot>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</Portal>

@@ -34,8 +34,10 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-notice": "^0.9.10",
     "eslint-plugin-svelte3": "^2.7.3",
+    "micromodal": "^0.4.6",
     "mocha": "^8.1.3",
     "npm-run-all": "^4.1.5",
+    "page": "^1.11.6",
     "react-is": "^16.13.1",
     "rollup": "^2.3.4",
     "rollup-plugin-copy": "^3.3.0",
@@ -49,8 +51,7 @@
     "svelte": "^3.29.0",
     "svelte-accessible-dialog": "^2.1.2",
     "svelte-loader": "^2.13.6",
-    "webextension-polyfill": "^0.6.0",
-    "micromodal": "^0.4.6"
+    "webextension-polyfill": "^0.6.0"
   },
   "dependencies": {
     "sirv-cli": "^1.0.0",
