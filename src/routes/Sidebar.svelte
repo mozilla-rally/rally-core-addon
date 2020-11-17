@@ -84,10 +84,10 @@ li a {
 <MainSidebar>
   <ul slot="navigation">
     <li><button class:active={currentView === 'current-studies'} on:click={send('current-studies')}>Current Studies</button></li>
-    <li>
+    <!-- <li>
       <a class="external" href="/studies">Latest News
         <ExternalLink /></a>
-    </li>
+    </li> -->
     <li>
       <a class="external" href="/studies">FAQ
         <ExternalLink /></a>

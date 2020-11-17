@@ -200,7 +200,7 @@
   {/if}
 
   {#if revealed || !joined}
-    <div class="study-card-body" transition:slide={{ duration: 200 }}>
+    <div class="study-card-body" transition:slide|local={{ duration: 200 }}>
       <div class="study-card-description body-copy text-body-sm">
         <h4 class="study-card-subheader text-display-xxs">Study Description</h4>
         <slot name="description">

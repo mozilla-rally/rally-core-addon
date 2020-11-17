@@ -15,6 +15,7 @@ Data points we'll need to support in the store to make this a reality:
 */
 
 import { createEventDispatcher } from 'svelte';
+import { fly } from 'svelte/transition';
 import StudyCard from './StudyCard.svelte';
 import SuccessfullyJoinedStudyNotification from './SuccessfullyJoinedStudyNotification.svelte';
 import SuccessfullyLeftStudyNotification from './SuccessfullyLeftStudyNotification.svelte';
@@ -43,6 +44,7 @@ function showNotification(joinOrLeave) {
         notificationID = false;
     }, 3000);
 }
+
 </script>
 
 <style>
@@ -57,47 +59,51 @@ function showNotification(joinOrLeave) {
     }
 </style>
 
-<h2>Current Studies</h2>
+<div  in:fly={{ duration: 800, y: 5 }}>
 
-<p>
-  Some sort of introduction lorem ipsum dolor sit amet, consectetur adipiscing
-  elit, sed do eiusmod tempor incididunt ut.
-</p> 
+    <h2>Current Studies</h2>
 
-<hr />
-<div class="studies">
+    <p>
+    Some sort of introduction lorem ipsum dolor sit amet, consectetur adipiscing
+    elit, sed do eiusmod tempor incididunt ut.
+    </p> 
 
-{#each studies as study, i (study.addon_id)}
-  <StudyCard 
-    title={study.name}
-    author={study.authors.name}
-    joined={(!!study.ionInstalled)}
-    imageSrc={study.icons[64]}
-    endDate={study.endDate}
-    joinedDate={study.joinedOn}
-    description={study.description}
-    dataCollectionDetails={study.dataCollectionDetails}
-    detailsDirectName={study.detailsSiteName}
-    detailsDirectLink={study.detailsLink}
-    privacyPolicyLink={study.privacyPolicy.spec}
-    tags={study.tags}
-    on:cta-clicked={() => {
-      // kill any notifications that might be present.
-      clearTimeout(notificationID);
-      notificationID = false;
-    }}
-    on:join={() => {
-        joinStudy(study.addon_id);
-        showNotification('joined');
-    }}
-    on:leave={() => {
-        leaveStudy(study.addon_id);
-        showNotification('left');
-    }}
-  />
-    {:else}
-    No available studies
-{/each}
+    <hr />
+    <div class="studies">
+
+    {#each studies as study, i (study.addon_id)}
+    <StudyCard 
+        title={study.name}
+        author={study.authors.name}
+        joined={(!!study.ionInstalled)}
+        imageSrc={study.icons[64]}
+        endDate={study.endDate}
+        joinedDate={study.joinedOn}
+        description={study.description}
+        dataCollectionDetails={study.dataCollectionDetails}
+        detailsDirectName={study.detailsSiteName}
+        detailsDirectLink={study.detailsLink}
+        privacyPolicyLink={study.privacyPolicy.spec}
+        tags={study.tags}
+        on:cta-clicked={() => {
+        // kill any notifications that might be present.
+        clearTimeout(notificationID);
+        notificationID = false;
+        }}
+        on:join={() => {
+            joinStudy(study.addon_id);
+            showNotification('joined');
+        }}
+        on:leave={() => {
+            leaveStudy(study.addon_id);
+            showNotification('left');
+        }}
+    />
+        {:else}
+        No available studies
+    {/each}
+    </div>
+
 </div>
 
 {#if notificationID}
