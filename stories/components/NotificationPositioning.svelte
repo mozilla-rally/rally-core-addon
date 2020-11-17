@@ -37,10 +37,6 @@ let xOffset = 0;
     </OnboardingBody>
 </OnboardingLayout>
 
-<NotificationElement location="top-left">
-    <span slot="body">this one will stay here</span>
-</NotificationElement>
-
 {#key location}
     <NotificationElement location={location} xOffset="{xOffset}px">
         <span style="display: contents;" slot="icon">
