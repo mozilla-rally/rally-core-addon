@@ -20,8 +20,6 @@ onDestroy(() => {
 
 <div class="gp-portal" style="display: none;">
 <div bind:this={ref}>
-    {#if mounted}
     <slot />
-    {/if}
 </div>
 </div>

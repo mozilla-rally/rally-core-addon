@@ -4,13 +4,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
   import Button from "../../src/components/Button.svelte";
   import Dialog from "../../src/components/Dialog.svelte";
-  import Layout from "../../src/routes/Layout.svelte";
   let dialogActive = false;
   let consented = false;
 </script>
 
-<Layout>
-  <main>
     <Button
       on:click={() => {
         dialogActive = !dialogActive;
@@ -48,5 +45,4 @@
         </div>
       </Dialog>
     {/if}
-  </main>
-</Layout>
+

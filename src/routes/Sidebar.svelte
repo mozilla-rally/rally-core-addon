@@ -9,8 +9,12 @@
   const dispatch = createEventDispatcher();
   function send(view) {
     return () => {
-      currentView = view;
-      dispatch("change-view", view);
+      if (view === 'leave-rally') {
+        dispatch("leave-rally");
+      } else {
+        currentView = view;
+        dispatch("change-view", view);
+      }
     }
   }
 
@@ -92,7 +96,7 @@ li a {
   <ul slot="settings" class="app-controls">
     <ul class="app-controls">
       <li><button class:active={currentView === 'privacy-notice'} on:click={send('privacy-notice')}>Privacy Notice</button></li>
-      <li><button class:active={currentView === 'complete-profile'} on:click={send('complete-profile')}>Complete Profile</button></li>
+      <!-- <li><button class:active={currentView === 'complete-profile'} on:click={send('complete-profile')}>Complete Profile</button></li> -->
       <li><button class:active={currentView === 'leave-rally'} on:click={send('leave-rally')}>Leave Mozilla Rally</button></li>
     </ul>
   </ul>

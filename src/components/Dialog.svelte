@@ -1,3 +1,8 @@
+<script context=module>
+import MicroModal from "micromodal";
+MicroModal.init({ disableScroll: true, disableFocus: true });
+</script>
+
 <script>
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -6,17 +11,20 @@
   import { fly, fade } from "svelte/transition";
   import Portal from './Portal.svelte';
   import Close from "./icons/Close.svelte";
-  import MicroModal from "micromodal";
 
   const dispatch = createEventDispatcher();
+  const key =
+    `modal-${Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)}`;
+  
 
   function onCancel() {
-    MicroModal.close("#modal-1");
+    MicroModal.close(key);
     dispatch("cancel");
   }
 
   function onAccept() {
-    MicroModal.close("#modal-1");
+    MicroModal.close(key);
     dispatch("accept");
   }
 
@@ -32,13 +40,12 @@
     if (e.key === "Escape") onDismiss();
   }
 
-  onMount(async () => {
-    MicroModal.init({ disableScroll: true, disableFocus: true });
-    MicroModal.show("modal-1", { disableScroll: true, disableFocus: true });
+  onMount( () => {
+    MicroModal.show(key, { disableScroll: true, disableFocus: true });
   });
 
   onDestroy(() => {
-    MicroModal.close("modal-1");
+    MicroModal.close(key);
   });
 </script>
 
@@ -55,6 +62,10 @@
     align-items: center;
   }
 
+  h2 {
+    font-size: 38px;
+  }
+
   header {
     display: grid;
     grid-template-columns: auto max-content;
@@ -62,9 +73,12 @@
   .container {
     margin: 8vh auto;
     width: 580px;
+    min-height: 400px;
     background-color: var(--color-white);
     padding: 20px;
     box-shadow: var(--box-shadow-lg);
+    display: grid;
+    grid-template-rows: max-content auto max-content;
   }
 
   .modal-body {
@@ -100,14 +114,14 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <Portal>
-  <div id="modal-1" aria-hidden="true" transition:fade={{ duration: 200 }}>
+  <div id={key} aria-hidden="true" transition:fade={{ duration: 200 }}>
     <div
       tabindex="-1"
+      transition:fly={{duration: 200, y: 5}}
       data-micromodal-close
       class="overlay"
       on:click={dismissParent}>
       <div
-        transition:fly={{ duration: 200, y: 5 }}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-1-title"

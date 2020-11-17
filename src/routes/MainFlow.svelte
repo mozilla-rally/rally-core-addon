@@ -4,14 +4,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 import Layout from './Layout.svelte';
 import PrivacyNotice from './terms-of-service/Content.svelte';
-import Demographics from './demographics/Content.svelte'
+import Demographics from './demographics/Content.svelte';
+
 // TODO: integrate ./current-studies/Content.svelte once appropriate.
 
 let view = PrivacyNotice;
 function changeView(event) {
   if (event.detail === 'complete-profile') view = Demographics;
   else view = PrivacyNotice;
-
 }
 
 // CurrentStudies view.

@@ -14,7 +14,6 @@ Data points we'll need to support in the store to make this a reality:
 
 */
 
-
 import { createEventDispatcher } from 'svelte';
 import StudyCard from './StudyCard.svelte';
 import SuccessfullyJoinedStudyNotification from './SuccessfullyJoinedStudyNotification.svelte';

@@ -9,6 +9,7 @@
 <style>
   h2 {
     font-size: 38px;
+    margin-bottom: 20px;
   }
 
   h3 {
