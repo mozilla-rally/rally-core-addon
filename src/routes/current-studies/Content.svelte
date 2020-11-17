@@ -48,24 +48,19 @@ function showNotification(joinOrLeave) {
 </script>
 
 <style>
-    .studies {
-        display: grid;
-        grid-auto-flow: row;
-        grid-row-gap: 1rem;
-    }
-
-    h2 {
-        margin-bottom: 1rem;
-    }
+.studies {
+    display: grid;
+    grid-auto-flow: row;
+    grid-row-gap: 1rem;
+}
 </style>
 
-<div  in:fly={{ duration: 800, y: 5 }}>
+<div in:fly={{ duration: 800, y: 5 }}>
 
-    <h2>Current Studies</h2>
+    <h2 class='section-header'>Current Studies</h2>
 
-    <p>
-    Some sort of introduction lorem ipsum dolor sit amet, consectetur adipiscing
-    elit, sed do eiusmod tempor incididunt ut.
+    <p style="font-style: italic;">
+        Easily contribute to causes you believe in; you may join multiple studies at once.
     </p> 
 
     <hr />
