@@ -76,8 +76,8 @@ function showNotification(joinOrLeave) {
         joinedDate={study.joinedOn}
         description={study.description}
         dataCollectionDetails={study.dataCollectionDetails}
-        detailsDirectName={study.detailsSiteName}
-        detailsDirectLink={study.detailsLink}
+        detailsDirectName={study.detailsDirectName}
+        detailsDirectLink={study.detailsDirectLink}
         privacyPolicyLink={study.privacyPolicy.spec}
         tags={study.tags}
         on:cta-clicked={() => {

@@ -120,7 +120,9 @@
       To ensure our data sets are representative of the many users of Firefox
     </li>
     <li>
-      To improve our existing products and services • To create and develop new
+      To improve our existing products and services
+    </li>
+    <li>To create and develop new
       products
     </li>
   </ul>
