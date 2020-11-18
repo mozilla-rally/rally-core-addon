@@ -111,7 +111,7 @@
     including:
   </p>
 
-  <ul>
+  <ul class="mzp-u-list-styled">
     <li>
       To determine which participants meet the criteria to be available to
       participate in particular research studies
