@@ -45,6 +45,7 @@ function toggleStudyJoinStatus(studyID, joined) {
         const nextStudy = {...study};
         if (nextStudy.addon_id === studyID) {
         nextStudy.ionInstalled = joined;
+        nextStudy.joinedOn = new Date();
         }
         return nextStudy;
     })];
