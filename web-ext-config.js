@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 module.exports = {
   // Global options:
   verbose: true,
@@ -10,18 +14,20 @@ module.exports = {
     pref: ["extensions.experiments.enabled=true"],
   },
   ignoreFiles: [
-    'docs',
-    'scripts',
-    'src',
-    'stories',
-    'tests',
-    'CODE_OF_CONDUCT.md',
-    'copyright.txt',
-    'LICENSE',
-    'package-lock.json',
-    'package.json',
-    'README.md',
-    'rollup.config.*',
-    'web-ext-config.js'
+    "docs",
+    "scripts",
+    "src",
+    "stories",
+    "tests",
+    "CODE_OF_CONDUCT.md",
+    "copyright.txt",
+    "LICENSE",
+    "package-lock.json",
+    "package.json",
+    "README.md",
+    "rollup.config.*",
+    "web-ext-config.js",
+    "core-addon/**/*",
+    "public/**/*.map",
   ],
 };
