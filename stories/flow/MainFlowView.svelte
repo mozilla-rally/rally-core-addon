@@ -61,7 +61,8 @@ function leaveStudy(studyID) { toggleStudyJoinStatus(studyID, false); }
     {:else if view === 'privacy-notice'}
         <PrivacyNotice />
     {:else}
-        <CurrentStudies 
+        <CurrentStudies
+            sidebarOffset
             {studies} 
             on:join-study={(evt) => { joinStudy(evt.detail); }}
             on:leave-study={(evt) => { leaveStudy(evt.detail); }} />

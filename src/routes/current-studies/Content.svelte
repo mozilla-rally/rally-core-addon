@@ -21,6 +21,7 @@ import SuccessfullyJoinedStudyNotification from './SuccessfullyJoinedStudyNotifi
 import SuccessfullyLeftStudyNotification from './SuccessfullyLeftStudyNotification.svelte';
 
 export let studies = [];
+export let sidebarOffset = false;
 
 const dispatch = createEventDispatcher();
 
@@ -103,7 +104,12 @@ function showNotification(joinOrLeave) {
 
 {#if notificationID}
     {#key notificationID}
-        {#if whichNotification === 'joined'}<SuccessfullyJoinedStudyNotification />{:else}<SuccessfullyLeftStudyNotification />
+        {#if whichNotification === 'joined'}<SuccessfullyJoinedStudyNotification 
+            location={sidebarOffset ? "top-left" : "top"}
+            xOffset={sidebarOffset ? "var(--main-notification-offset)" : undefined } />{:else}<SuccessfullyLeftStudyNotification
+            location={sidebarOffset ? "top-left" : "top"}
+            xOffset={sidebarOffset ? "var(--main-notification-offset)" : undefined }
+             />
         {/if}
     {/key}
 {/if}
