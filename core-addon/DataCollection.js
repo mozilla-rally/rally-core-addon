@@ -3,7 +3,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 // The encryption key id and JWK to encrypt data that go
-// to the "core" environment (i.e. `pioneer-core`).
+// to the "core" environment (i.e. `pioneer-core`). See
+// bug 1677761 for additional details.
 const CORE_ENCRYPTION_KEY_ID = "core";
 const CORE_ENCRYPTION_JWK = {
   "crv": "P-256",
