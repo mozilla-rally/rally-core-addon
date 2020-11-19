@@ -2,7 +2,6 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-  import VerticalLogo from "../VerticalLogo.svelte";
 </script>
 
 <style>
@@ -21,16 +20,10 @@
     align-items: start;
     grid-row-gap: 2rem;
   }
-
-  h1 {
-    align-self: start;
-  }
 </style>
 
 <div class="sidebar">
-  <h1>
-    <VerticalLogo />
-  </h1>
+  <slot name="header" />
   <slot name="navigation" />
   <slot name="settings" />
 </div>

@@ -8,7 +8,7 @@
 
 <style>
   div {
-    background-color: #f9f9fb;
+    background: url('texture.png');
     min-height: 100vh;
   }
 

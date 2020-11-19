@@ -8,7 +8,6 @@
   import Button from "../Button.svelte";
   import DataCollected from "../icons/DataCollected.svelte";
   import Details from "../icons/Details.svelte";
-  import CheckCircle from "../icons/CheckCircle.svelte";
   import niceDate from "./nice-date";
 
   import AccordionButton from "../accordion/AccordionButton.svelte";
@@ -35,7 +34,7 @@
 
     padding: 1.25rem;
     box-shadow: var(--rally-box-shadow-xs);
-    background: url('texture.png'), var(--color-white) repeat;
+    background-color: var(--color-white);
   }
 
   .study-card-body {
@@ -74,19 +73,15 @@
   }
 
   .study-card-joined-date {
+    margin: auto;
     margin-top: 0.75rem;
     font-size: 12px;
-    text-align: right;
+    text-align: center;
     color: var(--color-ink-30);
     display: grid;
     grid-auto-flow: column;
     align-items: center;
     grid-column-gap: 0.25rem;
-  }
-
-  .study-card-joined-date-symbol {
-    font-size: 1rem;
-    color: var(--color-green-60);
   }
 
   .study-card-section {
@@ -138,7 +133,7 @@
   .tag {
     background-color: var(--background, var(--color-marketing-gray-80));
     color: var(--text, var(--color-white));
-    padding: 1px 4px;
+    padding: 2px 6px 1px 6px;
     font-size: 12px;
     line-height: 18px;
     height: 18px;
@@ -184,17 +179,14 @@
             {:else}
               joined
             {/if}
-            <div class="study-card-joined-date-symbol gafc">
-              <CheckCircle />
-            </div>
           </div>
         {/if}
       </div></span>
   </Header>
   {#if joined}
-    <div style="padding-bottom: 1.5rem; padding-left: var(--left-pad);">
+    <div style="padding-bottom: 1rem; padding-left: var(--left-pad);">
       <AccordionButton bind:revealed>
-        <span class="text-body-sm">View More Information</span>
+        <h4 class="study-card-subheader text-display-xxs">Study Description</h4>
       </AccordionButton>
     </div>
   {/if}
@@ -202,7 +194,7 @@
   {#if revealed || !joined}
     <div class="study-card-body" transition:slide|local={{ duration: 200 }}>
       <div class="study-card-description body-copy text-body-sm">
-        <h4 class="study-card-subheader text-display-xxs">Study Description</h4>
+        {#if !joined}<h4 class="study-card-subheader text-display-xxs">Study Description</h4>{/if}
         <slot name="description">
           <p>description missing</p>
         </slot>

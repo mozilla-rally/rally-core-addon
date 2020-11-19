@@ -11,7 +11,7 @@
   .study-card-header {
     display: grid;
     grid-gap: 20px;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     grid-template-columns: var(--study-card-header-columns);
   }
 
@@ -20,7 +20,7 @@
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
-    color: var(--color-ink-50);
+    color: var(--color-marketing-gray-70);
   }
 
   h3 {

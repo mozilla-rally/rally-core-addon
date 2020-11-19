@@ -5,6 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import MainSidebar from "../components/layouts/MainSidebar.svelte";
   import ExternalLink from "../components/icons/ExternalLink.svelte";
+  import VerticalLogo from "../components/VerticalLogo.svelte";
 
   const dispatch = createEventDispatcher();
   function send(view) {
@@ -22,6 +23,10 @@
 </script>
 
 <style>
+
+h1 {
+    align-self: start;
+  }
 a, button {
   background-color: none;
   padding: 0;
@@ -37,11 +42,11 @@ a, button {
   transition: color .15s;
 }
 
-button.active {
+ul button.active {
   color: var(--color-dark-gray-90);
 }
 
-a::before, button::before {
+a::before, ul button::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -54,15 +59,20 @@ a::before, button::before {
   transform-origin: left center;
   transition: all 0.15s ease-in-out 0s;
 }
-a:hover::before, button:hover::before {
+a:hover::before, ul button:hover::before {
   visibility: visible;
   opacity: .4;
   transform: scaleX(1);
 }
 
-button.active::before, button.active:hover::before {
+ul button.active::before, ul button.active:hover::before {
   visibility: visible;
   transform: scaleX(1);
+  background-color: var(--color-dark-gray-90);
+}
+
+ul button.active:hover::before {
+  opacity: 1;
   background-color: var(--color-dark-gray-90);
 }
 
@@ -82,12 +92,13 @@ li a {
 </style>
 
 <MainSidebar>
+  <button slot='header' on:click={send('current-studies')}>
+    <h1>
+      <VerticalLogo />
+    </h1>
+  </button>
   <ul slot="navigation">
     <li><button class:active={currentView === 'current-studies'} on:click={send('current-studies')}>Current Studies</button></li>
-    <!-- <li>
-      <a class="external" href="/studies">Latest News
-        <ExternalLink /></a>
-    </li> -->
     <li>
       <a class="external" href="/studies">FAQ
         <ExternalLink /></a>

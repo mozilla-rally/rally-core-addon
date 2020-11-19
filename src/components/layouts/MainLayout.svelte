@@ -4,7 +4,7 @@
 <style>
   div {
     min-height: 100vh;
-    background-color: #f9f9fb;
+    background: url('texture.png');
     display: grid;
     grid-template-columns: max-content auto;
     justify-content: stretch;
