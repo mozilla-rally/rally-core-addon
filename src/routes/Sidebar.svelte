@@ -42,6 +42,10 @@ a, button {
   transition: color .15s;
 }
 
+a:hover, ul button:hover {
+  color: var(--color-dark-gray-90);
+}
+
 ul button.active {
   color: var(--color-dark-gray-90);
 }
@@ -59,6 +63,7 @@ a::before, ul button::before {
   transform-origin: left center;
   transition: all 0.15s ease-in-out 0s;
 }
+
 a:hover::before, ul button:hover::before {
   visibility: visible;
   opacity: .4;
