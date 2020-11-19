@@ -2,6 +2,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+// The encryption key id and JWK to encrypt data that go
+// to the "core" environment (i.e. `pioneer-core`). See
+// bug 1677761 for additional details.
+const CORE_ENCRYPTION_KEY_ID = "core";
+const CORE_ENCRYPTION_JWK = {
+  "crv": "P-256",
+  "kid": "core",
+  "kty": "EC",
+  "x": "muvXFcGjbk2uZCCa8ycoH8hVxeDCGPQ9Ed2-QHlTtuc",
+  "y": "xrLUev8_yUrSFAlabnHInvU4JKc6Ew3YXaaoDloQxw8",
+};
+
 module.exports = class DataCollection {
   /**
    * Sends an empty Ion ping with the provided info.
@@ -15,26 +27,40 @@ module.exports = class DataCollection {
    *        `schemaNamespace` and `studyName` properties of the ping.
    */
   async _sendEmptyPing(payloadType, namespace) {
-    // NOTE - while we're not actually sending useful data in
-    // this payload, the current Ion v2 Telemetry pipeline requires
-    // that pings are shaped this way so they are routed to the correct
-    // environment.
-    //
-    // At the moment, the public key used here isn't important but we do
-    // need to use *something*.
-    const publicKey = {
-      crv: "P-256",
-      kty: "EC",
-      x: "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
-      y: "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE",
-    };
+    let publicKey;
+    let keyId;
+
+    if (namespace === "pioneer-core") {
+      // When routing pings to the "core" environment, we need to use
+      // the proper encryption key.
+      keyId = CORE_ENCRYPTION_KEY_ID;
+      publicKey = CORE_ENCRYPTION_JWK;
+    } else {
+      // When routing empty pings to the environments for the specific
+      // studies, we can use a bogus key (the payload is empty).
+
+      // NOTE - while we're not actually sending useful data in
+      // this payload, the current Ion v2 Telemetry pipeline requires
+      // that pings are shaped this way so they are routed to the correct
+      // study environment.
+      //
+      // At the moment, the public key used here isn't important but we do
+      // need to use *something*.
+      keyId = "discarded";
+      publicKey = {
+        crv: "P-256",
+        kty: "EC",
+        x: "XLkI3NaY3-AF2nRMspC63BT1u0Y3moXYSfss7VuQ0mk",
+        y: "SB0KnIW-pqk85OIEYZenoNkEyOOp5GeWQhS1KeRtEUE",
+      };
+    }
 
     await this.sendPing(
       payloadType,
       // We expect to send an empty payload.
       {},
       namespace,
-      "discarded",
+      keyId,
       publicKey
     );
   }
@@ -60,7 +86,7 @@ module.exports = class DataCollection {
     // Note that the schema namespace directly informs how data is segregated after ingestion.
     // If this is an enrollment ping for the pioneer program (in contrast to the enrollment to
     // a specific study), use a meta namespace.
-    return await this._sendEmptyPing("pioneer-enrollment", "pioneer-meta");
+    return await this._sendEmptyPing("pioneer-enrollment", "pioneer-core");
   }
 
   /**

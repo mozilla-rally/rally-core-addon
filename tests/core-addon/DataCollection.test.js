@@ -39,10 +39,10 @@ describe('DataCollection', function () {
       // ... an empty payload ...
       assert.equal(Object.keys(submitArgs[1]).length, 0);
       // ... and a specific set of options.
-      assert.equal(submitArgs[2].studyName, "pioneer-meta");
-      assert.equal(submitArgs[2].encryptionKeyId, "discarded");
+      assert.equal(submitArgs[2].studyName, "pioneer-core");
+      assert.equal(submitArgs[2].encryptionKeyId, "core");
       assert.equal(submitArgs[2].schemaName, "pioneer-enrollment");
-      assert.equal(submitArgs[2].schemaNamespace, "pioneer-meta");
+      assert.equal(submitArgs[2].schemaNamespace, "pioneer-core");
     });
 
     it('generates the correct ping for the study', async function () {
