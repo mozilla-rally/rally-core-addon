@@ -19,7 +19,7 @@ onDestroy(() => {
 </script>
 
 <div class="gp-portal" style="display: none;">
-<div bind:this={ref}>
-    <slot />
-</div>
+    <div bind:this={ref}>
+        <slot />
+    </div>
 </div>

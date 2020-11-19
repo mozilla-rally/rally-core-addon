@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-
 import OnboardingLayout from '../../src/components/layouts/OnboardingLayout.svelte';
 import OnboardingBody from '../../src/components/layouts/OnboardingBody.svelte';
 import TOC from '../../src/routes/terms-of-service/Content.svelte';
