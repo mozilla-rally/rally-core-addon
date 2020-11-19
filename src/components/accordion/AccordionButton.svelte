@@ -42,7 +42,7 @@
     align-items: center;
     grid-template-columns: max-content max-content;
     justify-items: start;
-    grid-column-gap: 0.5em;
+    grid-column-gap: 0.25em;
   }
   .carat {
     justify-self: end;
