@@ -2,6 +2,21 @@
   --content-width: 660px;
   --onboarding-cta-height: 434px;
   --onboarding-cta-offset: calc(var(--onboarding-cta-height) - 230px);
+
+  --main-sidebar-width: 15rem;
+  --main-notification-offset: calc(
+    var(--main-sidebar-width) * 0.5 + var(--content-width) * 0.5
+  );
+  /* --------- shared component variables ---------- */
+  /* study card variables */
+  --study-card-header-columns: 60px auto max-content;
+  --study-card-header-areas: "image title cta";
+}
+
+.gafc {
+  display: grid;
+  align-items: center;
+  grid-auto-flow: column;
 }
 
 .shortcut-callout {
@@ -23,6 +38,10 @@ main h2 {
   font-size: 38px;
 }
 
+h2.section-header {
+  margin-bottom: 1rem;
+}
+
 main h3 {
   font-size: 20px;
   margin-bottom: 2em;
@@ -42,6 +61,7 @@ h4,
 h5,
 h6 {
   color: var(--color-ink-50);
+  margin: 0;
 }
 
 p,
@@ -61,4 +81,161 @@ main h4 {
 main hr {
   border-top: 1px dashed var(--color-black);
   margin-bottom: 2rem;
+}
+
+.radius-sm {
+  border-radius: 4px;
+}
+
+.body-copy {
+  color: var(--color-marketing-gray-70);
+}
+
+.text-head-sm {
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -1%;
+  font-weight: 700;
+}
+
+.text-body-xs {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--color-marketing-gray-60);
+}
+
+.text-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.text-body-md {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.text-display-xxs {
+  font-size: 1rem;
+  line-height: 1.1;
+}
+
+.text-display-xs {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.text-display-sm {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.text-display-md {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.text-display-lg {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.text-display-xl {
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+
+.text-display-xxl {
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+/* extended button states */
+
+.mzp-c-button.mzp-t-compact {
+  padding: 1px 10px;
+}
+
+.mzp-c-button.mzp-t-error {
+  background-color: var(--color-red-80);
+  border-color: var(--color-red-80);
+  color: var(--color-white);
+}
+
+.mzp-c-button.mzp-t-error:hover {
+  background-color: var(--color-red-90);
+  border-color: var(--color-red-90);
+  color: var(--color-white);
+}
+
+.mzp-c-button.mzp-t-icon {
+  border-radius: 50%;
+  width: max-content;
+  height: max-content;
+  padding: 1em;
+  display: grid;
+  place-items: center;
+}
+
+.mzp-c-button.mzp-t-secondary.mzp-t-text {
+  background-color: transparent;
+  border-color: transparent;
+  color: black;
+}
+
+.mzp-c-button.mzp-t-secondary.mzp-t-text:hover {
+  background-color: #ededf0;
+  border-color: #ededf0;
+  color: black;
+}
+
+.mzp-t-leave {
+  background-color: var(--color-marketing-gray-20);
+  color: var(--color-red-60);
+  border-color: var(--color-marketing-gray-20);
+}
+
+.mzp-t-leave:hover {
+  border-color: var(--color-red-60);
+  color: white;
+  background-color: var(--color-red-60);
+}
+
+.mzp-t-leave.mzp-t-product {
+  background-color: var(--color-red-60);
+  color: white;
+  border-color: var(--color-red-60);
+}
+
+.mzp-t-leave.mzp-t-product:hover {
+  background-color: var(--color-red-70);
+  border-color: var(--color-red-70);
+}
+
+/* other design system tweaks */
+
+ul.mzp-u-list-styled {
+  margin-left: 1rem;
+}
+
+/* special global component styles
+
+We'll use these global styles until we can assure use of :global in Svelte components again.
+
+See #141: https://github.com/mozilla-ion/ion-core-addon/issues/141
+
+*/
+
+/* study card: make all anchor tags a marketing gray color */
+.study-card-container a,
+.study-card-container a:hover {
+  color: var(--color-marketing-gray-90);
 }

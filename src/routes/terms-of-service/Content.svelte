@@ -7,10 +7,6 @@
 </script>
 
 <style>
-  h2 {
-    font-size: 38px;
-  }
-
   h3 {
     font-size: 20px;
     margin-bottom: 2em;
@@ -47,29 +43,28 @@
 </style>
 
 <div in:fly={{ duration: 800, y: 5 }}>
-  <h2>Our Privacy Consent Notice</h2>
+  <h2 class='section-header'>Our Privacy Notice</h2>
 
-  <p>
-    Some sort of introduction lorem ipsum dolor sit amet, consectetur adipiscing
-    elit, sed do eiusmod tempor incididunt ut.
+  <p style='font-style: italic;'>
+    Requesting consent for how your data can be used for causes you believe in.
   </p>
 
   <hr />
 
   <p>
-    Pioneer is an experimental initiative led by Mozilla to better understand
-    how our users use and navigate the internet. Pioneer is available to Firefox
+    Mozilla Rally is an experimental initiative led by Mozilla to better understand
+    how our users use and navigate the internet. Mozilla Rally is available to Firefox
     users in the United States who are 19 or older.
   </p>
   <p>
-    When you join Pioneer, we’ll ask you to provide optional demographic data.
+    When you join Mozilla Rally, we’ll ask you to provide optional demographic data.
     We’ll also collect basic technical and interaction data as long as you’re
-    participating in Pioneer. Once you’ve enrolled, you’ll have the opportunity
+    participating in Mozilla Rally. Once you’ve enrolled, you’ll have the opportunity
     to join available studies—each study will have a specific research purpose
     and unique privacy notice for you to review before you join it.
   </p>
   <p>
-    In this Privacy Notice, we detail what data the Pioneer program collects and
+    In this Privacy Notice, we detail what data the Mozilla Rally program collects and
     discloses, and why. Read each study’s privacy notice for information about
     how data is collected and handled in that particular study. We also adhere
     to the Mozilla Privacy Policy for how we receive, handle, and share
@@ -81,7 +76,7 @@
   <h4>Demographic data</h4>
 
   <p>
-    We collect optional, self-reported demographic data from Pioneer
+    We collect optional, self-reported demographic data from Mozilla Rally
     participants, including their age, gender, race/ethnicity, education level,
     household income, and zip code.
   </p>
@@ -116,7 +111,7 @@
     including:
   </p>
 
-  <ul>
+  <ul class="mzp-u-list-styled">
     <li>
       To determine which participants meet the criteria to be available to
       participate in particular research studies
@@ -125,7 +120,9 @@
       To ensure our data sets are representative of the many users of Firefox
     </li>
     <li>
-      To improve our existing products and services • To create and develop new
+      To improve our existing products and services
+    </li>
+    <li>To create and develop new
       products
     </li>
   </ul>
@@ -142,7 +139,7 @@
   <h4>Third-party researchers</h4>
 
   <p>
-    As part of being part of the Pioneer program, we will offer you the ability
+    As part of being part of the Mozilla Rally program, we will offer you the ability
     to join studies. If necessary for the study, we may ask you to share all or
     some of the data collected under this Privacy Notice with the third party
     researcher(s) administering a study. Mozilla will contractually obligate the
@@ -162,7 +159,7 @@
   <h3>Data Management</h3>
 
   <p>
-    You can learn more about managing your Pioneer and individual study data.
+    You can learn more about managing your Mozilla Rally and individual study data.
   </p>
 
   <p>

@@ -4,8 +4,8 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { onMount } from "svelte";
-  import Layout from "../../src/components/Layout.svelte";
-  import Main from "../../src/components/Main.svelte";
+  import Layout from "../../src/components/layouts/OnboardingLayout.svelte";
+  import Body from "../../src/components/layouts/OnboardingBody.svelte";
   import Welcome from "../../src/routes/welcome/Content.svelte";
   import Demographics from "../../src/routes/demographics/Content.svelte";
   import TermsOfService from "../../src/routes/terms-of-service/Content.svelte";
@@ -39,7 +39,7 @@
 {#if mounted}
   <div>
     <Layout>
-      <Main padForOnboarding={which !== 'welcome'}>
+      <Body padForOnboarding={which !== 'welcome'}>
         {#if which === 'welcome'}
           <Welcome on:get-started={() => send('terms')} />
         {:else if which === 'terms'}
@@ -47,7 +47,7 @@
         {:else if which === 'demographics'}
           <Demographics bind:results />
         {/if}
-      </Main>
+      </Body>
       <OnboardingCTAContainer
         step={step(which)}
         transparent={which === 'welcome'}>

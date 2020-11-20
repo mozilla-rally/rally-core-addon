@@ -1,7 +1,11 @@
 <script>
   /* This Source Code Form is subject to the terms of the Mozilla Public
-   * License, v. 2.0. If a copy of the MPL was not distributed with this
-   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+  /* NOTE: This component will be deprecated in favor of /src/components/accordion/Accordion
+  We're maintaining it here until we replace the old Ion experience with the new Rally one.
+  */
 
   import { slide } from "svelte/transition";
   import CaretRight from "./icons/CaretRight.svelte";

@@ -275,12 +275,10 @@
 </style>
 
 <div in:fly={{ duration: 800, y: 5 }}>
-  <h2>Let's set up your profile</h2>
+  <h2 class='section-header'>Your Data Profile</h2>
 
-  <p>
-    Don’t worry, it’s completely annonymous; it’s used by researchers to lorem
-    ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-    incididunt ut.
+  <p style="font-style: italic;">
+    This anonymously collected information will be used by researchers to understand how different people are exposed to the web in different ways.
   </p>
 
   <hr />

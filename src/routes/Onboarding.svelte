@@ -3,8 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
   import { onMount, getContext, createEventDispatcher } from "svelte";
-  import Layout from "../components/Layout.svelte";
-  import Main from "../components/Main.svelte";
+  import Layout from "../components/layouts/OnboardingLayout.svelte";
+  import Main from "../components/layouts/OnboardingBody.svelte";
   import Welcome from "../routes/welcome/Content.svelte";
   import Demographics from "./demographics/Content.svelte";
   import TermsOfService from "./terms-of-service/Content.svelte";

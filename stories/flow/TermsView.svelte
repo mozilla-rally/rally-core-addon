@@ -4,8 +4,8 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { onMount } from "svelte";
-  import Layout from "../../src/components/Layout.svelte";
-  import Main from "../../src/components/Main.svelte";
+  import Layout from "../../src/components/layouts/OnboardingLayout.svelte";
+  import Main from "../../src/components/layouts/OnboardingBody.svelte";
   import TermsOfService from "../../src/routes/terms-of-service/Content.svelte";
   import OnboardingCTAContainer from "../../src/components/OnboardingCTAContainer.svelte";
   import CallToAction from "../../src/routes/terms-of-service/CallToAction.svelte";
