@@ -191,25 +191,16 @@ module.exports = class DataCollection {
 
     // Map all the fields but "race" (because that has multiple
     // possible values).
-    for (let originalField in FIELD_MAPPING) {
+    for (const [originalField, newName] of Object.entries(FIELD_MAPPING)) {
       if (originalField in data) {
-        const newName = FIELD_MAPPING[originalField];
-        if (!(newName in processed)) {
-          processed[newName] = {};
-        }
-        processed[newName][data[originalField]] = true;
+        processed[newName] = { [data[originalField]]: true };
       }
     }
 
     // Note: "race" gets renamed to "races" and has multiple
     // values.
     if ("race" in data) {
-      for (let race of data["race"]) {
-        if (!("races" in processed)) {
-          processed["races"] = {};
-        }
-        processed["races"][race] = true;
-      }
+      processed["races"] = data.race.reduce((a, b) => ((a[b] = true), a), {});
     }
 
     return await this.sendPing(
