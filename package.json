@@ -1,8 +1,8 @@
 {
-  "name": "svelte-app",
-  "version": "1.0.0",
+  "name": "ion_core",
+  "version": "2.2.0",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/ion_core.xpi",
     "dev": "rollup -c -w",
     "start": "sirv public",
     "build-addon": "rollup -c rollup.config.addon.js",
@@ -54,7 +54,8 @@
   },
   "dependencies": {
     "sirv-cli": "^1.0.0",
-    "web-ext": "^5.1.0"
+    "web-ext": "^5.1.0",
+    "yarn": "^1.22.10"
   },
   "engines": {
     "node": ">=14.0.0"
