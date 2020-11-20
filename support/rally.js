@@ -55,10 +55,22 @@ module.exports = class Rally {
    */
   async _checkRallyCore() {
     try {
-      return await browser.management.get(CORE_ADDON_ID);
+      const msg = {
+        type: "core-check",
+        data: {}
+      }
+      let response =
+        await browser.runtime.sendMessage(CORE_ADDON_ID, msg, {});
+
+      if (!response
+          || response.type !== "core-check-response"
+          || response.data.enrolled !== true) {
+        return Promise.reject(
+          new Error(`Rally._checkRallyCore - unexpected response returned ${response}`));
+      }
     } catch (ex) {
-      console.error("Rally._checkRallyCore - core addon not found", ex);
-      return Promise.reject(ex);
+      return Promise.reject(
+        new Error("Rally._checkRallyCore - core addon not found"));
     }
 
     // TODO: in addition to checking if the addon is installed,

@@ -222,6 +222,15 @@ module.exports = class IonCore {
     }
 
     switch (message.type) {
+      case "core-check": {
+        let enrolled = !!(await this._storage.getIonID());
+        return Promise.resolve({
+          type: "core-check-response",
+          data: {
+            enrolled
+          }
+        });
+      }
       case "telemetry-ping": {
         const {payloadType, payload, namespace, keyId, key} = message.data;
         return await this._dataCollection.sendPing(
