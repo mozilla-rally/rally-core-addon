@@ -40,6 +40,8 @@
       <Button {size} product disabled>product</Button>
       <Button {size} product secondary>product / secondary</Button>
       <Button {size} product secondary disabled>product / secondary</Button>
+      <Button {size} product neutral>product / neutral</Button>
+      <Button {size} product neutral disabled>product / neutral</Button>
       <Button {size} neutral>neutral</Button>
       <Button {size} neutral disabled>neutral</Button>
       <Button {size} text product>text</Button>

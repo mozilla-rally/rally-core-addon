@@ -2,7 +2,7 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-  export let size = 24;
+  export let size = "1em";
   export let color = "currentColor";
 </script>
 
@@ -13,7 +13,6 @@ https://github.com/FirefoxUX/photon-icons/blob/master/icons/desktop/close-16.svg
 -->
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  width={size}
   height={size}
   viewBox="0 0 16 16">
   <path

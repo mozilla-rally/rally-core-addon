@@ -220,6 +220,17 @@ main hr {
   border-color: var(--color-red-70);
 }
 
+.mzp-c-button.mzp-t-product.mzp-t-neutral {
+  background-color: var(--color-light-gray-30);
+  border-color: var(--color-light-gray-30);
+}
+
+.mzp-c-button.mzp-t-product.mzp-t-neutral:hover {
+  color: var(--color-dark-gray-70);
+  background-color: var(--color-light-gray-50);
+  border-color: var(--color-light-gray-50);
+}
+
 /* other design system tweaks */
 
 ul.mzp-u-list-styled {
