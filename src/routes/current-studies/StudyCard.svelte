@@ -205,7 +205,6 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
             location={sidebarOffset ? "top-left" : "top"}
             xOffset={sidebarOffset ? "var(--main-notification-offset)" : undefined } />
         {:else}
-            whichOtofication = {$whichNotification}
         <SuccessfullyLeftStudyNotification
             location={sidebarOffset ? "top-left" : "top"}
             xOffset={sidebarOffset ? "var(--main-notification-offset)" : undefined }
