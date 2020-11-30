@@ -81,7 +81,7 @@ function triggerJoinEvent() {
             class="study-card-image"
             width="60"
             alt="study icon"
-            src={imageSrc || "/default-study-icon.png"} />
+            src={imageSrc || "public/default-study-icon.png"} />
             <span slot="study-name">{title}</span>
             <span slot="study-author">{author}</span>
         </StudyCardHeader>
