@@ -3,8 +3,13 @@
    * License, v. 2.0. If a copy of the MPL was not distributed with this
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-  import { writable } from "svelte/store";
-  import { fly } from "svelte/transition";
+  import { fly, slide } from "svelte/transition";
+  import Question from '../../components/form/Question.svelte';
+  import Choice from '../../components/form/Choice.svelte';
+  import Single from '../../components/form/Single.svelte';
+  import Multi from '../../components/form/Multi.svelte';
+  import Text from '../../components/form/Text.svelte';
+  import Label from '../../components/form/Label.svelte';
   import ClearAnswerButton from './ClearAnswerButton.svelte';
 
   function zipcodeIsValid() {
@@ -14,49 +19,6 @@
       else return true;
     };
   }
-
-  function buildValidator(validators) {
-    return function validate(value, dirty) {
-      if (!validators || validators.length === 0) {
-        return { dirty, valid: true };
-      }
-
-      const failing = validators.find((v) => v(value) !== true);
-      return {
-        dirty,
-        valid: !failing,
-        message: failing && failing(value),
-      };
-    };
-  }
-
-  export function createFieldValidator(...validators) {
-    const { subscribe, set } = writable({
-      dirty: false,
-      valid: false,
-      message: null,
-    });
-    const validator = buildValidator(validators);
-
-    function action(node, binding) {
-      function validate(value, dirty) {
-        const result = validator(value, dirty);
-        set(result);
-      }
-
-      validate(binding, false);
-
-      return {
-        update(value) {
-          validate(value, true);
-        },
-      };
-    }
-
-    return [{ subscribe }, action];
-  }
-
-  const [zipValidity, validateZip] = createFieldValidator(zipcodeIsValid());
 
   // add survey schema here.
   const schema = {
@@ -82,7 +44,14 @@
       values: [
         { key: "male", label: "Male" },
         { key: "female", label: "Female" },
-        { key: "neither", label: "Neither choice describes me" },
+        { key: "neither", label: "Neither choice describes me", 
+          progressiveDisclosure: true,
+          where: 'after question',
+          values: {
+            type: 'text',
+            label: "How would you describe your gender?"
+          }
+        },
         { key: "decline", label: "Decline to identify" },
       ],
     },
@@ -101,7 +70,14 @@
       type: "multi",
       columns: true,
       values: [
-        { key: "white", label: "White" },
+        { 
+          key: "white", label: "White",
+          progressiveDisclosure: true,
+          where: 'after option',
+          values: {
+            type: 'text'
+          }
+        },
         {
           key: "american_indian_or_alaska_native",
           label: "American Indian or Alaska Native",
@@ -177,100 +153,18 @@
   };
 
   export let results = Object.values(schema).reduce((acc, config) => {
-    let defaultValue = undefined;
-    switch (config.type) {
-      case "single": {
-        defaultValue = undefined;
-        break;
-      }
-      case "multi": {
-        defaultValue = [];
-        break;
-      }
-      case "text": {
-        defaultValue = "";
-        break;
-      }
-      default:
-        break;
-    }
-
-    acc[config.key] = defaultValue;
+    acc[config.key] = {};
+    if (config.type === 'text') acc[config.key].input = '';
     return acc;
   }, {});
 
-  function questionIsAnswered(answer) {
-    if (Array.isArray(answer)) return answer.length > 0;
-    return answer !== undefined;
+  function questionIsAnswered(answer, questionType) {
+    if (questionType === 'text') return answer.input.length > 0;
+    return !(Object.keys(answer).length === 0 && answer.constructor === Object);
   }
-
-  $: console.log(results);
 </script>
 
 <style>
-  /* this selects only checkbox or radio */
-  [class="mzp-c-choice"] {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    gap: 1rem;
-  }
-
-  .mzp-c-choice {
-    padding-bottom: 8px;
-  }
-
-  .mzp-c-choice-label {
-    font-weight: normal;
-    font-size: 1rem;
-  }
-
-  label,
-  input {
-    cursor: pointer;
-  }
-
-  input[type="text"] {
-    cursor: auto;
-  }
-  .mzp-c-choice-control[type="radio"] + label,
-  .mzp-c-choice-control[type="checkbox"] + label {
-    margin-left: 0.5rem;
-  }
-
-  /* correct for Protocol's radio and checkbox misalignments */
-  .mzp-c-choice-control[type="radio"] + label::before {
-    transform: translateY(0.25rem);
-  }
-
-  .mzp-c-choice-control[type="checkbox"] + label::before {
-    transform: translateY(0.25rem);
-  }
-
-  .mzp-c-choice-control[type="checkbox"]:checked + label::after {
-    transform: translateY(0.215rem) rotate(45deg);
-  }
-
-  legend {
-    color: var(--color-ink-50);
-    font-size: 1rem;
-  }
-
-  fieldset {
-    /* position: inherit; */
-    padding-bottom: 60px;
-  }
-
-  fieldset:last-child {
-    padding-bottom: 0;
-  }
-
-  .mzp-c-choices {
-    width: 100%;
-    padding-bottom: 0;
-    padding-left: 1rem;
-  }
-
   .two-columns {
     display: grid;
     grid-auto-flow: column;
@@ -280,6 +174,7 @@
     width: max-content;
     grid-column-gap: 4rem;
   }
+
 </style>
 
 <div in:fly={{ duration: 800, y: 5 }}>
@@ -294,60 +189,81 @@
   <form class="mzp-c-form">
     {#each Object.keys(results) as question}
       <fieldset class="mzp-c-field-set">
-        <legend class="mzp-c-field-label" for={schema[question].key}>
+        <Question key={schema[question].key}>
           {schema[question].label}
-          {#if questionIsAnswered(results[question])}
+          {#if questionIsAnswered(results[question], schema[question].type)}
             <ClearAnswerButton on:click={(e) => {
               e.preventDefault();
-              if (schema[question].type !== 'multi') results[question] = undefined;
-              else results[question] = [];
+              results[question] = {};
+              if (schema[question].type === 'text') results[question].input = '';
             }} />
           {/if}
-        </legend>
-
+        </Question>
         <div
           class="mzp-c-choices"
           class:two-columns={schema[question].columns}
           style="--rows: {schema[question].values ? Math.ceil(schema[question].values.length / 2) : 0};">
           {#if schema[question].type === 'text'}
-            <div
-              class="mzp-c-choice mzp-c-choice-text"
-              class:mzp-is-error={!$zipValidity.valid}>
-              <input
-                use:validateZip={results[question]}
-                type="text"
-                bind:value={results[question]} />
-              {#if $zipValidity.dirty && !$zipValidity.valid}
-                <span
-                  class="mzp-c-fieldnote"
-                  transition:fly={{ duration: 300, y: 5 }}>
-                  {$zipValidity.message}
-                </span>
-              {/if}
-            </div>
+          <Choice>
+            <Text 
+              validators={[zipcodeIsValid()]}
+              value={results[question].input}
+              on:input={(evt) => { results[question].input = evt.target.value; }}
+            />
+          </Choice>
           {:else}
             {#each schema[question].values as answer}
-              <div class="mzp-c-choice">
-                {#if schema[question].type === 'single'}
-                  <input
-                    class="mzp-c-choice-control"
-                    type="radio"
-                    id="answer-{answer.key}"
-                    bind:group={results[question]}
-                    value={answer.key} />
-                {:else if schema[question].type === 'multi'}
-                  <input
-                    class="mzp-c-choice-control"
-                    type="checkbox"
-                    id="answer-{answer.key}"
-                    bind:group={results[question]}
-                    value={answer.key} />
-                {/if}
-                <label class="mzp-c-choice-label" for="answer-{answer.key}">
-                  {answer.label}
-                </label>
+                <Choice>
+                  {#if schema[question].type === 'single'}
+                    <Single 
+                      value={answer.key}
+                      checked={results[question][answer.key]}
+                      on:click={() => { 
+                        results[question] = { [answer.key]: true }; 
+                        if (answer.progressiveDisclosure) results[question][`${answer.key}-freeform`] = '';
+                      }}
+                    />
+                  {:else}
+                    <Multi
+                      value={answer.key}
+                      checked={results[question][answer.key]}
+                      on:click={() => {
+                        if (answer.key in results[question]) {
+                          delete results[question][answer.key];
+                          if (answer.progressiveDisclosure) {
+                            delete results[question][`${answer.key}-freeform`];
+                          }
+                          // trigger update for Svelte.
+                          // This is an unfortunate issue where
+                          // the delete keyword is not watched but
+                          // the assignment is.
+                          results[question][answer.key] = results[question][answer.key];
+                        }
+                        else {
+                          if (answer.progressiveDisclosure) results[question][`${answer.key}-freeform`] = '';
+                          results[question][answer.key] = true;
+                        }
+                      }} />
+                  {/if}
+                  <Label value={answer.key}>
+                    {answer.label}
+                  </Label>
+              </Choice>
+              <!-- post-option progressive disclosures -->
+              {#if answer.progressiveDisclosure && answer.where === 'after option' && results[question][answer.key]}
+              <div transition:slide>
+                <Choice>
+                  <Text 
+                    value={results[question][`${answer.key}-freeform`]}
+                    on:input={(evt) => {
+                      results[question][`${answer.key}-freeform`] = evt.target.value;
+                    }}
+                   />
+                </Choice>
               </div>
+              {/if}
             {/each}
+            <!-- post-question progressive disclosures go here -->
           {/if}
         </div>
       </fieldset>

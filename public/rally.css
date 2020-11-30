@@ -250,3 +250,68 @@ See #141: https://github.com/mozilla-ion/ion-core-addon/issues/141
 .study-card-container a:hover {
   color: var(--color-marketing-gray-90);
 }
+
+/* Protocol form changes */
+
+/* this selects only checkbox or radio */
+[class="mzp-c-choice"] {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 1rem;
+}
+
+.mzp-c-choice {
+  padding-bottom: 8px;
+}
+
+.mzp-c-choice-label {
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+label,
+input {
+  cursor: pointer;
+}
+
+input[type="text"] {
+  cursor: auto;
+}
+.mzp-c-choice-control[type="radio"] + label,
+.mzp-c-choice-control[type="checkbox"] + label {
+  margin-left: 0.5rem;
+}
+
+/* correct for Protocol's radio and checkbox misalignments */
+.mzp-c-choice-control[type="radio"] + label::before {
+  transform: translateY(0.25rem);
+}
+
+.mzp-c-choice-control[type="checkbox"] + label::before {
+  transform: translateY(0.25rem);
+}
+
+.mzp-c-choice-control[type="checkbox"]:checked + label::after {
+  transform: translateY(0.215rem) rotate(45deg);
+}
+
+legend {
+  color: var(--color-ink-50);
+  font-size: 1rem;
+}
+
+fieldset {
+  /* position: inherit; */
+  padding-bottom: 60px;
+}
+
+fieldset:last-child {
+  padding-bottom: 0;
+}
+
+.mzp-c-choices {
+  width: 100%;
+  padding-bottom: 0;
+  padding-left: 1rem;
+}
