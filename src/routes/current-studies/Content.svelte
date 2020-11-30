@@ -81,6 +81,7 @@ function showNotification(joinOrLeave) {
         detailsDirectLink={study.detailsDirectLink}
         privacyPolicyLink={study.privacyPolicy.spec}
         tags={study.tags}
+        {sidebarOffset}
         on:cta-clicked={() => {
         // kill any notifications that might be present.
         clearTimeout(notificationID);
@@ -102,7 +103,7 @@ function showNotification(joinOrLeave) {
 
 </div>
 
-{#if notificationID}
+<!-- {#if notificationID}
     {#key notificationID}
         {#if whichNotification === 'joined'}<SuccessfullyJoinedStudyNotification 
             location={sidebarOffset ? "top-left" : "top"}
@@ -112,4 +113,4 @@ function showNotification(joinOrLeave) {
              />
         {/if}
     {/key}
-{/if}
+{/if} -->
