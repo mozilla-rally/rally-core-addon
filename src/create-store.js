@@ -49,5 +49,12 @@ export default function createStore(initialState, api) {
         console.error(err);
       }
     },
+    async updateDemographicSurvey(data) {
+      try {
+        await api.updateDemographicSurvey(data);
+      } catch (err) {
+        console.error(`Ion - failed to update the demographic survey`, err);
+      }
+    }
   };
 }

@@ -65,12 +65,12 @@
       type: "single",
       columns: true,
       values: [
-        { key: "19-24", label: "19-24 years old" },
-        { key: "25-34", label: "25-34 years old" },
-        { key: "35-44", label: "35-44 years old" },
-        { key: "45-54", label: "45-54 years old" },
-        { key: "55-64", label: "55-64 years old" },
-        { key: "> 65", label: "65 years and older" },
+        { key: "19_24", label: "19-24 years old" },
+        { key: "25_34", label: "25-34 years old" },
+        { key: "35_44", label: "35-44 years old" },
+        { key: "45_54", label: "45-54 years old" },
+        { key: "55_64", label: "55-64 years old" },
+        { key: "over_65", label: "65 years and older" },
       ],
     },
     gender: {
@@ -90,8 +90,8 @@
       label: "3. Are you of Hispanic, Latino, or Spanish origin?",
       type: "single",
       values: [
-        { key: "no", label: "No, not of Hispanic, Latino, or Spanish origin" },
-        { key: "yes", label: "Yes" },
+        { key: "other", label: "No, not of Hispanic, Latino, or Spanish origin" },
+        { key: "hispanicLatinoSpanish", label: "Yes" },
       ],
     },
     race: {
@@ -160,12 +160,12 @@
       type: "single",
       columns: 3,
       values: [
-        { key: "0-24999", label: "$0 - $24,999" },
-        { key: "25000-49999", label: "$25,000 - $49,999" },
-        { key: "50000-74999", label: "50,000 - $74,999" },
-        { key: "75000-99999", label: "$75,000 - $99,999" },
-        { key: "100000-149999", label: "$100,000 - $149,999" },
-        { key: ">= 150000", label: "$150,000 or more" },
+        { key: "0_24999", label: "$0 - $24,999" },
+        { key: "25000_49999", label: "$25,000 - $49,999" },
+        { key: "50000_74999", label: "50,000 - $74,999" },
+        { key: "75000_99999", label: "$75,000 - $99,999" },
+        { key: "100000_149999", label: "$100,000 - $149,999" },
+        { key: "ge_150000", label: "$150,000 or more" },
       ],
     },
     zipcode: {

@@ -190,6 +190,8 @@ module.exports = class IonCore {
       case "unenrollment":
         return this._unenroll()
                    .then(r => this._sendStateUpdateToUI());
+      case "update-demographics":
+        return this._updateDemographics(message.data);
       default:
         return Promise.reject(
           new Error(`IonCore - unexpected message type ${message.type}`));
@@ -556,5 +558,22 @@ module.exports = class IonCore {
     // Send a message to the UI to update the list of studies.
     this._connectionPort.postMessage(
       {type: "update-state", data: newState});
+  }
+
+  /**
+   * Updates the stored version of the demographics data.
+   *
+   * After the locally stored data is updated, the recent data
+   * is sent to the pipeline.
+   *
+   * @param {Object} data
+   *        A JSON-serializable object containing the demographics
+   *        information submitted by the user.
+   */
+  async _updateDemographics(data) {
+    await this._storage.setItem("demographicsData", data)
+      .catch(e => console.error(`IonCore._updateDemographics - failed to save data`, e));
+
+    return await this._dataCollection.sendDemographicSurveyPing(data);
   }
 }
