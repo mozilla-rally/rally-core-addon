@@ -27,7 +27,6 @@ module.exports = {
     "README.md",
     "rollup.config.*",
     "web-ext-config.js",
-    "core-addon/**/*",
     "public/**/*.map",
   ],
 };
