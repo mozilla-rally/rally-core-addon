@@ -65,12 +65,10 @@ module.exports = class Rally {
       if (!response
           || response.type !== "core-check-response"
           || response.data.enrolled !== true) {
-        return Promise.reject(
-          new Error(`Rally._checkRallyCore - unexpected response returned ${response}`));
+        throw new Error(`Rally._checkRallyCore - unexpected response returned ${response}`);
       }
     } catch (ex) {
-      return Promise.reject(
-        new Error("Rally._checkRallyCore - core addon not found"));
+      throw new Error("Rally._checkRallyCore - core addon not found");
     }
 
     // TODO: in addition to checking if the addon is installed,

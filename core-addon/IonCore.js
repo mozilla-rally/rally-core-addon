@@ -217,19 +217,18 @@ module.exports = class IonCore {
     // We only expect messages coming from known ion studies.
     let knownStudies = await this._availableStudies;
     if (!knownStudies.map(s => s.addon_id).includes(sender.id)) {
-      return Promise.reject(
-        new Error(`IonCore._handleExternalMessage - unexpected sender ${sender.id}`));
+      throw new Error(`IonCore._handleExternalMessage - unexpected sender ${sender.id}`);
     }
 
     switch (message.type) {
       case "core-check": {
         let enrolled = !!(await this._storage.getIonID());
-        return Promise.resolve({
+        return {
           type: "core-check-response",
           data: {
             enrolled
           }
-        });
+        };
       }
       case "telemetry-ping": {
         const {payloadType, payload, namespace, keyId, key} = message.data;
@@ -238,8 +237,7 @@ module.exports = class IonCore {
         );
       }
       default:
-        return Promise.reject(
-          new Error(`IonCore._handleExternalMessage - unexpected message type ${message.type}`));
+        throw new Error(`IonCore._handleExternalMessage - unexpected message type ${message.type}`);
     }
   }
 
