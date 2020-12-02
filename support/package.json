@@ -4,7 +4,7 @@
   "description": "The Rally partner support library.",
   "main": "rally.js",
   "scripts": {
-    "build": "echo FIXME"
+    "build": "echo FIXME, taskcluster requires a build target."
   },
   "devDependencies": {},
   "dependencies": {},
