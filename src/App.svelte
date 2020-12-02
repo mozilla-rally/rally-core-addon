@@ -4,7 +4,6 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { setContext } from "svelte";
-  import { fade } from 'svelte/transition';
   import { store } from "./stores.js";
 
   import Onboarding from "./routes/Onboarding.svelte";
