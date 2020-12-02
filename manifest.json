@@ -44,12 +44,8 @@
 
   "content_scripts": [
     {
-      "matches": [
-        "https://mozilla-ion.github.io/*"
-      ],
-      "js": [
-        "public/addon-build/content-script.js"
-      ]
+      "matches": ["https://mozilla-ion.github.io/*"],
+      "js": ["public/addon-build/content-script.js"]
     }
   ],
 

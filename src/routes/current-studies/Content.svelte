@@ -17,8 +17,6 @@ Data points we'll need to support in the store to make this a reality:
 import { createEventDispatcher } from 'svelte';
 import { fly } from 'svelte/transition';
 import StudyCard from './StudyCard.svelte';
-import SuccessfullyJoinedStudyNotification from './SuccessfullyJoinedStudyNotification.svelte';
-import SuccessfullyLeftStudyNotification from './SuccessfullyLeftStudyNotification.svelte';
 
 export let studies = [];
 export let sidebarOffset = false;
@@ -31,19 +29,6 @@ function joinStudy(studyID) {
 
 function leaveStudy(studyID) {
     dispatch("leave-study", studyID);
-}
-
-// TODO: move the notification system to
-// a separate global component once we have a notification system.
-
-let notificationID;
-let whichNotification;
-function showNotification(joinOrLeave) {
-    whichNotification = joinOrLeave;
-    notificationID = setTimeout(() => {
-        whichNotification = undefined;
-        notificationID = false;
-    }, 3000);
 }
 
 </script>
@@ -81,18 +66,12 @@ function showNotification(joinOrLeave) {
         detailsDirectLink={study.detailsDirectLink}
         privacyPolicyLink={study.privacyPolicy.spec}
         tags={study.tags}
-        on:cta-clicked={() => {
-        // kill any notifications that might be present.
-        clearTimeout(notificationID);
-        notificationID = false;
-        }}
+        {sidebarOffset}
         on:join={() => {
             joinStudy(study.addon_id);
-            showNotification('joined');
         }}
         on:leave={() => {
             leaveStudy(study.addon_id);
-            showNotification('left');
         }}
     />
         {:else}
@@ -101,15 +80,3 @@ function showNotification(joinOrLeave) {
     </div>
 
 </div>
-
-{#if notificationID}
-    {#key notificationID}
-        {#if whichNotification === 'joined'}<SuccessfullyJoinedStudyNotification 
-            location={sidebarOffset ? "top-left" : "top"}
-            xOffset={sidebarOffset ? "var(--main-notification-offset)" : undefined } />{:else}<SuccessfullyLeftStudyNotification
-            location={sidebarOffset ? "top-left" : "top"}
-            xOffset={sidebarOffset ? "var(--main-notification-offset)" : undefined }
-             />
-        {/if}
-    {/key}
-{/if}

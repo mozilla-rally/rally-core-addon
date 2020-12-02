@@ -34,7 +34,7 @@ const nicerStudy = {
 }
 
 let studies = [];
-fetch('locally-available-studies.json')
+fetch('public/locally-available-studies.json')
     .then(r => r.json())
     .then(s => { 
         studies = [nicerStudy, ...s.data]; 

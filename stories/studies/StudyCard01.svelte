@@ -7,7 +7,7 @@
 
 <style>
   .container {
-    background: url('texture.png');
+    background: url('/public/texture.png');
     min-height: 100vh;
     padding: 1rem;
   }
