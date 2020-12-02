@@ -11,7 +11,7 @@
     "test-support-library": "mocha --require  \"./tests/hooks.js\" \"./tests/support/*.js\"",
     "lint-addon": "web-ext lint",
     "lint-js": "eslint . .storybook",
-    "lint": "npm-run-all lint-*",
+    "lint": "npm run build && npm-run-all lint-*",
     "lint-css": "stylelint 'public/*.css' '.storybook/*.css' 'src/**/*.svelte' 'stories/**/*.svelte'",
     "storybook": "start-storybook -p 6006 -s public/",
     "build-storybook": "build-storybook -s public/",
