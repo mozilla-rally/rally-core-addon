@@ -4,6 +4,7 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { setContext } from "svelte";
+  import { fade } from 'svelte/transition';
   import { store } from "./stores.js";
 
   import Onboarding from "./routes/Onboarding.svelte";
@@ -29,6 +30,12 @@
       }} />
   {:else}
     <!-- main application flow -->
-    <Main />
+    <Main
+        on:leave-rally={() => { 
+          store.updateIonEnrollment(false); 
+          // reset to first run until Rally uninstalls itself.
+          firstRun = true;
+        }}
+      />
   {/if}
 {/if}

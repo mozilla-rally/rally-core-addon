@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
   import { createEventDispatcher } from 'svelte';
+  import { fly } from 'svelte/transition';
   import MainSidebar from "../components/layouts/MainSidebar.svelte";
   import ExternalLink from "../components/icons/ExternalLink.svelte";
   import VerticalLogo from "../components/VerticalLogo.svelte";
@@ -97,19 +98,19 @@ li a {
 </style>
 
 <MainSidebar>
-  <button slot='header' on:click={send('current-studies')}>
+  <button slot='header'in:fly={{duration:800, delay: 600, x: -15}} on:click={send('current-studies')}>
     <h1>
       <VerticalLogo />
     </h1>
   </button>
-  <ul slot="navigation">
+  <ul slot="navigation" in:fly={{duration: 800, delay: 300, x: -10}}>
     <li><button class:active={currentView === 'current-studies'} on:click={send('current-studies')}>Current Studies</button></li>
     <li>
       <a class="external" href="/studies">FAQ
         <ExternalLink /></a>
     </li>
   </ul>
-  <ul slot="settings" class="app-controls">
+  <ul slot="settings" class="app-controls"  in:fly={{duration: 800, delay: 600, x: -10}}>
     <ul class="app-controls">
       <li><button class:active={currentView === 'privacy-notice'} on:click={send('privacy-notice')}>Privacy Notice</button></li>
       <!-- <li><button class:active={currentView === 'complete-profile'} on:click={send('complete-profile')}>Complete Profile</button></li> -->
