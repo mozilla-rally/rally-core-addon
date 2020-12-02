@@ -55,6 +55,11 @@ To run test coverage:
 npm run test-addon
 ```
 
+To run a full integration test using Selenium, in headless browser mode:
+```bash
+npm run integration-test
+```
+
 To generate an installable extension file:
 
 ```bash

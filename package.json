@@ -15,7 +15,8 @@
     "lint-css": "stylelint 'public/*.css' '.storybook/*.css' 'src/**/*.svelte' 'stories/**/*.svelte'",
     "storybook": "start-storybook -p 6006 -s ./",
     "build-storybook": "build-storybook -s ./",
-    "test": "npm run test-addon && npm run test-support-library"
+    "test": "npm run test-addon && npm run test-support-library",
+    "integration-test": "npm build && node tests/core-addon/selenium/core_addon.js"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -54,6 +55,7 @@
     "webextension-polyfill": "^0.6.0"
   },
   "dependencies": {
+    "selenium-webdriver": "^4.0.0-alpha.7",
     "sirv-cli": "^1.0.0",
     "web-ext": "^5.1.0"
   },
