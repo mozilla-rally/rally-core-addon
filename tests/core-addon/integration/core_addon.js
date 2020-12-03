@@ -20,7 +20,7 @@ if (process.platform === "linux") {
 describe("Selenium", function () {
   // eslint-disable-next-line mocha/no-hooks-for-single-case
   beforeEach(async function () {
-    driver = await new Builder()
+    this.driver = await new Builder()
       .forBrowser("firefox")
       .setFirefoxOptions(firefoxOptions)
       .build();
