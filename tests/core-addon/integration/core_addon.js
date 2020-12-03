@@ -6,7 +6,6 @@ const firefox = require("selenium-webdriver/firefox");
 const { Builder, By, until } = require("selenium-webdriver");
 const assert = require("assert");
 
-let driver = null;
 const firefoxOptions = new firefox.Options();
 firefoxOptions.setPreference("xpinstall.signatures.required", false);
 // Unset this to run the UI (useful for local testing).
