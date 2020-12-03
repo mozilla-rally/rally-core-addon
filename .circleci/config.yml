@@ -64,7 +64,7 @@ jobs:
           command: wget https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-linux64.tar.gz && tar zxf geckodriver-v0.28.0-linux64.tar.gz
       - run:
           name: Run Selenium tests
-          command: export PATH=.:$PATH && npm run integration-test
+          command: export PATH=.:$PATH && npm run test-integration
 
 workflows:
   version: 2

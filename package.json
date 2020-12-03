@@ -16,7 +16,7 @@
     "storybook": "start-storybook -p 6006 -s ./",
     "build-storybook": "build-storybook -s ./",
     "test": "npm run test-addon && npm run test-support-library",
-    "integration-test": "npm build && node tests/core-addon/selenium/core_addon.js"
+    "test-integration": "npm run build && node --unhandled-rejections=strict tests/core-addon/selenium/core_addon.js"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

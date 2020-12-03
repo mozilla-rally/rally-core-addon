@@ -62,7 +62,7 @@ First download [Gecko Driver](https://github.com/mozilla/geckodriver/releases) a
 Then:
 
 ```bash
-npm run integration-test
+npm run test-integration
 ```
 
 To generate an installable extension file:
