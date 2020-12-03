@@ -27,7 +27,7 @@ describe("Selenium", function () {
 
   // eslint-disable-next-line mocha/no-hooks-for-single-case
   afterEach(async function () {
-    await driver.quit();
+    await this.driver.quit();
   });
 
   it("should install the core add-on", async function () {
