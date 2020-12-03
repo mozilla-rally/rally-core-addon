@@ -31,13 +31,14 @@ describe("Selenium", function () {
   });
 
   it("should install the core add-on", async function () {
-    await driver.get(`file:///${__dirname}/index.html`);
-    await driver.wait(until.titleIs("Installation Test"), 1000);
-    await driver.findElement(By.id("install")).click();
+    await this.driver.get(`file:///${__dirname}/index.html`);
+    await this.driver.wait(until.titleIs("Installation Test"), 1000);
+    await this.driver.findElement(By.id("install")).click();
     // switch to browser UI context, to interact with Firefox add-on install prompts.
-    await driver.setContext(firefox.Context.CHROME);
-    await driver.findElement(By.css(`[label="Add"]`)).click();
-    const result = await driver.findElement(By.css(`[label="Okay, Got It"]`));
+    await this.driver.setContext(firefox.Context.CHROME);
+    await this.driver.findElement(By.css(`[label="Add"]`)).click();
+    const result = await this.driver.findElement(By.css(`[label="Okay, Got It"]`));
+
     assert.notStrictEqual(result, null);
   });
 });
