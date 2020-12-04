@@ -188,8 +188,7 @@ module.exports = class IonCore {
         // from the control panel.
         return this._unenrollStudy(message.data.studyID);
       case "unenrollment":
-        return this._unenroll()
-                   .then(r => this._sendStateUpdateToUI());
+        return this._unenroll();
       case "update-demographics":
         return this._updateDemographics(message.data);
       default:
@@ -422,8 +421,11 @@ module.exports = class IonCore {
     // the deletion pings.
     await browser.firefoxPrivilegedApi.clearIonID();
 
-    // Finally clear the list of studies user took part in.
+    // Clear the list of studies user took part in.
     await this._storage.clearActivatedStudies();
+
+    // Finally, uninstall the addon.
+    await browser.management.uninstallSelf({showConfirmDialog: false});
   }
 
   /**
