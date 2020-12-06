@@ -57,10 +57,6 @@ npm run test-addon
 
 To run a full integration test using Selenium, in headless browser mode:
 
-First download [Gecko Driver](https://github.com/mozilla/geckodriver/releases) and make sure it is on your `$PATH`.
-
-Then:
-
 ```bash
 npm run test-integration
 ```

@@ -19,6 +19,7 @@
     "test-integration": "npm run build && mocha --timeout 30000 \"./tests/core-addon/integration/*.js\""
   },
   "devDependencies": {
+    "geckodriver": "^1.21.0",
     "@babel/core": "^7.12.3",
     "@mozilla-protocol/core": "^12.1.0",
     "@rollup/plugin-commonjs": "^14.0.0",
