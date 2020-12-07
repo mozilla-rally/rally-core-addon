@@ -14,6 +14,8 @@ firefoxOptions.headless();
 // This is the path to Firefox Nightly on Ubuntu with the Mozilla PPA
 if (process.platform === "linux") {
   firefoxOptions.setBinary("/usr/bin/firefox-trunk");
+} else if (process.platform === "darwin") {
+  firefoxOptions.setBinary("/Applications/Firefox Nightly.app/Contents/MacOS/firefox");
 }
 
 describe("Selenium", function () {
