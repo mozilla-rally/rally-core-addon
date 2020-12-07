@@ -235,6 +235,7 @@ describe('IonCore', function () {
         .resolves();
       browser.storage.local.remove.yields();
       chrome.runtime.sendMessage.yields();
+      browser.management.uninstallSelf.yields();
 
       // Provide a valid study enrollment message.
       await this.ionCore._handleMessage(
@@ -259,6 +260,8 @@ describe('IonCore', function () {
           sinon.match.any
         ).calledOnce
       );
+      // We expect the core addon to uninstall itself.
+      assert.ok(browser.management.uninstallSelf.calledOnce);
     });
 
     it('dispatches study-unenrollment messages', async function () {
