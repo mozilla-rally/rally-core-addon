@@ -9,7 +9,7 @@ const firefoxOptions = new firefox.Options();
 firefoxOptions.setPreference("xpinstall.signatures.required", false);
 firefoxOptions.setPreference("extensions.experiments.enabled", true);
 // Unset this to run the UI (useful for local testing).
-// firefoxOptions.headless();
+firefoxOptions.headless();
 
 // This is the path to Firefox Nightly on Ubuntu with the Mozilla PPA.
 if (process.platform === "linux") {
