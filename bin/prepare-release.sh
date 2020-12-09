@@ -72,88 +72,36 @@ if [[ -n "$DRY_RUN" ]]; then
     DOIT=n
 fi
 
-### GLEAN-CORE ###
+### Rollup files ###
 
-# Update the glean-core version
+# Update the version in the package.json file
 
-FILE=glean-core/Cargo.toml
+FILE=package.json
 run $SED -i.bak -E \
-    -e "s/^version = \"[0-9a-z.-]+\"/version = \"${NEW_VERSION}\"/" \
+    -e "s/^\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
     "${WORKSPACE_ROOT}/${FILE}"
 run rm "${WORKSPACE_ROOT}/${FILE}.bak"
 
-### GLEAN-FFI ###
+### Add-on manifest file ###
 
-# Update the glean-ffi version, and its glean-core dependency
+# Update the version in the manifest.json file
 
-FILE=glean-core/ffi/Cargo.toml
-# sed explanation:
-# s/^version.../... - replace old version with the new one
-# /glean-core/      - match to the line of '[dependencies.glean-core]'
-# !bLBL             - if not matched, jump to label LBL, otherwise continue
-# n;n               - skip two lines ahead
-# s/ver../ver/      - replace old version
-# : LBL             - define label (followed by no command)
+FILE=manifest.json
 run $SED -i.bak -E \
-    -e "s/^version = \"[0-9a-z.-]+\"/version = \"${NEW_VERSION}\"/" \
-    -e "/glean-core/!bLBL" \
-    -e "n;n;s/version = \"[0-9a-z.-]+\"/version = \"${NEW_VERSION}\"/" \
-    -e ": LBL" \
+    -e "s/^\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
     "${WORKSPACE_ROOT}/${FILE}"
 run rm "${WORKSPACE_ROOT}/${FILE}.bak"
 
-### GLEAN RLB ###
+### Update package-log.json ###
 
-# Update the version of the glean-core dependency
-
-FILE=glean-core/rlb/Cargo.toml
-run $SED -i.bak -E \
-    -e "s/^version = \"[0-9a-z.-]+\"/version = \"${NEW_VERSION}\"/" \
-    "${WORKSPACE_ROOT}/${FILE}"
-run rm "${WORKSPACE_ROOT}/${FILE}.bak"
-
-# Update the glean-python version
-
-FILE=glean-core/python/setup.py
-run $SED -i.bak -E \
-    -e "s/^version = \"[0-9a-z.-]+\"/version = \"${NEW_VERSION}\"/" \
-    "${WORKSPACE_ROOT}/${FILE}"
-run rm "${WORKSPACE_ROOT}/${FILE}.bak"
-
-### Update Cargo.lock
-
-cargo update -p glean-core -p glean-ffi
-
-### KOTLIN PACKAGES ###
-
-FILE=.buildconfig.yml
-run $SED -i.bak -E \
-    -e "s/libraryVersion: [0-9A-Z.-]+/libraryVersion: ${NEW_VERSION}/" \
-    "${WORKSPACE_ROOT}/${FILE}"
-run rm "${WORKSPACE_ROOT}/${FILE}.bak"
-
-### GLEAN GRADLE PLUGIN ###
-
-FILE=gradle-plugin/src/main/groovy/mozilla/telemetry/glean-gradle-plugin/GleanGradlePlugin.groovy
-run $SED -i.bak -E \
-    -e "s/project.ext.glean_version = \"[0-9A-Z.-]+\"/project.ext.glean_version = \"${NEW_VERSION}\"/" \
-    "${WORKSPACE_ROOT}/${FILE}"
-run rm "${WORKSPACE_ROOT}/${FILE}.bak"
-
-### GLEAN C# BINDINGS ###
-
-FILE=glean-core/csharp/Glean/Glean.csproj
-run $SED -i.bak -E \
-    -e "s/<Version>[0-9A-Z.-]+<\/Version>/<Version>${NEW_VERSION}<\/Version>/" \
-    "${WORKSPACE_ROOT}/${FILE}"
-run rm "${WORKSPACE_ROOT}/${FILE}.bak"
+run npm i --package-lock-only
 
 ### CHANGELOG ###
 
 FILE=CHANGELOG.md
 run $SED -i.bak -E \
     -e "s/# Unreleased changes/# v${NEW_VERSION} (${DATE})/" \
-    -e "s/\.\.\.main/...v${NEW_VERSION}/" \
+    -e "s/\.\.\.master/...v${NEW_VERSION}/" \
     "${WORKSPACE_ROOT}/${FILE}"
 run rm "${WORKSPACE_ROOT}/${FILE}.bak"
 
@@ -162,7 +110,7 @@ if [ "$DOIT" = y ]; then
     cat > "${WORKSPACE_ROOT}/${FILE}" <<EOL
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla/glean/compare/v${NEW_VERSION}...main)
+[Full changelog](https://github.com/mozilla-ion/ion-core-addon/compare/v${NEW_VERSION}...master)
 
 ${CHANGELOG}
 EOL
@@ -200,4 +148,4 @@ echo "Don't forget to push this commit:"
 echo
 echo "    git push $remote $branch"
 echo
-echo "Once pushed, wait for the CI build to finish: https://circleci.com/gh/mozilla/glean/tree/$branch"
+echo "Once pushed, wait for the CI build to finish: https://circleci.com/gh/mozilla-ion/ion-core-addon/tree/$branch"
