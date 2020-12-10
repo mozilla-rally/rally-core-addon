@@ -18,7 +18,7 @@ The development & release process roughly follows the [GitFlow model](https://nv
 ## Published artifacts
 
 * A QA-signed version of the Firefox Rally Core Add-on (**only meant for QA**).
-* A Mozilla-signed version of the Firefox Rally Core Add-on (**TODO**).
+* A Mozilla-signed version of the Firefox Rally Core Add-on ([**TODO**](https://github.com/mozilla-ion/ion-core-addon/issues/242)).
 
 ## Standard Release
 
@@ -223,5 +223,5 @@ If you need to release a hotfix for a previously released version (that is: not 
 
 ## Producing a production-signed extension
 
-Production signing requires sign-off from addons and releng.
+Production signing requires sign-off from addons and releng. The process for kicking off the release is [documented here](https://github.com/mozilla-extensions/xpi-manifest/blob/master/docs/releasing-a-xpi.md#kicking-off-the-release).
 See the `#addons-pipeline` channel on Slack for assistance.
