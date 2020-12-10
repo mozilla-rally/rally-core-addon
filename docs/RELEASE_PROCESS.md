@@ -85,6 +85,7 @@ When CI has finished and is green for your specific release branch, you are read
     ```
 9. Trigger the signing process by sending a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-extensions/ion-core-addon/compare/master...release?expand=1>
     * Add the description from the `upstream` GitHub release as the description of the PR.
+    * Set the title of the PR to `Release 25.0.0`.
     * This is important so that CI runs the signing process.
     * This should never have conflicts with `master` branch: no change should ever happen on this repository outside from the mirroring and merging.
     * The `dep-signing-ion_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/ion_core.xpi`. Save it to disk and then add it as an attachment named `qa-ion_core.xpi` to the `v25.0.0` release.
@@ -152,6 +153,7 @@ When CI has finished and is green for your hotfix branch, you are ready to cut a
     ```
 9. Trigger the signing process by sending a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-extensions/ion-core-addon/compare/master...release?expand=1>
     * Add the description from the `upstream` GitHub release as the description of the PR.
+    * Set the title of the PR to `Release 25.0.1`.
     * This is important so that CI runs the signing process.
     * This should never have conflicts with `master` branch: no change should ever happen on this repository outside from the mirroring and merging.
     * The `dep-signing-ion_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/ion_core.xpi`. Save it to disk and then add it as an attachment named `qa-ion_core.xpi` to the `v25.0.1` release.
