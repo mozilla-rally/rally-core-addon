@@ -71,7 +71,7 @@ The output will be a `.zip` file in `web-ext-artifacts/` - this should be rename
 
 ## Building and testing a study locally
 
-To run an end-to-end local test with your own study add-on, first build your study (if you don't have one, you can [build the Ion Basic Study](https://github.com/mozilla-ion/ion-basic-study)) and export the signed build as `<name-of-study>.xpi`. Edit `/public/locally-available-studies.json` so that `sourceURI.spec` is `/public/<name-of-study>.xpi` (you can change the other fields in `/public/locally-available-studies.json` as well for demo purposes as needed). 
+To run an end-to-end local test with your own study add-on, first build your study (if you don't have one, you can [build the Ion Basic Study](https://github.com/mozilla-ion/ion-basic-study)) and export the signed build as `<name-of-study>.xpi`. Edit `/public/locally-available-studies.json` so that `sourceURI.spec` is `/public/<name-of-study>.xpi` (you can change the other fields in `/public/locally-available-studies.json` as well for demo purposes as needed).
 
 Then run:
 
@@ -80,6 +80,12 @@ Then run:
 - `web-ext run`
 
 To walk through the Core Add-On experience with your study.
+
+## Testing the QA-signed extension
+
+To test the QA-signed extension in Firefox, you must be running the Nightly release or an unbranded build (there are equivalents for Release and Beta), then navigate to `about:config` and create a new boolean pref named `xpinstall.signatures.dev-root` and set it to `true`.
+
+> **Note:** this will cause production-signed extensions (such as those from addons.mozilla.org) to not load. To allow these, set `xpinstall.signatures.required` pref to `false`.
 
 ## Developing new frontend components
 
