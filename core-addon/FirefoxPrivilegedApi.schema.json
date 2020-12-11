@@ -29,6 +29,10 @@
                 "type": "boolean",
                 "description": "Whether or not the ping should contain the Pioneer ID"
               },
+              "overridePioneerId": {
+                "type": "string",
+                "description": "The ID to use instead of the one stored in the Firefox preferences"
+              },
               "encryptionKeyId": {
                 "type": "string",
                 "description": "The public key ID to use"
