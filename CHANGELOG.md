@@ -2,6 +2,8 @@
 
 [Full changelog](https://github.com/mozilla-ion/ion-core-addon/compare/v0.6.1...main)
 
+* #237: Remove reliance on the Firefox Pioner ID pref.
+
 # v0.6.1 (2020-12-09)
 
 [Full changelog](https://github.com/mozilla-ion/ion-core-addon/compare/v0.6.0...main)
