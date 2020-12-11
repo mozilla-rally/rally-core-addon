@@ -33,16 +33,16 @@ module.exports = class Storage {
     return browser.storage.local.set({ [key]: value });
   }
 
-  async getIonID() {
-    return await this.getItem("ionId");
+  async getRallyID() {
+    return await this.getItem("rallyId");
   }
 
-  async setIonID(uuid) {
-    return await this.setItem("ionId", uuid);
+  async setRallyID(uuid) {
+    return await this.setItem("rallyId", uuid);
   }
 
-  async clearIonID() {
-    return await browser.storage.local.remove("ionId");
+  async clearRallyID() {
+    return await browser.storage.local.remove("rallyId");
   }
 
   /**
