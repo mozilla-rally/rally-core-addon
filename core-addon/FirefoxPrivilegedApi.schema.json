@@ -56,25 +56,6 @@
         "async": true
       },
       {
-        "name": "setIonID",
-        "type": "function",
-        "description": "Saves the Ion ID in the Firefox prefs",
-        "parameters": [
-          {
-            "name": "type",
-            "type": "string"
-          }
-        ],
-        "async": true
-      },
-      {
-        "name": "clearIonID",
-        "type": "function",
-        "description": "Clears the Ion ID stored in the Firefox prefs",
-        "parameters": [],
-        "async": true
-      },
-      {
         "name": "generateUUID",
         "type": "function",
         "description": "Generate a random UUID using the Firefox APIs",

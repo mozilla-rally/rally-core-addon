@@ -149,7 +149,6 @@ describe('IonCore', function () {
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
@@ -184,7 +183,6 @@ describe('IonCore', function () {
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
@@ -218,8 +216,6 @@ describe('IonCore', function () {
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
-        clearIonID: async function() {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
@@ -273,7 +269,6 @@ describe('IonCore', function () {
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
       let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
@@ -345,7 +340,6 @@ describe('IonCore', function () {
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
 

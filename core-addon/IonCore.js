@@ -315,12 +315,6 @@ module.exports = class IonCore {
     // Store it locally for future use.
     await this._storage.setIonID(uuid);
 
-    // The telemetry API, before sending a ping, reads the
-    // ion id from a pref. It no value is set, the API will
-    // throw and nothing will be sent. This means, at enrollment,
-    // we need set the value of that required pref.
-    await browser.firefoxPrivilegedApi.setIonID(uuid);
-
     // Finally send the ping.
     await this._dataCollection.sendEnrollmentPing();
   }
@@ -415,11 +409,6 @@ module.exports = class IonCore {
 
     // Clear locally stored Ion ID.
     await this._storage.clearIonID();
-
-    // The telemetry API, before sending a ping, reads the
-    // ion id from a pref. We're good to clear this after sending
-    // the deletion pings.
-    await browser.firefoxPrivilegedApi.clearIonID();
 
     // Clear the list of studies user took part in.
     await this._storage.clearActivatedStudies();
