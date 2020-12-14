@@ -29,6 +29,10 @@
                 "type": "boolean",
                 "description": "Whether or not the ping should contain the Pioneer ID"
               },
+              "overridePioneerId": {
+                "type": "string",
+                "description": "The ID to use instead of the one stored in the Firefox preferences"
+              },
               "encryptionKeyId": {
                 "type": "string",
                 "description": "The public key ID to use"
@@ -53,25 +57,6 @@
             }
           }
         ],
-        "async": true
-      },
-      {
-        "name": "setIonID",
-        "type": "function",
-        "description": "Saves the Ion ID in the Firefox prefs",
-        "parameters": [
-          {
-            "name": "type",
-            "type": "string"
-          }
-        ],
-        "async": true
-      },
-      {
-        "name": "clearIonID",
-        "type": "function",
-        "description": "Clears the Ion ID stored in the Firefox prefs",
-        "parameters": [],
         "async": true
       },
       {

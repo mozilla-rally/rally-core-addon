@@ -223,7 +223,7 @@ module.exports = class IonCore {
 
     switch (message.type) {
       case "core-check": {
-        let enrolled = !!(await this._storage.getIonID());
+        let enrolled = !!(await this._storage.getRallyID());
         return {
           type: "core-check-response",
           data: {
@@ -233,8 +233,9 @@ module.exports = class IonCore {
       }
       case "telemetry-ping": {
         const {payloadType, payload, namespace, keyId, key} = message.data;
+        let rallyId = await this._storage.getRallyID();
         return await this._dataCollection.sendPing(
-          payloadType, payload, namespace, keyId, key
+          rallyId, payloadType, payload, namespace, keyId, key
         );
       }
       default:
@@ -313,16 +314,10 @@ module.exports = class IonCore {
     const uuid = await browser.firefoxPrivilegedApi.generateUUID();
 
     // Store it locally for future use.
-    await this._storage.setIonID(uuid);
-
-    // The telemetry API, before sending a ping, reads the
-    // ion id from a pref. It no value is set, the API will
-    // throw and nothing will be sent. This means, at enrollment,
-    // we need set the value of that required pref.
-    await browser.firefoxPrivilegedApi.setIonID(uuid);
+    await this._storage.setRallyID(uuid);
 
     // Finally send the ping.
-    await this._dataCollection.sendEnrollmentPing();
+    await this._dataCollection.sendEnrollmentPing(uuid);
   }
 
   /**
@@ -345,7 +340,8 @@ module.exports = class IonCore {
     await this._storage.appendActivatedStudy(studyAddonId);
 
     // Finally send the ping.
-    await this._dataCollection.sendEnrollmentPing(studyAddonId);
+    let rallyId = await this._storage.getRallyID();
+    await this._dataCollection.sendEnrollmentPing(rallyId, studyAddonId);
   }
 
   /**
@@ -377,7 +373,9 @@ module.exports = class IonCore {
     }
 
     await this._storage.removeActivatedStudy(studyAddonId);
-    await this._dataCollection.sendDeletionPing(studyAddonId);
+
+    let rallyId = await this._storage.getRallyID();
+    await this._dataCollection.sendDeletionPing(rallyId, studyAddonId);
   }
 
   /**
@@ -405,21 +403,18 @@ module.exports = class IonCore {
       }
     }
 
+    let rallyId = await this._storage.getRallyID();
+
     // Read the list of the studies user activated throughout
     // their stay on the Ion platform and send a deletion request
     // for each of them.
     let studyList = await this._storage.getActivatedStudies();
     for (let studyId of studyList) {
-      await this._dataCollection.sendDeletionPing(studyId);
+      await this._dataCollection.sendDeletionPing(rallyId, studyId);
     }
 
     // Clear locally stored Ion ID.
-    await this._storage.clearIonID();
-
-    // The telemetry API, before sending a ping, reads the
-    // ion id from a pref. We're good to clear this after sending
-    // the deletion pings.
-    await browser.firefoxPrivilegedApi.clearIonID();
+    await this._storage.clearRallyID();
 
     // Clear the list of studies user took part in.
     await this._storage.clearActivatedStudies();
@@ -549,7 +544,7 @@ module.exports = class IonCore {
    * ```
    */
   async _sendStateUpdateToUI() {
-    let enrolled = !!(await this._storage.getIonID());
+    let enrolled = !!(await this._storage.getRallyID());
     let availableStudies = await this._availableStudies;
 
     const newState = {
@@ -576,6 +571,7 @@ module.exports = class IonCore {
     await this._storage.setItem("demographicsData", data)
       .catch(e => console.error(`IonCore._updateDemographics - failed to save data`, e));
 
-    return await this._dataCollection.sendDemographicSurveyPing(data);
+    let rallyId = await this._storage.getRallyID();
+    return await this._dataCollection.sendDemographicSurveyPing(rallyId, data);
   }
 }

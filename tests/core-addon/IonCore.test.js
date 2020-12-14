@@ -149,10 +149,8 @@ describe('IonCore', function () {
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
         generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
-      let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
 
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
@@ -163,6 +161,7 @@ describe('IonCore', function () {
       chrome.storage.local.set.yields();
 
       sinon.spy(this.ionCore._dataCollection, "sendEnrollmentPing");
+      sinon.spy(this.ionCore._storage, "setRallyID");
 
       // Provide a valid enrollment message.
       await this.ionCore._handleMessage(
@@ -170,8 +169,7 @@ describe('IonCore', function () {
       );
 
       // We expect to store the fake ion ID.
-      telemetryMock.expects("setIonID").withArgs([FAKE_UUID]).calledOnce;
-
+      assert.ok(this.ionCore._storage.setRallyID.withArgs(FAKE_UUID).calledOnce);
       assert.ok(this.ionCore._dataCollection.sendEnrollmentPing.calledOnce);
     });
 
@@ -181,31 +179,25 @@ describe('IonCore', function () {
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
 
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
-      let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
 
       sinon.spy(this.ionCore._dataCollection, "sendEnrollmentPing");
 
-      // Return an empty object from the local storage. Note that this
-      // needs to use `browser` and must use `callsArgWith` to guarantee
-      // that the promise resolves, due to a bug in sinon-chrome. See
-      // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
-      browser.storage.local.get.callsArgWith(1, {}).resolves();
-      chrome.storage.local.get.yields({});
+      // Mock the storage to provide a fake rally id.
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      browser.storage.local.get
+        .callsArgWith(1, {rallyId: FAKE_UUID})
+        .resolves();
+      chrome.storage.local.get.yields(FAKE_UUID);
 
       // Attempt to enroll to a study.
       await this.ionCore._enrollStudy(FAKE_STUDY_ID);
 
       // We expect to store the fake ion ID.
-      telemetryMock.expects("setIonID").withArgs([FAKE_UUID]).calledOnce;
-
       assert.ok(
-        this.ionCore._dataCollection.sendEnrollmentPing.withArgs(FAKE_STUDY_ID).calledOnce
+        this.ionCore._dataCollection.sendEnrollmentPing.withArgs(FAKE_UUID, FAKE_STUDY_ID).calledOnce
       );
     });
 
@@ -215,25 +207,21 @@ describe('IonCore', function () {
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
 
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
-        clearIonID: async function() {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
-      let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
+
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      this.ionCore._storage = {
+        getActivatedStudies: async function() { return [FAKE_STUDY_ID]; },
+        clearActivatedStudies: async function() {},
+        getRallyID: async function() { return FAKE_UUID; },
+        clearRallyID: async function() {},
+      };
 
       sinon.spy(this.ionCore._dataCollection, "sendDeletionPing");
+      sinon.spy(this.ionCore._storage, "clearRallyID");
 
-      // Return an empty object from the local storage. Note that this
-      // needs to use `browser` and must use `callsArgWith` to guarantee
-      // that the promise resolves, due to a bug in sinon-chrome. See
-      // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
-      browser.storage.local.get
-        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
-        .resolves();
-      browser.storage.local.remove.yields();
       chrome.runtime.sendMessage.yields();
       browser.management.uninstallSelf.yields();
 
@@ -242,11 +230,11 @@ describe('IonCore', function () {
         {type: "unenrollment", data: {}}
       );
 
-      // We expect to store the fake ion ID...
-      telemetryMock.expects("clearIonID").calledOnce;
+      // We expect to remove the fake rally ID...
+      assert.ok(this.ionCore._storage.clearRallyID.calledOnce);
       // ... to submit a ping with the expected type ...
       assert.ok(
-        this.ionCore._dataCollection.sendDeletionPing.withArgs(FAKE_STUDY_ID).calledOnce
+        this.ionCore._dataCollection.sendDeletionPing.withArgs(FAKE_UUID, FAKE_STUDY_ID).calledOnce
       );
       // We also expect an "uninstall" message to be dispatched to
       // the one study marked as installed.
@@ -270,24 +258,19 @@ describe('IonCore', function () {
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
 
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
-      let telemetryMock = sinon.mock(chrome.firefoxPrivilegedApi);
+
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      this.ionCore._storage = {
+        getActivatedStudies: async function() { return [FAKE_STUDY_ID]; },
+        removeActivatedStudy: async function() {},
+        getRallyID: async function() { return FAKE_UUID; },
+      };
 
       sinon.spy(this.ionCore._dataCollection, "sendDeletionPing");
 
-      // Return an empty object from the local storage. Note that this
-      // needs to use `browser` and must use `callsArgWith` to guarantee
-      // that the promise resolves, due to a bug in sinon-chrome. See
-      // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
-      browser.storage.local.get
-        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
-        .resolves();
-      chrome.storage.local.get.yields({});
       chrome.runtime.sendMessage.yields();
 
       // Provide a valid study unenrollment message.
@@ -295,11 +278,9 @@ describe('IonCore', function () {
         {type: "study-unenrollment", data: { studyID: FAKE_STUDY_ID}}
       );
 
-      // We expect to store the fake ion ID...
-      telemetryMock.expects("setIonID").withArgs([FAKE_UUID]).calledOnce;
-      // ... to submit a ping with the expected type ...
+      // We to submit a ping with the expected type.
       assert.ok(
-        this.ionCore._dataCollection.sendDeletionPing.withArgs(FAKE_STUDY_ID).calledOnce
+        this.ionCore._dataCollection.sendDeletionPing.withArgs(FAKE_UUID, FAKE_STUDY_ID).calledOnce
       );
 
       // Make sure that we're generating an uninstall message for
@@ -342,11 +323,13 @@ describe('IonCore', function () {
 
     it('dispatches telemetry-ping messages', async function () {
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
+      };
+
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      this.ionCore._storage = {
+        getRallyID: async function() { return FAKE_UUID; },
       };
 
       sinon.spy(this.ionCore._dataCollection, "sendPing");
@@ -376,6 +359,7 @@ describe('IonCore', function () {
       assert.ok(
         this.ionCore._dataCollection.sendPing
             .withArgs(
+              FAKE_UUID,
               SENT_PING.payloadType,
               sinon.match(SENT_PING.payload),
               SENT_PING.namespace,
@@ -468,7 +452,10 @@ describe('IonCore', function () {
     it('properly dispatches messages to studies', async function () {
       let TEST_PAYLOAD = { "someKey": "testValue" };
 
-      // Make sure the function yields during tests!
+      // Make sure the functions yield during tests!
+      browser.storage.local.get
+        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
+        .resolves();
       chrome.runtime.sendMessage.yields();
 
       await this.ionCore._sendMessageToStudy(FAKE_STUDY_ID, "uninstall", TEST_PAYLOAD);
@@ -489,6 +476,11 @@ describe('IonCore', function () {
   describe('_updateDemographics()', function () {
     it('properly saves data to the local storage', async function () {
       let TEST_SURVEY_DATA = { "someKey": "testValue" };
+
+      // Set a fake Rally id.
+      browser.storage.local.get
+        .callsArgWith(1, {rallyId: "fake-rally-id"})
+        .resolves();
 
       await this.ionCore._updateDemographics(TEST_SURVEY_DATA);
 
