@@ -91,8 +91,8 @@
         line-height: 1.2;
       }
 
-      a,
-      a:visited {
+      a#installButton,
+      a:visited#installButton {
         text-decoration: none;
         font-size: 2.5rem;
         padding: 3rem 4rem;
@@ -110,19 +110,19 @@
         box-shadow: var(--dreamy-box);
       }
 
-      a:hover {
+      a:hover#installButton {
         text-decoration: none;
         transform: translateY(-2.5px);
         color: white;
       }
 
-      a:active {
+      a:active#installButton {
         transform: translateY(2.5px);
       }
 
-      a:active,
-      a:focus,
-      a:active:hover {
+      a:active#installButton,
+      a:focus#installButton,
+      a:active:hover#installButton {
         color: white;
       }
 
@@ -161,8 +161,10 @@
       //   we'll send on page load;
       // - if the addon is not installed, it will send a message as soon as
       //   it gets installed.
-      window.addEventListener("web-check-response", event => {
-        console.debug("Ion - 'web-check-response' message received from the Core Addon");
+      window.addEventListener("web-check-response", (event) => {
+        console.debug(
+          "Ion - 'web-check-response' message received from the Core Addon"
+        );
         document.getElementById("installButton").style.display = "none";
         document.getElementById("installedBlob").style.display = "block";
       });
@@ -171,7 +173,7 @@
       // if the addon is already installed, we will receive a response.
       window.onload = () => {
         window.dispatchEvent(new CustomEvent("web-check", { detail: {} }));
-      }
+      };
     </script>
   </head>
   <body>
@@ -203,22 +205,17 @@
       href="https://github.com/mozilla-ion/ion-core-addon/releases/download/v0.6.1/ion_core-0.6.0-signed.xpi"
       >Install the Ion Web Extension</a
     >
-    <div id="installedBlob" style="display: none">
+    <div id="installedBlob" style="display: none;">
       Congratulations! Ion is installed and ready!
     </div>
     <div>
-      <b style="text-transform: uppercase">Note</b> – this is demoware. You're
-      going to need to run Nightly and set in <code>about:config</code> the
-      following:
-      <ul>
-        <li>
-          <code>xpinstall.signatures.required = false</code>
-        </li>
-        <li>
-          <code>xpinstall.signatures.dev-root = true</code> (this does not
-          exist and must be created)
-        </li>
-      </ul>
+      <b style="text-transform: uppercase;">Note</b> – this installs the latest
+      development version of Ion. We do our best to keep this stable and
+      up-to-date, please file
+      <a href="https://github.com/mozilla-ion/ion-core-addon/issues/new"
+        >an issue on github</a
+      >
+      for any problems you encounter. Thanks for dogfooding!
     </div>
   </body>
 </html>
