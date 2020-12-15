@@ -119,14 +119,21 @@ describe("Core-Addon Onboarding", function () {
     await findAndAct(this.driver, By.xpath(`//button[text()="Cancel"]`), e => e.click());
 
     // Begin unenrollment and confirm it this time.
-    await findAndAct(this.driver, By.xpath(`//button[text()="Leave Mozilla Rally"]`), e => e.click());
+    const unenrollSelector = By.xpath(`//button[text()="Leave Mozilla Rally"]`);
+    const unenrollButton = await this.driver.findElement(unenrollSelector);
+    await this.driver.wait(until.elementIsVisible(unenrollButton), WAIT_FOR_PROPERTY);
+    unenrollButton.click();
 
     await this.driver.wait(
       until.titleIs("Ion: Put your data to work for a better internet"),
       WAIT_FOR_PROPERTY
     );
 
-    await findAndAct(this.driver, By.xpath(`//button[text()="Leave Rally"]`), e => e.click());
+    const confirmButton = await this.driver.findElement(
+      By.xpath(`//button[text()="Leave Rally"]`)
+    );
+    await this.driver.wait(until.elementIsVisible(confirmButton), WAIT_FOR_PROPERTY);
+    confirmButton.click();
     // TODO check that core add-on is uninstalled, see https://github.com/mozilla-ion/ion-core-addon/issues/245
   });
 });
