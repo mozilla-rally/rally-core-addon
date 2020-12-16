@@ -1,5 +1,5 @@
 {
-  "description": "Ion Core add-on.",
+  "description": "Rally Core add-on.",
   "author": "Mozilla",
   "manifest_version": 2,
   "name": "Ion Core",
@@ -44,7 +44,7 @@
 
   "content_scripts": [
     {
-      "matches": ["https://mozilla-ion.github.io/*"],
+      "matches": ["https://mozilla-rally.github.io/*"],
       "js": ["public/addon-build/content-script.js"]
     }
   ],

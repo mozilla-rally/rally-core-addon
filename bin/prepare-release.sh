@@ -78,7 +78,7 @@ fi
 
 FILE=package.json
 run $SED -i.bak -E \
-    -e "s/^\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
+    -e "s/\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
     "${WORKSPACE_ROOT}/${FILE}"
 run rm "${WORKSPACE_ROOT}/${FILE}.bak"
 
@@ -88,7 +88,7 @@ run rm "${WORKSPACE_ROOT}/${FILE}.bak"
 
 FILE=manifest.json
 run $SED -i.bak -E \
-    -e "s/^\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
+    -e "s/\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
     "${WORKSPACE_ROOT}/${FILE}"
 run rm "${WORKSPACE_ROOT}/${FILE}.bak"
 
@@ -110,7 +110,7 @@ if [ "$DOIT" = y ]; then
     cat > "${WORKSPACE_ROOT}/${FILE}" <<EOL
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-ion/ion-core-addon/compare/v${NEW_VERSION}...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v${NEW_VERSION}...master)
 
 ${CHANGELOG}
 EOL
@@ -143,4 +143,4 @@ echo "Don't forget to push this commit:"
 echo
 echo "    git push $remote $branch"
 echo
-echo "Once pushed, wait for the CI build to finish: https://circleci.com/gh/mozilla-ion/ion-core-addon/tree/$branch"
+echo "Once pushed, wait for the CI build to finish: https://circleci.com/gh/mozilla-rally/core-addon/tree/$branch"

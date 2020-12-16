@@ -86,10 +86,10 @@ describe("Core-Addon Onboarding", function () {
     await this.driver.wait(until.elementLocated(By.css("button")));
 
     // FIXME we need to use button IDs here so xpath is not needed...
-    // See https://github.com/mozilla-ion/ion-core-addon/issues/244
+    // See https://github.com/mozilla-rally/core-addon/issues/244
     await findAndAct(this.driver, By.xpath(`//button[text()="Get Started"]`), e => e.click());
     await findAndAct(this.driver, By.xpath(`//button[text()="Accept & Participate"]`), e => e.click());
-    // TODO check that state is enrolled, see https://github.com/mozilla-ion/ion-core-addon/issues/245
+    // TODO check that state is enrolled, see https://github.com/mozilla-rally/core-addon/issues/245
 
     await findAndAct(this.driver, By.xpath(`//button[text()="Save & Continue"]`), e => e.click());
 
@@ -100,15 +100,13 @@ describe("Core-Addon Onboarding", function () {
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
 
     await this.driver.setContext(firefox.Context.CHROME);
-    await findAndAct(this.driver, By.css(`[label="Continue to Installation"]`), e => e.click());
-
     await findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
     await findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
 
     // FIXME close tab and click on icon, check that post-enrollment options page is shown.
     // This will currently fail because there is a bug in the core-addon UI, where
     // the options page will show no studies.
-    // See https://github.com/mozilla-ion/ion-core-addon/issues/235
+    // See https://github.com/mozilla-rally/core-addon/issues/235
 
     // Switch back to web content context.
     await this.driver.setContext(firefox.Context.CONTENT);
@@ -134,6 +132,6 @@ describe("Core-Addon Onboarding", function () {
     );
     await this.driver.wait(until.elementIsVisible(confirmButton), WAIT_FOR_PROPERTY);
     confirmButton.click();
-    // TODO check that core add-on is uninstalled, see https://github.com/mozilla-ion/ion-core-addon/issues/245
+    // TODO check that core add-on is uninstalled, see https://github.com/mozilla-rally/core-addon/issues/245
   });
 });

@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
  // ^^^ the linter currently forces this block even though it appears below.
- // see https://github.com/mozilla-ion/ion-core-addon/issues/184.
+ // see https://github.com/mozilla-rally/core-addon/issues/184.
 import { writable, get } from 'svelte/store';
 
 let notificationID = writable(undefined);
