@@ -1,5 +1,5 @@
 {
-  "name": "ion_core",
+  "name": "rally_core",
   "version": "0.6.0",
   "scripts": {
     "build": "rollup -c && rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/ion_core.xpi",
@@ -66,14 +66,14 @@
   "description": "This is the Ion Core Add-on: a cross-browser WebExtension that allows users to participate to Ion studies.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mozilla-ion/ion-core-addon.git"
+    "url": "git+https://github.com/mozilla-rally/core-addon.git"
   },
   "keywords": [],
   "author": "Mozilla",
   "license": "MPL-2.0",
   "private": true,
   "bugs": {
-    "url": "https://github.com/mozilla-ion/ion-core-addon/issues"
+    "url": "https://github.com/mozilla-rally/core-addon/issues"
   },
-  "homepage": "https://github.com/mozilla-ion/ion-core-addon#readme"
+  "homepage": "https://github.com/mozilla-rally/core-addon#readme"
 }
