@@ -4,6 +4,7 @@
 
 * [#237](https://github.com/mozilla-rally/core-addon/pull/237): Remove reliance on the Firefox Pioner ID pref.
 * [#262](https://github.com/mozilla-rally/core-addon/pull/262): rename the org from `mozilla-ion` to `mozilla-rally`. Without this change the core add-on won't be able to communicate with the test website.
+  * This changed the Partner Support Library as well.
 
 # v0.6.1 (2020-12-09)
 
