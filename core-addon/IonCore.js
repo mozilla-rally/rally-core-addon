@@ -12,7 +12,7 @@ const ION_DEFAULT_ARGS = {
   // NOTE: if this URL ever changes, you will have to update the domain in
   // the permissions in manifest.json.
   availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records",
-  website: "https://mozilla-ion.github.io",
+  website: "https://mozilla-rally.github.io",
 }
 
 module.exports = class IonCore {
