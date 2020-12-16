@@ -3,7 +3,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 const CORE_ADDON_ID = "ion-core-addon@mozilla.org";
-const ION_SIGNUP_URL = "https://mozilla-ion.github.io/ion-core-addon/";
+const SIGNUP_URL = "https://mozilla-rally.github.io/core-addon/";
 
 module.exports = class Rally {
   /**
@@ -35,7 +35,7 @@ module.exports = class Rally {
     await this._checkRallyCore().then(
         () => console.debug("Rally.initialize - Found the Core Add-on")
       ).catch(
-        async () => await browser.tabs.create({ url: ION_SIGNUP_URL })
+        async () => await browser.tabs.create({ url: SIGNUP_URL })
       );
 
     // Listen for incoming messages from the Core addon.

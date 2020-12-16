@@ -10,14 +10,14 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mozilla-ion/ion-core-addon.git",
+    "url": "git+https://github.com/mozilla-rally/core-addon.git",
     "directory": "support"
   },
   "keywords": [],
   "author": "Mozilla Rally team",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/mozilla-ion/ion-core-addon/issues"
+    "url": "https://github.com/mozilla-rally/core-addon/issues"
   },
-  "homepage": "https://github.com/mozilla-ion/ion-core-addon#readme"
+  "homepage": "https://github.com/mozilla-rally/core-addon#readme"
 }
