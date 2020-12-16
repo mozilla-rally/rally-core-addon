@@ -78,7 +78,7 @@ fi
 
 FILE=package.json
 run $SED -i.bak -E \
-    -e "s/^\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
+    -e "s/\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
     "${WORKSPACE_ROOT}/${FILE}"
 run rm "${WORKSPACE_ROOT}/${FILE}.bak"
 
@@ -88,7 +88,7 @@ run rm "${WORKSPACE_ROOT}/${FILE}.bak"
 
 FILE=manifest.json
 run $SED -i.bak -E \
-    -e "s/^\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
+    -e "s/\"version\": \"[0-9a-z.-]+\"/\"version\": \"${NEW_VERSION}\"/" \
     "${WORKSPACE_ROOT}/${FILE}"
 run rm "${WORKSPACE_ROOT}/${FILE}.bak"
 
