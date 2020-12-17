@@ -103,7 +103,7 @@ module.exports = class DataCollection {
    */
   async sendDeletionPing(rallyId, studyAddonId) {
     if (studyAddonId === undefined) {
-      throw new Error("IonCore - the deletion-request ping requires a study id");
+      throw new Error("DataCollection - the deletion-request ping requires a study id");
     }
 
     return await this._sendEmptyPing(rallyId, "deletion-request", studyAddonId);
