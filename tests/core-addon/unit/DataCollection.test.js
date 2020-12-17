@@ -5,7 +5,7 @@
 var assert = require('assert').strict;
 var sinon = require('sinon');
 
-var DataCollection = require('../../core-addon/DataCollection');
+var DataCollection = require('../../../core-addon/DataCollection');
 
 // A fake study id to use in the tests when looking for a
 // "known" study.

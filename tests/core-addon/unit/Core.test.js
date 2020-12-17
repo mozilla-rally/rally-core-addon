@@ -5,7 +5,7 @@
 var assert = require('assert').strict;
 var sinon = require('sinon');
 
-var Core = require('../../core-addon/Core');
+var Core = require('../../../core-addon/Core');
 
 // A fake study id to use in the tests when looking for a
 // "known" study.

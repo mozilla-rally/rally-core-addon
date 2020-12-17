@@ -7,7 +7,7 @@
     "start": "sirv public",
     "build-addon": "rollup -c rollup.config.addon.js",
     "local-build-addon": "rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json",
-    "test-addon": "mocha --require  \"./tests/hooks.js\" \"./tests/core-addon/*.js\"",
+    "test-addon": "mocha --require  \"./tests/hooks.js\" \"./tests/core-addon/unit/*.js\"",
     "test-support-library": "mocha --require  \"./tests/hooks.js\" \"./tests/support/*.js\"",
     "lint-addon": "web-ext lint",
     "lint-js": "eslint . .storybook",
