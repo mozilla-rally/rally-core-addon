@@ -74,7 +74,7 @@ describe('DataCollection', function () {
     it('rejects if no study id is provided', function () {
       assert.rejects(
         this.dataCollection.sendDeletionPing("some-rally-id"),
-        { message: "IonCore - the deletion-request ping requires a study id"}
+        { message: "DataCollection - the deletion-request ping requires a study id"}
       );
     });
 
