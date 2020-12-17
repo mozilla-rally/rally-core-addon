@@ -2,28 +2,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+const utils = require("./utils.js");
+const { By, until } = require("selenium-webdriver");
 const firefox = require("selenium-webdriver/firefox");
-const { Builder, By, until } = require("selenium-webdriver");
 
 // The number of milliseconds to wait for some
 // property to change in tests. This should be
 // a long time to account for slow CI.
 const WAIT_FOR_PROPERTY = 5000;
-
-const firefoxOptions = new firefox.Options();
-firefoxOptions.setPreference("xpinstall.signatures.required", false);
-firefoxOptions.setPreference("extensions.experiments.enabled", true);
-// Unset this to run the UI (useful for local testing).
-firefoxOptions.headless();
-
-// This is the path to Firefox Nightly on Ubuntu with the Mozilla PPA.
-if (process.platform === "linux") {
-  firefoxOptions.setBinary("/usr/bin/firefox-trunk");
-} else if (process.platform === "darwin") {
-  firefoxOptions.setBinary(
-    "/Applications/Firefox Nightly.app/Contents/MacOS/firefox"
-  );
-}
 
 /**
  * Find the element and perform an action on it.
@@ -44,10 +30,7 @@ async function findAndAct(driver, element, action) {
 describe("Core-Addon Onboarding", function () {
   // eslint-disable-next-line mocha/no-hooks-for-single-case
   beforeEach(async function () {
-    this.driver = await new Builder()
-      .forBrowser("firefox")
-      .setFirefoxOptions(firefoxOptions)
-      .build();
+    this.driver = await utils.getFirefoxDriver(true);
   });
 
   // eslint-disable-next-line mocha/no-hooks-for-single-case
