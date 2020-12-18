@@ -15,7 +15,6 @@ module.exports = {
   },
   ignoreFiles: [
     "bin",
-    "core-addon",
     "docs",
     "scripts",
     "src",
