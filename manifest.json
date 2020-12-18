@@ -2,13 +2,13 @@
   "description": "Rally Core add-on.",
   "author": "Mozilla",
   "manifest_version": 2,
-  "name": "Ion Core",
+  "name": "Rally Core",
   "version": "0.6.0",
   "homepage_url": "https://github.com/mozilla-extensions/pioneer-v2-core-example",
 
   "applications": {
     "gecko": {
-      "id": "ion-core-addon@mozilla.org",
+      "id": "rally-core@mozilla.org",
       "strict_min_version": "80.0a1"
     }
   },
@@ -22,7 +22,7 @@
 
   "telemetry": {
     "pioneer_id": true,
-    "study_name": "ion-core-addon",
+    "study_name": "rally-core",
     "ping_type": "pioneer-study",
     "schemaNamespace": "pioneer-debug",
     "public_key": {

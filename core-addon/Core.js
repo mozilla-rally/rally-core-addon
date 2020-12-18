@@ -5,25 +5,25 @@
 const Storage = require("./Storage.js");
 const DataCollection = require("./DataCollection.js");
 
-// The path of the embedded resource used to control Ion options.
-const ION_OPTIONS_PAGE_PATH = "public/index.html";
+// The path of the embedded resource used to control options.
+const OPTIONS_PAGE_PATH = "public/index.html";
 
-const ION_DEFAULT_ARGS = {
+const DEFAULT_ARGS = {
   // NOTE: if this URL ever changes, you will have to update the domain in
   // the permissions in manifest.json.
   availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records",
   website: "https://mozilla-rally.github.io",
 }
 
-module.exports = class IonCore {
-   /**
+module.exports = class Core {
+ /**
   * @param {Object} args arguments passed in from the user.
-  * @param {String} args.availableStudiesURI the URI where the available Ion studies
+  * @param {String} args.availableStudiesURI the URI where the available studies
   *             information is listed.
   * @param {String} args.website the URL of the platform website.
   */
   constructor(args = {}) {
-    this._userArguments = {...ION_DEFAULT_ARGS, ...args};
+    this._userArguments = {...DEFAULT_ARGS, ...args};
 
     this._storage = new Storage();
     this._dataCollection = new DataCollection();
@@ -90,7 +90,7 @@ module.exports = class IonCore {
 
   _openControlPanel() {
     browser.runtime.openOptionsPage().catch(e => {
-      console.error(`IonCore.js - Unable to open the control panel`, e);
+      console.error(`Core.js - Unable to open the control panel`, e);
     });
   }
 
@@ -106,11 +106,11 @@ module.exports = class IonCore {
    */
   async _handleAddonLifecycle(info, installed) {
     // Don't do anything if we received an updated from an addon
-    // that's not an Ion study.
+    // that's not a study.
     let knownStudies = await this._availableStudies;
     if (!knownStudies.map(s => s.addon_id).includes(info.id)) {
       console.debug(
-        `IonCore._handleAddonLifecycle - non-study addon ${info.id} was ${installed ? "installed" : "uninstalled"}`
+        `Core._handleAddonLifecycle - non-study addon ${info.id} was ${installed ? "installed" : "uninstalled"}`
       );
       return;
     }
@@ -144,8 +144,8 @@ module.exports = class IonCore {
   _onPortConnected(port) {
     const sender = port.sender;
     if ((sender.id != browser.runtime.id)
-      || (sender.url != browser.runtime.getURL(ION_OPTIONS_PAGE_PATH))) {
-      console.error("IonCore - received message from unexpected sender");
+      || (sender.url != browser.runtime.getURL(OPTIONS_PAGE_PATH))) {
+      console.error("Core - received message from unexpected sender");
       port.disconnect();
       return;
     }
@@ -159,7 +159,7 @@ module.exports = class IonCore {
     // end or in case of any other error. Log an error and clear
     // the port in that case.
     this._connectionPort.onDisconnect.addListener(e => {
-      console.error("IonCore - there was an error connecting to the page", e);
+      console.error("Core - there was an error connecting to the page", e);
       this._connectionPort = null;
     });
   }
@@ -193,7 +193,7 @@ module.exports = class IonCore {
         return this._updateDemographics(message.data);
       default:
         return Promise.reject(
-          new Error(`IonCore - unexpected message type ${message.type}`));
+          new Error(`Core - unexpected message type ${message.type}`));
     }
   }
 
@@ -218,7 +218,7 @@ module.exports = class IonCore {
     // We only expect messages coming from known ion studies.
     let knownStudies = await this._availableStudies;
     if (!knownStudies.map(s => s.addon_id).includes(sender.id)) {
-      throw new Error(`IonCore._handleExternalMessage - unexpected sender ${sender.id}`);
+      throw new Error(`Core._handleExternalMessage - unexpected sender ${sender.id}`);
     }
 
     switch (message.type) {
@@ -239,7 +239,7 @@ module.exports = class IonCore {
         );
       }
       default:
-        throw new Error(`IonCore._handleExternalMessage - unexpected message type ${message.type}`);
+        throw new Error(`Core._handleExternalMessage - unexpected message type ${message.type}`);
     }
   }
 
@@ -256,7 +256,7 @@ module.exports = class IonCore {
    *          `sender` or rejected in case of errors.
    */
   _handleWebMessage(message, sender) {
-    console.log(`IonCore - received web message ${message} from ${sender}`);
+    console.log(`Core - received web message ${message} from ${sender}`);
 
     try {
       let platformURL = new URL(this._userArguments.website);
@@ -264,17 +264,17 @@ module.exports = class IonCore {
 
       if (platformURL.origin != senderURL.origin) {
         return Promise.reject(
-          new Error(`IonCore - received message from unexpected URL ${sender.url}`));
+          new Error(`Core - received message from unexpected URL ${sender.url}`));
       }
     } catch (ex) {
       return Promise.reject(
-        new Error(`IonCore - cannot validate sender URL ${sender.url}`));
+        new Error(`Core - cannot validate sender URL ${sender.url}`));
     }
 
     // We should have received the message from our core addon.
     if (sender.id !== browser.runtime.id) {
       return Promise.reject(
-        new Error(`IonCore - received message from an unexpected webextension ${sender.id}`));
+        new Error(`Core - received message from an unexpected webextension ${sender.id}`));
     }
 
     // ** IMPORTANT **
@@ -301,9 +301,9 @@ module.exports = class IonCore {
   }
 
   /**
-   * Enroll in the Ion platform.
+   * Enroll in the platform.
    *
-   * This sets up all the required information (e.g. Ion ID)
+   * This sets up all the required information (e.g. the ID)
    * and sets the relevant data to the pipeline.
    *
    * @returns {Promise} A promise resolved when the enrollment
@@ -321,7 +321,7 @@ module.exports = class IonCore {
   }
 
   /**
-   * Enroll in an Ion Study.
+   * Enroll in a Study.
    *
    * This sends the required pings,
    *
@@ -333,7 +333,7 @@ module.exports = class IonCore {
     let knownStudies = await this._availableStudies;
     if (!knownStudies.map(s => s.addon_id).includes(studyAddonId)) {
       return Promise.reject(
-        new Error(`IonCore._enrollStudy - Unknown study ${studyAddonId}`));
+        new Error(`Core._enrollStudy - Unknown study ${studyAddonId}`));
     }
 
     // Record that user activated this study.
@@ -345,7 +345,7 @@ module.exports = class IonCore {
   }
 
   /**
-   * Unenroll in an Ion Study.
+   * Unenroll in a Study.
    *
    * This sends the required pings.
    *
@@ -359,17 +359,17 @@ module.exports = class IonCore {
     let knownStudies = await this._availableStudies;
     if (!knownStudies.map(s => s.addon_id).includes(studyAddonId)) {
       return Promise.reject(
-        new Error(`IonCore._unenrollStudy - Unknown study ${studyAddonId}`));
+        new Error(`Core._unenrollStudy - Unknown study ${studyAddonId}`));
     }
 
     // Attempt to send an uninstall message, but move on if the
     // delivery fails: studies will not be able to send anything
-    // without the Ion Core anyway. Moreover, they might have been
+    // without the Core Add-on anyway. Moreover, they might have been
     // removed manually from the addons pages (e.g. about:addons).
     try {
       await this._sendMessageToStudy(studyAddonId, "uninstall", {});
     } catch (e) {
-      console.error(`IonCore._unenroll - Unable to uninstall ${studyAddonId}`, e);
+      console.error(`Core._unenroll - Unable to uninstall ${studyAddonId}`, e);
     }
 
     await this._storage.removeActivatedStudy(studyAddonId);
@@ -379,9 +379,9 @@ module.exports = class IonCore {
   }
 
   /**
-   * Unenroll from the Ion platform.
+   * Unenroll from the platform.
    *
-   * This clears all the stored data (e.g. Ion ID)
+   * This clears all the stored data (e.g. the ID)
    * and sends the relevant deletion requests to the pipeline.
    *
    * @returns {Promise} A promise resolved when the unenrollment
@@ -395,25 +395,25 @@ module.exports = class IonCore {
     for (let studyId of installedStudies) {
       // Attempt to send an uninstall message to each study, but
       // move on if the delivery fails: studies will not be able
-      // to send anything without the Ion Core anyway.
+      // to send anything without the Core Add-on anyway.
       try {
         await this._sendMessageToStudy(studyId, "uninstall", {});
       } catch (e) {
-        console.error(`IonCore._unenroll - Unable to uninstall ${studyId}`, e);
+        console.error(`Core._unenroll - Unable to uninstall ${studyId}`, e);
       }
     }
 
     let rallyId = await this._storage.getRallyID();
 
     // Read the list of the studies user activated throughout
-    // their stay on the Ion platform and send a deletion request
+    // their stay on the platform and send a deletion request
     // for each of them.
     let studyList = await this._storage.getActivatedStudies();
     for (let studyId of studyList) {
       await this._dataCollection.sendDeletionPing(rallyId, studyId);
     }
 
-    // Clear locally stored Ion ID.
+    // Clear locally stored ID.
     await this._storage.clearRallyID();
 
     // Clear the list of studies user took part in.
@@ -424,10 +424,10 @@ module.exports = class IonCore {
   }
 
   /**
-   * Sends a message to an available Ion study.
+   * Sends a message to an available study.
    *
    * @param {String} studyId
-   *        The id of the Ion study, as assigned by the platform
+   *        The id of the study, as assigned by the platform
    *        it is deployed on (e.g. a Firefox Addon Id).
    * @param {String} type
    *        The type of the message to send. Check `VALID_TYPES`
@@ -445,14 +445,14 @@ module.exports = class IonCore {
     // Make sure `type` is one of the expected values.
     if (!VALID_TYPES.includes(type)) {
       return Promise.reject(
-        new Error(`IonCore._sendMessageToStudy - unexpected message "${type}" to study "${studyId}"`));
+        new Error(`Core._sendMessageToStudy - unexpected message "${type}" to study "${studyId}"`));
     }
 
     // Validate the studyId against the list of known studies.
     let studyList = await this._storage.getActivatedStudies();
     if (!studyList.includes(studyId)) {
       return Promise.reject(
-        new Error(`IonCore._sendMessageToStudy - "${studyId}" is not a known Ion study`));
+        new Error(`Core._sendMessageToStudy - "${studyId}" is not a known study`));
     }
 
     const msg = {
@@ -471,7 +471,7 @@ module.exports = class IonCore {
    *          has at least the `addon_id` and `ionInstalled` properties.
    */
   async _updateInstalledStudies(studies) {
-    console.debug("IonCore._updateInstalledStudies");
+    console.debug("Core._updateInstalledStudies");
 
     // If we were able to fetch studies definitions, see if any
     // of them were installed. Start by getting the list of installed
@@ -569,7 +569,7 @@ module.exports = class IonCore {
    */
   async _updateDemographics(data) {
     await this._storage.setItem("demographicsData", data)
-      .catch(e => console.error(`IonCore._updateDemographics - failed to save data`, e));
+      .catch(e => console.error(`Core._updateDemographics - failed to save data`, e));
 
     let rallyId = await this._storage.getRallyID();
     return await this._dataCollection.sendDemographicSurveyPing(rallyId, data);

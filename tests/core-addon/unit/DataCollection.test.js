@@ -5,7 +5,7 @@
 var assert = require('assert').strict;
 var sinon = require('sinon');
 
-var DataCollection = require('../../core-addon/DataCollection');
+var DataCollection = require('../../../core-addon/DataCollection');
 
 // A fake study id to use in the tests when looking for a
 // "known" study.
@@ -74,7 +74,7 @@ describe('DataCollection', function () {
     it('rejects if no study id is provided', function () {
       assert.rejects(
         this.dataCollection.sendDeletionPing("some-rally-id"),
-        { message: "IonCore - the deletion-request ping requires a study id"}
+        { message: "DataCollection - the deletion-request ping requires a study id"}
       );
     });
 

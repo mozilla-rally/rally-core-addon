@@ -32,7 +32,7 @@ async function sendToCore(port, type, payload) {
   // Make sure `type` is one of the expected values.
   if (!VALID_TYPES.includes(type)) {
     return Promise.reject(
-      new Error(`Ion: sendToCore - unexpected message to core "${type}"`));
+      new Error(`Rally: sendToCore - unexpected message to core "${type}"`));
   }
 
   const msg = {
@@ -93,7 +93,7 @@ export default {
     // end or in case of any other error. Log an error and clear
     // the port in that case.
     this._connectionPort.onDisconnect.addListener(e => {
-      console.error("Ion - there was an error connecting to the background script", e);
+      console.error("Rally - there was an error connecting to the background script", e);
       this._connectionPort = null;
     });
 
@@ -133,7 +133,7 @@ export default {
    * Updates the study enrollment.
    *
    * @param {Boolean} enroll
-   *        `true` if user decided to enroll in an Ion Study,
+   *        `true` if user decided to enroll in a Study,
    *        `false` if user opted out.
    * @returns {Boolean} `true` if the enrollment status was successfully
    *          updated, `false` otherwise.
@@ -160,15 +160,15 @@ export default {
   },
 
   /**
-   * Updates the overall Ion enrollment in the add-on.
+   * Updates the platform enrollment in the add-on.
    *
    * @param {Boolean} enroll
-   *        `true` if user decided to enroll in the Ion platform,
+   *        `true` if user decided to enroll in the platform,
    *        `false` otherwise.
    * @returns {Boolean} `true` if the enrollment status was successfully
    *          updated, `false` otherwise.
    */
-  async updateIonEnrollment(enroll) {
+  async updatePlatformEnrollment(enroll) {
     await sendToCore(
       this._connectionPort, enroll ? "enrollment" : "unenrollment", {});
 
@@ -206,7 +206,7 @@ export default {
       } break;
       default:
         return Promise.reject(
-          new Error(`Ion - unexpected message type ${message.type}`));
+          new Error(`Rally - unexpected message type ${message.type}`));
     }
   },
 

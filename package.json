@@ -2,12 +2,12 @@
   "name": "rally_core",
   "version": "0.6.0",
   "scripts": {
-    "build": "rollup -c && rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/ion_core.xpi",
+    "build": "rollup -c && rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/rally_core.xpi",
     "dev": "rollup -c -w",
     "start": "sirv public",
     "build-addon": "rollup -c rollup.config.addon.js",
     "local-build-addon": "rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json",
-    "test-addon": "mocha --require  \"./tests/hooks.js\" \"./tests/core-addon/*.js\"",
+    "test-addon": "mocha --require  \"./tests/hooks.js\" \"./tests/core-addon/unit/*.js\"",
     "test-support-library": "mocha --require  \"./tests/hooks.js\" \"./tests/support/*.js\"",
     "lint-addon": "web-ext lint",
     "lint-js": "eslint . .storybook",
@@ -63,7 +63,7 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "description": "This is the Ion Core Add-on: a cross-browser WebExtension that allows users to participate to Ion studies.",
+  "description": "This is the Rally Core Add-on: a cross-browser WebExtension that allows users to participate to Rally studies.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mozilla-rally/core-addon.git"

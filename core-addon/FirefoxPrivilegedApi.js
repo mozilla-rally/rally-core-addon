@@ -20,7 +20,7 @@ this.firefoxPrivilegedApi = class extends ExtensionAPI {
     return {
       firefoxPrivilegedApi: {
         async submitEncryptedPing(type, payload, options) {
-          console.debug(`Ion - Sending ping through legacy telemetry (${type})`);
+          console.debug(`Sending ping through legacy telemetry (${type})`);
 
           // This function will always send encrypted pings.
           let augmentedOptions = options;

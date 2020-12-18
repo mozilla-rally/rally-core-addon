@@ -30,8 +30,8 @@
   {:else}
     <!-- main application flow -->
     <Main
-        on:leave-rally={() => { 
-          store.updateIonEnrollment(false); 
+        on:leave-rally={() => {
+          store.updatePlatformEnrollment(false);
           // reset to first run until Rally uninstalls itself.
           firstRun = true;
         }}

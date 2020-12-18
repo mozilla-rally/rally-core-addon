@@ -4,7 +4,7 @@
 
  const assert = require('assert').strict;
 
-var Storage = require('../../core-addon/Storage');
+var Storage = require('../../../core-addon/Storage');
 
 describe('Storage', function () {
   beforeEach(function () {
