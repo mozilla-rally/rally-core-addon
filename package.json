@@ -63,7 +63,7 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "description": "This is the Ion Core Add-on: a cross-browser WebExtension that allows users to participate to Ion studies.",
+  "description": "This is the Rally Core Add-on: a cross-browser WebExtension that allows users to participate to Rally studies.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mozilla-rally/core-addon.git"

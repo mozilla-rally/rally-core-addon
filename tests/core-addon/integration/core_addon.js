@@ -79,7 +79,7 @@ describe("Core-Addon Onboarding", function () {
 
     // New tab is focused.
     await this.driver.wait(
-      until.titleIs("Ion: Put your data to work for a better internet"),
+      until.titleIs("Rally: Put your data to work for a better internet"),
       WAIT_FOR_PROPERTY
     );
 
@@ -123,7 +123,7 @@ describe("Core-Addon Onboarding", function () {
     unenrollButton.click();
 
     await this.driver.wait(
-      until.titleIs("Ion: Put your data to work for a better internet"),
+      until.titleIs("Rally: Put your data to work for a better internet"),
       WAIT_FOR_PROPERTY
     );
 

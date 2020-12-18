@@ -3,11 +3,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-/* 
--------------- Current Studies -------------- 
+/*
+-------------- Current Studies --------------
 
 Data points we'll need to support in the store to make this a reality:
-- study join date (study.joinedOn, added from Ion.js as soon as the study is successfully joined)
+- study join date (study.joinedOn, added from the partner support library as soon as the study is successfully joined)
 - study end date (study.endDate, this should come from the partner)
 - study details link (study.detailsLink), which should be provided by partner
 - study details page name (study.detailsLinkName), which should be provided by partner

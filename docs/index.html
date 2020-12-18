@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Ion: Put your data to work for a better internet.</title>
-    <meta name="author" content="Ion Teeam" />
-    <meta name="description" content="Ion" />
+    <title>Rally: Put your data to work for a better internet.</title>
+    <meta name="author" content="Rally Teeam" />
+    <meta name="description" content="Rally" />
     <meta name="keywords" content="mozilla,data" />
     <style>
       :root {
@@ -163,7 +163,7 @@
       //   it gets installed.
       window.addEventListener("web-check-response", (event) => {
         console.debug(
-          "Ion - 'web-check-response' message received from the Core Addon"
+          "Rally - 'web-check-response' message received from the Core Addon"
         );
         document.getElementById("installButton").style.display = "none";
         document.getElementById("installedBlob").style.display = "block";
@@ -203,14 +203,14 @@
       id="installButton"
       tabindex="0"
       href="https://github.com/mozilla-rally/core-addon/releases/download/v0.6.1/ion_core-0.6.0-signed.xpi"
-      >Install the Ion Web Extension</a
+      >Install the Rally Web Extension</a
     >
     <div id="installedBlob" style="display: none;">
-      Congratulations! Ion is installed and ready!
+      Congratulations! Rally is installed and ready!
     </div>
     <div>
       <b style="text-transform: uppercase;">Note</b> – this installs the latest
-      development version of Ion. We do our best to keep this stable and
+      development version of Rally. We do our best to keep this stable and
       up-to-date, please file
       <a href="https://github.com/mozilla-rally/core-addon/issues/new"
         >an issue on github</a

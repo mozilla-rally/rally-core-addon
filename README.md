@@ -71,7 +71,7 @@ The output will be a `.zip` file in `web-ext-artifacts/` - this should be rename
 
 ## Building and testing a study locally
 
-To run an end-to-end local test with your own study add-on, first build your study (if you don't have one, you can [build the Ion Basic Study](https://github.com/mozilla-rally/study-template)) and export the signed build as `<name-of-study>.xpi`. Edit `/public/locally-available-studies.json` so that `sourceURI.spec` is `/public/<name-of-study>.xpi` (you can change the other fields in `/public/locally-available-studies.json` as well for demo purposes as needed).
+To run an end-to-end local test with your own study add-on, first build your study (if you don't have one, you can [build the Rally Study Template](https://github.com/mozilla-rally/study-template)) and export the signed build as `<name-of-study>.xpi`. Edit `/public/locally-available-studies.json` so that `sourceURI.spec` is `/public/<name-of-study>.xpi` (you can change the other fields in `/public/locally-available-studies.json` as well for demo purposes as needed).
 
 Then run:
 

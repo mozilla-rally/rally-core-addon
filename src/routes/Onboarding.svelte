@@ -62,7 +62,7 @@
           <TermsCallToAction
             on:accept={() => {
               // Join Rally.
-              store.updateIonEnrollment(true);
+              store.updatePlatformEnrollment(true);
               send('demographics');
             }}
             on:cancel={() => {

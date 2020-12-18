@@ -438,7 +438,7 @@ describe('Core', function () {
         this.core._sendMessageToStudy(
           "unknown-test-study-id@ion.com", "uninstall", {}
         ),
-        { message: "Core._sendMessageToStudy - \"unknown-test-study-id@ion.com\" is not a known Ion study"}
+        { message: "Core._sendMessageToStudy - \"unknown-test-study-id@ion.com\" is not a known study"}
       );
     });
 

@@ -27,7 +27,7 @@ export default function createStore(initialState, api) {
       // it's always a boolean.
       let coercedEnroll = !!enroll;
       console.debug(
-        `Ion - changing study ${studyID} enrollment to ${coercedEnroll}`);
+        `Rally - changing study ${studyID} enrollment to ${coercedEnroll}`);
 
       // send study enrollment message
       try {
@@ -36,15 +36,15 @@ export default function createStore(initialState, api) {
         console.error(err);
       }
     },
-    async updateIonEnrollment(enroll) {
+    async updatePlatformEnrollment(enroll) {
       // Enforce the truthyness of `enroll`, to make sure
       // it's always a boolean.
       let coercedEnroll = !!enroll;
-      console.debug(`Ion - changing enrollment to ${coercedEnroll}`);
+      console.debug(`Rally - changing enrollment to ${coercedEnroll}`);
 
       // send the ion enrollment message
       try {
-        await api.updateIonEnrollment(coercedEnroll);
+        await api.updatePlatformEnrollment(coercedEnroll);
       } catch (err) {
         console.error(err);
       }
@@ -53,7 +53,7 @@ export default function createStore(initialState, api) {
       try {
         await api.updateDemographicSurvey(data);
       } catch (err) {
-        console.error(`Ion - failed to update the demographic survey`, err);
+        console.error(`Rally - failed to update the demographic survey`, err);
       }
     }
   };

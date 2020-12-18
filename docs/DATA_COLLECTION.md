@@ -1,6 +1,6 @@
 # Data Documentation
 This describes the data being collected and sent by the Core Add-on out of the box.
-This add-on will send a [`pioneer-study` pings](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/pioneer-study.html) with a different encrypted payload using the Ion platform, through Firefox, in different circumstances:
+This add-on will send a [`pioneer-study` pings](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/pioneer-study.html) with a different encrypted payload using the Rally platform, through Firefox, in different circumstances:
 
 - when [joining the platform](#joining-the-platform-pioneer-enrollment);
 - when [joining a study](#joining-a-study-pioneer-enrollment);

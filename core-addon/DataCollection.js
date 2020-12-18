@@ -16,7 +16,7 @@ const CORE_ENCRYPTION_JWK = {
 
 module.exports = class DataCollection {
   /**
-   * Sends an empty Ion ping with the provided info.
+   * Sends an empty ping with the provided info.
    *
    * @param {String} rallyId
    *        The id of the Rally platform.
@@ -41,7 +41,7 @@ module.exports = class DataCollection {
       // studies, we can use a bogus key (the payload is empty).
 
       // NOTE - while we're not actually sending useful data in
-      // this payload, the current Ion v2 Telemetry pipeline requires
+      // this payload, the current Telemetry pipeline requires
       // that pings are shaped this way so they are routed to the correct
       // study environment.
       //
@@ -94,7 +94,7 @@ module.exports = class DataCollection {
   }
 
   /**
-   * Sends a Ion deletion-request ping.
+   * Sends a deletion-request ping.
    *
    * @param {String} rallyId
    *        The id of the Rally platform.
