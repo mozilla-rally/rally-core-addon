@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-const CORE_ADDON_ID = "ion-core-addon@mozilla.org";
+const CORE_ADDON_ID = "rally-core@mozilla.org";
 const SIGNUP_URL = "https://mozilla-rally.github.io/core-addon/";
 
 class Rally {
