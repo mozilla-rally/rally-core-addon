@@ -1,11 +1,11 @@
 # Rally Release Process
 The Rally Core Add-on will be shipped as a [browser extension](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions), with special Firefox-only privileges.
-In order to enable Firefox-specific privileges it requires a signature done on Mozilla infrastructure, in the [`mozilla-extensions`](https://github.com/mozilla-extensions/core-addon/) clone of [this repository](https://github.com/mozilla-rally/core-addon).
+In order to enable Firefox-specific privileges it requires a signature done on Mozilla infrastructure, in the [`mozilla-extensions`](https://github.com/mozilla-extensions/rally-core-addon/) clone of [this repository](https://github.com/mozilla-rally/core-addon).
 
 The development & release process roughly follows the [GitFlow model](https://nvie.com/posts/a-successful-git-branching-model/).
 
 > **Note:** The rest of this section assumes that `upstream` points to the `https://github.com/mozilla-rally/core-addon` repository,
-> `origin` points to the developer fork and `mozext` refers to `https://github.com/mozilla-extensions/core-addon`.
+> `origin` points to the developer fork and `mozext` refers to `https://github.com/mozilla-extensions/rally-core-addon`.
 > For some developer workflows, `upstream` can be the same as `origin`.
 
 **Table of Contents**:
@@ -83,7 +83,7 @@ When CI has finished and is green for your specific release branch, you are read
     git push mozext release
     git push mozext v25.0.0
     ```
-9. Trigger the signing process by sending a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-extensions/core-addon/compare/master...release?expand=1>
+9. Trigger the signing process by sending a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-extensions/rally-core-addon/compare/master...release?expand=1>
     * Add the description from the `upstream` GitHub release as the description of the PR.
     * Set the title of the PR to `Release 25.0.0`.
     * This is important so that CI runs the signing process.
@@ -151,7 +151,7 @@ When CI has finished and is green for your hotfix branch, you are ready to cut a
     git push mozext release
     git push mozext v25.0.1
     ```
-9. Trigger the signing process by sending a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-extensions/core-addon/compare/master...release?expand=1>
+9. Trigger the signing process by sending a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-extensions/rally-core-addon/compare/master...release?expand=1>
     * Add the description from the `upstream` GitHub release as the description of the PR.
     * Set the title of the PR to `Release 25.0.1`.
     * This is important so that CI runs the signing process.
@@ -214,7 +214,7 @@ If you need to release a hotfix for a previously released version (that is: not 
     git push mozext support/v24.0
     git push mozext v24.0
     ```
-8. Trigger the signing process by sending a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-extensions/core-addon/compare/master...support/v24.0?expand=1>
+8. Trigger the signing process by sending a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-extensions/rally-core-addon/compare/master...support/v24.0?expand=1>
     * Add the description from the `upstream` GitHub release as the description of the PR.
     * This is important so that CI runs the signing process.
     * This should never have conflicts with `master` branch: no change should ever happen on this repository outside from the mirroring and merging.
