@@ -52,7 +52,7 @@ function leaveStudy(studyID) {
     <hr />
     <div class="studies">
 
-    {#each studies as study, i (study.addon_id)}
+    {#each studies as study}
     <StudyCard 
         title={study.name}
         author={study.authors.name}

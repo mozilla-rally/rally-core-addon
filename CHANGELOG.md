@@ -6,6 +6,7 @@
   * [#237](https://github.com/mozilla-rally/core-addon/pull/237): Remove reliance on the Firefox Pioner ID pref.
   * **Breaking change** - [#262](https://github.com/mozilla-rally/core-addon/pull/262): rename the org from `mozilla-ion` to `mozilla-rally`. Without this change the core add-on won't be able to communicate with the test website.
   * [#271](https://github.com/mozilla-rally/core-addon/pull/271): drop or change references to `Ion` in the codebase. This additionally changes the add-on id to `rally-core@mozilla.org`.
+  * [#280](https://github.com/mozilla-rally/core-addon/pull/280) Fix bug where studies were not displayed on options page reload.
 * `rally.js`
   * **Breaking change** - [#262](https://github.com/mozilla-rally/core-addon/pull/262): rename the org from `mozilla-ion` to `mozilla-rally`. Without this change no communication with the core add-on is possible.
   * [#269](https://github.com/mozilla-rally/core-addon/pull/269): Allow using the Rally.js support library without a bundler.
