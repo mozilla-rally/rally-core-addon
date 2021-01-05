@@ -51,6 +51,8 @@ export default {
     replace({
       __STORE_IMPLEMENTATION__: JSON.stringify(STORE_MOCK),
       __API_ENDPOINT__: production ? "web-extension" : "web",
+      __HOW_IT_WORKS_URL__: "https://rally-stage.bespoke.nonprod.dataops.mozgcp.net/how-rally-works/",
+      __FAQ_URL__: "https://rally-stage.bespoke.nonprod.dataops.mozgcp.net/how-rally-works/faqs/"
     }),
     copy({
       targets: [
