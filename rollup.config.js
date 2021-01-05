@@ -54,7 +54,11 @@ export default {
     }),
     copy({
       targets: [
-        { src: 'node_modules/@mozilla-protocol/core/protocol/fonts/*', dest: 'public/fonts/'},
+        { src: 'node_modules/@mozilla-protocol/core/protocol/fonts/Inter-Bold.woff2', dest: 'public/fonts/'},
+        { src: 'node_modules/@mozilla-protocol/core/protocol/fonts/Inter-Regular.woff2', dest: 'public/fonts/'},
+        { src: 'node_modules/@mozilla-protocol/core/protocol/fonts/Inter-Italic.woff2', dest: 'public/fonts/'},
+        { src: 'node_modules/@mozilla-protocol/core/protocol/fonts/ZillaSlab-Bold.woff2', dest: 'public/fonts/'},
+        { src: 'node_modules/@mozilla-protocol/core/protocol/fonts/Metropolis-*.woff2', dest: 'public/fonts/'},
         { src: 'node_modules/@mozilla-protocol/core/protocol/css/protocol.css', dest: 'public/build/'},
         { src: 'node_modules/@mozilla-protocol/core/protocol/css/protocol-extra.css', dest: 'public/build/'}
       ]
