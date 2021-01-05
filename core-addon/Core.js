@@ -256,7 +256,7 @@ module.exports = class Core {
    *          `sender` or rejected in case of errors.
    */
   _handleWebMessage(message, sender) {
-    console.log(`Core - received web message ${message} from ${sender}`);
+    console.log("Core - received web message", message, "from", sender, "test");
 
     try {
       let platformURL = new URL(this._userArguments.website);
