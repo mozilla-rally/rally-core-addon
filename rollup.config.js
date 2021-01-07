@@ -51,6 +51,9 @@ export default {
     replace({
       __STORE_IMPLEMENTATION__: JSON.stringify(STORE_MOCK),
       __API_ENDPOINT__: production ? "web-extension" : "web",
+      // the following replacements build the site URLs.
+      // In the templates, use (for example) __BASE_SITE_URL__/__FAQ_PATH__
+      __BASE_SITE__: "https://rally-stage.bespoke.nonprod.dataops.mozgcp.net",
     }),
     copy({
       targets: [
