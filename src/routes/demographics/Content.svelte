@@ -5,6 +5,7 @@
 
   import { writable } from "svelte/store";
   import { fly } from "svelte/transition";
+  import ClearAnswerButton from './ClearAnswerButton.svelte';
 
   function zipcodeIsValid() {
     return function zipcodeValid(value) {
@@ -176,6 +177,12 @@
     },
   };
 
+  function questionIsAnswered(answer, questionType) {
+      if (questionType === 'text') return answer.length > 0;
+      if (questionType === 'single') return answer !== undefined;
+      if (questionType === 'multi') return answer.length > 0;
+  }
+
   export let results = Object.values(schema).reduce((acc, config) => {
     let defaultValue = undefined;
     switch (config.type) {
@@ -307,6 +314,13 @@
       <fieldset class="mzp-c-field-set">
         <legend class="mzp-c-field-label" for={schema[question].key}>
           {schema[question].label}
+          {#if questionIsAnswered(results[question], schema[question].type)}
+            <ClearAnswerButton on:click={(e) => {
+              e.preventDefault();
+              results[question] = {};
+              if (schema[question].type === 'text') results[question].input = '';
+            }} />
+          {/if}
         </legend>
 
         <div
