@@ -54,8 +54,6 @@ export default {
       // the following replacements build the site URLs.
       // In the templates, use (for example) __BASE_SITE_URL__/__FAQ_PATH__
       __BASE_SITE__: "https://rally-stage.bespoke.nonprod.dataops.mozgcp.net",
-      __HOW_IT_WORKS_PATH__: "how-rally-works/",
-      __FAQ_PATH__: "how-rally-works/faqs/"
     }),
     copy({
       targets: [
