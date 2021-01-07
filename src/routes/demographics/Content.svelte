@@ -183,6 +183,23 @@
       if (questionType === 'multi') return answer.length > 0;
   }
 
+  function clearAnswer(question) {
+    switch (schema[question].type) {
+      case "text": {
+        results[question] = '';
+        break;
+      } case "single": {
+        results[question] = undefined;
+        break;
+      } case "multi": {
+        results[question] = [];
+        break;
+      } default: {
+        throw Error('question must have a type');
+      }
+    }
+  }
+
   export let results = Object.values(schema).reduce((acc, config) => {
     let defaultValue = undefined;
     switch (config.type) {
@@ -317,8 +334,7 @@
           {#if questionIsAnswered(results[question], schema[question].type)}
             <ClearAnswerButton on:click={(e) => {
               e.preventDefault();
-              results[question] = {};
-              if (schema[question].type === 'text') results[question].input = '';
+              clearAnswer(question);
             }} />
           {/if}
         </legend>
