@@ -120,7 +120,7 @@
         Get Started
       </Button>
       <div class="how-it-works">
-        <a href="__HOW_IT_WORKS_URL__">how it works
+        <a href="__BASE_SITE__/__HOW_IT_WORKS_PATH__">how it works
           <ExternalLink /></a>
       </div>
     </div>
