@@ -4,22 +4,14 @@
 
 import { writable } from "svelte/store";
 
-// The default initial state for this store.
-const INITIAL_STATE = {
-  enrolled: false,
-  availableStudies: [],
-};
-
 export default function createStore(api) {
   // initialize the writable store.
   const { subscribe, set } = writable();
 
   // initialize from the API.
-  api.initialize().then(async (remoteInitialState) => {
-    console.log(`initialize: remote - ${JSON.stringify(remoteInitialState)} - initial ${JSON.stringify(INITIAL_STATE)}`);
-    const state = remoteInitialState || INITIAL_STATE;
-    state.availableStudies = await api.getAvailableStudies();
-    set(state);
+  api.initialize().then(async (newState) => {
+    console.log(`initialize: updated state - ${JSON.stringify(newState)}`);
+    set(newState);
   });
 
   // set UI when the background script reports a new state.
