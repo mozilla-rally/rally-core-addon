@@ -5,6 +5,4 @@
 import createStore from "./create-store";
 import api from "./api/__API_ENDPOINT__";
 
-const initialValue = __STORE_IMPLEMENTATION__;
-
-export const store = createStore(initialValue, api);
+export const store = createStore(api);
