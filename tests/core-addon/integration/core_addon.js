@@ -86,13 +86,31 @@ describe("Core-Addon Onboarding", function () {
     await findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
     await findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
 
-    // FIXME close tab and click on icon, check that post-enrollment options page is shown.
+    // Close options page tab.
     // This will currently fail because there is a bug in the core-addon UI, where
+    await this.driver.close();
     // the options page will show no studies.
+    const originalTab = (await this.driver.getAllWindowHandles())[0];
     // See https://github.com/mozilla-rally/core-addon/issues/235
+    await this.driver.switchTo().window(originalTab);
+    await findAndAct(this.driver, By.id("rally-core_mozilla_org-browser-action"), e => e.click());
+
+    // We expect the extension to load its options page in a new tab.
+    await this.driver.wait(async () => {
+      return (await this.driver.getAllWindowHandles()).length >= 2;
+    }, WAIT_FOR_PROPERTY);
+
+    // Selenium is still focused on the old tab, so switch to the new window handle.
+    let latestTab = (await this.driver.getAllWindowHandles()).length - 1;
+    const newOptionsTab = (await this.driver.getAllWindowHandles())[latestTab];
+    await this.driver.switchTo().window(newOptionsTab);
 
     // Switch back to web content context.
     await this.driver.setContext(firefox.Context.CONTENT);
+
+    // Ensure that the study card for the base study is displayed.
+    const baseStudySelector = By.xpath(`//span[text()="Ion Base Study"]`);
+    await this.driver.findElement(baseStudySelector);
 
     // Begin study unenrollment cancel it.
     await findAndAct(this.driver, By.xpath(`//button[text()="Leave Mozilla Rally"]`), e => e.click());
