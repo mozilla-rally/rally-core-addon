@@ -93,12 +93,9 @@ describe("Core-Addon Onboarding", function () {
     await findAndAct(this.driver, By.id("rally-core_mozilla_org-browser-action"), e => e.click());
 
     // We expect the extension to load its options page in a new tab.
-    console.debug("debug1");
     await this.driver.wait(async () => {
-      console.debug("window handles:", (await this.driver.getAllWindowHandles()).length);
       return (await this.driver.getAllWindowHandles()).length >= 2;
     }, WAIT_FOR_PROPERTY);
-    console.debug("debug2");
 
     // Selenium is still focused on the old tab, so switch to the new window handle.
     let latestTab = (await this.driver.getAllWindowHandles()).length - 1;
@@ -108,11 +105,9 @@ describe("Core-Addon Onboarding", function () {
     // Switch back to web content context.
     await this.driver.setContext(firefox.Context.CONTENT);
 
-    console.debug("debug3");
     // Ensure that the study card for the base study is displayed.
     const baseStudySelector = By.xpath(`//span[text()="Ion Base Study"]`);
     await this.driver.findElement(baseStudySelector);
-    console.debug("debug4");
 
     // Begin study unenrollment cancel it.
     await findAndAct(this.driver, By.xpath(`//button[text()="Leave Mozilla Rally"]`), e => e.click());
