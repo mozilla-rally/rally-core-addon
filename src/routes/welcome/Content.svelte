@@ -120,7 +120,7 @@
         Get Started
       </Button>
       <div class="how-it-works">
-        <a href="__BASE_SITE__/how-rally-works/">how it works
+        <a target="_blank" href="__BASE_SITE__/how-rally-works/">how it works
           <ExternalLink /></a>
       </div>
     </div>
