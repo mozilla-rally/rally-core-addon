@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.6.1...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.7.0...master)
+
+# v0.7.0 (2021-01-11)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.6.1...v0.7.0)
 
 * Core-Addon
   * [#237](https://github.com/mozilla-rally/core-addon/pull/237): Remove reliance on the Firefox Pioner ID pref.
@@ -16,7 +20,7 @@
 
 # v0.6.1 (2020-12-09)
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.6.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.6.0...v0.7.0)
 
 * Added this changelog file.
 * The data collected from the demographic survey is being submitted to the Rally servers.
