@@ -3,10 +3,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 window.browser = require("webextension-polyfill");
-const IonCore = require("./IonCore.js");
+const Core = require("./Core.js");
 
-const ionCore = new IonCore({
+const core = new Core({
     availableStudiesURI: __ION_STUDIES_LIST__,
     website: __ION_WEBSITE_URL__,
 });
-ionCore.initialize();
+core.initialize();

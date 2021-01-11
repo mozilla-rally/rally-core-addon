@@ -6,7 +6,7 @@ Create account on https://addons.mozilla.org, navigate to the "Developer Hub", a
 
 ## Build your extension
 
-Starting with a github repository containing your study extension (such as [the Ion Basic Study](https://github.com/mozilla-ion/ion-basic-study)):
+Starting with a github repository containing your study extension (such as [the Rally Study Template](https://github.com/mozilla-rally/study-template)):
 
 * run `web-ext build` to generate your extension in `web-ext-artifacts/`
 * upload the resulting `.zip` file in `web-ext-artifacts/` to the https://addons.mozilla.org Developer Hub
@@ -15,9 +15,9 @@ It may take some time for your extension to be reviewed and available for downlo
 
 ## Update RemoteSettings Server
 
-The Ion Core extension checks the Firefox RemoteSettings server for a list of the currently-approved studies.
+The Rally Core extension checks the Firefox RemoteSettings server for a list of the currently-approved studies.
 
-For local testing, see: https://github.com/mozilla-ion/ion-core-addon#building-and-testing-a-study-locally
+For local testing, see: https://github.com/mozilla-rally/core-addon#building-and-testing-a-study-locally
 There is also a RemoteSettings dev server you may use for local testing / QA: https://remote-settings.readthedocs.io/en/latest/tutorial-dev-server.html
 
 Updates to the staging and production RemoteSettings servers must receive sign off. The current reviewers are @knowtheory and @rhelmer.

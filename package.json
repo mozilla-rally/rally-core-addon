@@ -1,13 +1,13 @@
 {
-  "name": "ion_core",
-  "version": "0.6.0",
+  "name": "rally_core",
+  "version": "0.7.0",
   "scripts": {
-    "build": "rollup -c && rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/ion_core.xpi",
+    "build": "rollup -c && rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/rally_core.xpi",
     "dev": "rollup -c -w",
     "start": "sirv public",
     "build-addon": "rollup -c rollup.config.addon.js",
     "local-build-addon": "rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json",
-    "test-addon": "mocha --require  \"./tests/hooks.js\" \"./tests/core-addon/*.js\"",
+    "test-addon": "mocha --require  \"./tests/hooks.js\" \"./tests/core-addon/unit/*.js\"",
     "test-support-library": "mocha --require  \"./tests/hooks.js\" \"./tests/support/*.js\"",
     "lint-addon": "web-ext lint",
     "lint-js": "eslint . .storybook",
@@ -36,6 +36,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-notice": "^0.9.10",
     "eslint-plugin-svelte3": "^2.7.3",
+    "geckodriver": "^1.21.0",
     "micromodal": "^0.4.6",
     "mocha": "^8.1.3",
     "npm-run-all": "^4.1.5",
@@ -46,6 +47,7 @@
     "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-svelte": "^6.0.0",
     "rollup-plugin-terser": "^7.0.0",
+    "selenium-webdriver": "^4.0.0-alpha.7",
     "sinon-chrome": "^3.0.1",
     "stylelint": "^13.7.2",
     "stylelint-config-standard": "^20.0.0",
@@ -56,23 +58,22 @@
     "webextension-polyfill": "^0.7.0"
   },
   "dependencies": {
-    "selenium-webdriver": "^4.0.0-alpha.7",
     "sirv-cli": "^1.0.0"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "description": "This is the Ion Core Add-on: a cross-browser WebExtension that allows users to participate to Ion studies.",
+  "description": "This is the Rally Core Add-on: a cross-browser WebExtension that allows users to participate to Rally studies.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mozilla-ion/ion-core-addon.git"
+    "url": "git+https://github.com/mozilla-rally/core-addon.git"
   },
   "keywords": [],
   "author": "Mozilla",
   "license": "MPL-2.0",
   "private": true,
   "bugs": {
-    "url": "https://github.com/mozilla-ion/ion-core-addon/issues"
+    "url": "https://github.com/mozilla-rally/core-addon/issues"
   },
-  "homepage": "https://github.com/mozilla-ion/ion-core-addon#readme"
+  "homepage": "https://github.com/mozilla-rally/core-addon#readme"
 }

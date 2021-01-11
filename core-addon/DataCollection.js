@@ -16,17 +16,18 @@ const CORE_ENCRYPTION_JWK = {
 
 module.exports = class DataCollection {
   /**
-   * Sends an empty Ion ping with the provided info.
+   * Sends an empty ping with the provided info.
    *
+   * @param {String} rallyId
+   *        The id of the Rally platform.
    * @param {String} payloadType
    *        The type of the encrypted payload. This will define the
    *        `schemaName` of the ping.
-   *
    * @param {String} namespace
    *        The namespace to route the ping. This will define the
    *        `schemaNamespace` and `studyName` properties of the ping.
    */
-  async _sendEmptyPing(payloadType, namespace) {
+  async _sendEmptyPing(rallyId, payloadType, namespace) {
     let publicKey;
     let keyId;
 
@@ -40,7 +41,7 @@ module.exports = class DataCollection {
       // studies, we can use a bogus key (the payload is empty).
 
       // NOTE - while we're not actually sending useful data in
-      // this payload, the current Ion v2 Telemetry pipeline requires
+      // this payload, the current Telemetry pipeline requires
       // that pings are shaped this way so they are routed to the correct
       // study environment.
       //
@@ -56,6 +57,7 @@ module.exports = class DataCollection {
     }
 
     await this.sendPing(
+      rallyId,
       payloadType,
       // We expect to send an empty payload.
       {},
@@ -71,41 +73,47 @@ module.exports = class DataCollection {
    * The `creationDate` provided by the telemetry APIs will be used as the
    * timestamp for considering the user enrolled in pioneer and/or the study.
    *
+   * @param {String} rallyId
+   *        The id of the Rally platform.
    * @param {String} [studyAddonid=undefined]
    *        optional study id. It's sent in the ping, if present, to signal
    *        that user enroled in the study.
    */
-  async sendEnrollmentPing(studyAddonId) {
+  async sendEnrollmentPing(rallyId, studyAddonId) {
     // If we were provided with a study id, then this is an enrollment to a study.
     // Send the id alongside with the data and change the schema namespace to simplify
     // the work on the ingestion pipeline.
     if (studyAddonId !== undefined) {
-      return await this._sendEmptyPing("pioneer-enrollment", studyAddonId);
+      return await this._sendEmptyPing(rallyId, "pioneer-enrollment", studyAddonId);
     }
 
     // Note that the schema namespace directly informs how data is segregated after ingestion.
     // If this is an enrollment ping for the pioneer program (in contrast to the enrollment to
     // a specific study), use a meta namespace.
-    return await this._sendEmptyPing("pioneer-enrollment", "pioneer-core");
+    return await this._sendEmptyPing(rallyId, "pioneer-enrollment", "pioneer-core");
   }
 
   /**
-   * Sends a Ion deletion-request ping.
+   * Sends a deletion-request ping.
    *
+   * @param {String} rallyId
+   *        The id of the Rally platform.
    * @param {String} studyAddonid
    *        It's sent in the ping to signal that user unenrolled from a study.
    */
-  async sendDeletionPing(studyAddonId) {
+  async sendDeletionPing(rallyId, studyAddonId) {
     if (studyAddonId === undefined) {
-      throw new Error("IonCore - the deletion-request ping requires a study id");
+      throw new Error("DataCollection - the deletion-request ping requires a study id");
     }
 
-    return await this._sendEmptyPing("deletion-request", studyAddonId);
+    return await this._sendEmptyPing(rallyId, "deletion-request", studyAddonId);
   }
 
   /**
    * Send a ping using the Firefox legacy telemetry.
    *
+   * @param {String} rallyId
+   *        The id of the Rally platform.
    * @param {String} payloadType
    *        The type of the encrypted payload. This will define the
    *        `schemaName` of the ping.
@@ -129,10 +137,15 @@ module.exports = class DataCollection {
    *          "kid":"Public key used in JWS spec Appendix A.3 example"
    *        }
    */
-  async sendPing(payloadType, payload, namespace, keyId, key) {
+  async sendPing(rallyId, payloadType, payload, namespace, keyId, key) {
+    if (!rallyId || typeof rallyId != "string") {
+      throw new Error(`DataCollection.sendPing - invalid Rally id ${rallyId}`);
+    }
+
     let options = {
       studyName: namespace,
       addPioneerId: true,
+      overridePioneerId: rallyId,
       encryptionKeyId: keyId,
       publicKey: key,
       schemaName: payloadType,
@@ -160,11 +173,13 @@ module.exports = class DataCollection {
   /**
    * Sends a demographic-survey ping.
    *
+   * @param {String} rallyId
+   *        The id of the Rally platform.
    * @param {Object} data
    *        A JSON-serializable object containing the demographics
    *        information submitted by the user..
    */
-  async sendDemographicSurveyPing(data) {
+  async sendDemographicSurveyPing(rallyId, data) {
     const FIELD_MAPPING = {
       "age": "age",
       "gender": "gender",
@@ -204,6 +219,7 @@ module.exports = class DataCollection {
     }
 
     return await this.sendPing(
+      rallyId,
       "demographic-survey",
       processed,
       "pioneer-core",

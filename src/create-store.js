@@ -4,16 +4,14 @@
 
 import { writable } from "svelte/store";
 
-export default function createStore(initialState, api) {
+export default function createStore(api) {
   // initialize the writable store.
   const { subscribe, set } = writable();
 
   // initialize from the API.
-  api.initialize(initialState).then(async (remoteInitialState) => {
-    console.log('initialize', remoteInitialState, initialState);
-    const state = remoteInitialState || initialState;
-    state.availableStudies = await api.getAvailableStudies();
-    set(state);
+  api.initialize().then(async (newState) => {
+    console.log(`initialize: updated state - ${JSON.stringify(newState)}`);
+    set(newState);
   });
 
   // set UI when the background script reports a new state.
@@ -27,7 +25,7 @@ export default function createStore(initialState, api) {
       // it's always a boolean.
       let coercedEnroll = !!enroll;
       console.debug(
-        `Ion - changing study ${studyID} enrollment to ${coercedEnroll}`);
+        `Rally - changing study ${studyID} enrollment to ${coercedEnroll}`);
 
       // send study enrollment message
       try {
@@ -36,15 +34,15 @@ export default function createStore(initialState, api) {
         console.error(err);
       }
     },
-    async updateIonEnrollment(enroll) {
+    async updatePlatformEnrollment(enroll) {
       // Enforce the truthyness of `enroll`, to make sure
       // it's always a boolean.
       let coercedEnroll = !!enroll;
-      console.debug(`Ion - changing enrollment to ${coercedEnroll}`);
+      console.debug(`Rally - changing enrollment to ${coercedEnroll}`);
 
       // send the ion enrollment message
       try {
-        await api.updateIonEnrollment(coercedEnroll);
+        await api.updatePlatformEnrollment(coercedEnroll);
       } catch (err) {
         console.error(err);
       }
@@ -53,7 +51,7 @@ export default function createStore(initialState, api) {
       try {
         await api.updateDemographicSurvey(data);
       } catch (err) {
-        console.error(`Ion - failed to update the demographic survey`, err);
+        console.error(`Rally - failed to update the demographic survey`, err);
       }
     }
   };

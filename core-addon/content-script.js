@@ -13,7 +13,7 @@ window.browser = require("webextension-polyfill");
  *        {type: "message-type", data: {...}}
  */
 function sendToPage(message) {
-  console.debug(`Ion: sending response ${message.type} to page`);
+  console.debug(`Rally: sending response ${message.type} to page`);
   const data = message.data || {};
   window.dispatchEvent(new CustomEvent(message.type, { detail: data }));
 }
@@ -31,13 +31,13 @@ function sendAddonAliveEvent() {
  * any actor could inject custom scripts and impersonate the web page.
  */
 window.addEventListener("web-check", event => {
-  console.debug("Ion - 'web-check' message received from the page");
+  console.debug("Rally - 'web-check' message received from the page");
   // TODO: can we automatically get the addon id for the right platform
   // at build time?
   browser
     .runtime
     .sendMessage(
-        "ion-core-addon@mozilla.org",
+        "rally-core@mozilla.org",
         {type: "web-check", data: {}},
         {}
       )
@@ -49,7 +49,7 @@ window.addEventListener("web-check", event => {
       );
 });
 
-console.debug("Ion - Running content script");
+console.debug("Rally - Running content script");
 // Send an event as soon as injected, to notify the web page if
 // it is already open.
 sendAddonAliveEvent();

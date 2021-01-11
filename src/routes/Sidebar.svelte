@@ -106,7 +106,7 @@ li a {
   <ul slot="navigation" in:fly={{duration: 800, delay: 300, x: -10}}>
     <li><button class:active={currentView === 'current-studies'} on:click={send('current-studies')}>Current Studies</button></li>
     <li>
-      <a class="external" href="/studies">FAQ
+      <a class="external" target="_blank" href="__BASE_SITE__/how-rally-works/faqs/">FAQ
         <ExternalLink /></a>
     </li>
   </ul>

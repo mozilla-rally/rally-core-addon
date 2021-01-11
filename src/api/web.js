@@ -18,8 +18,8 @@ export default {
     // use it when instantiating or updating the app store.
     return Promise.resolve(availableStudies);
   },
-  async getIonEnrollment() {
-    // this API function will return Ion enrollment status from a remote source.
+  async getPlatformEnrollment() {
+    // this API function will return platform enrollment status from a remote source.
     // use it primarily when instantiating or updating the app store.
     const state = await this.getItem("__STATE__");
     if (state !== null) {
@@ -39,8 +39,8 @@ export default {
     // we might need to keep track of that.
     return true;
   },
-  async updateIonEnrollment(enroll) {
-    // this updates the ion enrollment in whatever remote location we have.
+  async updatePlatformEnrollment(enroll) {
+    // this updates the platform enrollment in whatever remote location we have.
     return true;
   },
 };

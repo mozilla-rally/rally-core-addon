@@ -5,7 +5,7 @@
 var assert = require('assert').strict;
 var sinon = require('sinon');
 
-var DataCollection = require('../../core-addon/DataCollection');
+var DataCollection = require('../../../core-addon/DataCollection');
 
 // A fake study id to use in the tests when looking for a
 // "known" study.
@@ -19,10 +19,7 @@ describe('DataCollection', function () {
   describe('sendEnrollmentPing()', function () {
     it('generates the correct ping for the platform', async function () {
       // Create a mock for the privileged API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
 
@@ -31,7 +28,7 @@ describe('DataCollection', function () {
         sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
 
       // Provide a valid enrollment message.
-      await this.dataCollection.sendEnrollmentPing();
+      await this.dataCollection.sendEnrollmentPing("some-rally-id");
 
       // We expect to submit a ping with the expected type ...
       const submitArgs = telemetrySpy.getCall(0).args;
@@ -39,6 +36,7 @@ describe('DataCollection', function () {
       // ... an empty payload ...
       assert.equal(Object.keys(submitArgs[1]).length, 0);
       // ... and a specific set of options.
+      assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, "pioneer-core");
       assert.equal(submitArgs[2].encryptionKeyId, "core");
       assert.equal(submitArgs[2].schemaName, "pioneer-enrollment");
@@ -47,10 +45,7 @@ describe('DataCollection', function () {
 
     it('generates the correct ping for the study', async function () {
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
 
@@ -59,7 +54,7 @@ describe('DataCollection', function () {
         sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
 
       // Provide a valid study enrollment message.
-      await this.dataCollection.sendEnrollmentPing(FAKE_STUDY_ID);
+      await this.dataCollection.sendEnrollmentPing("some-rally-id", FAKE_STUDY_ID);
 
       // We expect to submit a ping with the expected type ...
       const submitArgs = telemetrySpy.getCall(0).args;
@@ -67,6 +62,7 @@ describe('DataCollection', function () {
       // ... an empty payload ...
       assert.equal(Object.keys(submitArgs[1]).length, 0);
       // ... and a specific set of options.
+      assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, FAKE_STUDY_ID);
       assert.equal(submitArgs[2].encryptionKeyId, "discarded");
       assert.equal(submitArgs[2].schemaName, "pioneer-enrollment");
@@ -77,18 +73,14 @@ describe('DataCollection', function () {
   describe('sendDeletionPing()', function () {
     it('rejects if no study id is provided', function () {
       assert.rejects(
-        this.dataCollection.sendDeletionPing(),
-        { message: "IonCore - the deletion-request ping requires a study id"}
+        this.dataCollection.sendDeletionPing("some-rally-id"),
+        { message: "DataCollection - the deletion-request ping requires a study id"}
       );
     });
 
     it('generates the deletion ping for the study', async function () {
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
-        clearIonID: async function() {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
 
@@ -97,7 +89,7 @@ describe('DataCollection', function () {
         sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
 
       // Provide a valid study enrollment message.
-      await this.dataCollection.sendDeletionPing(FAKE_STUDY_ID);
+      await this.dataCollection.sendDeletionPing("some-rally-id", FAKE_STUDY_ID);
 
       // We expect to submit a ping with the expected type ...
       const submitArgs = telemetrySpy.getCall(0).args;
@@ -105,6 +97,7 @@ describe('DataCollection', function () {
       // ... an empty payload ...
       assert.equal(Object.keys(submitArgs[1]).length, 0);
       // ... and a specific set of options.
+      assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, FAKE_STUDY_ID);
       assert.equal(submitArgs[2].encryptionKeyId, "discarded");
       assert.equal(submitArgs[2].schemaName, "deletion-request");
@@ -115,11 +108,7 @@ describe('DataCollection', function () {
   describe('sendDemographicSurveyPing()', function () {
     it('generates an empty demographic-survey ping for the platform', async function () {
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
-        clearIonID: async function() {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
 
@@ -128,7 +117,7 @@ describe('DataCollection', function () {
         sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
 
       // Since no option is mandatory, try to send an empty payload.
-      await this.dataCollection.sendDemographicSurveyPing({});
+      await this.dataCollection.sendDemographicSurveyPing("some-rally-id", {});
 
       // We expect to submit a ping with the expected type ...
       const submitArgs = telemetrySpy.getCall(0).args;
@@ -136,6 +125,7 @@ describe('DataCollection', function () {
       // ... an empty payload ...
       assert.equal(Object.keys(submitArgs[1]).length, 0);
       // ... and a specific set of options.
+      assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, "pioneer-core");
       assert.equal(submitArgs[2].encryptionKeyId, "core");
       assert.equal(submitArgs[2].schemaName, "demographic-survey");
@@ -144,11 +134,7 @@ describe('DataCollection', function () {
 
     it('submits demographic-survey ping if unknown keys are provided', async function () {
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
-        clearIonID: async function() {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
 
@@ -158,7 +144,7 @@ describe('DataCollection', function () {
 
       // Attempt to send some unexpected data: the collection mechanism
       // should filter them out.
-      await this.dataCollection.sendDemographicSurveyPing({
+      await this.dataCollection.sendDemographicSurveyPing("some-rally-id", {
         "thisIsNotKnowAndNotExpected": ["wow"]
       });
 
@@ -168,6 +154,7 @@ describe('DataCollection', function () {
       // ... an empty payload ...
       assert.equal(Object.keys(submitArgs[1]).length, 0);
       // ... and a specific set of options.
+      assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, "pioneer-core");
       assert.equal(submitArgs[2].encryptionKeyId, "core");
       assert.equal(submitArgs[2].schemaName, "demographic-survey");
@@ -176,11 +163,7 @@ describe('DataCollection', function () {
 
     it('submits demographic-survey ping with partial data', async function () {
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
-        clearIonID: async function() {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
 
@@ -189,7 +172,7 @@ describe('DataCollection', function () {
         sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
 
       // Only send one value.
-      await this.dataCollection.sendDemographicSurveyPing({
+      await this.dataCollection.sendDemographicSurveyPing("some-rally-id", {
         "age": "35_44",
       });
 
@@ -201,6 +184,7 @@ describe('DataCollection', function () {
       assert.ok("age" in submitArgs[1]);
       assert.equal(true, submitArgs[1]["age"]["35_44"]);
       // ... and a specific set of options.
+      assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, "pioneer-core");
       assert.equal(submitArgs[2].encryptionKeyId, "core");
       assert.equal(submitArgs[2].schemaName, "demographic-survey");
@@ -209,11 +193,7 @@ describe('DataCollection', function () {
 
     it('submits demographic-survey ping with races data', async function () {
       // Create a mock for the telemetry API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        setIonID: async function(uuid) {},
-        clearIonID: async function() {},
         submitEncryptedPing: async function(type, payload, options) {},
       };
 
@@ -222,7 +202,7 @@ describe('DataCollection', function () {
         sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
 
       // Only send one value.
-      await this.dataCollection.sendDemographicSurveyPing({
+      await this.dataCollection.sendDemographicSurveyPing("some-rally-id", {
         "age": "35_44",
         "race": ["american_indian_or_alaska_native", "samoan"],
       });
@@ -236,6 +216,7 @@ describe('DataCollection', function () {
       assert.equal(true, submitArgs[1]["races"]["american_indian_or_alaska_native"]);
       assert.equal(true, submitArgs[1]["races"]["samoan"]);
       // ... and a specific set of options.
+      assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, "pioneer-core");
       assert.equal(submitArgs[2].encryptionKeyId, "core");
       assert.equal(submitArgs[2].schemaName, "demographic-survey");

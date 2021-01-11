@@ -11,9 +11,9 @@ export default {
   // stored somewhere (i.e. remote settings)
   async getAvailableStudies() {},
 
-  // fetch ion enrollment from remote location, if available.
+  // fetch platform enrollment from remote location, if available.
   // use in the store instantiation.
-  async getIonEnrollment() {},
+  async getPlatformEnrollment() {},
 
   // return the app state from firefox's internal storage.
   // this is called on store instantiation.
@@ -26,6 +26,6 @@ export default {
   // updates the study enrollment in the firefox's internal storage, if needed.
   async updateStudyEnrollment(studyID, enroll) {},
 
-  // updates the overall Ion enrollment in firefox's internal storage, if needed.
-  async updateIonEnrollment(studyID, enroll) {},
+  // updates the platform enrollment in firefox's internal storage, if needed.
+  async updatePlatformEnrollment(studyID, enroll) {},
 };

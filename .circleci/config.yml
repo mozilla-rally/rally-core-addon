@@ -60,9 +60,6 @@ jobs:
           name: Install the dependencies
           command: npm install && sudo add-apt-repository ppa:ubuntu-mozilla-daily/ppa && sudo apt update && sudo apt install firefox-trunk
       - run:
-          name: Download and unpack GeckoDriver for Selenium
-          command: wget https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-linux64.tar.gz && tar zxf geckodriver-v0.28.0-linux64.tar.gz
-      - run:
           name: Run Selenium tests
           command: export PATH=.:$PATH && npm run test-integration
 

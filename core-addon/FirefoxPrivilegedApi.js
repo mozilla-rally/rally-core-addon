@@ -4,7 +4,6 @@
 
 "use strict";
 
-const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 const { TelemetryController } = ChromeUtils.import(
   "resource://gre/modules/TelemetryController.jsm"
 );
@@ -16,29 +15,18 @@ XPCOMUtils.defineLazyServiceGetters(this, {
   gUUIDGenerator: ["@mozilla.org/uuid-generator;1", "nsIUUIDGenerator"],
 });
 
-// The pref that contains the Ion ID within Firefox. Unfortunately
-// the telemetry APIs require this, therefore it needs to be set in
-// prefs even though it will be stored in the standard addon storage area.
-const PREF_ION_ID = "toolkit.telemetry.pioneerId";
-
 this.firefoxPrivilegedApi = class extends ExtensionAPI {
   getAPI(context) {
     return {
       firefoxPrivilegedApi: {
         async submitEncryptedPing(type, payload, options) {
-          console.debug(`Ion - Sending ping through legacy telemetry (${type})`);
+          console.debug(`Sending ping through legacy telemetry (${type})`);
 
           // This function will always send encrypted pings.
           let augmentedOptions = options;
           augmentedOptions.useEncryption = true;
 
           TelemetryController.submitExternalPing(type, payload, options);
-        },
-        async setIonID(id) {
-          Services.prefs.setStringPref(PREF_ION_ID, id);
-        },
-        async clearIonID() {
-          Services.prefs.clearUserPref(PREF_ION_ID);
         },
         async generateUUID() {
           // eslint-disable-next-line no-undef

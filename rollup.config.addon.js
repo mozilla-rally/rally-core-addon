@@ -20,7 +20,7 @@ export default (cliArgs) => {
           "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records'",
         __ION_WEBSITE_URL__: cliArgs['config-website'] ?
           `'${cliArgs['config-website']}'` :
-          "'https://mozilla-ion.github.io'",
+          "'https://rally-stage.bespoke.nonprod.dataops.mozgcp.net'",
       }),
       resolve({
         browser: true,
