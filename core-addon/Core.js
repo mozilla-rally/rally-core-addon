@@ -119,7 +119,7 @@ module.exports = class Core {
     // information.
     this._availableStudies = Promise.resolve(knownStudies.map(s => {
         if (s.addon_id == info.id) {
-          s.ionInstalled = installed;
+          s.studyInstalled = installed;
         }
         return s;
       })
@@ -217,7 +217,7 @@ module.exports = class Core {
   async _handleExternalMessage(message, sender) {
     // We only expect messages coming from known installed studies.
     let installedStudies = (await this._availableStudies)
-      .filter(s => s.ionInstalled)
+      .filter(s => s.studyInstalled)
       .map(s => s.addon_id);
     if (!installedStudies.includes(sender.id)) {
       throw new Error(`Core._handleExternalMessage - unexpected sender ${sender.id}`);
@@ -392,7 +392,7 @@ module.exports = class Core {
   async _unenroll() {
     // Uninstall all known studies that are still installed.
     let installedStudies = (await this._availableStudies)
-      .filter(s => s.ionInstalled)
+      .filter(s => s.studyInstalled)
       .map(s => s.addon_id);
     for (let studyId of installedStudies) {
       // Attempt to send an uninstall message to each study, but
@@ -466,11 +466,11 @@ module.exports = class Core {
   }
 
   /**
-   * Update the `ionInstalled` property for the available studies.
+   * Update the `studyInstalled` property for the available studies.
    *
    * @returns {Promise(Array<Object>)} resolved with an array of studies
    *          objects, or an empty array on failures. Each study object
-   *          has at least the `addon_id` and `ionInstalled` properties.
+   *          has at least the `addon_id` and `studyInstalled` properties.
    */
   async _updateInstalledStudies(studies) {
     console.debug("Core._updateInstalledStudies");
@@ -483,7 +483,7 @@ module.exports = class Core {
         addons.filter(a => a.type == "extension")
               .map(a => a.id));
     return studies.map(s => {
-      s.ionInstalled = installedAddonsIds.includes(s.addon_id);
+      s.studyInstalled = installedAddonsIds.includes(s.addon_id);
       return s;
     });
   }
@@ -539,7 +539,7 @@ module.exports = class Core {
    *      id:"...",
    *      last_modified: ...,
    *      // Whether or not the study is currently installed.
-   *      ionInstalled: false
+   *      studyInstalled: false
    *    },
    *  ]
    * }
