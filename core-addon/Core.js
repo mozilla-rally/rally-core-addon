@@ -215,9 +215,11 @@ module.exports = class Core {
    *          `sender`.
    */
   async _handleExternalMessage(message, sender) {
-    // We only expect messages coming from known ion studies.
-    let knownStudies = await this._availableStudies;
-    if (!knownStudies.map(s => s.addon_id).includes(sender.id)) {
+    // We only expect messages coming from known installed studies.
+    let installedStudies = (await this._availableStudies)
+      .filter(s => s.ionInstalled)
+      .map(s => s.addon_id);
+    if (!installedStudies.includes(sender.id)) {
       throw new Error(`Core._handleExternalMessage - unexpected sender ${sender.id}`);
     }
 
