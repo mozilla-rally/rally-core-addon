@@ -16,7 +16,11 @@
     "test": "npm run --silent skip-taskcluster || (npm run test-addon && npm run test-support-library)",
     "test-addon": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.js\" \"./tests/core-addon/unit/*.js\")",
     "test-integration": "npm run --silent skip-taskcluster || (npm run build && mocha --unhandled-rejections=strict --timeout 30000 \"./tests/core-addon/integration/*.js\")",
-    "test-support-library": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.js\" \"./tests/support/*.mjs\")"
+    "test-support-library": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.js\" \"./tests/support/*.mjs\")",
+    "watch": "npm-run-all --parallel watch-ui watch-addon watch-webext",
+    "watch-ui": "rollup -c -w",
+    "watch-addon": "rollup -c rollup.config.addon.js -w --config-disable-remote-settings --config-studies-list-url=/public/locally-available-studies.json",
+    "watch-webext": "web-ext run --watch-file public/build/build.js --watch-file public/addon-build/background.js --watch-file public/addon-build/content-script.js"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
