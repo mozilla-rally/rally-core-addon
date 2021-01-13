@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "name": "Ion Base Study",
+      "name": "Rally Base Study",
       "icons": {
         "32": "https://addons.cdn.mozilla.net/static/img/addon-icons/default-32.png",
         "64": "https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png",
@@ -12,18 +12,18 @@
         "url": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
         "name": "Ion Developers"
       },
-      "version": "2.1",
+      "version": "0.3.1",
       "addon_id": "ion-basic-study@mozilla.org",
       "moreInfo": {
         "spec": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/"
       },
       "isDefault": false,
       "sourceURI": {
-        "spec": "https://addons.mozilla.org/firefox/downloads/file/3692256/ion_basic_study-0.3.0-fx.xpi"
+        "spec": "https://addons.mozilla.org/firefox/downloads/file/3707495/ion_basic_study-0.3.1-fx.xpi"
       },
       "studyType": "extension",
       "studyEnded": false,
-      "description": "Study purpose: Testing Ion.",
+      "description": "Study purpose: Testing Rally.",
       "privacyPolicy": {
         "spec": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/"
       },
