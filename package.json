@@ -1,6 +1,6 @@
 {
   "name": "rally_core",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "scripts": {
     "build": "rollup -c && rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/rally_core.xpi",
     "dev": "rollup -c -w",

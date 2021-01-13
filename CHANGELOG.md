@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.7.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.7.1...master)
+
+# v0.7.1 (2021-01-13)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.7.0...v0.7.1)
 
 * Core-Addon
   * [#299](https://github.com/mozilla-rally/core-addon/pull/299): Change the link to the sample Rally demo addon.
