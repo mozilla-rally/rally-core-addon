@@ -3,7 +3,7 @@
   "author": "Mozilla",
   "manifest_version": 2,
   "name": "Rally Core",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "homepage_url": "https://github.com/mozilla-extensions/pioneer-v2-core-example",
 
   "applications": {
