@@ -109,7 +109,7 @@ describe("Core-Addon Onboarding", function () {
     await this.driver.setContext(firefox.Context.CONTENT);
 
     // Ensure that the study card for the base study is displayed.
-    const baseStudySelector = By.xpath(`//span[text()="Ion Base Study"]`);
+    const baseStudySelector = By.xpath(`//span[text()="Rally Base Study"]`);
     await this.driver.findElement(baseStudySelector);
 
     // Begin study unenrollment cancel it.
