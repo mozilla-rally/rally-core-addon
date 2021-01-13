@@ -21,7 +21,7 @@ module.exports = {
     __API_ENDPOINT__: false,
     __ION_STUDIES_LIST__: false,
     __ION_WEBSITE_URL__: false,
-    __STORE_IMPLEMENTATION__: false,
+    __DISABLE_LOCALE_CHECK__: false,
   },
   overrides: [
     {
