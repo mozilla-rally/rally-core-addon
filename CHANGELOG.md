@@ -9,6 +9,9 @@
 * Core-Addon
   * [#299](https://github.com/mozilla-rally/core-addon/pull/299): Change the link to the sample Rally demo addon.
 
+* Core-Addon
+  * [#294](https://github.com/mozilla-rally/core-addon/pull/294): Only process messages from known, installed studies. Additionally rename `ionInstalled` to `studyInstalled`.
+
 # v0.7.0 (2021-01-11)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.6.1...v0.7.0)

@@ -24,22 +24,22 @@
     description: `This study is a a simple scaffold. Researchers can add any description they prefer here.
     Perpetual sincerity out suspected necessary one but provision satisfied. Respect nothing use set waiting pursuit nay you looking. If on prevailed concluded ye abilities. Address say you new but minuter greater. Do denied agreed in innate. Can and middletons thoroughly themselves him. Tolerably sportsmen belonging in september no am immediate newspaper. Theirs expect dinner it pretty indeed having no of. Principle september she conveying did eat may extensive. `,
     dataCollectionDetails: ['page views', 'time and date of joining study', 'etc.'],
-    
+
   }
 
   let studies = [];
   fetch('locally-available-studies.json')
     .then(r => r.json())
-    .then(s => { 
-      studies = [nicerStudy, ...s.data]; 
+    .then(s => {
+      studies = [nicerStudy, ...s.data];
     });
 
   function toggleStudyJoinStatus(studyID, joined) {
-    // set study.ionInstalled if studyID = study.study_id.
+    // set study.studyInstalled if studyID = study.study_id.
     studies = [...studies.map(study => {
       const nextStudy = {...study};
       if (nextStudy.addon_id === studyID) {
-        nextStudy.ionInstalled = joined;
+        nextStudy.studyInstalled = joined;
       }
       return nextStudy;
     })];
