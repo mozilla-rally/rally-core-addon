@@ -4,6 +4,7 @@
 
 * Core-Addon
   * [#294](https://github.com/mozilla-rally/core-addon/pull/294): Only process messages from known, installed studies. Additionally rename `ionInstalled` to `studyInstalled`.
+  * [#301](https://github.com/mozilla-rally/core-addon/pull/301): Correctly report the zip code in the demographics survey.
 
 # v0.7.1 (2021-01-13)
 
