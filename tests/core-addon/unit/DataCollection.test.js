@@ -191,7 +191,7 @@ describe('DataCollection', function () {
       assert.equal(submitArgs[2].schemaNamespace, "pioneer-core");
     });
 
-    it('submits demographic-survey ping with races data', async function () {
+    it('submits demographic-survey ping with races and zip data', async function () {
       // Create a mock for the telemetry API.
       chrome.firefoxPrivilegedApi = {
         submitEncryptedPing: async function(type, payload, options) {},
@@ -205,16 +205,19 @@ describe('DataCollection', function () {
       await this.dataCollection.sendDemographicSurveyPing("some-rally-id", {
         "age": "35_44",
         "race": ["american_indian_or_alaska_native", "samoan"],
+        "zipcode": "03295",
       });
 
       // We expect to submit a ping with the expected type ...
       const submitArgs = telemetrySpy.getCall(0).args;
       assert.equal(submitArgs[0], "pioneer-study");
-      // ... with the "age" and "races" ...
-      assert.equal(Object.keys(submitArgs[1]).length, 2);
+      // ... with the "age", "races" and "zipcode" ...
+      assert.equal(Object.keys(submitArgs[1]).length, 3);
       assert.ok("races" in submitArgs[1]);
       assert.equal(true, submitArgs[1]["races"]["american_indian_or_alaska_native"]);
       assert.equal(true, submitArgs[1]["races"]["samoan"]);
+      assert.ok("zipCode" in submitArgs[1]);
+      assert.equal("03295", submitArgs[1]["zipCode"]);
       // ... and a specific set of options.
       assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, "pioneer-core");
