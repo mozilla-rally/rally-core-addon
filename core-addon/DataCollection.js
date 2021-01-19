@@ -155,6 +155,11 @@ module.exports = class DataCollection {
       schemaNamespace: namespace,
     };
 
+    if (!__ENABLE_DATA_SUBMISSION__) {
+      console.warn(`DataCollection.sendPing - data submission disabled, ping ${payloadType} not submitted`);
+      return;
+    }
+
     // We intentionally don't wait on the promise returned by
     // `submitExternalPing`, because that's an internal API only meant
     // for telemetry tests. Moreover, in order to send a custom schema
