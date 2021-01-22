@@ -16,25 +16,36 @@
   $: if ($store && firstRun === undefined) {
     firstRun = !$store.enrolled;
   }
+
+  // We currently exclusively support Rally on en-US locales,
+  // but still support enabling/disabling the locale check
+  // to enable the development workflows on other locales.
+  let isRallySupported = __DISABLE_LOCALE_CHECK__
+    ? true
+    : navigator.language === "en-US";
 </script>
 
-{#if $store}
-  {#if firstRun}
-    <!-- onboarding flow -->
-    <!-- the onboarding-complete event occurs once the user has
-    gotten through the profile completion step. -->
-    <Onboarding
-      on:onboarding-complete={() => {
-        firstRun = false;
-      }} />
-  {:else}
-    <!-- main application flow -->
-    <Main
-        on:leave-rally={() => {
-          store.updatePlatformEnrollment(false);
-          // reset to first run until Rally uninstalls itself.
-          firstRun = true;
-        }}
-      />
+{#if isRallySupported}
+  {#if $store}
+    {#if firstRun}
+      <!-- onboarding flow -->
+      <!-- the onboarding-complete event occurs once the user has
+      gotten through the profile completion step. -->
+      <Onboarding
+        on:onboarding-complete={() => {
+          firstRun = false;
+        }} />
+    {:else}
+      <!-- main application flow -->
+      <Main
+          on:leave-rally={() => {
+            store.updatePlatformEnrollment(false);
+            // reset to first run until Rally uninstalls itself.
+            firstRun = true;
+          }}
+        />
+    {/if}
   {/if}
+{:else}
+  <div>Sorry, Rally is not supported in this locale.</div>
 {/if}

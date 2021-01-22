@@ -11,12 +11,21 @@ const fs = require("fs");
  *
  * @param {Boolean} headless
  *        Whether or not to run Firefox in headless mode.
+ * @param {Object} prefsOverride
+ *        The properties of this object are a key-value
+ *        representation of the preferences to set.
  * @returns {WebDriver} a WebDriver instance to control Firefox.
  */
-async function getFirefoxDriver(headless) {
+async function getFirefoxDriver(headless, prefsOverride) {
   const firefoxOptions = new firefox.Options();
   firefoxOptions.setPreference("xpinstall.signatures.required", false);
   firefoxOptions.setPreference("extensions.experiments.enabled", true);
+
+  if (prefsOverride) {
+    for (let [pref, value] of Object.entries(prefsOverride)) {
+      firefoxOptions.setPreference(pref, value);
+    }
+  }
 
   if (headless) {
     firefoxOptions.headless();
