@@ -23,19 +23,32 @@ class Rally {
    *          "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0",
    *          "kid":"Public key used in JWS spec Appendix A.3 example"
    *        }
+   * @param {Boolean} enableDevMode
+   *        Whether or not to initialize Rally.js in developer mode.
+   *        In this mode we ignore problems when communicating with
+   *        core add-on.
    */
-  async initialize(keyId, key) {
+  async initialize(keyId, key, enableDevMode) {
     console.debug("Rally.initialize");
 
     this._validateEncryptionKey(keyId, key);
 
     this._keyId = keyId;
     this._key = key;
+    this._enableDevMode = !!enableDevMode;
 
     await this._checkRallyCore().then(
         () => console.debug("Rally.initialize - Found the Core Add-on")
       ).catch(
-        async () => await browser.tabs.create({ url: SIGNUP_URL })
+        async () => {
+          // Do not prompt recommend installing Rally in
+          // developer mode.
+          if (!this._enableDevMode) {
+            await browser.tabs.create({ url: SIGNUP_URL });
+          } else {
+            console.warn("Rally.initialize - Executing in developer mode.");
+          }
+        }
       );
 
     // Listen for incoming messages from the Core addon.
@@ -70,10 +83,6 @@ class Rally {
     } catch (ex) {
       throw new Error("Rally._checkRallyCore - core addon not found");
     }
-
-    // TODO: in addition to checking if the addon is installed,
-    // this should check if user has joined the platform by sending
-    // a message to the addon and waiting for its response.
   }
 
   /**
@@ -147,6 +156,15 @@ class Rally {
   async sendPing(payloadType, payload) {
     if (!this._initialized) {
       console.error("Rally.sendPing - Not initialzed, call `initialize()`");
+      return;
+    }
+
+    // When in developer mode, dump the payload to the console.
+    if (this._enableDevMode) {
+      console.log(
+        `Rally.sendPing - Developer mode. ${payloadType} will not be submitted`,
+        payload
+      );
       return;
     }
 

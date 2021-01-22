@@ -17,6 +17,37 @@ describe('Rally', function () {
         this.rally.initialize("key-id", "not-an-object, will fail")
       );
     });
+
+    it('no core addon skips the info page in dev mode', async function () {
+      // Mock the check to make it fail.
+      this.rally._checkRallyCore = async () => {
+        throw "Core Add-On not available.";
+      };
+
+      await this.rally.initialize(
+        "key-id",
+        {},
+        true, // Developer mode.
+      );
+
+      assert.ok(browser.tabs.create.notCalled);
+    });
+
+    it('no core addon opens an info page in production', async function () {
+      chrome.tabs.create.yields();
+
+      // Mock the check to make it fail.
+      this.rally._checkRallyCore = async () => {
+        throw "Core Add-On not available.";
+      };
+
+      await this.rally.initialize(
+        "key-id",
+        {},
+      );
+
+      assert.ok(chrome.tabs.create.calledOnce);
+    });
   });
 
   describe('_checkRallyCore()', function () {
@@ -39,6 +70,49 @@ describe('Rally', function () {
         {type: "core-check-response", data: {enrolled: true}});
 
       await this.rally._checkRallyCore();
+    });
+  });
+
+  describe('sendPing()', function () {
+    it('must not send data if not initialized', async function () {
+      chrome.runtime.sendMessage.flush();
+
+      // This API should never throw. We catch errors and
+      // log them, but we have no way to assert that something
+      // was logged. We can only assert that no message was
+      // sent.
+      await this.rally.sendPing("test", {});
+
+      assert.ok(chrome.runtime.sendMessage.notCalled);
+    });
+
+    it('must not send data in developer mode', async function () {
+      chrome.runtime.sendMessage.flush();
+      // Make sure the core add-on is detected. This test
+      // would work even if it wasn't detected, as long as
+      // `_checkRallyCore` returns something.
+      this.rally._checkRallyCore = async () => {
+        return {
+          "type": "core-check-response",
+          "data": {
+            "enrolled": true
+          }
+        };
+      };
+
+      await this.rally.initialize(
+        "key-id",
+        {},
+        true, // Developer mode.
+      );
+
+      // This API should never throw. We catch errors and
+      // log them, but we have no way to assert that something
+      // was logged. We can only assert that no message was
+      // sent.
+      await this.rally.sendPing("test", {});
+
+      assert.ok(chrome.runtime.sendMessage.notCalled);
     });
   });
 
