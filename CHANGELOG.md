@@ -6,6 +6,7 @@
   * [#294](https://github.com/mozilla-rally/core-addon/pull/294): Only process messages from known, installed studies. Additionally rename `ionInstalled` to `studyInstalled`.
   * [#301](https://github.com/mozilla-rally/core-addon/pull/301): Correctly report the zip code in the demographics survey.
   * [#298](https://github.com/mozilla-rally/core-addon/pull/298): Disable Rally on locales other than `en-US`. The ` --config-disable-locale-check` build option allows overriding the check for developer workflows on other locales.
+  * [#305](https://github.com/mozilla-rally/core-addon/pull/305): Disable data submission to enable safer QA.
 
 # v0.7.1 (2021-01-13)
 
