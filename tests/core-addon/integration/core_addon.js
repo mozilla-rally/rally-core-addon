@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 const assert = require('assert').strict;
+const fs = require('fs');
 const utils = require("./utils.js");
 const { By, until } = require("selenium-webdriver");
 const firefox = require("selenium-webdriver/firefox");
@@ -28,63 +29,114 @@ async function findAndAct(driver, element, action) {
   await driver.findElement(element).then(e => action(e));
 }
 
-describe("Core-Addon Onboarding", function () {
+/**
+ * Install the Rally extension, but do not join Rally.
+ *
+ * Leaves the Selenium driver context set to CONTENT, and
+ * focused on the options page.
+ */
+async function installRally(driver) {
+  await driver.get(`file:///${__dirname}/index.html`);
+  await driver.wait(until.titleIs("Installation Test"), WAIT_FOR_PROPERTY);
+  await findAndAct(driver, By.id("install"), e => e.click());
+
+  // switch to browser UI context, to interact with Firefox add-on install prompts.
+  await driver.setContext(firefox.Context.CHROME);
+  await findAndAct(driver, By.css(`[label="Add"]`), e => e.click());
+  await findAndAct(driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+
+  // We expect the extension to load its options page in a new tab.
+  await driver.wait(async () => {
+    return (await driver.getAllWindowHandles()).length === 2;
+  }, WAIT_FOR_PROPERTY);
+
+  // Selenium is still focused on the old tab, so switch to the new window handle.
+  const newTab = (await driver.getAllWindowHandles())[1];
+  await driver.switchTo().window(newTab);
+
+  // Switch back to web content context.
+  await driver.setContext(firefox.Context.CONTENT);
+
+  // New tab is focused, now on options page.
+  await driver.wait(
+    until.titleIs("Rally: Put your data to work for a better internet"),
+    WAIT_FOR_PROPERTY
+  );
+}
+
+/**
+ * Join Rally.
+ * Assumes that the Rally core add-on is already installed, and
+ * focused on the options page.
+ *
+ * Leaves the Selenium driver context set to CONTENT, and
+ * focused on the options page.
+ */
+async function joinRally(driver) {
+  await driver.wait(until.elementLocated(By.css("button")));
+
+  // FIXME we need to use button IDs here so xpath is not needed...
+  // See https://github.com/mozilla-rally/core-addon/issues/244
+  await findAndAct(driver, By.xpath(`//button[text()="Get Started"]`), e => e.click());
+  await findAndAct(driver, By.xpath(`//button[text()="Accept & Participate"]`), e => e.click());
+  // TODO check that state is enrolled, see https://github.com/mozilla-rally/core-addon/issues/245
+
+  await findAndAct(driver, By.xpath(`//button[text()="Save & Continue"]`), e => e.click());
+}
+
+const rallyTestStudy = JSON.parse(fs.readFileSync("public/locally-available-studies.json"))[0];
+
+/**
+ * Initialize Remote Settings and populate the local database with test studies.
+ * Intended to be run by `driver.executeScript()` in CHROME context.
+ */
+async function initRemoteSettings(testStudy, timestamp) {
+  const { RemoteSettings } = ChromeUtils.import("resource://services-settings/remote-settings.js");
+  const remoteSettingsKey = "rally-studies-v1";
+
+  const db = await RemoteSettings(remoteSettingsKey).db;
+  await db.create(testStudy);
+  await db.importChanges({}, timestamp);
+
+  await RemoteSettings(remoteSettingsKey).get();
+}
+
+/**
+ * Trigger a Remote Settings update.
+ */
+async function updateRemoteSettings(modifiedTestStudy, timestamp) {
+  const { RemoteSettings } = ChromeUtils.import("resource://services-settings/remote-settings.js");
+  const remoteSettingsKey = "rally-studies-v1";
+
+  await RemoteSettings(remoteSettingsKey).emit("sync", { data: { current: [modifiedTestStudy] } });
+}
+
+describe("Core-Addon", function () {
   it("should un/enroll in Rally", async function () {
     this.driver = await utils.getFirefoxDriver(true, {});
 
-    await this.driver.get(`file:///${__dirname}/index.html`);
-    await this.driver.wait(until.titleIs("Installation Test"), WAIT_FOR_PROPERTY);
-    await findAndAct(this.driver, By.id("install"), e => e.click());
-
-    // switch to browser UI context, to interact with Firefox add-on install prompts.
+    // Switch to browser UI context, so we can inject script to set up Remote Settings.
     await this.driver.setContext(firefox.Context.CHROME);
-    await findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
-    await findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+    await this.driver.executeScript(initRemoteSettings, rallyTestStudy, 1234567);
 
-    // Switch back to web content context.
+    // Switch back to web content context (options page).
     await this.driver.setContext(firefox.Context.CONTENT);
 
-    // We expect the extension to load its options page in a new tab.
-    await this.driver.wait(async () => {
-      return (await this.driver.getAllWindowHandles()).length === 2;
-    }, WAIT_FOR_PROPERTY);
-
-    // Selenium is still focused on the old tab, so switch to the new window handle.
-    const newTab = (await this.driver.getAllWindowHandles())[1];
-    await this.driver.switchTo().window(newTab);
-
-    // New tab is focused.
-    await this.driver.wait(
-      until.titleIs("Rally: Put your data to work for a better internet"),
-      WAIT_FOR_PROPERTY
-    );
-
-    await this.driver.wait(until.elementLocated(By.css("button")));
-
-    // FIXME we need to use button IDs here so xpath is not needed...
-    // See https://github.com/mozilla-rally/core-addon/issues/244
-    await findAndAct(this.driver, By.xpath(`//button[text()="Get Started"]`), e => e.click());
-    await findAndAct(this.driver, By.xpath(`//button[text()="Accept & Participate"]`), e => e.click());
-    // TODO check that state is enrolled, see https://github.com/mozilla-rally/core-addon/issues/245
-
-    await findAndAct(this.driver, By.xpath(`//button[text()="Save & Continue"]`), e => e.click());
+    await installRally(this.driver);
+    await joinRally(this.driver);
 
     await this.driver.wait(until.elementLocated(By.css("button")));
     await findAndAct(this.driver, By.xpath(`//button[text()="Join Study"]`), e => e.click());
     await findAndAct(this.driver, By.xpath(`(//button[text()="Join Study"])[2]`), e => e.click());
 
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
-
     await this.driver.setContext(firefox.Context.CHROME);
     await findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
     await findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
 
-    // Close options page tab.
-    // This will currently fail because there is a bug in the core-addon UI, where
+    // Close options page tab and re-open it.
     await this.driver.close();
-    // the options page will show no studies.
     const originalTab = (await this.driver.getAllWindowHandles())[0];
-    // See https://github.com/mozilla-rally/core-addon/issues/235
     await this.driver.switchTo().window(originalTab);
     await findAndAct(this.driver, By.id("rally-core_mozilla_org-browser-action"), e => e.click());
 
@@ -98,7 +150,7 @@ describe("Core-Addon Onboarding", function () {
     const newOptionsTab = (await this.driver.getAllWindowHandles())[latestTab];
     await this.driver.switchTo().window(newOptionsTab);
 
-    // Switch back to web content context.
+    // Switch context to web content to interact with options page.
     await this.driver.setContext(firefox.Context.CONTENT);
 
     // Ensure that the study card for the base study is displayed.
@@ -107,7 +159,6 @@ describe("Core-Addon Onboarding", function () {
 
     // Begin study unenrollment cancel it.
     await findAndAct(this.driver, By.xpath(`//button[text()="Leave Mozilla Rally"]`), e => e.click());
-
     await findAndAct(this.driver, By.xpath(`//button[text()="Cancel"]`), e => e.click());
 
     // Begin unenrollment and confirm it this time.
@@ -125,7 +176,7 @@ describe("Core-Addon Onboarding", function () {
       By.xpath(`//button[text()="Leave Rally"]`)
     );
     await this.driver.wait(until.elementIsVisible(confirmButton), WAIT_FOR_PROPERTY);
-    confirmButton.click();
+    await confirmButton.click();
     // TODO check that core add-on is uninstalled, see https://github.com/mozilla-rally/core-addon/issues/245
 
     await this.driver.quit();
@@ -133,40 +184,55 @@ describe("Core-Addon Onboarding", function () {
 
   it("Should be disabled on non en-US locales", async function () {
     this.driver = await utils.getFirefoxDriver(true, {
-        "intl.accept_languages": "it-IT"
-      }
-    );
+      "intl.accept_languages": "it-IT"
+    });
 
-    await this.driver.get(`file:///${__dirname}/index.html`);
-    await this.driver.wait(until.titleIs("Installation Test"), WAIT_FOR_PROPERTY);
-    await findAndAct(this.driver, By.id("install"), e => e.click());
-
-    // switch to browser UI context, to interact with Firefox add-on install prompts.
-    await this.driver.setContext(firefox.Context.CHROME);
-    await findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
-    await findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
-
-    // Switch back to web content context.
-    await this.driver.setContext(firefox.Context.CONTENT);
-
-    // We expect the extension to load its options page in a new tab.
-    await this.driver.wait(async () => {
-      return (await this.driver.getAllWindowHandles()).length === 2;
-    }, WAIT_FOR_PROPERTY);
-
-    // Selenium is still focused on the old tab, so switch to the new window handle.
-    const newTab = (await this.driver.getAllWindowHandles())[1];
-    await this.driver.switchTo().window(newTab);
-
-    // New tab is focused.
-    await this.driver.wait(
-      until.titleIs("Rally: Put your data to work for a better internet"),
-      WAIT_FOR_PROPERTY
-    );
+    await installRally(this.driver);
 
     // Check the content of the page.
     const pageContent = await this.driver.getPageSource();
     assert.ok(pageContent.includes("Sorry, Rally is not supported in this locale."));
+
+    await this.driver.quit();
+  });
+
+  it("Should display and respond to Remote Settings changes", async function () {
+    this.driver = await utils.getFirefoxDriver(true, {});
+
+    // Switch to browser UI context, so we can inject script to set up Remote Settings.
+    await this.driver.setContext(firefox.Context.CHROME);
+    await this.driver.executeScript(initRemoteSettings, rallyTestStudy, 1234567);
+    // Switch back to web content context (options page).
+    await this.driver.setContext(firefox.Context.CONTENT);
+
+    await installRally(this.driver);
+    await joinRally(this.driver);
+
+    // Ensure that the study card for the base study is displayed.
+    const baseStudySelector = By.xpath(`//span[text()="Rally Base Study"]`);
+    await this.driver.findElement(baseStudySelector);
+
+    // Switch to browser UI context, so we can inject script to modify Remote Settings.
+    const modifiedTestStudy = Object.assign({}, rallyTestStudy);
+    modifiedTestStudy.name = "Another Rally Study";
+    await this.driver.setContext(firefox.Context.CHROME);
+    await this.driver.executeScript(updateRemoteSettings, modifiedTestStudy, (1234567 + 1));
+    // Switch back to web content context (options page).
+    await this.driver.setContext(firefox.Context.CONTENT);
+
+    // Ensure that the study card for the base study is displayed.
+    const anotherStudySelector = By.xpath(`//span[text()="Another Rally Study"]`);
+    await this.driver.findElement(anotherStudySelector);
+
+    // Check that studies are installable.
+    await this.driver.wait(until.elementLocated(By.css("button")));
+    await findAndAct(this.driver, By.xpath(`//button[text()="Join Study"]`), e => e.click());
+    await findAndAct(this.driver, By.xpath(`(//button[text()="Join Study"])[2]`), e => e.click());
+
+    // Switch to browser UI context, to interact with Firefox add-on install prompts.
+    await this.driver.setContext(firefox.Context.CHROME);
+    await findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
+    await findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
 
     await this.driver.quit();
   });

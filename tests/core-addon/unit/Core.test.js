@@ -45,6 +45,18 @@ describe('Core', function () {
       }
     });
 
+    // Create a mock for the privileged API.
+    chrome.firefoxPrivilegedApi = {
+      submitEncryptedPing: async function(type, payload, options) {},
+      getRemoteSettings: async () => FAKE_STUDY_LIST,
+      onRemoteSettingsSync: {
+        addListener: async (callback) => {
+          callback(new Event());
+        }
+      },
+    };
+
+
     this.core = new Core({
       website: FAKE_WEBSITE
     });
@@ -404,13 +416,16 @@ describe('Core', function () {
     });
 
     it('returns an empty list on errors', async function () {
-      // Mock the 'fetch' to reject.
-      global.fetch = () => Promise.reject();
+      // Create a mock for the privileged API.
+      chrome.firefoxPrivilegedApi = {
+        getRemoteSettings: async () => [],
+      };
+
       let studies = await this.core._fetchAvailableStudies();
       assert.equal(studies.length, 0);
     });
-  });
 
+  });
   describe('_updateInstalledStudies()', function () {
     it('adds the studyInstalled property', async function () {
       // Kick off an update task.

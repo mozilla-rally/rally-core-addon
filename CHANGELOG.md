@@ -1,6 +1,7 @@
 # Unreleased changes
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.8.0...master)
+  * [318](https://github.com/mozilla-rally/rally-core-addon/pull/311): Use Remote Settings for fetching study metadata.
 
 # v0.8.0 (2021-02-01)
 

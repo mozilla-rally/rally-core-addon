@@ -2,9 +2,9 @@
   "name": "rally_core",
   "version": "0.8.0",
   "scripts": {
-    "build": "rollup -c && rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/rally_core.xpi",
+    "build": "rollup -c && npm run build-addon && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/rally_core.xpi",
     "build-addon": "rollup -c rollup.config.addon.js",
-    "build-local-addon": "rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json",
+    "build-local-addon": "rollup -c rollup.config.addon.js --config-disable-remote-settings --config-study-list-url=/public/locally-available-studies.json",
     "build-storybook": "build-storybook -s ./",
     "lint": "npm run build && npm-run-all lint-*",
     "lint-addon": "web-ext lint",
@@ -15,7 +15,7 @@
     "storybook": "start-storybook -p 6006 -s ./",
     "test": "npm run --silent skip-taskcluster || (npm run test-addon && npm run test-support-library)",
     "test-addon": "npm run --silent skip-taskcluster || (mocha --require  \"./tests/hooks.js\" \"./tests/core-addon/unit/*.js\")",
-    "test-integration": "npm run --silent skip-taskcluster || (npm run build && mocha --timeout 30000 \"./tests/core-addon/integration/*.js\")",
+    "test-integration": "npm run --silent skip-taskcluster || (npm run build && mocha --unhandled-rejections=strict --timeout 30000 \"./tests/core-addon/integration/*.js\")",
     "test-support-library": "npm run --silent skip-taskcluster || (mocha --require  \"./tests/hooks.js\" \"./tests/support/*.mjs\")"
   },
   "devDependencies": {

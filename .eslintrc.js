@@ -20,6 +20,7 @@ module.exports = {
     // NOTE: These get injected via Rollup.
     __ION_STUDIES_LIST__: false,
     __ION_WEBSITE_URL__: false,
+    __DISABLE_REMOTE_SETTINGS__: false,
     __DISABLE_LOCALE_CHECK__: false,
     __ENABLE_DATA_SUBMISSION__: false,
   },

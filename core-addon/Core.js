@@ -11,29 +11,42 @@ const OPTIONS_PAGE_PATH = "public/index.html";
 const DEFAULT_ARGS = {
   // NOTE: if this URL ever changes, you will have to update the domain in
   // the permissions in manifest.json.
-  availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records",
+  availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/rally-studies-v1/records",
+  disableRemoteSettings: false,
   website: "https://mozilla-rally.github.io",
 }
 
 module.exports = class Core {
- /**
-  * @param {Object} args arguments passed in from the user.
-  * @param {String} args.availableStudiesURI the URI where the available studies
-  *             information is listed.
-  * @param {String} args.website the URL of the platform website.
-  */
+  /**
+   * @param {Object} args arguments passed in from the user.
+   * @param {String} args.availableStudiesURI the URI where the available studies
+   *             information is listed. Only used when disableRemoteSettings is `true`.
+   * @param {boolean} args.disableRemoteSettings do not use the official RemoteSettings server.
+   *             Default is `true`.
+   * @param {String} args.website the URL of the platform website.
+   */
   constructor(args = {}) {
-    this._userArguments = {...DEFAULT_ARGS, ...args};
+    this._userArguments = { ...DEFAULT_ARGS, ...args };
 
     this._storage = new Storage();
     this._dataCollection = new DataCollection();
 
     // Asynchronously get the available studies. We don't need to wait
     // for this to finish, the UI can handle the wait.
-    this._availableStudies =
-      this._fetchAvailableStudies()
-          .then(studies => this._updateInstalledStudies(studies));
-
+    this._availableStudies = this._fetchAvailableStudies().then((studies) =>
+      this._updateInstalledStudies(studies)
+    );
+    if (this._userArguments.disableRemoteSettings) {
+      console.warn("RemoteSettings disabled, not adding a new studies listener.");
+    } else {
+      // Register a listener to react to remote-settings updates.
+      browser.firefoxPrivilegedApi.onRemoteSettingsSync.addListener((studies) => {
+        // FIXME Important: this may be racing with the initial update or if there's two consecutive updates?
+        // @see https://github.com/mozilla-rally/rally-core-addon/issues/318
+        this._availableStudies = this._updateInstalledStudies(studies);
+        this._sendStateUpdateToUI();
+      });
+    }
     this._connectionPort = null;
   }
 
@@ -118,11 +131,11 @@ module.exports = class Core {
     // Update the available studies list with the installation
     // information.
     this._availableStudies = Promise.resolve(knownStudies.map(s => {
-        if (s.addon_id == info.id) {
-          s.studyInstalled = installed;
-        }
-        return s;
-      })
+      if (s.addon_id == info.id) {
+        s.studyInstalled = installed;
+      }
+      return s;
+    })
     );
 
     if (installed) {
@@ -179,7 +192,7 @@ module.exports = class Core {
     switch (message.type) {
       case "enrollment":
         return this._enroll()
-                   .then(r => this._sendStateUpdateToUI());
+          .then(r => this._sendStateUpdateToUI());
       case "get-studies":
         return this._sendStateUpdateToUI();
       case "study-unenrollment":
@@ -234,7 +247,7 @@ module.exports = class Core {
         };
       }
       case "telemetry-ping": {
-        const {payloadType, payload, namespace, keyId, key} = message.data;
+        const { payloadType, payload, namespace, keyId, key } = message.data;
         let rallyId = await this._storage.getRallyID();
         return await this._dataCollection.sendPing(
           rallyId, payloadType, payload, namespace, keyId, key
@@ -422,7 +435,7 @@ module.exports = class Core {
     await this._storage.clearActivatedStudies();
 
     // Finally, uninstall the addon.
-    await browser.management.uninstallSelf({showConfirmDialog: false});
+    await browser.management.uninstallSelf({ showConfirmDialog: false });
   }
 
   /**
@@ -473,7 +486,7 @@ module.exports = class Core {
    *          has at least the `addon_id` and `studyInstalled` properties.
    */
   async _updateInstalledStudies(studies) {
-    console.debug("Core._updateInstalledStudies");
+    console.debug("Core._updateInstalledStudies:", studies);
 
     // If we were able to fetch studies definitions, see if any
     // of them were installed. Start by getting the list of installed
@@ -481,7 +494,7 @@ module.exports = class Core {
     let installedAddonsIds =
       await browser.management.getAll().then(addons =>
         addons.filter(a => a.type == "extension")
-              .map(a => a.id));
+          .map(a => a.id));
     return studies.map(s => {
       s.studyInstalled = installedAddonsIds.includes(s.addon_id);
       return s;
@@ -492,14 +505,23 @@ module.exports = class Core {
    * Fetch the available studies.
    *
    * This loads the studies from the Firefox Remote Settings service.
+   * If `disableRemoteSettings` is `true`, then an URL will be used instead. This is intended for local testing.
    *
    * @returns {Promise(Array<Object>)} resolved with an array of studies
    *          objects, or an empty array on failures.
    */
   async _fetchAvailableStudies() {
     try {
-      const request = await fetch(this._userArguments.availableStudiesURI);
-      return (await request.json()).data;
+      let studies = [];
+      if (this._userArguments.disableRemoteSettings) {
+        console.warn("Not using RemoteSettings, fetching from:", this._userArguments.availableStudiesURI);
+        const request = await fetch(this._userArguments.availableStudiesURI);
+        studies = await request.json();
+      } else {
+        console.debug("Using RemoteSettings for studies.");
+        studies = await browser.firefoxPrivilegedApi.getRemoteSettings();
+      }
+      return studies;
     } catch (err) {
       console.error(err);
       return [];
@@ -556,7 +578,7 @@ module.exports = class Core {
 
     // Send a message to the UI to update the list of studies.
     this._connectionPort.postMessage(
-      {type: "update-state", data: newState});
+      { type: "update-state", data: newState });
   }
 
   /**

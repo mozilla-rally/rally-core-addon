@@ -1,37 +1,35 @@
-{
-  "data": [
-    {
-      "name": "Rally Base Study",
-      "icons": {
-        "32": "https://addons.cdn.mozilla.net/static/img/addon-icons/default-32.png",
-        "64": "https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png",
-        "128": "https://addons.cdn.mozilla.net/static/img/addon-icons/default-128.png"
-      },
-      "schema": 1597266497978,
-      "authors": {
-        "url": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
-        "name": "Ion Developers"
-      },
-      "version": "0.3.1",
-      "addon_id": "ion-basic-study@mozilla.org",
-      "moreInfo": {
-        "spec": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/"
-      },
-      "isDefault": false,
-      "sourceURI": {
-        "spec": "https://addons.mozilla.org/firefox/downloads/file/3707495/ion_basic_study-0.3.1-fx.xpi"
-      },
-      "studyType": "extension",
-      "studyEnded": false,
-      "description": "Study purpose: Testing Rally.",
-      "privacyPolicy": {
-        "spec": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/"
-      },
-      "joinStudyConsent": "This study will send an encrypted ping, only when the toolbar icon is clicked.",
-      "leaveStudyConsent": "This study cannot be re-joined.",
-      "dataCollectionDetails": ["The date and time"],
-      "id": "0eb02750-7159-4f09-96ae-5c7cb7424e89",
-      "last_modified": 1597280277565
-    }
-  ]
-}
+[
+  {
+    "name": "Rally Base Study",
+    "icons": {
+      "32": "https://addons.cdn.mozilla.net/static/img/addon-icons/default-32.png",
+      "64": "https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png",
+      "128": "https://addons.cdn.mozilla.net/static/img/addon-icons/default-128.png"
+    },
+    "schema": 1597266497978,
+    "authors": {
+      "url": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
+      "name": "Ion Developers"
+    },
+    "version": "0.3.1",
+    "addon_id": "ion-basic-study@mozilla.org",
+    "moreInfo": {
+      "spec": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/"
+    },
+    "isDefault": false,
+    "sourceURI": {
+      "spec": "https://addons.mozilla.org/firefox/downloads/latest/ion-basic-study"
+    },
+    "studyType": "extension",
+    "studyEnded": false,
+    "description": "Study purpose: Testing Rally.",
+    "privacyPolicy": {
+      "spec": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/"
+    },
+    "joinStudyConsent": "This study will send an encrypted ping, only when the toolbar icon is clicked.",
+    "leaveStudyConsent": "This study cannot be re-joined.",
+    "dataCollectionDetails": ["The date and time"],
+    "id": "0eb02750-7159-4f09-96ae-5c7cb7424e89",
+    "last_modified": 1597280277565
+  }
+]
