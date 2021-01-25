@@ -35,7 +35,7 @@ class Rally {
 
     this._keyId = keyId;
     this._key = key;
-    this._enableDevMode = !!enableDevMode;
+    this._enableDevMode = Boolean(enableDevMode);
 
     await this._checkRallyCore().then(
         () => console.debug("Rally.initialize - Found the Core Add-on")
