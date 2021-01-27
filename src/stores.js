@@ -3,6 +3,5 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import createStore from "./create-store";
-import api from "./api/__API_ENDPOINT__";
 
-export const store = createStore(api);
+export const store = createStore();
