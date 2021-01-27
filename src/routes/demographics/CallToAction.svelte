@@ -54,7 +54,7 @@
       transition:fade|local={{ duration: 400 }}
       class="shortcut-callout"
       style="text-align: right;">
-      all 7 questions are optional; they help researchers parse data
+      the following 7<br/> questions are optional
     </div>
     <div class="arrow">
       <Arrow02 />
