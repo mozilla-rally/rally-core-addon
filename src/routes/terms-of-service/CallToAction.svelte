@@ -45,7 +45,7 @@
     intro = true;
   }}>
   <Button size="xl" product on:click={() => dispatch('accept')}>
-    Accept & Participate
+    Accept & Enroll
   </Button>
   <Button size="xl" product secondary on:click={() => dispatch('cancel')}>
     Cancel
