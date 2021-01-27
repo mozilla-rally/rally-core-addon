@@ -46,124 +46,125 @@
   <h2 class='section-header'>Our Privacy Notice</h2>
 
   <p style='font-style: italic;'>
-    Requesting consent for how your data can be used for causes you believe in.
+    Before you get started, please make sure you're comfortable with our privacy notice.
   </p>
 
   <hr />
 
-  <p>
-    Mozilla Rally is an experimental initiative led by Mozilla to better understand
-    how our users use and navigate the internet. Mozilla Rally is available to Firefox
-    users in the United States who are 19 or older.
-  </p>
-  <p>
-    When you join Mozilla Rally, we’ll ask you to provide optional demographic data.
-    We’ll also collect basic technical and interaction data as long as you’re
-    participating in Mozilla Rally. Once you’ve enrolled, you’ll have the opportunity
-    to join available studies—each study will have a specific research purpose
-    and unique privacy notice for you to review before you join it.
-  </p>
-  <p>
-    In this Privacy Notice, we detail what data the Mozilla Rally program collects and
-    discloses, and why. Read each study’s privacy notice for information about
-    how data is collected and handled in that particular study. We also adhere
-    to the Mozilla Privacy Policy for how we receive, handle, and share
-    information.
-  </p>
+  <h3>Introduction</h3>
 
-  <h3>Information We Collect</h3>
-
-  <h4>Demographic data</h4>
+  <p>In this notice, we detail what data Mozilla Rally collects and discloses, and why it does so.</p>
 
   <p>
-    We collect optional, self-reported demographic data from Mozilla Rally
-    participants, including their age, gender, race/ethnicity, education level,
-    household income, and zip code.
+    Mozilla Rally is a <b>new platform</b> created to empower people to 
+    contribute their data towards <b>building a better internet</b>.
+  </p>
+  <p>
+    It is currently available to Firefox users in the U.S. who are 19 or older.
+  </p>
+  <p>
+    <b>This notice only coverss Rally itself</b>, as each study will have a
+    unique privacy notice detailing how data is collected and handled in 
+    that particular study. We also adhere to the <a href="#FIXME">Mozilla Privacy Policy</a>
+    for how we receive, handle, and share information.
   </p>
 
-  <h4>Technical data</h4>
+  <h3>Types of Information We Collect</h3>
+
+  <p>We'll ask for your consent before we collect any of your info, which could include:</p>
+
+  <h4>Your Demographic data</h4>
 
   <p>
-    We collect basic information about your device’s operating system. When
-    Firefox sends data to us, your IP address is temporarily collected as part
-    of our server logs.
+    This includes your <b>age</b>, <b>gender</b>, <b>race/ethnicity</b>, 
+    <b>education level</b>, <b>household income</b>, and <b>zip code</b>.
+    This is entirely optional.
   </p>
 
-  <h4>Interaction data</h4>
-  <p>
-    We collect data about your interactions with Firefox, like number and type
-    of installed Firefox Add-ons and your active browsing session duration.
-  </p>
-
-  <h4>Location data</h4>
+  <h4>Your Device's Technical data</h4>
 
   <p>
-    We will use your IP address to approximate your country location, in
-    addition to collecting your self-reported zip code (if you provide it).
+    This includes your device's <b>operating system</b> and <b>IP address</b> (which we'll only hang on to temporarily).
   </p>
 
-  <p>See a full list of the data we collect.</p>
+  <h4>Your Interaction data</h4>
+  <p>
+    This includes your <b>interactions with Firefox</b>, like the number and
+    type of Firefox Add-ons you have installed, or the duration of your
+    active browsing session duration.
+  </p>
+
+  <h4>Your Location data</h4>
+
+  <p>
+    This includes your <b>country</b>, <b>city</b>, and <b>state</b> location, which is
+    determined by your <b>IP address</b>.
+  </p>
+
 
   <h3>How We Use Your Information</h3>
 
   <p>
-    We use the information we collect for for research and development,
-    including:
+    We may share information with trusted entities that help us fulfill our mission, including:
   </p>
 
   <ul class="mzp-u-list-styled">
     <li>
-      To determine which participants meet the criteria to be available to
-      participate in particular research studies
+      determining which Rally participants could be eligible to participate
+      in particular research studies, should they choose to enroll
     </li>
     <li>
-      To ensure our data sets are representative of the many users of Firefox
+      ensuring that the data we collect represents teh diverse communities
+      that use the internet
     </li>
     <li>
-      To improve our existing products and services
+      improving Mozilla's existing products and services
     </li>
-    <li>To create and develop new
-      products
+    <li>
+      creating and developing new products
     </li>
   </ul>
 
-  <h3>Who We May Disclose Information To</h3>
+  <h3>Who We may Share Information With</h3>
 
-  <h4>Google Cloud Platform (GCP)</h4>
-
-  <p>
-    We use GCP as our cloud-storage service. Mozilla has contracted with GCP
-    requiring them to handle the data in ways that are approved by us.
-  </p>
-
-  <h4>Third-party researchers</h4>
+  <h4>Our data Storage Provider</h4>
 
   <p>
-    As part of being part of the Mozilla Rally program, we will offer you the ability
-    to join studies. If necessary for the study, we may ask you to share all or
-    some of the data collected under this Privacy Notice with the third party
-    researcher(s) administering a study. Mozilla will contractually obligate the
-    third party researchers to ensure that your data is handled in ways that are
-    approved by us.
+    We use Google's cloud storage service to store the data collected
+    through Rally. Google only stores Rally data and <b>cannot use that
+      data for its own purposes
+    </b>.
   </p>
 
-  <h4>General public</h4>
+  <h4>Our Research Partners</h4>
 
   <p>
-    To advance our mission of being open, we may release data sets to the
-    general public. When we do so, we will aggregate the data and remove
-    identifying information, so the data won’t reveal the behaviors or
-    characteristics of individual users.
+    Rally patners with trusted third parties to build and release studies. 
+    For any studies you join, we may ask you to share the data collected
+    under <b>this Privacy Notice</b> with third party researcher(s)
+    administering the study. Our research partners are under contracts
+    with Mozilla to ensure that <b>your data is protected</b> and handled only
+    in ways we've approved.
   </p>
 
-  <h3>Data Management</h3>
-
-  <p>
-    You can learn more about managing your Mozilla Rally and individual study data.
-  </p>
+  <h4>People Like You (only aggregated data)</h4>
 
   <p>
-    If you have any other questions regarding our privacy practices, please
-    contact us at compliance@mozilla.com.
+    Our mission is focused on <b>empowering everyday citizens</b>, not just a
+    select few. To that end, we may release aggregated, de-identified data sets
+    to help further public knowledge on certain issues. These
+    data sets will be <b>stripped of any identifiable data</b>, and won't reveal
+    anything about individual users.
   </p>
+
+  <h4>How You Can Manage Your Data</h4>
+
+  <p>Our "opt-in" approach to data collection means that you choose which data you share with us.</p>
+
+  <p>Rally operates based on <b>your participation</b> – meaning you can
+  choose to disclose the level of information you're comfortable with, either by finding a study
+that matches your level of comfort or by declining to share demographic information in your profile. <a href="#FIXME">Learn more about managing your data</a>.</p>
+
+  <p>If you have any other questions regarding our privacy practices, please contact us at <a href='#FIXME'>compliance@mozilla.com</a>.</p>
+
 </div>

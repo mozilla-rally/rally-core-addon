@@ -1,5 +1,5 @@
 :root {
-  --content-width: 660px;
+  --content-width: 700px;
   --onboarding-cta-height: 434px;
   --onboarding-cta-offset: calc(var(--onboarding-cta-height) - 230px);
 
