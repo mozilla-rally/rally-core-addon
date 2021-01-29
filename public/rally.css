@@ -65,7 +65,6 @@ h6 {
 }
 
 p,
-div,
 ul,
 ol {
   color: var(--color-marketing-gray-70);
@@ -238,4 +237,20 @@ See #141: https://github.com/mozilla-rally/core-addon/issues/141
 .study-card-container a,
 .study-card-container a:hover {
   color: var(--color-marketing-gray-90);
+}
+
+/* some modals have text on the left, image on the right (e.g. leaving study, leaving Rally). Use this class. */
+.split-content-modal {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.content-width {
+  width: var(--content-width);
+}
+
+.modal-call-flow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: var(--gap, 12px);
 }
