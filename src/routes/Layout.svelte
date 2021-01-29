@@ -13,6 +13,9 @@
   const dispatch = createEventDispatcher();
 </script>
 
+<style>
+</style>
+
 <Layout>
   <Sidebar on:change-view on:leave-rally={() => {
     leaveModal = true;
@@ -23,12 +26,24 @@
 </Layout>
 
 {#if leaveModal}
-  <Dialog on:dismiss={() => { leaveModal = false; }}>
-    <div slot="title">Leaving Mozilla Rally</div>
-  <div style="padding-bottom: 90px;" slot="body">
-    Placeholder text.
+  <Dialog width="var(--content-width)" on:dismiss={() => { leaveModal = false; }}>
+    <div slot="title">Before You Go…</div>
+  <div class='split-content-modal' slot="body">
+    <div>
+      <p>
+        Thanks for helping make the internet just a little bit better. For your reference, leaving Rally means that:
+      </p>
+      <ul class="mzp-u-list-styled" style="font-weight: bold;">
+        <li>We will no longer collect any data for our platform or studies</li>
+        <li>You will be removed from any studies you're currently participating in</li>
+        <li>We will delete any demographic information you've shared with us</li>
+        <li>Researchers will not receive any additional data from you, but will retain access to the data you've already shared with them.</li>
+        <li>FIXME for Ryan: the Rally add-on will remove itself from your browser</li>
+      </ul>
+    </div>
+    <img src="public/img/before-you-go.png" alt="person walking through exit door" />
   </div>
-  <div slot="cta">
+  <div class='modal-call-flow' slot="cta">
       <Button
       size="lg"
       product

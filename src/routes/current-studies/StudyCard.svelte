@@ -45,7 +45,7 @@ let firstRuns = {};
     NOTE: this is a full pattern integration of the study card. It uses the StudyCard, StudyCardHeader,
     and dialog components. This is the component to use _in practice_.
 
-    It relies on props instead of props to reduce the cost of use.
+    It relies on props instead of slots to reduce the cost of use.
 */
 
 import { createEventDispatcher } from 'svelte';
@@ -117,6 +117,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
 
 {#if joinModal}
     <Dialog
+    width={joined ? "var(--content-width)" : undefined}
     on:dismiss={() => {
         joinModal = false;
     }}>
@@ -135,35 +136,42 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
         </StudyCardHeader>
         {:else}Leave this Study?{/if}
     </div>
-    <div style="padding-bottom: 90px;" slot="body">
+    <div class:split-content-modal={joined} slot="body">
         {#if !joined}
-        {#if joinStudyConsentNotice}
-            {@html joinStudyConsentNotice}
+            {#if joinStudyConsentNotice}
+                {@html joinStudyConsentNotice}
+            {:else}
+            <!-- default "join study" consent notice -->
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, ut enim ad minim veniam, ut enim ad minim
+                veniam.
+                </p>
+                <p>TBD approach based on explorations with SimplySecure.</p>
+            {/if}
         {:else}
-        <!-- default "join study" consent notice -->
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-            enim ad minim veniam, ut enim ad minim veniam, ut enim ad minim
-            veniam.
-            </p>
-            <p>TBD approach based on explorations with SimplySecure.</p>
-        {/if}
-        {:else}
-        {#if leaveStudyConsentNotice}
-            {@html leaveStudyConsentNotice}
-        {:else}
-        <!-- default "leave study" consent notice -->
-        What does it mean to leave
-        <ul>
-            <li>You will no longer share any data with our platform</li>
-            <li>You’ll be removed from any active studies</li>
-            <li>We’ll delete your data?</li>
-        </ul>
-        {/if}
+                <div>
+                    <p>
+                        You’re free to come and go as you please. Just to confirm, leaving a study means the following:
+                    </p>
+                    <ul  class="mzp-u-list-styled" style="padding-right: 14px; font-weight: bold;">
+                        <li>You will only be leaving this specific study.
+                            If you are enrolled in other studies, data
+                            collection will proceed as planned.
+                        </li>
+                        <li>
+                            Researchers working on this study will 
+                            no longer receive data from you, but will
+                            retain access to the data that you've already contributed.
+                        </li>
+                    </ul>
+                </div>
+                <img style="margin-bottom: -80px;" src="public/img/leave-this-study.png" alt="person considering leaving the study" />
         {/if}
     </div>
-    <div slot="cta">
+    <!-- if the leave study modal is present, shore up the button hheights -->
+    <div class='modal-call-flow' slot="cta" style="margin-top: {joined ? "-50px" : "none"};">
         <Button
         size="lg"
         product

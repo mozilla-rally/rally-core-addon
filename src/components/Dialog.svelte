@@ -12,6 +12,11 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
   import Portal from './Portal.svelte';
   import Close from "./icons/Close.svelte";
 
+  export let width;
+  export let layout;
+  // 
+  $: styles = width ? `--width: ${width};` : undefined;
+
   const dispatch = createEventDispatcher();
   const key =
     `modal-${Math.random().toString(36).substring(2, 15) +
@@ -72,7 +77,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
   }
   .container {
     margin: 8vh auto;
-    width: 580px;
+    width: var(--width, 580px);
     min-height: 400px;
     background-color: var(--color-white);
     padding: 20px;
@@ -82,7 +87,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
   }
 
   .modal-body {
-    padding: 2rem 0;
+    padding-top: 2rem;
   }
 
   .cta {
@@ -120,6 +125,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
       transition:fly={{duration: 200, y: 5}}
       data-micromodal-close
       class="overlay"
+      style={styles}
       on:click={dismissParent}>
       <div
         role="dialog"
