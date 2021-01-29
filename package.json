@@ -4,8 +4,8 @@
   "scripts": {
     "build": "rollup -c && rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/rally_core.xpi",
     "build-addon": "rollup -c rollup.config.addon.js",
+    "build-local-addon": "rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json",
     "build-storybook": "build-storybook -s ./",
-    "local-build-addon": "rollup -c rollup.config.addon.js --config-study-list-url=/public/locally-available-studies.json",
     "lint": "npm run build && npm-run-all lint-*",
     "lint-addon": "web-ext lint",
     "lint-css": "stylelint 'public/*.css' '.storybook/*.css' 'src/**/*.svelte' 'stories/**/*.svelte'",
