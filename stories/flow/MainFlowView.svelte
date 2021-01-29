@@ -2,10 +2,14 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
     * License, v. 2.0. If a copy of the MPL was not distributed with this
     * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+import MainContent from '../../src/components/layouts/MainContent.svelte';
 import Layout from '../../src/routes/Layout.svelte';
 import CurrentStudies from '../../src/routes/current-studies/Content.svelte';
+import StudyBG from '../../src/routes/current-studies/Background.svelte';
 import PrivacyNotice from '../../src/routes/terms-of-service/Content.svelte';
 import Demographics from '../../src/routes/demographics/Content.svelte';
+
 
 let view = 'current-studies';
 function changeView(event) {
@@ -58,14 +62,22 @@ function leaveStudy(studyID) { toggleStudyJoinStatus(studyID, false); }
 
 <Layout on:change-view={changeView}>
     {#if view === 'complete-profile'}
-        <Demographics />
+        <MainContent>
+            <Demographics />
+        </MainContent>
     {:else if view === 'privacy-notice'}
-        <PrivacyNotice />
+        <MainContent>
+            <PrivacyNotice />
+        </MainContent>
     {:else}
-        <CurrentStudies
-            sidebarOffset
-            {studies} 
-            on:join-study={(evt) => { joinStudy(evt.detail); }}
-            on:leave-study={(evt) => { leaveStudy(evt.detail); }} />
+    <StudyBG>
+        <MainContent>
+            <CurrentStudies
+                sidebarOffset
+                {studies} 
+                on:join-study={(evt) => { joinStudy(evt.detail); }}
+                on:leave-study={(evt) => { leaveStudy(evt.detail); }} />
+        </MainContent>
+    </StudyBG>
     {/if}
 </Layout>

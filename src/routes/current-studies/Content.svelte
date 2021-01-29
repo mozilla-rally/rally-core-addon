@@ -46,7 +46,7 @@ function leaveStudy(studyID) {
     <h2 class='section-header'>Current Studies</h2>
 
     <p style="font-style: italic;">
-        Easily contribute to causes you believe in; you may join multiple studies at once.
+        Browse available studies and find the choice (or choices) that feel right to you.
     </p>
 
     <hr />

@@ -8,7 +8,7 @@
     display: grid;
     grid-template-columns: max-content auto;
     justify-content: stretch;
-    justify-items: start;
+    justify-items: stretch;
   }
 </style>
 
