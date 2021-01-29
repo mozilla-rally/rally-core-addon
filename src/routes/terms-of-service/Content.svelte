@@ -4,6 +4,8 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { fly } from "svelte/transition";
+
+  export let onboarding = true;
 </script>
 
 <style>
@@ -68,9 +70,11 @@
 <div in:fly={{ duration: 800, y: 5 }}>
   <h2 class='section-header'>Our Privacy Notice</h2>
 
-  <p style='font-style: italic;'>
-    Before you get started, please make sure you're comfortable with our privacy notice.
-  </p>
+  {#if onboarding}
+    <p style='font-style: italic;'>
+      Before you get started, please make sure you're comfortable with our privacy notice.
+    </p>
+  {/if}
 
   <hr />
 
@@ -92,7 +96,7 @@
     <p class="icon-block-right">
       <b>This notice only covers Rally itself</b>, as each study will have a
       unique privacy notice detailing how data is collected and handled in 
-      that particular study. We also adhere to the <a href="#FIXME">Mozilla Privacy Policy</a>
+      that particular study. We also adhere to the <a href="https://www.mozilla.org/en-US/privacy/">Mozilla Privacy Policy</a>
       for how we receive, handle, and share information.
     </p>
   </div>
@@ -217,7 +221,7 @@
     <div class='icon-block-right'>
     <p>Rally operates based on <b>your participation</b> – meaning you can
     choose to disclose the level of information you're comfortable with, either by finding a study
-  that matches your level of comfort or by declining to share demographic information in your profile. <a href="#FIXME">Learn more about managing your data</a>.</p>
+  that matches your level of comfort or by declining to share demographic information in your profile. <a href="https://support.mozilla.org/en-US/kb/mozilla-ion-managing-account-data#w_what-data-do-you-receive-from-me">Learn more about managing your data</a>.</p>
   <p>If you have any other questions regarding our privacy practices, please contact us at <a href='#FIXME'>compliance@mozilla.com</a>.</p>
 </div>
   </div>

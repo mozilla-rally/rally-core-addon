@@ -151,19 +151,19 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
                 <p>TBD approach based on explorations with SimplySecure.</p>
             {/if}
         {:else}
-                <div>
-                    <p>
+                <div style="width: 368px;">
+                    <p style="padding-top: 20px;">
                         You’re free to come and go as you please. Just to confirm, leaving a study means the following:
                     </p>
-                    <ul  class="mzp-u-list-styled" style="padding-right: 14px; font-weight: bold;">
-                        <li>You will only be leaving this specific study.
+                    <ul  class="mzp-u-list-styled" style="padding-right: 17px;">
+                        <li><b>You will only be leaving this specific study</b>.
                             If you are enrolled in other studies, data
                             collection will proceed as planned.
                         </li>
                         <li>
-                            Researchers working on this study will 
-                            no longer receive data from you, but will
-                            retain access to the data that you've already contributed.
+                            Researchers working on this study will <br />
+                            <b>no longer receive data from you</b>, but will
+                            retain access to the data that you've <b>already contributed</b>.
                         </li>
                     </ul>
                 </div>

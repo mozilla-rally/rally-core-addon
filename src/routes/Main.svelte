@@ -34,7 +34,7 @@ onMount(() => { mounted = true; })
         {#if view === 'complete-profile'}
             <Demographics />
         {:else if view === 'privacy-notice'}
-            <PrivacyNotice />
+            <PrivacyNotice onboarding={false} />
         {:else}
             <StudyBackgroundElement>
                 <CurrentStudies
