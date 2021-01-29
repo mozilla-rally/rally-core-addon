@@ -67,7 +67,7 @@ function leaveStudy(studyID) { toggleStudyJoinStatus(studyID, false); }
         </MainContent>
     {:else if view === 'privacy-notice'}
         <MainContent>
-            <PrivacyNotice />
+            <PrivacyNotice onboarding={false} />
         </MainContent>
     {:else}
     <StudyBG>
