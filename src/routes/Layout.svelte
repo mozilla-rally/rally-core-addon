@@ -30,16 +30,16 @@
     <div slot="title">Before You Go…</div>
   <div class='split-content-modal' slot="body">
     <div>
-      <p>
+      <p style="padding-top: 20px;">
         Thanks for helping make the internet just a little bit better. For your reference, leaving Rally means that:
       </p>
-      <ul class="mzp-u-list-styled" style="font-weight: bold;">
-        <li>We will no longer collect any data for our platform or studies</li>
-        <li>You will be removed from any studies you're currently participating in</li>
-        <li>We will delete any demographic information you've shared with us</li>
-        <li>Researchers will not receive any additional data from you, but will retain access to the data you've already shared with them.</li>
-        <li>FIXME for Ryan: the Rally add-on will remove itself from your browser</li>
-      </ul>
+      <ul class="mzp-u-list-styled">
+        <li>We will <b>no longer collect any data</b> for our platform or studies</li>
+        <li>You will be <b>removed from any studies</b> you're currently participating in</li>
+        <li>We will <b>delete any demographic information</b> you've shared with us</li>
+        <li>Researchers will <b>not receive any additional data</b> from you, but will <b>retain access to the data</b> you've already shared with them.</li>
+        <li>We will <b>uninstall & remove the Rally add-on</b> and any study add-ons installed through Rally</li>
+      </ul> 
     </div>
     <img src="public/img/before-you-go.png" alt="person walking through exit door" />
   </div>
