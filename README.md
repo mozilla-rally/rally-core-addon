@@ -76,7 +76,7 @@ To run an end-to-end local test with your own study add-on, first build your stu
 Then run:
 
 - `npm run build`
-- `npm run local-build-addon`
+- `npm run build-local-addon`
 - `web-ext run`
 
 To walk through the Core Add-On experience with your study.
