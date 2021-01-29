@@ -104,7 +104,7 @@
 
     <img class="icon-block-left" src="public/img/your-demographic-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
     <div class="icon-block-right">
-      <h4>Your Demographic data</h4>
+      <h4>Your Demographic Data</h4>
       <p>
         This includes your <b>age</b>, <b>gender</b>, <b>race/ethnicity</b>, 
         <b>education level</b>, <b>household income</b>, and <b>zip code</b>.
@@ -114,7 +114,7 @@
 
     <img class="icon-block-left" src="public/img/your-technical-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
     <div class="icon-block-right">
-      <h4>Your Device's Technical data</h4>
+      <h4>Your Device's Technical Data</h4>
       <p>
         This includes your device's <b>operating system</b> and <b>IP address</b> (which we'll only hang on to temporarily).
       </p>
@@ -122,7 +122,7 @@
 
     <img class="icon-block-left" src="public/img/your-interaction-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
     <div class="icon-block-right">
-      <h4>Your Interaction data</h4>
+      <h4>Your Interaction Data</h4>
       <p>
         This includes your <b>interactions with Firefox</b>, like the number and
         type of Firefox Add-ons you have installed, or the duration of your
@@ -132,7 +132,7 @@
 
   <img class="icon-block-left" src="public/img/your-location-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
   <div class="icon-block-right">
-    <h4>Your Location data</h4>
+    <h4>Your Location Data</h4>
     <p>
       This includes your <b>country</b>, <b>city</b>, and <b>state</b> location, which is
       determined by your <b>IP address</b>.
