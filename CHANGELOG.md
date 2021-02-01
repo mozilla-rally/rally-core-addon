@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.7.1...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.8.0...master)
+
+# v0.8.0 (2021-02-01)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.7.1...v0.8.0)
 
 * Core-Addon
   * [#294](https://github.com/mozilla-rally/core-addon/pull/294): Only process messages from known, installed studies. Additionally rename `ionInstalled` to `studyInstalled`.
