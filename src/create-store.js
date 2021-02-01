@@ -3,8 +3,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import { writable } from "svelte/store";
+import api from "./web-extension-api";
 
-export default function createStore(api) {
+export default function createStore() {
   // initialize the writable store.
   const { subscribe, set } = writable();
 

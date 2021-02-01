@@ -36,15 +36,15 @@ const nicerStudy = {
 let studies = [];
 fetch('public/locally-available-studies.json')
     .then(r => r.json())
-    .then(s => { 
-        studies = [nicerStudy, ...s.data]; 
+    .then(s => {
+        studies = [nicerStudy, ...s.data];
     });
 
 function toggleStudyJoinStatus(studyID, joined) {
     studies = [...studies.map(study => {
         const nextStudy = {...study};
         if (nextStudy.addon_id === studyID) {
-        nextStudy.ionInstalled = joined;
+        nextStudy.studyInstalled = joined;
         nextStudy.joinedOn = new Date();
         }
         return nextStudy;

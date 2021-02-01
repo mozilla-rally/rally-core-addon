@@ -155,6 +155,11 @@ module.exports = class DataCollection {
       schemaNamespace: namespace,
     };
 
+    if (!__ENABLE_DATA_SUBMISSION__) {
+      console.warn(`DataCollection.sendPing - data submission disabled, ping ${payloadType} not submitted`);
+      return;
+    }
+
     // We intentionally don't wait on the promise returned by
     // `submitExternalPing`, because that's an internal API only meant
     // for telemetry tests. Moreover, in order to send a custom schema
@@ -186,7 +191,6 @@ module.exports = class DataCollection {
       "hispanicLatinoSpanishOrigin": "origin",
       "school": "education",
       "income": "income",
-      "zipCode": "zipCode",
     };
 
     // Important: the following code flattens out arrays and nested
@@ -216,6 +220,12 @@ module.exports = class DataCollection {
     // values.
     if ("race" in data) {
       processed["races"] = data.race.reduce((a, b) => ((a[b] = true), a), {});
+    }
+
+    // Note: "zipcode" gets renamed to "zipCode" and directly
+    // assigned a value.
+    if ("zipcode" in data) {
+      processed["zipCode"] = data["zipcode"];
     }
 
     return await this.sendPing(

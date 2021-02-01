@@ -15,10 +15,16 @@ exports.mochaHooks = {
   beforeAll() {
     global.chrome = chrome;
     global.browser = browser;
+    // TODO: remove the next line once https://github.com/mozilla-rally/core-addon/issues/304
+    // is merged.
+    global.__ENABLE_DATA_SUBMISSION__ = true;
   },
   afterAll() {
     chrome.flush();
     delete global.chrome;
     delete global.browser;
+    // TODO: remove the next line once https://github.com/mozilla-rally/core-addon/issues/304
+    // is merged.
+    delete global.__ENABLE_DATA_SUBMISSION__;
   },
 };

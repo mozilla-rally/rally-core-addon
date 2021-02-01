@@ -88,7 +88,7 @@ When CI has finished and is green for your specific release branch, you are read
     * Set the title of the PR to `Release 25.0.0`.
     * This is important so that CI runs the signing process.
     * This should never have conflicts with `master` branch: no change should ever happen on this repository outside from the mirroring and merging.
-    * The `dep-signing-ion_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/ion_core.xpi`. Save it to disk and then add it as an attachment named `qa-ion_core.xpi` to the `v25.0.0` release.
+    * The `dep-signing-rally_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/rally_core.xpi`. Save it to disk and then add it as an attachment named `qa-rally_core.xpi` to the `v25.0.0` release.
     * Never delete the `release` branch!
 10. Refer to [Producing a production-signed extension](#producing-a-production-signed-extension) to build the officially signed add-on.
 
@@ -156,7 +156,7 @@ When CI has finished and is green for your hotfix branch, you are ready to cut a
     * Set the title of the PR to `Release 25.0.1`.
     * This is important so that CI runs the signing process.
     * This should never have conflicts with `master` branch: no change should ever happen on this repository outside from the mirroring and merging.
-    * The `dep-signing-ion_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/ion_core.xpi`. Save it to disk and then add it as an attachment named `qa-ion_core.xpi` to the `v25.0.1` release.
+    * The `dep-signing-rally_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/rally_core.xpi`. Save it to disk and then add it as an attachment named `qa-rally_core.xpi` to the `v25.0.1` release.
     * Merge the PR once the build is done but do not delete the `release` branch.
 10. Refer to [Producing a production-signed extension](#producing-a-production-signed-extension) to build the officially signed add-on.
 
@@ -218,7 +218,7 @@ If you need to release a hotfix for a previously released version (that is: not 
     * Add the description from the `upstream` GitHub release as the description of the PR.
     * This is important so that CI runs the signing process.
     * This should never have conflicts with `master` branch: no change should ever happen on this repository outside from the mirroring and merging.
-    * The `dep-signing-ion_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/ion_core.xpi`. Save it to disk and then add it as an attachment named `qa-ion_core.xpi` to the `v24.0` release.
+    * The `dep-signing-rally_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/rally_core.xpi`. Save it to disk and then add it as an attachment named `qa-rally_core.xpi` to the `v24.0` release.
     * Merge the PR once the build is done.
 7. Once the above pull request lands, delete the specific hotfix branch (e.g. `support/v24.0`) from both `mozext` and `upstream`.
 8. Refer to [Producing a production-signed extension](#producing-a-production-signed-extension) to build the officially signed add-on.

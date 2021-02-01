@@ -18,10 +18,10 @@ module.exports = {
     ChromeUtils: false,
     ExtensionAPI: false,
     // NOTE: These get injected via Rollup.
-    __API_ENDPOINT__: false,
     __ION_STUDIES_LIST__: false,
     __ION_WEBSITE_URL__: false,
-    __STORE_IMPLEMENTATION__: false,
+    __DISABLE_LOCALE_CHECK__: false,
+    __ENABLE_DATA_SUBMISSION__: false,
   },
   overrides: [
     {

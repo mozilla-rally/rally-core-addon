@@ -412,7 +412,7 @@ describe('Core', function () {
   });
 
   describe('_updateInstalledStudies()', function () {
-    it('adds the ionInstalled property', async function () {
+    it('adds the studyInstalled property', async function () {
       // Kick off an update task.
       let studies =
         await this.core._updateInstalledStudies(FAKE_STUDY_LIST);
@@ -421,13 +421,13 @@ describe('Core', function () {
       // our fake data, see the beginning of this file).
       assert.equal(studies
         .filter(a => (a.addon_id === FAKE_STUDY_ID))
-        .map(a => a.ionInstalled)[0],
+        .map(a => a.studyInstalled)[0],
         true);
       // Check that the FAKE_STUDY_ID_NOT_INSTALLED is marked as
       // NOT installed.
       assert.equal(studies
         .filter(a => (a.addon_id === FAKE_STUDY_ID_NOT_INSTALLED))
-        .map(a => a.ionInstalled)[0],
+        .map(a => a.studyInstalled)[0],
         false);
     });
   });

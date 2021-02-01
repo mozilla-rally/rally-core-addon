@@ -37,7 +37,7 @@ function serve() {
   };
 }
 
-export default {
+export default (cliArgs) => [{
   input: "src/main.js",
   output: {
     sourcemap: true,
@@ -47,10 +47,16 @@ export default {
   },
   plugins: [
     replace({
-      __API_ENDPOINT__: production ? "web-extension" : "web",
       // the following replacements build the site URLs.
       // In the templates, use (for example) __BASE_SITE_URL__/__FAQ_PATH__
       __BASE_SITE__: "https://rally-stage.bespoke.nonprod.dataops.mozgcp.net",
+      // Support enabling/disabling the locale check to enable
+      // the development workflows on other locales.
+      __DISABLE_LOCALE_CHECK__: !!cliArgs["config-disable-locale-check"],
+      // Data submission is disabled by default. Use this option via the CLI
+      // to enable it for testing until https://github.com/mozilla-rally/core-addon/issues/304
+      // is fixed.
+      __ENABLE_DATA_SUBMISSION__: !!cliArgs["config-enable-data-submission"],
     }),
     copy({
       targets: [
@@ -99,4 +105,4 @@ export default {
   watch: {
     clearScreen: false,
   },
-};
+}];

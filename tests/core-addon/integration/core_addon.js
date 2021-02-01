@@ -2,6 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+const assert = require('assert').strict;
 const utils = require("./utils.js");
 const { By, until } = require("selenium-webdriver");
 const firefox = require("selenium-webdriver/firefox");
@@ -28,17 +29,9 @@ async function findAndAct(driver, element, action) {
 }
 
 describe("Core-Addon Onboarding", function () {
-  // eslint-disable-next-line mocha/no-hooks-for-single-case
-  beforeEach(async function () {
-    this.driver = await utils.getFirefoxDriver(true);
-  });
-
-  // eslint-disable-next-line mocha/no-hooks-for-single-case
-  afterEach(async function () {
-    await this.driver.quit();
-  });
-
   it("should un/enroll in Rally", async function () {
+    this.driver = await utils.getFirefoxDriver(true, {});
+
     await this.driver.get(`file:///${__dirname}/index.html`);
     await this.driver.wait(until.titleIs("Installation Test"), WAIT_FOR_PROPERTY);
     await findAndAct(this.driver, By.id("install"), e => e.click());
@@ -134,5 +127,47 @@ describe("Core-Addon Onboarding", function () {
     await this.driver.wait(until.elementIsVisible(confirmButton), WAIT_FOR_PROPERTY);
     confirmButton.click();
     // TODO check that core add-on is uninstalled, see https://github.com/mozilla-rally/core-addon/issues/245
+
+    await this.driver.quit();
+  });
+
+  it("Should be disabled on non en-US locales", async function () {
+    this.driver = await utils.getFirefoxDriver(true, {
+        "intl.accept_languages": "it-IT"
+      }
+    );
+
+    await this.driver.get(`file:///${__dirname}/index.html`);
+    await this.driver.wait(until.titleIs("Installation Test"), WAIT_FOR_PROPERTY);
+    await findAndAct(this.driver, By.id("install"), e => e.click());
+
+    // switch to browser UI context, to interact with Firefox add-on install prompts.
+    await this.driver.setContext(firefox.Context.CHROME);
+    await findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
+    await findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+
+    // Switch back to web content context.
+    await this.driver.setContext(firefox.Context.CONTENT);
+
+    // We expect the extension to load its options page in a new tab.
+    await this.driver.wait(async () => {
+      return (await this.driver.getAllWindowHandles()).length === 2;
+    }, WAIT_FOR_PROPERTY);
+
+    // Selenium is still focused on the old tab, so switch to the new window handle.
+    const newTab = (await this.driver.getAllWindowHandles())[1];
+    await this.driver.switchTo().window(newTab);
+
+    // New tab is focused.
+    await this.driver.wait(
+      until.titleIs("Rally: Put your data to work for a better internet"),
+      WAIT_FOR_PROPERTY
+    );
+
+    // Check the content of the page.
+    const pageContent = await this.driver.getPageSource();
+    assert.ok(pageContent.includes("Sorry, Rally is not supported in this locale."));
+
+    await this.driver.quit();
   });
 });

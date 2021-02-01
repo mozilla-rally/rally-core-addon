@@ -47,16 +47,16 @@ function leaveStudy(studyID) {
 
     <p style="font-style: italic;">
         Easily contribute to causes you believe in; you may join multiple studies at once.
-    </p> 
+    </p>
 
     <hr />
     <div class="studies">
 
     {#each studies as study, i (study.addon_id)}
-    <StudyCard 
+    <StudyCard
         title={study.name}
         author={study.authors.name}
-        joined={(!!study.ionInstalled)}
+        joined={(!!study.studyInstalled)}
         imageSrc={study.icons[64]}
         endDate={study.endDate}
         joinedDate={study.joinedOn}
