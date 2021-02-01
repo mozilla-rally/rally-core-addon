@@ -70,27 +70,15 @@ When CI has finished and is green for your specific release branch, you are read
     1. [Draft a New Release](https://github.com/mozilla-rally/core-addon/releases/new) in the GitHub UI (`Releases > Draft a New Release`).
     2. Enter `v<myversion>` as the tag. It's important this is the same as the version you specified to the `prepare_release.sh` script, with the `v` prefix added.
     3. Select the `release` branch as the target.
-     4. Under the description, paste the contents of the release notes from `CHANGELOG.md`.
+    4. Under the description, paste the contents of the release notes from `CHANGELOG.md`.
+    5 The `dep-signing-rally_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/rally_core.xpi`. Save it to disk and then add it as an attachment named `qa-rally_core.xpi` to the `v25.0.0` release.
 5. Wait for the CI build to complete for the tag.
     * You can check [on CircleCI for the running build](https://circleci.com/gh/mozilla-rally/core-addon).
 6. Send a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-rally/core-addon/compare/master...release-v25.0.0?expand=1>
     * This is important so that no changes are lost.
     * This might have merge conflicts with the `master` branch, which you need to fix before it is merged.
 7. Once the above pull request lands, delete the specific release branch (e.g. `release-v25.0.0`).
-8. Mirror the release branch and the release tag on the signing repository:
-    ```
-    git fetch upstream
-    git push mozext release
-    git push mozext v25.0.0
-    ```
-9. Trigger the signing process by sending a pull request to merge back the specific release branch to the development branch: <https://github.com/mozilla-extensions/rally-core-addon/compare/master...release?expand=1>
-    * Add the description from the `upstream` GitHub release as the description of the PR.
-    * Set the title of the PR to `Release 25.0.0`.
-    * This is important so that CI runs the signing process.
-    * This should never have conflicts with `master` branch: no change should ever happen on this repository outside from the mirroring and merging.
-    * The `dep-signing-rally_core` task will produce a QA-signed build of the add-on on TC. Click on `Details`, then `View task in Taskcluster`. Click the `Artifacts` section to find a link to the signed XPI, e.g. `public/build/rally_core.xpi`. Save it to disk and then add it as an attachment named `qa-rally_core.xpi` to the `v25.0.0` release.
-    * Never delete the `release` branch!
-10. Refer to [Producing a production-signed extension](#producing-a-production-signed-extension) to build the officially signed add-on.
+8. Refer to [Producing a production-signed extension](#producing-a-production-signed-extension) to build the officially signed add-on.
 
 ## Hotfix release for latest version
 
