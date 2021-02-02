@@ -1,6 +1,6 @@
 {
   "name": "@mozilla/rally",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The Rally partner support library.",
   "main": "rally.js",
   "type": "module",
@@ -11,14 +11,14 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mozilla-rally/core-addon.git",
+    "url": "git+https://github.com/mozilla-rally/rally-core-addon.git",
     "directory": "support"
   },
   "keywords": [],
   "author": "Mozilla Rally team",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/mozilla-rally/core-addon/issues"
+    "url": "https://github.com/mozilla-rally/rally-core-addon/issues"
   },
-  "homepage": "https://github.com/mozilla-rally/core-addon#readme"
+  "homepage": "https://github.com/mozilla-rally/rally-core-addon#readme"
 }

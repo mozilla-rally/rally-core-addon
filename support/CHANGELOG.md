@@ -1,6 +1,8 @@
 # Unreleased changes
 
-* [#](https://github.com/mozilla-rally/core-addon/pull/xx) Migrate to ES6 modules.
+# v0.2.0 (2021-02-02)
+
+* [#316](https://github.com/mozilla-rally/rally-core-addon/pull/316): Migrate to ES6 modules.
 
 # v0.1.0 (2021-22-01)
 
