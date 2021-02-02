@@ -16,7 +16,7 @@
     "test": "npm run --silent skip-taskcluster || (npm run test-addon && npm run test-support-library)",
     "test-addon": "npm run --silent skip-taskcluster || (mocha --require  \"./tests/hooks.js\" \"./tests/core-addon/unit/*.js\")",
     "test-integration": "npm run --silent skip-taskcluster || (npm run build && mocha --timeout 30000 \"./tests/core-addon/integration/*.js\")",
-    "test-support-library": "npm run --silent skip-taskcluster || (mocha --require  \"./tests/hooks.js\" \"./tests/support/*.js\")"
+    "test-support-library": "npm run --silent skip-taskcluster || (mocha --require  \"./tests/hooks.js\" \"./tests/support/*.mjs\")"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
