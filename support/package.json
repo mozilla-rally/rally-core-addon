@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "The Rally partner support library.",
   "main": "rally.js",
+  "type": "module",
   "scripts": {
     "build": "echo FIXME, taskcluster requires a build target."
   },
