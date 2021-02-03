@@ -45,11 +45,10 @@ function leaveStudy(studyID) {
 
     <h2 class='section-header'>Current Studies</h2>
 
-    <p style="font-style: italic;">
+    <p>
         Browse available studies and find the choice (or choices) that feel right to you.
     </p>
 
-    <hr />
     <div class="studies">
 
     {#each studies as study, i (study.addon_id)}

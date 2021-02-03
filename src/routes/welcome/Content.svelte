@@ -56,6 +56,10 @@
     justify-items: center;
     align-items: center;
     width: 170px;
+    color: var(--color-marketing-gray-70);
+  }
+  .ion-card-container img {
+    height: 138px;
   }
 
   .ion-card-description {
