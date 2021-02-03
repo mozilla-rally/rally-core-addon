@@ -40,7 +40,7 @@
     class="study-card-image"
     width="60"
     alt="study icon"
-    src="public/default-study-icon.png" />
+    src="img/default-study-icon.png" />
   </slot>
   <div class="study-card-header-info">
     <h3 class="text-head-sm">

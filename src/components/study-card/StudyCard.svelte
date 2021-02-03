@@ -158,7 +158,7 @@
       class="study-card-image"
       width="60"
       alt="study icon"
-      src={imageSrc || "public/default-study-icon.png"} />
+      src={imageSrc || "img/default-study-icon.png"} />
     <span slot="study-name"><slot name="name">Study Title</slot></span>
     <span slot="study-author"><slot name="author">Study Author</slot></span>
     <span slot="study-cta">

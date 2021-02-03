@@ -41,7 +41,7 @@
         <li>We will <b>uninstall & remove the Rally add-on</b>, and any associated study add-ons that you may have installed.</li>
       </ul> 
     </div>
-    <img style=" width: 270px; padding-top: 40px;" src="public/img/before-you-go.png" alt="person walking through exit door" />
+    <img style=" width: 270px; padding-top: 40px;" src="img/before-you-go.png" alt="person walking through exit door" />
   </div>
   <div class='modal-call-flow' slot="cta">
       <Button
