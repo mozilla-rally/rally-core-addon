@@ -190,6 +190,10 @@
 
   <h3>Who We May Share Information With</h3>
 
+  <p>
+    We may share information with trusted entities that help us fulfill our mission, including:
+  </p>
+
   <div class='icon-explanation-block'>
 
     <img class="icon-block-left" width=99 src="img/data-storage-provider.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
