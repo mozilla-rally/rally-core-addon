@@ -33,7 +33,7 @@
     --left-pad: calc(var(--icon-size) + var(--gap));
 
     padding: 1.25rem;
-    box-shadow: var(--rally-box-shadow-xs);
+    box-shadow: var(--rally-box-shadow-sm);
     background-color: var(--color-white);
   }
 
