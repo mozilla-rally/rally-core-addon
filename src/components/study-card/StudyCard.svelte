@@ -236,7 +236,7 @@
     </div>
 
     <div class="study-card-privacy-policy">
-      <a href={privacyPolicyLink}>privacy policy</a>
+      <a href={privacyPolicyLink}>Privacy Policy</a>
     </div>
   </div>
 </div>

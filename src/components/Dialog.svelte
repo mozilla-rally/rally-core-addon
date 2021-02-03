@@ -77,13 +77,14 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
   }
   .container {
     margin: 8vh auto;
-    width: var(--width, var(--content-width));
-    min-height: 400px;
+    width: calc(var(--width, var(--content-width)) - 40px);
+    min-height: calc(400px - 40px);
     background-color: var(--color-white);
     padding: 20px;
     box-shadow: var(--box-shadow-lg);
     display: grid;
     grid-template-rows: max-content auto max-content;
+    font-size: 14px;
   }
 
   .cta {

@@ -155,7 +155,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
                     <p style="padding-top: 20px;">
                         You’re free to come and go as you please. Just to confirm, leaving a study means the following:
                     </p>
-                    <ul  class="mzp-u-list-styled" style="padding-right: 17px;">
+                    <ul  class="mzp-u-list-styled bigger-gap" style="padding-right: 56px;">
                         <li><b>You will only be leaving this specific study</b>.
                             If you are enrolled in other studies, data
                             collection will proceed as planned.
@@ -167,7 +167,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
                         </li>
                     </ul>
                 </div>
-                <img style="margin-bottom: -80px;" src="public/img/leave-this-study.png" alt="person considering leaving the study" />
+                    <img style="display: block; width: 100%; margin-bottom: -80px; margin-right: 24px;padding-right: 12px; box-sizing: border-box;" src="public/img/leave-this-study.png" alt="person considering leaving the study" />
         {/if}
     </div>
     <!-- if the leave study modal is present, shore up the button hheights -->
