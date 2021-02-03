@@ -100,7 +100,8 @@ li a {
 <MainSidebar>
   <button slot='header'in:fly={{duration:800, delay: 600, x: -15}} on:click={send('current-studies')}>
     <h1>
-      <VerticalLogo />
+      <img src="img/logo-tall.svg" alt="Mozilla Rally Logo" />
+      
     </h1>
   </button>
   <ul slot="navigation" in:fly={{duration: 800, delay: 300, x: -10}}>
