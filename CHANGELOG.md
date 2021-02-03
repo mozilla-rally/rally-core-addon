@@ -2,6 +2,7 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.8.0...master)
   * [318](https://github.com/mozilla-rally/rally-core-addon/pull/311): Use Remote Settings for fetching study metadata.
+  * [328](https://github.com/mozilla-rally/rally-core-addon/pull/328): Update demographic survey to use "Latinx"; list answers for race question 4 alphabetically.
 
 # v0.8.0 (2021-02-01)
 
