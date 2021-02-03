@@ -95,6 +95,10 @@ li a {
 .app-controls {
   align-self: end;
 }
+
+.app-controls button {
+  font-size: 14px;
+}
 </style>
 
 <MainSidebar>
