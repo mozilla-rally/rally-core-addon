@@ -18,6 +18,7 @@ export default (cliArgs) => {
         __ION_STUDIES_LIST__: cliArgs['config-study-list-url'] ?
           `'${cliArgs['config-study-list-url']}'` :
           "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records'",
+        __DISABLE_REMOTE_SETTINGS__: !!cliArgs["config-disable-remote-settings"],
         __ION_WEBSITE_URL__: cliArgs['config-website'] ?
           `'${cliArgs['config-website']}'` :
           "'https://rally-stage.bespoke.nonprod.dataops.mozgcp.net'",

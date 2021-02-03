@@ -11,7 +11,7 @@ export default function createStore() {
 
   // initialize from the API.
   api.initialize().then(async (newState) => {
-    console.log(`initialize: updated state - ${JSON.stringify(newState)}`);
+    console.log(`initialize: updated state -`, newState);
     set(newState);
   });
 

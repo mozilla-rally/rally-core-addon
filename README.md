@@ -87,6 +87,38 @@ To test the QA-signed extension in Firefox, you must be running the Nightly rele
 
 > **Note:** this will cause production-signed extensions (such as those from addons.mozilla.org) to not load. To allow these, set `xpinstall.signatures.required` pref to `false`.
 
+## Testing Remote Settings changes
+
+The Rally core-addon uses the Firefox [remote settings server](https://remote-settings.readthedocs.io/en/latest/) to publish metadata about current studies.
+Changes may be tested locally, or on the dev and staging servers, before pushing live.
+
+> **Note:** `npm run build-local-addon` will produce a build that uses `public/locally-available-studies.json` instead of fetching from Remote Settings. If you are doing local development you most likely want this option.
+
+For developer convenience, a [public remote-settings dev server](https://remote-settings.readthedocs.io/en/latest/tutorial-dev-server.html) is available. Making
+changes to staging or production require multiple sign-offs from Mozilla.
+
+You may also set up your own [local remote settings server](https://remote-settings.readthedocs.io/en/latest/tutorial-local-server.html).
+
+> **Note:** Firefox Release cannot be reconfigured to use a different server, an unbranded build such as Firefox Nightly must be used for testing.
+
+1. In `about:config` on Firefox Nightly, change `services.settings.server` to the URL for your server. If you're using the public remote-settings dev server
+described above, then the value will be `https://kinto.dev.mozaws.net/v1`.
+2. In the Firefox Browser console, first import the `RemoteSettings` module:
+```js
+const { RemoteSettings } = ChromeUtils.import(
+  "resource://services-settings/remote-settings.js"
+);
+```
+3. Then, disable signature checking and fetch the latest `rally-studies-v1` collection:
+```js
+RemoteSettings("rally-studies-v1").verifySignature = false;
+await RemoteSettings("rally-studies-v1").get();
+```
+4. The UI for the core add-on options page should respond immediately. After making changes to the RS server, you can either wait or explicitly poll for updates:
+```js
+await RemoteSettings.pollChanges()
+```
+
 ## Developing new frontend components
 
 The Core Add-On uses Storybook to assist in isolated component work. If you're building a new component, look at the examples in `/stories`. To run the storybook, run `npm run storybook`.

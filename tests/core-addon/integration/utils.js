@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const { Builder } = require("selenium-webdriver");
+const { Builder, Capabilities } = require("selenium-webdriver");
 const firefox = require("selenium-webdriver/firefox");
 const fs = require("fs");
 
@@ -52,6 +52,7 @@ async function getFirefoxDriver(headless, prefsOverride) {
 
   return await new Builder()
     .forBrowser("firefox")
+    .withCapabilities(Capabilities.firefox())
     .setFirefoxOptions(firefoxOptions)
     .build();
 }
