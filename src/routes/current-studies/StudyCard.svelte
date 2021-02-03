@@ -130,7 +130,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
             class="study-card-image"
             width="60"
             alt="study icon"
-            src={imageSrc || "public/default-study-icon.png"} />
+            src={imageSrc || "img/default-study-icon.png"} />
             <span slot="study-name">{title}</span>
             <span slot="study-author">{author}</span>
         </StudyCardHeader>
@@ -167,7 +167,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
                         </li>
                     </ul>
                 </div>
-                    <img style="display: block; width: 100%; margin-bottom: -80px; margin-right: 24px;padding-right: 12px; box-sizing: border-box;" src="public/img/leave-this-study.png" alt="person considering leaving the study" />
+                    <img style="display: block; width: 100%; margin-bottom: -80px; margin-right: 24px;padding-right: 12px; box-sizing: border-box;" src="../img/leave-this-study.png" alt="person considering leaving the study" />
         {/if}
     </div>
     <!-- if the leave study modal is present, shore up the button hheights -->
