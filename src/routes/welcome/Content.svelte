@@ -38,7 +38,7 @@
     grid-auto-flow: column;
     align-items: center;
     justify-content: center;
-    grid-column-gap: 10.67px;
+    grid-column-gap: 8px;
   }
 
   .ion-three-cards {
