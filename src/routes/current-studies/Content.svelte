@@ -34,7 +34,12 @@ function leaveStudy(studyID) {
 </script>
 
 <style>
+
+p {
+    margin: 0;
+}
 .studies {
+    margin-top: 28px;
     display: grid;
     grid-auto-flow: row;
     grid-row-gap: 1rem;
