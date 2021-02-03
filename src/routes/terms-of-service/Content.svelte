@@ -85,6 +85,10 @@
     <p style='font-style: italic;'>
       Before you get started, please make sure you're comfortable with our privacy notice.
     </p>
+  {:else}
+    <p>
+      Put your data to work and start building a better internet.
+    </p>
   {/if}
 
   <hr />
