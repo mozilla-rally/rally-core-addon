@@ -82,7 +82,7 @@
   <h2 class='section-header'>Our Privacy Notice</h2>
 
   {#if onboarding}
-    <p style='font-style: italic;'>
+    <p>
       Before you get started, please make sure you're comfortable with our privacy notice.
     </p>
   {:else}

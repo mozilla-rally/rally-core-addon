@@ -278,7 +278,7 @@
 <div in:fly={{ duration: 800, y: 5 }}>
   <h2 class='section-header'>Tell Us About Yourself</h2>
 
-  <p style="font-style: italic;">
+  <p>
     Each question is completely optional, and can be updated at any time by clicking Manage Profile. The answers you give will help us understand the composition and representivity of the Rally community.
   </p>
 
