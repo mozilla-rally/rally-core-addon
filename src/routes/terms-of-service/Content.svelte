@@ -240,10 +240,11 @@
 
   <div class='icon-explanation-block' style="padding-bottom: 48px;">
     <img class="icon-block-left" width=96 src="img/manage-your-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <!-- accommodate the link breaking -->
     <div class='icon-block-right'>
     <p>Rally operates based on <b>your participation</b> – meaning you can
     choose to disclose the level of information you're comfortable with, either by finding a study
-  that matches your level of comfort or by declining to share demographic information in your profile. <a href="https://support.mozilla.org/en-US/kb/mozilla-ion-managing-account-data#w_what-data-do-you-receive-from-me">Learn more about managing your data</a>.</p>
+  that matches your level of comfort or by declining to share demographic information in your profile. <br /><a href="https://support.mozilla.org/en-US/kb/mozilla-ion-managing-account-data#w_what-data-do-you-receive-from-me">Learn more about managing your data</a>.</p>
   <p>If you have any other questions regarding our privacy practices, please contact us at <a href='#FIXME'>compliance@mozilla.com</a>.</p>
 </div>
   </div>
