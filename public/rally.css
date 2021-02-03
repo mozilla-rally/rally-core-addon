@@ -225,6 +225,14 @@ ul.mzp-u-list-styled {
   margin-left: 1rem;
 }
 
+ul.mzp-u-list-styled.bigger-gap {
+  margin-bottom: 0;
+}
+
+ul.mzp-u-list-styled.bigger-gap > li + li {
+  margin-top: 16px;
+}
+
 /* special global component styles
 
 We'll use these global styles until we can assure use of :global in Svelte components again.
