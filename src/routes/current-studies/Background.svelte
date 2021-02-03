@@ -14,7 +14,7 @@ $: p.set(0);
 
 <style>
 div {
-    background-image: linear-gradient(to left, rgba(248, 248, 250, var(--o, 1)), rgba(248, 248, 250, var(--o, 1))), url('public/img/study-texture.png');
+    background-image: linear-gradient(to left, rgba(248, 248, 250, var(--o, 1)), rgba(248, 248, 250, var(--o, 1))), url('img/study-texture.png');
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: right var(--p, 0);

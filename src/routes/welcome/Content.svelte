@@ -74,7 +74,7 @@
     <h2
       class="mzp-c-call-out-title mzp-has-zap-1"
       in:fly={{ duration: 800, y: 5 }}>
-      <img src="public/img/logo-wide.svg" alt="Mozilla Rally Logo" />
+      <img src="img/logo-wide.svg" alt="Mozilla Rally Logo" />
     </h2>
 
     <p
@@ -86,15 +86,15 @@
 
     <div in:fly={{ duration: 400, y: 10 }} class="ion-three-cards">
       <div class="ion-card-container">
-        <img src="public/img/welcome-01.png" alt='review our privacy policy' />
+        <img src="img/welcome-01.png" alt='review our privacy policy' />
         <div class="ion-card-description">Review and agree to our Privacy Notice</div>
       </div>
       <div class="ion-card-container">
-        <img src="public/img/welcome-02.png" alt='tell us about yourself' />
+        <img src="img/welcome-02.png" alt='tell us about yourself' />
         <div class="ion-card-description">Tell us about yourself, if you want to</div>
       </div>
       <div class="ion-card-container">
-        <img src="public/img/welcome-03.png" alt='join studies' />
+        <img src="img/welcome-03.png" alt='join studies' />
         <div class="ion-card-description">Join the study that's right for you</div>
       </div>
     </div>
