@@ -85,13 +85,13 @@
         { key: "decline", label: "Decline to identify" },
       ],
     },
-    hispanicLatinoSpanishOrigin: {
-      key: "hispanicLatinoSpanishOrigin",
+    hispanicLatinxSpanishOrigin: {
+      key: "hispanicLatinxSpanishOrigin",
       label: "3. Are you of Hispanic, Latinx, or Spanish origin?",
       type: "single",
       values: [
         { key: "other", label: "No, not of Hispanic, Latinx, or Spanish origin" },
-        { key: "hispanicLatinoSpanish", label: "Yes" },
+        { key: "hispanicLatinxSpanish", label: "Yes" },
       ],
     },
     race: {
