@@ -225,7 +225,26 @@
 
   input[type="text"] {
     cursor: auto;
+    border: 2px solid #CDCDD4;
+    width: 140px;
+    min-width: 140px;
+    transition: border-color 200ms;
   }
+
+  input[type="text"]:focus {
+    border-color: #0250bb;
+    box-shadow: 0 0 0 2px #0250bb; 
+
+  }
+  .mzp-is-error input[type="text"] {
+    border: 2px solid #D70022;
+    color: #D70022;
+  }
+
+  .mzp-is-error input[type="text"]:focus {
+    box-shadow: 0 0 0 2px #D70022; 
+  }
+
   .mzp-c-choice-control[type="radio"] + label,
   .mzp-c-choice-control[type="checkbox"] + label {
     margin-left: 0.5rem;
