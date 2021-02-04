@@ -74,7 +74,7 @@ All the sections in this encrypted payload are optional and some of them can con
 
 - `age`: the age-group of the user.
 - `gender`: the gender of the user.
-- `origin`: whether or not user is of Hispanic, Latino, Spanish or other origin (if `hispanicLatinoSpanish` is `true`); if `other` in this section is `true`, then user is neither of Hispanic, Latino or Spanish origins.
+- `origin`: whether or not user is of Hispanic, Latinx, Spanish or other origin (if `hispanicLatinxSpanish` is `true`); if `other` in this section is `true`, then user is neither of Hispanic, Latinx or Spanish origins.
 - `race`: the races user identifies with; this can contain multiple entries.
 - `education`: the user education level.
 - `income`: the income-group of the user.
