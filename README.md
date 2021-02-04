@@ -4,7 +4,7 @@ This is the Core Add-on for the Rally platform. It is implemented as a cross-bro
 
 Rally studies are implemented as Add-ons. A [study template](https://github.com/mozilla-rally/study-template) is provided to help study authors start writing their study. A [demo website landing page](https://mozilla-rally.github.io/core-addon) is also available for testing the Core Add-on.
 
-The "source of truth" for Rally study metadata is on the [Firefox remote settings server](https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records).
+The "source of truth" for Rally study metadata is on the [Firefox remote settings server](https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/rally-study-addons-v1/records).
 
 ## Get started
 
