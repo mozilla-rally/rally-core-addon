@@ -137,7 +137,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
             <slot name="title">Title.</slot>
           </h2>
           <button on:click={onDismiss}>
-            <Close size="20px" />
+            <Close size="28px" />
           </button>
         </header>
 
