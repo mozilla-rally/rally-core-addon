@@ -7,7 +7,6 @@
 
 <style>
   .container {
-    background: url('img/noise-texture.png');
     min-height: 100vh;
     padding: 1rem;
   }
@@ -21,7 +20,7 @@
   }
 </style>
 
-<div class="container">
+<div class="container noise-background">
   <div class="study-card-set">
     <StudySet />
   </div>
