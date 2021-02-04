@@ -57,6 +57,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
 <style>
   .overlay {
     --modal-min-height: calc(400px - 40px);
+ 
     position: fixed;
     top: 0;
     left: 0;
@@ -79,6 +80,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
   }
   .container {
     width: calc(var(--width, var(--content-width)) - 40px);
+    min-width: calc(var(--width, var(--content-width)) - 40px);
     min-height: var(--modal-min-height);
     background-color: var(--color-white);
     padding: 20px;
@@ -100,9 +102,9 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
     background-color: transparent;
     border: none;
     line-height: 1;
-    width: 1.5em;
-    height: 1.5em;
-    border-radius: 1em;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
     transition: transform 500ms, color 500ms;
     color: #1d1133;
     cursor: pointer;
@@ -135,7 +137,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
             <slot name="title">Title.</slot>
           </h2>
           <button on:click={onDismiss}>
-            <Close />
+            <Close size="20px" />
           </button>
         </header>
 
