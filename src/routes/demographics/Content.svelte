@@ -85,13 +85,13 @@
         { key: "decline", label: "Decline to identify" },
       ],
     },
-    hispanicLatinoSpanishOrigin: {
-      key: "hispanicLatinoSpanishOrigin",
-      label: "3. Are you of Hispanic, Latino, or Spanish origin?",
+    hispanicLatinxSpanishOrigin: {
+      key: "hispanicLatinxSpanishOrigin",
+      label: "3. Are you of Hispanic, Latinx, or Spanish origin?",
       type: "single",
       values: [
-        { key: "other", label: "No, not of Hispanic, Latino, or Spanish origin" },
-        { key: "hispanicLatinoSpanish", label: "Yes" },
+        { key: "other", label: "No, not of Hispanic, Latinx, or Spanish origin" },
+        { key: "hispanicLatinxSpanish", label: "Yes" },
       ],
     },
     race: {
@@ -100,24 +100,25 @@
       type: "multi",
       columns: true,
       values: [
-        { key: "white", label: "White" },
         {
           key: "american_indian_or_alaska_native",
           label: "American Indian or Alaska Native",
         },
-        { key: "chinese", label: "Chinese" },
-        { key: "filipino", label: "Filipino" },
         { key: "asian_indian", label: "Asian Indian" },
-        { key: "vietnamese", label: "Vietnamese" },
-        { key: "korean", label: "Korean" },
-        { key: "japanese", label: "Japanese" },
         {
           key: "black_or_african_american",
           label: "Black or African American",
         },
+        { key: "chamorro", label: "Chamorro" },
+        { key: "chinese", label: "Chinese" },
+        { key: "filipino", label: "Filipino" },
+        { key: "japanese", label: "Japanese" },
+        { key: "korean", label: "Korean" },
         { key: "native_hawaiian", label: "Native Hawaiian" },
         { key: "samoan", label: "Samoan" },
-        { key: "chamorro", label: "Chamorro" },
+        { key: "vietnamese", label: "Vietnamese" },
+        { key: "white", label: "White" },
+        { key: "other_asian", label: "Other Asian" },
         { key: "other_pacific_islander", label: "Other Pacific Islander" },
         { key: "some_other_race", label: "Some other race" },
       ],
@@ -275,10 +276,10 @@
 </style>
 
 <div in:fly={{ duration: 800, y: 5 }}>
-  <h2 class='section-header'>Your Data Profile</h2>
+  <h2 class='section-header'>Tell Us About Yourself</h2>
 
   <p style="font-style: italic;">
-    This anonymously collected information will be used by researchers to understand how different people are exposed to the web in different ways.
+    Each question is completely optional, and can be updated at any time by clicking Manage Profile. The answers you give will help us understand the composition and representivity of the Rally community.
   </p>
 
   <hr />
