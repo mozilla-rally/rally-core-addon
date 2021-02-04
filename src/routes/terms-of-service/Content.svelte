@@ -146,9 +146,8 @@
     <div class="icon-block-right">
       <h4>Your Interaction Data</h4>
       <div>
-        This includes your <b>interactions with Firefox</b>, like the number and
-        type of Firefox Add-ons you have installed, or the duration of your
-        active browsing session duration.
+        This includes your <b>interactions with Firefox</b>, like the number and type of Firefox Add-ons you have installed, 
+        your interactions with the Rally add-on itself, or the duration of your active browsing session.
       </div>
     </div>
 
