@@ -29,7 +29,7 @@
     <span style="display: contents;" slot="icon">
       <Alert />
     </span>
-    <span slot="body">error joining study</span>
+    <span slot="body">unable to join study</span>
     <span slot="cta">
       <Button size="sm" error compact>Try Again</Button>
     </span>

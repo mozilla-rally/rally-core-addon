@@ -56,15 +56,17 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
 
 <style>
   .overlay {
+    --modal-min-height: calc(400px - 40px);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    padding-top: calc(var(--modal-min-height) / 3);
     background: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
   }
 
   h2 {
@@ -76,9 +78,8 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
     grid-template-columns: auto max-content;
   }
   .container {
-    margin: 8vh auto;
     width: calc(var(--width, var(--content-width)) - 40px);
-    min-height: calc(400px - 40px);
+    min-height: var(--modal-min-height);
     background-color: var(--color-white);
     padding: 20px;
     box-shadow: var(--box-shadow-lg);
