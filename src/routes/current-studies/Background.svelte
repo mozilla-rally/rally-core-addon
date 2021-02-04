@@ -14,13 +14,15 @@ $: p.set(0);
 
 <style>
 div {
-    background-image: linear-gradient(to left, rgba(248, 248, 250, var(--o, 1)), rgba(248, 248, 250, var(--o, 1))), url('img/study-texture.png');
+    background-image: 
+        linear-gradient(to left, rgba(248, 248, 250, var(--o, 1)), rgba(248, 248, 250, var(--o, 1))), 
+        url('img/study-texture.png');
     background-size: auto 100%;
     background-repeat: no-repeat;
-    background-position: right var(--p, 0);
+    background-position: calc(15rem + var(--content-width) * .85) var(--p1, 0);
     background-attachment: fixed;
 }
 </style>
-<div style="--o: {$t}; --p: {$p * -20}px;">
+<div style="--o: {$t}; --p1: {$p * 20}px; --p2: {$p * 10}px;">
     <slot />
 </div>
