@@ -71,7 +71,7 @@ function leaveStudy(studyID) { toggleStudyJoinStatus(studyID, false); }
         </MainContent>
     {:else}
     <StudyBG>
-        <MainContent>
+        <MainContent pad={false}>
             <CurrentStudies
                 sidebarOffset
                 {studies} 
