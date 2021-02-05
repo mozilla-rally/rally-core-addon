@@ -8,7 +8,7 @@
 
   import Onboarding from "./routes/Onboarding.svelte";
   import Main from './routes/Main.svelte';
-  import NonUSSplashPage from './routes/rally-unavailable-non-us/Content.svelte';
+  import NonUSSplashPage from './routes/non-eligible-splashes/NonUSUser.svelte';
   setContext("rally:store", store);
 
   // As soon as the store has its initial value, let's

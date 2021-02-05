@@ -2,9 +2,8 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
     * License, v. 2.0. If a copy of the MPL was not distributed with this
     * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-import { fly } from "svelte/transition";
-import { createEventDispatcher } from "svelte";
+import { createEventDispatcher, onMount } from "svelte";
+import {  fly } from 'svelte/transition';
 import Button from "../../components/Button.svelte";
 import ExternalLink from "../../components/icons/ExternalLink.svelte";
 
@@ -12,6 +11,10 @@ import Layout from "../../components/layouts/OnboardingLayout.svelte";
 import Main from "../../components/layouts/OnboardingBody.svelte";
 
 const dispatch = createEventDispatcher();
+let mounted = false;
+onMount(() => {
+    mounted = true;
+});
 </script>
 
 <style>
@@ -45,6 +48,7 @@ const dispatch = createEventDispatcher();
 
 </style>
 
+{#if mounted}
 <Layout>
     <Main>
         <section class="mzp-c-call-out">
@@ -67,7 +71,7 @@ const dispatch = createEventDispatcher();
                 </p>
 
                 <div
-                in:fly={{ duration: 800, y: 5 }}
+                in:fly={{ duration: 800, y: -5 }}
                 class="mzp-c-button-download-container"
                 style="width: 239px; display: grid; margin: auto;">
                 <Button 
@@ -84,3 +88,4 @@ const dispatch = createEventDispatcher();
         </section>
     </Main>
 </Layout>
+{/if}
