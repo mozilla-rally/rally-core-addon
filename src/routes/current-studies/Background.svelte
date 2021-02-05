@@ -5,12 +5,15 @@
 import { tweened } from 'svelte/motion';
 import { cubicOut as easing } from 'svelte/easing';
 
-let t = tweened(1, { duration: 800});
-let p = tweened(1, {duration: 1100, easing});
+let o1 = tweened(1, { duration: 800});
+let o2 = tweened(1, { duration: 800, delay: 200});
+let layer1 = tweened(1, {duration: 1100, easing, delay: 200});
+let layer2 = tweened(1, {duration: 2200, easing});
 let m = tweened(0, {duration: 500, easing});
 
-$: t.set(.2);
-$: p.set(0);
+$: o1.set(.2);
+$: layer1.set(0);
+$: layer2.set(0);
 
 let innerHeight = 0;
 let scrollY = 0;
@@ -26,7 +29,7 @@ $: m.set(percentScrolled);
 div {
     padding: 2rem 2.5rem;
     background-image: 
-        linear-gradient(to left, rgba(248, 248, 250, var(--o, 1)), rgba(248, 248, 250, var(--o, 1))), 
+        linear-gradient(to left, rgba(248, 248, 250, var(--o1, 1)), rgba(248, 248, 250, var(--o1, 1))), 
         url('img/data1-bg.png'), url('img/data2-bg.png'),
         url('img/cards1-bg.png'), url('img/cards2-bg.png');
     background-size: auto 100%;
@@ -43,12 +46,11 @@ div {
 <svelte:window bind:scrollY bind:innerHeight />
 
 <div style="
-        --o: {$t};
-        --d: {1 - $p};
-        --data1: {-$p * 35 + $m * 4}px; 
-        --data2: {$p * 10  - $m * 7}px;
-        --card1: {-$p * 15  - $m * 3}px;
-        --card2: {$p * 30  + $m * 6}px;
+        --o1: {$o1};
+        --data1: {$layer1 * 15 + $m * 4}px; 
+        --data2: {-$layer2 * 15  - $m * 7}px;
+        --card1: {-$layer1 * 10  - $m * 3}px;
+        --card2: {$layer2 * 10 + $m * 6}px;
     ">
     <slot />
 </div>
