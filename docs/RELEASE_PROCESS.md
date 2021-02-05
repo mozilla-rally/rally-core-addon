@@ -80,6 +80,7 @@ When CI has finished and is green for your specific release branch, you are read
     * This might have merge conflicts with the `master` branch, which you need to fix before it is merged.
 7. Once the above pull request lands, delete the specific release branch (e.g. `release-v25.0.0`).
 8. Refer to [Producing a production-signed extension](#producing-a-production-signed-extension) to build the officially signed add-on.
+    *  Once the signed add-on is built, save it to disk and then add it as an attachment named signed-rally_core.xpi to the v25.0.0 release.
 
 ## Hotfix release for latest version
 
