@@ -8,6 +8,7 @@
 
   import Onboarding from "./routes/Onboarding.svelte";
   import Main from './routes/Main.svelte';
+  import NonUSSplashPage from './rally-unavailable-non-us/Content.svelte';
   setContext("rally:store", store);
 
   // As soon as the store has its initial value, let's
@@ -47,5 +48,5 @@
     {/if}
   {/if}
 {:else}
-  <div>Sorry, Rally is not supported in this locale.</div>
+  <NonUSSplashPage />
 {/if}

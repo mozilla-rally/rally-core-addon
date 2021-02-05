@@ -7,6 +7,10 @@ import { fly } from "svelte/transition";
 import { createEventDispatcher } from "svelte";
 import Button from "../../components/Button.svelte";
 import ExternalLink from "../../components/icons/ExternalLink.svelte";
+
+import Layout from "../../components/layouts/OnboardingLayout.svelte";
+import Main from "../../components/layouts/OnboardingBody.svelte";
+
 const dispatch = createEventDispatcher();
 </script>
 
@@ -42,39 +46,43 @@ const dispatch = createEventDispatcher();
 
 </style>
 
-<section class="mzp-c-call-out">
-<div class="mzp-l-content" in:fly={{ duration: 800, y: 5 }}>
-    <h2
-    class="mzp-c-call-out-title mzp-has-zap-1"
-    in:fly={{ duration: 800, y: 5 }}>
-    <img src="img/logo-wide.svg" alt="Mozilla Rally Logo" />
-    </h2>
+<Layout>
+    <Main>
+        <section class="mzp-c-call-out">
+            <div class="mzp-l-content" in:fly={{ duration: 800, y: 5 }}>
+                <h2
+                class="mzp-c-call-out-title mzp-has-zap-1"
+                in:fly={{ duration: 800, y: 5 }}>
+                <img src="img/logo-wide.svg" alt="Mozilla Rally Logo" />
+                </h2>
 
-    <p
-    class="mzp-c-call-out-desc"
-    style="color: var(--color-marketing-gray-70);
-">
-    Put your data to work and start building a better internet.
-    </p>
+                <p
+                class="mzp-c-call-out-desc"
+                style="color: var(--color-marketing-gray-70);
+            ">
+                Put your data to work and start building a better internet.
+                </p>
 
-    <p style="font-weight: bold;  margin: auto; margin-top: 60px; margin-bottom: 20px; width: 660px;">
-        At this time, Mozilla Rally is only available to participants based in the U.S., but we're
-        hoping to provide access to other countries as soon as we can.
-    </p>
+                <p style="font-weight: bold;  margin: auto; margin-top: 60px; margin-bottom: 20px; width: 660px;">
+                    At this time, Mozilla Rally is only available to participants based in the U.S., but we're
+                    hoping to provide access to other countries as soon as we can.
+                </p>
 
-    <div
-    in:fly={{ duration: 800, y: 5 }}
-    class="mzp-c-button-download-container"
-    style="width: 239px; display: grid; margin: auto;">
-    <Button 
-    product
-    leave size="xl" on:click={() => dispatch('remove-extension')}>
-        Remove Extension
-    </Button>
-    </div>
-    <div class="waitlist">
-    <a target="_blank" href="__BASE_SITE__/waitlist/">Join the Waitlist
-        <ExternalLink /></a>
-    </div>
-</div>
-</section>
+                <div
+                in:fly={{ duration: 800, y: 5 }}
+                class="mzp-c-button-download-container"
+                style="width: 239px; display: grid; margin: auto;">
+                <Button 
+                product
+                leave size="xl" on:click={() => dispatch('remove-extension')}>
+                    Remove Extension
+                </Button>
+                </div>
+                <div class="waitlist">
+                <a target="_blank" href="__BASE_SITE__/waitlist/">Join the Waitlist
+                    <ExternalLink /></a>
+                </div>
+            </div>
+        </section>
+    </Main>
+</Layout>
