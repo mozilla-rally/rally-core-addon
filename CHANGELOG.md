@@ -5,7 +5,7 @@
 * [#318](https://github.com/mozilla-rally/rally-core-addon/pull/311): Use Remote Settings for fetching study metadata.
 * [#328](https://github.com/mozilla-rally/rally-core-addon/pull/328): Update demographic survey to use "Latinx"; list answers for race question 4 alphabetically.
 * [#334](https://github.com/mozilla-rally/rally-core-addon/pull/334): Make Mocha stricter about unhandled exceptions in tests; fix the enable data submission option.
- * [340](https://github.com/mozilla-rally/rally-core-addon/pull/340): Update options page favicon, toolbar icon, and addon image to use the new Rally branding.
+ * [341](https://github.com/mozilla-rally/rally-core-addon/pull/341): Update options page favicon, toolbar icon, and addon image to use the new Rally branding.
 
 # v0.8.0 (2021-02-01)
 
