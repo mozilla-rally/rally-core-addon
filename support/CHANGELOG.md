@@ -1,5 +1,7 @@
 # Unreleased changes
 
+* [#337](https://github.com/mozilla-rally/rally-core-addon/pull/337): `initialize` rejects if the study is not allowed to start.
+
 # v0.2.0 (2021-02-02)
 
 * [#316](https://github.com/mozilla-rally/rally-core-addon/pull/316): Migrate to ES6 modules.
