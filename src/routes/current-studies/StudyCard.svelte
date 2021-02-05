@@ -166,7 +166,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
                         </li>
                     </ul>
                 </div>
-                    <img style="width: 270px; padding-top: 20px; transform: translateX(-24px);" src="../img/leave-this-study.png" alt="person considering leaving the study" />
+                    <img style="width: 270px; padding-top: 20px; transform: translateX(-24px);" src="img/leave-this-study.png" alt="person considering leaving the study" />
         {/if}
     </div>
     <!-- if the leave study modal is present, shore up the button hheights -->
