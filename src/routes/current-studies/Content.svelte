@@ -34,7 +34,9 @@ function leaveStudy(studyID) {
 </script>
 
 <style>
-
+.current-studies {
+    min-height: calc(100vh - 4rem);
+}
 p {
     margin: 0;
 }
@@ -46,7 +48,7 @@ p {
 }
 </style>
 
-<div in:fly={{ duration: 800, y: 5 }}>
+<div class='current-studies' in:fly={{ duration: 800, y: 5 }}>
 
     <h2 class='section-header'>Current Studies</h2>
 
