@@ -78,7 +78,7 @@ async function joinRally(driver) {
   // FIXME we need to use button IDs here so xpath is not needed...
   // See https://github.com/mozilla-rally/core-addon/issues/244
   await findAndAct(driver, By.xpath(`//button[text()="Get Started"]`), e => e.click());
-  await findAndAct(driver, By.xpath(`//button[text()="Accept & Participate"]`), e => e.click());
+  await findAndAct(driver, By.xpath(`//button[text()="Accept & Enroll"]`), e => e.click());
   // TODO check that state is enrolled, see https://github.com/mozilla-rally/core-addon/issues/245
 
   await findAndAct(driver, By.xpath(`//button[text()="Save & Continue"]`), e => e.click());
