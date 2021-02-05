@@ -29,7 +29,7 @@ const dispatch = createEventDispatcher();
 }
 
 .mzp-c-call-out-title {
-    margin-bottom: 12px;
+    margin-bottom: -12px;
 }
 .waitlist {
     margin-top: 24px;
@@ -58,8 +58,7 @@ const dispatch = createEventDispatcher();
 
                 <p
                 class="mzp-c-call-out-desc"
-                style="color: var(--color-marketing-gray-70);
-            ">
+                style="color: var(--color-marketing-gray-70); letter-spacing: -.01em;">
                 Put your data to work and start building a better internet.
                 </p>
 
