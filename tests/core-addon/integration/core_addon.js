@@ -222,6 +222,7 @@ describe("Core-Addon", function () {
 
     // Ensure that the study card for the base study is displayed.
     const anotherStudySelector = By.xpath(`//span[text()="Another Rally Study"]`);
+    await this.driver.wait(until.elementLocated(anotherStudySelector), WAIT_FOR_PROPERTY);
     await this.driver.findElement(anotherStudySelector);
 
     // Check that studies are installable.
