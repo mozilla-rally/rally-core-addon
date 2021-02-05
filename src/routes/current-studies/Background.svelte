@@ -26,11 +26,11 @@ $: m.set(percentScrolled);
 
 <svelte:window bind:scrollY bind:innerHeight />
 
-<div class='study-background' style="
-        --o1: {$o1};
-        --data1: {$layer1 * 15 + $m * 4}px; 
-        --data2: {-$layer2 * 15  - $m * 7}px;
-        --card1: {-$layer1 * 10  - $m * 3}px;
-        --card2: {$layer2 * 10 + $m * 6}px;">
+<div class='study-background' style={`
+        --o1: ${$o1};
+        --data1: ${$layer1 * 15 + $m * 4}px; 
+        --data2: ${-$layer2 * 15  - $m * 7}px;
+        --card1: ${-$layer1 * 10  - $m * 3}px;
+        --card2: ${$layer2 * 10 + $m * 6}px;`}>
     <slot />
 </div>
