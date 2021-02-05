@@ -8,7 +8,7 @@
 
   import Onboarding from "./routes/Onboarding.svelte";
   import Main from './routes/Main.svelte';
-  import NonUSSplashPage from './rally-unavailable-non-us/Content.svelte';
+  import NonUSSplashPage from './routes/rally-unavailable-non-us/Content.svelte';
   setContext("rally:store", store);
 
   // As soon as the store has its initial value, let's
@@ -21,9 +21,10 @@
   // We currently exclusively support Rally on en-US locales,
   // but still support enabling/disabling the locale check
   // to enable the development workflows on other locales.
-  let isRallySupported = __DISABLE_LOCALE_CHECK__
-    ? true
-    : navigator.language === "en-US";
+  let isRallySupported = false;
+  // let isRallySupported = __DISABLE_LOCALE_CHECK__
+  //   ? true
+  //   : navigator.language === "en-US";
 </script>
 
 {#if isRallySupported}
@@ -41,12 +42,12 @@
       <Main
           on:leave-rally={() => {
             store.updatePlatformEnrollment(false);
-            // reset to first run until Rally uninstalls itself.
-            firstRun = true;
           }}
         />
     {/if}
   {/if}
 {:else}
-  <NonUSSplashPage />
+  <NonUSSplashPage on:remove-extension={() => {
+    store.uninstallRally();
+  }} />
 {/if}
