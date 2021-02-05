@@ -6,7 +6,6 @@
   import { fly } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
   import Button from "../../components/Button.svelte";
-  import Logo from "../../components/MozillaRallyLogo.svelte";
   import ExternalLink from "../../components/icons/ExternalLink.svelte";
   const dispatch = createEventDispatcher();
 </script>
