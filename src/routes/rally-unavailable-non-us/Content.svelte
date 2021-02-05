@@ -24,7 +24,6 @@ const dispatch = createEventDispatcher();
 .mzp-l-content {
     padding-left: 0;         
     padding-right: 0;
-    /* this is Main + required padding to meet 120px */
     padding-top: 80px;
 }
 

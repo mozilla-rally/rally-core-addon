@@ -54,6 +54,13 @@ export default function createStore() {
       } catch (err) {
         console.error(`Rally - failed to update the demographic survey`, err);
       }
+    },
+    async uninstallRally() {
+      try {
+        await api.uninstallRally();
+      } catch (err) {
+        console.error(`Rally - failed to uninstall itself on request`, err);
+      }
     }
   };
 }
