@@ -289,8 +289,6 @@ describe('Core', function () {
     });
 
     it('dispatches uninstall-rally messages', async function () {
-      // FIXME: this test doesn't seem to work. Figure out what's happening here.
-      browser.management.uninstallSelf.yields();
       await this.core._handleMessage(
         {type: "uninstall-rally", data: {}}
       );
