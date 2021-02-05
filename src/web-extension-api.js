@@ -150,11 +150,11 @@ export default {
     // Fetch the study add-on and attempt to install it.
     const state = await this.getAvailableStudies();
     const studies = state.availableStudies;
-    const studyMetadata = studies.find(s => s.addon_id === studyID);
+    const studyMetadata = studies.find(s => s.addonId === studyID);
 
-    // This triggers the install by directing the page toward the sourceURI,
+    // This triggers the install by directing the page toward the downloadLink,
     // which is the study add-on's xpi.
-    window.location.href = studyMetadata.sourceURI.spec;
+    window.location.href = studyMetadata.downloadLink;
 
     return true;
   },
