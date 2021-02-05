@@ -212,6 +212,14 @@ describe("Core-Addon", function () {
     const baseStudySelector = By.xpath(`//span[text()="Rally Base Study"]`);
     await this.driver.findElement(baseStudySelector);
 
+    // FIXME Take a screenshot.
+    await this.driver.takeScreenshot().then(data => {
+      var base64Data = data.replace(/^data:image\/png;base64,/, "")
+      fs.writeFile("out.png", base64Data, 'base64', function (err) {
+        if (err) console.log(err);
+      });
+    });
+
     // Switch to browser UI context, so we can inject script to modify Remote Settings.
     const modifiedTestStudy = Object.assign({}, rallyTestStudy);
     modifiedTestStudy.name = "Another Rally Study";
