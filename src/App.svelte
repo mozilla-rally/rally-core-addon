@@ -21,10 +21,9 @@
   // We currently exclusively support Rally on en-US locales,
   // but still support enabling/disabling the locale check
   // to enable the development workflows on other locales.
-  let isRallySupported = false;
-  // let isRallySupported = __DISABLE_LOCALE_CHECK__
-  //   ? true
-  //   : navigator.language === "en-US";
+  let isRallySupported = __DISABLE_LOCALE_CHECK__
+    ? true
+    : navigator.language === "en-US";
 </script>
 
 {#if isRallySupported}

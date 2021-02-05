@@ -205,7 +205,8 @@ module.exports = class Core {
       case "uninstall-rally":
         // If a user is uninstalling Rally because they do not qualify to be 
         // on the platform (e.g. they are non-US), uninstall it for them on request.
-        return browser.management.uninstallSelf({ showConfirmDialog: false });
+        browser.management.uninstallSelf({ showConfirmDialog: false });
+        return Promise.resolve();
       case "update-demographics":
         return this._updateDemographics(message.data);
       default:
