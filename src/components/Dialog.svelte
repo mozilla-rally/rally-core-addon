@@ -57,7 +57,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
 <style>
   .overlay {
     --modal-min-height: calc(400px - 40px);
- 
+
     position: fixed;
     top: 0;
     left: 0;

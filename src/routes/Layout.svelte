@@ -13,9 +13,6 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<style>
-</style>
-
 <Layout>
   <Sidebar on:change-view on:leave-rally={() => {
     leaveModal = true;
