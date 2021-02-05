@@ -25,7 +25,7 @@ export default (cliArgs) => {
         // to enable it for testing until https://github.com/mozilla-rally/core-addon/issues/304
         // is fixed.
         __ENABLE_DATA_SUBMISSION__: !!cliArgs["config-enable-data-submission"],
-        __ION_WEBSITE_URL__: cliArgs['config-website'] ?
+        __WEBSITE_URL__: cliArgs['config-website'] ?
           `'${cliArgs['config-website']}'` :
           "'https://rally-stage.bespoke.nonprod.dataops.mozgcp.net'",
       }),
