@@ -191,7 +191,7 @@ describe("Core-Addon", function () {
 
     // Check the content of the page.
     const pageContent = await this.driver.getPageSource();
-    assert.ok(pageContent.includes("Sorry, Rally is not supported in this locale."));
+    assert.ok(pageContent.includes("At this time, Mozilla Rally is only available to participants based in the U.S."));
 
     await this.driver.quit();
   });
