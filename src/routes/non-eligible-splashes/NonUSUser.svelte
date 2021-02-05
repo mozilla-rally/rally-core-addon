@@ -25,7 +25,7 @@ onMount(() => {
 }
 
 .mzp-l-content {
-    padding-left: 0;         
+    padding-left: 0;
     padding-right: 0;
     padding-top: 80px;
 }
@@ -65,7 +65,7 @@ onMount(() => {
                 Put your data to work and start building a better internet.
                 </p>
 
-                <p style="font-weight: bold;  margin: auto; margin-top: 60px; margin-bottom: 20px; width: 660px;">
+                <p style="font-weight: bold; margin: auto; margin-top: 60px; margin-bottom: 20px; width: 660px;">
                     At this time, Mozilla Rally is only available to participants based in the U.S., but we're
                     hoping to provide access to other countries as soon as we can.
                 </p>
