@@ -41,7 +41,8 @@ let studies = [];
 fetch('locally-available-studies.json')
     .then(r => r.json())
     .then(s => {
-        studies = [nicerStudy, ...s.data];
+        // studies = [nicerStudy, ...s];
+        studies = [nicerStudy, ...s];
     });
 
 function toggleStudyJoinStatus(studyID, joined) {
