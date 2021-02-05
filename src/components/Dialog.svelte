@@ -12,6 +12,9 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
   import Portal from './Portal.svelte';
   import Close from "./icons/Close.svelte";
 
+  export let width;
+  $: styles = width ? `--width: ${width};` : undefined;
+
   const dispatch = createEventDispatcher();
   const key =
     `modal-${Math.random().toString(36).substring(2, 15) +
@@ -51,15 +54,18 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
 
 <style>
   .overlay {
+    --modal-min-height: calc(400px - 40px);
+
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    padding-top: calc(var(--modal-min-height) / 3);
     background: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
   }
 
   h2 {
@@ -71,18 +77,15 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
     grid-template-columns: auto max-content;
   }
   .container {
-    margin: 8vh auto;
-    width: 580px;
-    min-height: 400px;
+    width: calc(var(--width, var(--content-width)) - 40px);
+    min-width: calc(var(--width, var(--content-width)) - 40px);
+    min-height: var(--modal-min-height);
     background-color: var(--color-white);
     padding: 20px;
     box-shadow: var(--box-shadow-lg);
     display: grid;
     grid-template-rows: max-content auto max-content;
-  }
-
-  .modal-body {
-    padding: 2rem 0;
+    font-size: 14px;
   }
 
   .cta {
@@ -97,9 +100,9 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
     background-color: transparent;
     border: none;
     line-height: 1;
-    width: 1.5em;
-    height: 1.5em;
-    border-radius: 1em;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
     transition: transform 500ms, color 500ms;
     color: #1d1133;
     cursor: pointer;
@@ -120,6 +123,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
       transition:fly={{duration: 200, y: 5}}
       data-micromodal-close
       class="overlay"
+      style={styles}
       on:click={dismissParent}>
       <div
         role="dialog"
@@ -131,7 +135,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
             <slot name="title">Title.</slot>
           </h2>
           <button on:click={onDismiss}>
-            <Close />
+            <Close size="28px" />
           </button>
         </header>
 

@@ -7,7 +7,6 @@
 
 <style>
   .container {
-    background: url('/public/texture.png');
     min-height: 100vh;
     padding: 1rem;
   }
@@ -15,15 +14,13 @@
     width: 660px;
     display: grid;
     margin: auto;
-    /* grid-auto-flow: row;
-    grid-row-gap: 1rem; */
     grid-auto-flow: row;
     align-items: start;
     grid-gap: 4rem;
   }
 </style>
 
-<div class="container">
+<div class="container noise-background">
   <div class="study-card-set">
     <StudySet />
   </div>

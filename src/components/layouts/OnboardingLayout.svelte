@@ -8,7 +8,6 @@
 
 <style>
   div {
-    background: url('/public/texture.png');
     min-height: 100vh;
   }
 
@@ -17,6 +16,6 @@
   }
 </style>
 
-<div class="mzp-t-mozilla" class:no-overflow={noOverflow}>
+<div class="mzp-t-mozilla noise-background" class:no-overflow={noOverflow}>
   <slot />
 </div>

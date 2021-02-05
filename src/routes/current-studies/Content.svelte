@@ -34,22 +34,28 @@ function leaveStudy(studyID) {
 </script>
 
 <style>
+.current-studies {
+    min-height: calc(100vh - 4rem);
+}
+p {
+    margin: 0;
+}
 .studies {
+    margin-top: 28px;
     display: grid;
     grid-auto-flow: row;
     grid-row-gap: 1rem;
 }
 </style>
 
-<div in:fly={{ duration: 800, y: 5 }}>
+<div class='current-studies' in:fly={{ duration: 800, y: 5 }}>
 
     <h2 class='section-header'>Current Studies</h2>
 
-    <p style="font-style: italic;">
-        Easily contribute to causes you believe in; you may join multiple studies at once.
+    <p>
+        Browse available studies and find the choice (or choices) that feel right to you.
     </p>
 
-    <hr />
     <div class="studies">
 
     {#each studies as study, i (study.addon_id)}

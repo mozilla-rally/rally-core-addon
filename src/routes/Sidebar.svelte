@@ -6,7 +6,6 @@
   import { fly } from 'svelte/transition';
   import MainSidebar from "../components/layouts/MainSidebar.svelte";
   import ExternalLink from "../components/icons/ExternalLink.svelte";
-  import VerticalLogo from "../components/VerticalLogo.svelte";
 
   const dispatch = createEventDispatcher();
   function send(view) {
@@ -95,16 +94,25 @@ li a {
 .app-controls {
   align-self: end;
 }
+
+.app-controls button {
+  font-size: 14px;
+}
 </style>
 
 <MainSidebar>
   <button slot='header'in:fly={{duration:800, delay: 600, x: -15}} on:click={send('current-studies')}>
     <h1>
-      <VerticalLogo />
+      <img src="img/logo-tall.svg" alt="Mozilla Rally Logo" />
+      
     </h1>
   </button>
   <ul slot="navigation" in:fly={{duration: 800, delay: 300, x: -10}}>
     <li><button class:active={currentView === 'current-studies'} on:click={send('current-studies')}>Current Studies</button></li>
+    <li>
+      <a class="external" target="_blank" href="https://support.mozilla.org/en-US/kb/about-mozilla-rally">Support
+        <ExternalLink /></a>
+    </li>
     <li>
       <a class="external" target="_blank" href="__BASE_SITE__/how-rally-works/faqs/">FAQ
         <ExternalLink /></a>

@@ -4,31 +4,36 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { fly } from "svelte/transition";
+
+  export let onboarding = true;
 </script>
 
 <style>
   h3 {
-    font-size: 20px;
-    margin-bottom: 2em;
+    font-size: 24px;
+    margin-bottom: 8px;
     margin-top: 2em;
+    font-family: "Zilla Slab", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+  p, div, li {
+    letter-spacing: -.01em;
   }
 
   h4 {
     font-size: 16px;
-    margin-bottom: 0;
-    margin-top: 2em;
+    margin-bottom: 4px;
+    margin-top: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol";
   }
   h2,
   h3,
   h4 {
     color: var(--color-ink-50);
-  }
-
-  h3,
-  h4 {
-    font-family: "Metropolis", -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
-      "Segoe UI Emoji", "Segoe UI Symbol";
   }
 
   p,
@@ -37,133 +42,212 @@
   }
 
   hr {
-    border-top: 1px dashed var(--color-black);
+    border-top: .5px dashed var(--color-black);
     margin-bottom: 2rem;
+  }
+
+  .icon-explanation-block {
+    display: grid;
+    grid-template-columns: [icon] 140px [body] auto;
+    grid-template-rows: auto;
+    grid-row-gap: 40px;
+    grid-column-gap: 27px;
+    padding-top: 16px;
+    padding-bottom: 24px;
+  }
+
+  .icon-block-left {
+    margin: auto;
+    grid-column: icon;
+    justify-self: center;
+  }
+
+  .icon-block-right {
+    grid-column: body;
+    align-self: center;
+    max-width: 504px;
+    color: var(--color-marketing-gray-70);
+  }
+
+  .icon-block-right p:last-child {
+    margin: 0;
+  }
+  .align-start {
+    margin: 0 auto;
+  }
+
+  .mzp-u-list-styled li {
+    margin-bottom: .5em;
   }
 </style>
 
 <div in:fly={{ duration: 800, y: 5 }}>
   <h2 class='section-header'>Our Privacy Notice</h2>
 
-  <p style='font-style: italic;'>
-    Requesting consent for how your data can be used for causes you believe in.
-  </p>
+  {#if onboarding}
+    <p>
+      Before you get started, please make sure you're comfortable with our privacy notice.
+    </p>
+  {:else}
+    <p>
+      Put your data to work and start building a better internet.
+    </p>
+  {/if}
 
   <hr />
 
-  <p>
-    Mozilla Rally is an experimental initiative led by Mozilla to better understand
-    how our users use and navigate the internet. Mozilla Rally is available to Firefox
-    users in the United States who are 19 or older.
-  </p>
-  <p>
-    When you join Mozilla Rally, we’ll ask you to provide optional demographic data.
-    We’ll also collect basic technical and interaction data as long as you’re
-    participating in Mozilla Rally. Once you’ve enrolled, you’ll have the opportunity
-    to join available studies—each study will have a specific research purpose
-    and unique privacy notice for you to review before you join it.
-  </p>
-  <p>
-    In this Privacy Notice, we detail what data the Mozilla Rally program collects and
-    discloses, and why. Read each study’s privacy notice for information about
-    how data is collected and handled in that particular study. We also adhere
-    to the Mozilla Privacy Policy for how we receive, handle, and share
-    information.
-  </p>
+  <h3>Introduction</h3>
 
-  <h3>Information We Collect</h3>
+  <p>In this notice, we detail what data Mozilla Rally collects and discloses, and why it does so.</p>
 
-  <h4>Demographic data</h4>
+  <div class="icon-explanation-block">
+    <img class="icon-block-left" width=84 src="img/new-platform.png" alt="Mozilla Rally is a new platform created to empower people to contribute their data towards <b>building a better internet" />
+    <div class="icon-block-right">
+      Mozilla Rally is a <b>new platform</b> created to empower people to 
+      contribute their data towards <b>building a better internet</b>.
+    </div>
+    <img class="icon-block-left" width=111 src="img/who-is-eligible.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <div class="icon-block-right"  style="max-width: 514px;">
+      It is currently available to Firefox users in the U.S. who are 19 or older.
+    </div>
+    <img class="icon-block-left" width=83 src="img/notice-covers-rally.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <div class="icon-block-right">
+      <b>This notice only covers Rally itself</b>, as each study will have a
+      unique privacy notice detailing how data is collected and handled in 
+      that particular study. We also adhere to the <a href="https://www.mozilla.org/en-US/privacy/">Mozilla Privacy Policy</a>
+      for how we receive, handle, and share information.
+    </div>
+  </div>
+  <h3>Types of Information We Collect</h3>
 
-  <p>
-    We collect optional, self-reported demographic data from Mozilla Rally
-    participants, including their age, gender, race/ethnicity, education level,
-    household income, and zip code.
-  </p>
+  <p>We'll ask for your consent before we collect any of your info, which could include:</p>
 
-  <h4>Technical data</h4>
+  <div class='icon-explanation-block'>
 
-  <p>
-    We collect basic information about your device’s operating system. When
-    Firefox sends data to us, your IP address is temporarily collected as part
-    of our server logs.
-  </p>
+    <img class="icon-block-left" width=95 src="img/your-demographic-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <div class="icon-block-right">
+      <h4>Your Demographic Data</h4>
+      <div>
+        This includes your <b>age</b>, <b>gender</b>, <b>race/ethnicity</b>, 
+        <b>education level</b>, <b>household income</b>, and <b>zip code</b>.
+        This is entirely optional.
+      </div>
+    </div>
 
-  <h4>Interaction data</h4>
-  <p>
-    We collect data about your interactions with Firefox, like number and type
-    of installed Firefox Add-ons and your active browsing session duration.
-  </p>
+    <img class="icon-block-left" width=109 src="img/your-technical-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <div class="icon-block-right">
+      <h4>Your Device's Technical Data</h4>
+      <div>
+        This includes your device's <b>operating system</b> and <b>IP address</b> (which we'll only hang on to temporarily).
+      </div>
+    </div>
 
-  <h4>Location data</h4>
+    <img class="icon-block-left" width=97 src="img/your-interaction-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <div class="icon-block-right">
+      <h4>Your Interaction Data</h4>
+      <div>
+        This includes your <b>interactions with Firefox</b>, like the number and type of Firefox Add-ons you have installed, 
+        your interactions with the Rally add-on itself, or the duration of your active browsing session.
+      </div>
+    </div>
 
-  <p>
-    We will use your IP address to approximate your country location, in
-    addition to collecting your self-reported zip code (if you provide it).
-  </p>
-
-  <p>See a full list of the data we collect.</p>
+  <img class="icon-block-left" width=82 src="img/your-location-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+  <div class="icon-block-right">
+    <h4>Your Location Data</h4>
+    <div>
+      This includes your <b>country</b>, <b>city</b>, and <b>state</b> location, which is
+      determined by your <b>IP address</b>.
+    </div>
+  </div>
+</div>
 
   <h3>How We Use Your Information</h3>
 
   <p>
-    We use the information we collect for for research and development,
-    including:
+    We use the information we collect for research and development, which could mean:
   </p>
 
-  <ul class="mzp-u-list-styled">
-    <li>
-      To determine which participants meet the criteria to be available to
-      participate in particular research studies
-    </li>
-    <li>
-      To ensure our data sets are representative of the many users of Firefox
-    </li>
-    <li>
-      To improve our existing products and services
-    </li>
-    <li>To create and develop new
-      products
-    </li>
-  </ul>
+  <div class='icon-explanation-block'>
+    <img class="icon-block-left align-start" width=125 src="img/how-we-use-your-information.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <ul class="mzp-u-list-styled icon-block-right">
+      <li>
+        determining which Rally participants could be eligible to participate
+        in particular research studies, should they choose to enroll
+      </li>
+      <li>
+        ensuring that the data we collect represents the diverse communities
+        that use the internet
+      </li>
+      <li>
+        improving Mozilla's existing products and services
+      </li>
+      <li>
+        creating and developing new products
+      </li>
+    </ul>
+  </div>
 
-  <h3>Who We May Disclose Information To</h3>
-
-  <h4>Google Cloud Platform (GCP)</h4>
+  <h3>Who We May Share Information With</h3>
 
   <p>
-    We use GCP as our cloud-storage service. Mozilla has contracted with GCP
-    requiring them to handle the data in ways that are approved by us.
+    We may share information with trusted entities that help us fulfill our mission, including:
   </p>
 
-  <h4>Third-party researchers</h4>
+  <div class='icon-explanation-block'>
 
-  <p>
-    As part of being part of the Mozilla Rally program, we will offer you the ability
-    to join studies. If necessary for the study, we may ask you to share all or
-    some of the data collected under this Privacy Notice with the third party
-    researcher(s) administering a study. Mozilla will contractually obligate the
-    third party researchers to ensure that your data is handled in ways that are
-    approved by us.
-  </p>
+    <img class="icon-block-left" width=99 src="img/data-storage-provider.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <div class='icon-block-right'>
+      <h4>Our Data Storage Provider</h4>
 
-  <h4>General public</h4>
+      <div>
+        We use Google's cloud storage service to store the data collected
+        through Rally. Google only stores Rally data and <b>cannot use that
+          data for its own purposes</b>.
+      </div>
+    </div>
 
-  <p>
-    To advance our mission of being open, we may release data sets to the
-    general public. When we do so, we will aggregate the data and remove
-    identifying information, so the data won’t reveal the behaviors or
-    characteristics of individual users.
-  </p>
+    <img class="icon-block-left" width=117 src="img/our-research-partners.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <div class='icon-block-right'>
+      <h4>Our Research Partners</h4>
 
-  <h3>Data Management</h3>
+      <div>
+        Rally partners with trusted third parties to build and release studies. 
+        For any studies you join, we may ask you to share the data collected
+        under <b>this Privacy Notice</b> with third party researcher(s)
+        administering the study. Our research partners are under contracts
+        with Mozilla to ensure that <b>your data is protected</b> and handled only
+        in ways we've approved.
+      </div>
+    </div>
 
-  <p>
-    You can learn more about managing your Mozilla Rally and individual study data.
-  </p>
+    <img class="icon-block-left" width=118 src="img/people-like-you.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <div class='icon-block-right'>
+      <h4>People Like You (only aggregated data)</h4>
 
-  <p>
-    If you have any other questions regarding our privacy practices, please
-    contact us at compliance@mozilla.com.
-  </p>
+      <div>
+        Our mission is focused on <b>empowering everyday citizens</b>, not just a
+        select few. To that end, we may release aggregated, de-identified data sets
+        to help further public knowledge on certain issues. These
+        data sets will be <b>stripped of any identifiable data</b>, and won't reveal
+        anything about individual users.
+      </div>
+    </div>
+  </div>
+
+  <h3>How You Can Manage Your Data</h3>
+  <p>Our "opt-in" approach to data collection means that you choose which data you share with us.</p>
+
+  <div class='icon-explanation-block' style="padding-bottom: 48px;">
+    <img class="icon-block-left" width=96 src="img/manage-your-data.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <!-- accommodate the link breaking -->
+    <div class='icon-block-right'>
+    <p>Rally operates based on <b>your participation</b> – meaning you can
+    choose to disclose the level of information you're comfortable with, either by finding a study
+  that matches your level of comfort or by declining to share demographic information in your profile. <br /><a href="https://support.mozilla.org/en-US/kb/mozilla-rally-managing-account-data">Learn more about managing your data</a>.</p>
+  <p>If you have any other questions regarding our privacy practices, please contact us at <a href='mailto:compliance@mozilla.com'>compliance@mozilla.com</a>.</p>
+</div>
+  </div>
+
+
+
 </div>

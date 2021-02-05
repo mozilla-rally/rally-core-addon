@@ -1,5 +1,5 @@
 :root {
-  --content-width: 660px;
+  --content-width: 700px;
   --onboarding-cta-height: 434px;
   --onboarding-cta-offset: calc(var(--onboarding-cta-height) - 230px);
 
@@ -39,7 +39,7 @@ main h2 {
 }
 
 h2.section-header {
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
 }
 
 main h3 {
@@ -65,7 +65,6 @@ h6 {
 }
 
 p,
-div,
 ul,
 ol {
   color: var(--color-marketing-gray-70);
@@ -81,6 +80,32 @@ main h4 {
 main hr {
   border-top: 1px dashed var(--color-black);
   margin-bottom: 2rem;
+}
+
+.noise-background {
+  background: url("img/noise-texture-top.png"), url("img/noise-texture.png");
+  background-blend-mode: screen;
+}
+
+/* place the styling in src/routes/current-studies/Background.svelte in the stylesheet
+to ensure access to the background images. */
+.study-background {
+  padding: 2rem 2.5rem;
+  background-image: linear-gradient(
+      to left,
+      rgba(248, 248, 250, var(--o1, 1)),
+      rgba(248, 248, 250, var(--o1, 1))
+    ),
+    url("img/data1-bg.png"), url("img/data2-bg.png"), url("img/cards1-bg.png"),
+    url("img/cards2-bg.png");
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: left top,
+    calc(15rem + var(--content-width) * 0.85) var(--data1, 0),
+    calc(15rem + var(--content-width) * 0.85) var(--data2, 0),
+    calc(15rem + var(--content-width) * 0.85) var(--card1, 0),
+    calc(15rem + var(--content-width) * 0.85) var(--card2, 0);
+  background-attachment: fixed;
 }
 
 .radius-sm {
@@ -226,6 +251,14 @@ ul.mzp-u-list-styled {
   margin-left: 1rem;
 }
 
+ul.mzp-u-list-styled.bigger-gap {
+  margin-bottom: 0;
+}
+
+ul.mzp-u-list-styled.bigger-gap > li + li {
+  margin-top: 16px;
+}
+
 /* special global component styles
 
 We'll use these global styles until we can assure use of :global in Svelte components again.
@@ -238,4 +271,20 @@ See #141: https://github.com/mozilla-rally/core-addon/issues/141
 .study-card-container a,
 .study-card-container a:hover {
   color: var(--color-marketing-gray-90);
+}
+
+/* some modals have text on the left, image on the right (e.g. leaving study, leaving Rally). Use this class. */
+.split-content-modal {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.content-width {
+  width: var(--content-width);
+}
+
+.modal-call-flow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: var(--gap, 12px);
 }

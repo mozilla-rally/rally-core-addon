@@ -7,6 +7,8 @@ import Layout from './Layout.svelte';
 import CurrentStudies from './current-studies/Content.svelte';
 import PrivacyNotice from './terms-of-service/Content.svelte';
 import Demographics from './demographics/Content.svelte';
+import StudyBackgroundElement from './current-studies/Background.svelte';
+import MainContent from '../components/layouts/MainContent.svelte';
 
 const store = getContext("rally:store");
 
@@ -31,15 +33,23 @@ onMount(() => { mounted = true; })
     on:leave-rally
 >
         {#if view === 'complete-profile'}
-            <Demographics />
+            <MainContent>
+                <Demographics />
+            </MainContent>
         {:else if view === 'privacy-notice'}
-            <PrivacyNotice />
+            <MainContent>
+                <PrivacyNotice onboarding={false} />
+            </MainContent>
         {:else}
-            <CurrentStudies
-                sidebarOffset
-                studies={$store.availableStudies}
-                on:join-study={(evt) => { joinStudy(evt.detail); }}
-                on:leave-study={(evt) => { leaveStudy(evt.detail); }} />
+            <StudyBackgroundElement>
+                <MainContent  pad={false}>
+                    <CurrentStudies
+                        sidebarOffset
+                        studies={$store.availableStudies}
+                        on:join-study={(evt) => { joinStudy(evt.detail); }}
+                        on:leave-study={(evt) => { leaveStudy(evt.detail); }} />
+                </MainContent>
+            </StudyBackgroundElement>
         {/if}
 </Layout>
 {/if}

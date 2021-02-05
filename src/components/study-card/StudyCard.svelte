@@ -33,7 +33,7 @@
     --left-pad: calc(var(--icon-size) + var(--gap));
 
     padding: 1.25rem;
-    box-shadow: var(--rally-box-shadow-xs);
+    box-shadow: var(--rally-box-shadow-sm);
     background-color: var(--color-white);
   }
 
@@ -158,7 +158,7 @@
       class="study-card-image"
       width="60"
       alt="study icon"
-      src={imageSrc || "public/default-study-icon.png"} />
+      src={imageSrc || "img/default-study-icon.png"} />
     <span slot="study-name"><slot name="name">Study Title</slot></span>
     <span slot="study-author"><slot name="author">Study Author</slot></span>
     <span slot="study-cta">
@@ -236,7 +236,7 @@
     </div>
 
     <div class="study-card-privacy-policy">
-      <a href={privacyPolicyLink}>privacy policy</a>
+      <a href={privacyPolicyLink}>Privacy Policy</a>
     </div>
   </div>
 </div>

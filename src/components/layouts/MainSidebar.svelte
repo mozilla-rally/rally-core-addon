@@ -19,6 +19,7 @@
     align-content: stretch;
     align-items: start;
     grid-row-gap: 2rem;
+    border-right: 1px solid #E1E1E3;
   }
 </style>
 
