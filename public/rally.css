@@ -87,6 +87,27 @@ main hr {
   background-blend-mode: screen;
 }
 
+/* place the styling in src/routes/current-studies/Background.svelte in the stylesheet
+to ensure access to the background images. */
+.study-background {
+  padding: 2rem 2.5rem;
+  background-image: linear-gradient(
+      to left,
+      rgba(248, 248, 250, var(--o1, 1)),
+      rgba(248, 248, 250, var(--o1, 1))
+    ),
+    url("img/data1-bg.png"), url("img/data2-bg.png"), url("img/cards1-bg.png"),
+    url("img/cards2-bg.png");
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: left top,
+    calc(15rem + var(--content-width) * 0.85) var(--data1, 0),
+    calc(15rem + var(--content-width) * 0.85) var(--data2, 0),
+    calc(15rem + var(--content-width) * 0.85) var(--card1, 0),
+    calc(15rem + var(--content-width) * 0.85) var(--card2, 0);
+  background-attachment: fixed;
+}
+
 .radius-sm {
   border-radius: 4px;
 }

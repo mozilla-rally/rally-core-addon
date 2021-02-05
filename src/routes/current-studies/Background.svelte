@@ -25,27 +25,9 @@ $: m.set(percentScrolled);
 
 </script>
 
-<style>
-div {
-    padding: 2rem 2.5rem;
-    background-image: 
-        linear-gradient(to left, rgba(248, 248, 250, var(--o1, 1)), rgba(248, 248, 250, var(--o1, 1))), 
-        url('img/data1-bg.png'), url('img/data2-bg.png'),
-        url('img/cards1-bg.png'), url('img/cards2-bg.png');
-    background-size: auto 100%;
-    background-repeat: no-repeat;
-    background-position: left top, 
-        calc(15rem + var(--content-width) * .85) var(--data1, 0), 
-        calc(15rem + var(--content-width) * .85) var(--data2, 0),
-        calc(15rem + var(--content-width) * .85) var(--card1, 0),
-        calc(15rem + var(--content-width) * .85) var(--card2, 0);
-    background-attachment: fixed;
-}
-</style>
-
 <svelte:window bind:scrollY bind:innerHeight />
 
-<div style="
+<div class='study-background' style="
         --o1: {$o1};
         --data1: {$layer1 * 15 + $m * 4}px; 
         --data2: {-$layer2 * 15  - $m * 7}px;
