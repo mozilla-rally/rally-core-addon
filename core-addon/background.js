@@ -6,8 +6,8 @@ window.browser = require("webextension-polyfill");
 const Core = require("./Core.js");
 
 const core = new Core({
-    availableStudiesURI: __ION_STUDIES_LIST__,
+    availableStudiesURI: __STUDIES_LIST__,
     disableRemoteSettings: __DISABLE_REMOTE_SETTINGS__,
-    website: __ION_WEBSITE_URL__,
+    website: __WEBSITE_URL__,
 });
 core.initialize();

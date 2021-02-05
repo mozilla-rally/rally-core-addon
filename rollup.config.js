@@ -53,10 +53,6 @@ export default (cliArgs) => [{
       // Support enabling/disabling the locale check to enable
       // the development workflows on other locales.
       __DISABLE_LOCALE_CHECK__: !!cliArgs["config-disable-locale-check"],
-      // Data submission is disabled by default. Use this option via the CLI
-      // to enable it for testing until https://github.com/mozilla-rally/core-addon/issues/304
-      // is fixed.
-      __ENABLE_DATA_SUBMISSION__: !!cliArgs["config-enable-data-submission"],
     }),
     copy({
       targets: [

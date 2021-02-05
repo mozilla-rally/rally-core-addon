@@ -19,6 +19,7 @@ const FAKE_STUDY_LIST = [
     "addon_id": FAKE_STUDY_ID_NOT_INSTALLED
   }
 ];
+const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
 const FAKE_WEBSITE = "https://test.website";
 
 describe('Core', function () {
@@ -47,15 +48,15 @@ describe('Core', function () {
 
     // Create a mock for the privileged API.
     chrome.firefoxPrivilegedApi = {
+      generateUUID: async function() { return FAKE_UUID; },
       submitEncryptedPing: async function(type, payload, options) {},
       getRemoteSettings: async () => FAKE_STUDY_LIST,
       onRemoteSettingsSync: {
         addListener: async (callback) => {
-          callback(new Event());
+          callback(FAKE_STUDY_LIST);
         }
       },
     };
-
 
     this.core = new Core({
       website: FAKE_WEBSITE
@@ -157,20 +158,13 @@ describe('Core', function () {
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
 
-      // Create a mock for the privileged API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
-      chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
-
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
       // that the promise resolves, due to a bug in sinon-chrome. See
       // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
       browser.storage.local.get.callsArgWith(1, {}).resolves();
       // Make sure to mock the local storage calls as well.
-      chrome.storage.local.set.yields();
+      browser.storage.local.set.yields();
 
       sinon.spy(this.core._dataCollection, "sendEnrollmentPing");
       sinon.spy(this.core._storage, "setRallyID");
@@ -189,11 +183,6 @@ describe('Core', function () {
       // Mock the URL of the options page.
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
-
-      // Create a mock for the telemetry API.
-      chrome.firefoxPrivilegedApi = {
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
 
       sinon.spy(this.core._dataCollection, "sendEnrollmentPing");
 
@@ -217,11 +206,6 @@ describe('Core', function () {
       // Mock the URL of the options page.
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
-
-      // Create a mock for the telemetry API.
-      chrome.firefoxPrivilegedApi = {
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
 
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       this.core._storage = {
@@ -268,11 +252,6 @@ describe('Core', function () {
       // Mock the URL of the options page.
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
-
-      // Create a mock for the telemetry API.
-      chrome.firefoxPrivilegedApi = {
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
 
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       this.core._storage = {
@@ -334,11 +313,6 @@ describe('Core', function () {
     });
 
     it('dispatches telemetry-ping messages', async function () {
-      // Create a mock for the telemetry API.
-      chrome.firefoxPrivilegedApi = {
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
-
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       this.core._storage = {
         getRallyID: async function() { return FAKE_UUID; },

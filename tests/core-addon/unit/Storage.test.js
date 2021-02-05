@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
- const assert = require('assert').strict;
+const assert = require('assert').strict;
 
 var Storage = require('../../../core-addon/Storage');
 
@@ -29,6 +29,7 @@ describe('Storage', function () {
       // that the promise resolves, due to a bug in sinon-chrome. See
       // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
       browser.storage.local.get.callsArgWith(1, {}).resolves();
+      browser.storage.local.set.yields();
 
       let storedIds = await this.storage.appendActivatedStudy(TEST_ADDON_ID);
 
@@ -43,6 +44,7 @@ describe('Storage', function () {
       // that the promise resolves, due to a bug in sinon-chrome. See
       // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
       browser.storage.local.get.callsArgWith(1, {}).throws();
+      browser.storage.local.set.yields();
 
       let storedIds = await this.storage.appendActivatedStudy(TEST_ADDON_ID);
 
@@ -59,6 +61,7 @@ describe('Storage', function () {
       browser.storage.local.get
         .callsArgWith(1, {activatedStudies: [TEST_ADDON_ID]})
         .resolves();
+      browser.storage.local.set.yields();
 
       let storedIds = await this.storage.appendActivatedStudy(TEST_ADDON_ID);
 

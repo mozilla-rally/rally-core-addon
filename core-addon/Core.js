@@ -8,25 +8,17 @@ const DataCollection = require("./DataCollection.js");
 // The path of the embedded resource used to control options.
 const OPTIONS_PAGE_PATH = "public/index.html";
 
-const DEFAULT_ARGS = {
-  // NOTE: if this URL ever changes, you will have to update the domain in
-  // the permissions in manifest.json.
-  availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/rally-studies-v1/records",
-  disableRemoteSettings: false,
-  website: "https://mozilla-rally.github.io",
-}
-
 module.exports = class Core {
   /**
    * @param {Object} args arguments passed in from the user.
    * @param {String} args.availableStudiesURI the URI where the available studies
    *             information is listed. Only used when disableRemoteSettings is `true`.
-   * @param {boolean} args.disableRemoteSettings do not use the official RemoteSettings server.
+   * @param {Boolean} args.disableRemoteSettings do not use the official RemoteSettings server.
    *             Default is `true`.
    * @param {String} args.website the URL of the platform website.
    */
-  constructor(args = {}) {
-    this._userArguments = { ...DEFAULT_ARGS, ...args };
+  constructor(args) {
+    this._userArguments = args;
 
     this._storage = new Storage();
     this._dataCollection = new DataCollection();

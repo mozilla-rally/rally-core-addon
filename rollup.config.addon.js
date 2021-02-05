@@ -15,11 +15,17 @@ export default (cliArgs) => {
     },
     plugins: [
       replace({
-        __ION_STUDIES_LIST__: cliArgs['config-study-list-url'] ?
-          `'${cliArgs['config-study-list-url']}'` :
-          "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records'",
+        // NOTE: if this URL ever changes, you will have to update the domain in
+        // the permissions in manifest.json.
+        __STUDIES_LIST__: cliArgs['config-studies-list-url'] ?
+          `'${cliArgs['config-studies-list-url']}'` :
+          "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/rally-studies-v1/records'",
         __DISABLE_REMOTE_SETTINGS__: !!cliArgs["config-disable-remote-settings"],
-        __ION_WEBSITE_URL__: cliArgs['config-website'] ?
+        // Data submission is disabled by default. Use this option via the CLI
+        // to enable it for testing until https://github.com/mozilla-rally/core-addon/issues/304
+        // is fixed.
+        __ENABLE_DATA_SUBMISSION__: !!cliArgs["config-enable-data-submission"],
+        __WEBSITE_URL__: cliArgs['config-website'] ?
           `'${cliArgs['config-website']}'` :
           "'https://rally-stage.bespoke.nonprod.dataops.mozgcp.net'",
       }),
