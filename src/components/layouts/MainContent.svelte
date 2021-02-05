@@ -16,6 +16,6 @@ div {
 }
 </style>
 
-<div style="--pad: {pad ? "2rem 2.5rem" : "0"};">
+<div style={`--pad: ${pad ? "2rem 2.5rem" : "0"};`}>
     <slot />
 </div>

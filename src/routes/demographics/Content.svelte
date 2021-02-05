@@ -233,8 +233,7 @@
 
   input[type="text"]:focus {
     border-color: #0250bb;
-    box-shadow: 0 0 0 2px #0250bb; 
-
+    box-shadow: 0 0 0 2px #0250bb;
   }
   .mzp-is-error input[type="text"] {
     border: 2px solid #D70022;
@@ -242,7 +241,7 @@
   }
 
   .mzp-is-error input[type="text"]:focus {
-    box-shadow: 0 0 0 2px #D70022; 
+    box-shadow: 0 0 0 2px #D70022;
   }
 
   .mzp-c-choice-control[type="radio"] + label,

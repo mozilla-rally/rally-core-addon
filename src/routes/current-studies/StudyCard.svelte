@@ -69,7 +69,6 @@ export let tags;
 export let detailsDirectName;
 export let detailsDirectLink;
 export let joinStudyConsentNotice;
-export let leaveStudyConsentNotice;
 export let sidebarOffset = false; // sidebar offset for notifications
 
 const dispatch = createEventDispatcher();
@@ -171,7 +170,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
         {/if}
     </div>
     <!-- if the leave study modal is present, shore up the button hheights -->
-    <div class='modal-call-flow' slot="cta" style="margin-top: {joined ? "-50px" : "none"};">
+    <div class='modal-call-flow' slot="cta" style={`margin-top: ${joined ? "-50px" : "none"};`}>
         <Button
         size="lg"
         product
