@@ -13,8 +13,6 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
   import Close from "./icons/Close.svelte";
 
   export let width;
-  export let layout;
-  // 
   $: styles = width ? `--width: ${width};` : undefined;
 
   const dispatch = createEventDispatcher();

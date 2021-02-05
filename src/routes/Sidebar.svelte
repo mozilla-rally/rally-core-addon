@@ -6,7 +6,6 @@
   import { fly } from 'svelte/transition';
   import MainSidebar from "../components/layouts/MainSidebar.svelte";
   import ExternalLink from "../components/icons/ExternalLink.svelte";
-  import VerticalLogo from "../components/VerticalLogo.svelte";
 
   const dispatch = createEventDispatcher();
   function send(view) {
