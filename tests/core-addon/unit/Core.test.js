@@ -13,10 +13,10 @@ const FAKE_STUDY_ID = "test@ion-studies.com";
 const FAKE_STUDY_ID_NOT_INSTALLED = "test-not-installed@ion-studies.com";
 const FAKE_STUDY_LIST = [
   {
-    "addon_id": FAKE_STUDY_ID
+    "addonId": FAKE_STUDY_ID
   },
   {
-    "addon_id": FAKE_STUDY_ID_NOT_INSTALLED
+    "addonId": FAKE_STUDY_ID_NOT_INSTALLED
   }
 ];
 const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
@@ -385,8 +385,8 @@ describe('Core', function () {
     it('returns a list of addons', async function () {
       let studies = await this.core._fetchAvailableStudies();
       assert.equal(studies.length, 2);
-      assert.ok(studies.filter(a => (a.addon_id === FAKE_STUDY_ID)));
-      assert.ok(studies.filter(a => (a.addon_id === FAKE_STUDY_ID_NOT_INSTALLED)));
+      assert.ok(studies.filter(a => (a.addonId === FAKE_STUDY_ID)));
+      assert.ok(studies.filter(a => (a.addonId === FAKE_STUDY_ID_NOT_INSTALLED)));
     });
 
     it('returns an empty list on errors', async function () {
@@ -409,13 +409,13 @@ describe('Core', function () {
       // Check that the FAKE_STUDY_ID is marked as installed (as per
       // our fake data, see the beginning of this file).
       assert.equal(studies
-        .filter(a => (a.addon_id === FAKE_STUDY_ID))
+        .filter(a => (a.addonId === FAKE_STUDY_ID))
         .map(a => a.studyInstalled)[0],
         true);
       // Check that the FAKE_STUDY_ID_NOT_INSTALLED is marked as
       // NOT installed.
       assert.equal(studies
-        .filter(a => (a.addon_id === FAKE_STUDY_ID_NOT_INSTALLED))
+        .filter(a => (a.addonId === FAKE_STUDY_ID_NOT_INSTALLED))
         .map(a => a.studyInstalled)[0],
         false);
     });
