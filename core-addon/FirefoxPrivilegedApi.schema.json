@@ -47,7 +47,9 @@
               "publicKey": {
                 "type": "object",
                 "description": "The public key to use (JSON Web Key)",
-                "additionalProperties": { "type": "any" }
+                "additionalProperties": {
+                  "type": "any"
+                }
               },
               "schemaName": {
                 "type": "string",
@@ -71,6 +73,30 @@
         "type": "function",
         "description": "Generate a random UUID using the Firefox APIs",
         "parameters": [],
+        "async": true
+      },
+      {
+        "name": "disableStudy",
+        "type": "function",
+        "description": "Disable a study",
+        "parameters": [
+          {
+            "name": "studyAddonId",
+            "type": "string"
+          }
+        ],
+        "async": true
+      },
+      {
+        "name": "enableStudy",
+        "type": "function",
+        "description": "Enable a study",
+        "parameters": [
+          {
+            "name": "studyAddonId",
+            "type": "string"
+          }
+        ],
         "async": true
       },
       {

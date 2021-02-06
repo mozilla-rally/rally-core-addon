@@ -48,6 +48,8 @@ describe('Core', function () {
 
     // Create a mock for the privileged API.
     chrome.firefoxPrivilegedApi = {
+      disableStudy: async function () { return Promise.resolve() },
+      enableStudy: async function () { return Promise.resolve() },
       generateUUID: async function() { return FAKE_UUID; },
       submitEncryptedPing: async function(type, payload, options) {},
       getRemoteSettings: async () => FAKE_STUDY_LIST,

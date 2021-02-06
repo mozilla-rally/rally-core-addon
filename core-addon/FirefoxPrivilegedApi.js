@@ -8,8 +8,9 @@ const { XPCOMUtils } = ChromeUtils.import(
   "resource://gre/modules/XPCOMUtils.jsm"
 );
 
-/* global RemoteSettings TelemetryController */
+/* global AddonManager RemoteSettings TelemetryController */
 XPCOMUtils.defineLazyModuleGetters(this, {
+  AddonManager: "resource://gre/modules/AddonManager.jsm",
   RemoteSettings: "resource://services-settings/remote-settings.js",
   TelemetryController: "resource://gre/modules/TelemetryController.jsm",
 });
@@ -44,6 +45,22 @@ this.firefoxPrivilegedApi = class extends ExtensionAPI {
         async generateUUID() {
           let str = gUUIDGenerator.generateUUID().toString();
           return str.substring(1, str.length - 1);
+        },
+        async disableStudy(studyAddonId) {
+          const addon = await AddonManager.getAddonByID(studyAddonId);
+          try {
+            await addon.disable();
+          } catch (err) {
+            throw new Error("Could not disable study:", err);
+          }
+        },
+        async enableStudy(studyAddonId) {
+          const addon = await AddonManager.getAddonByID(studyAddonId);
+          try {
+            await addon.enable();
+          } catch (err) {
+            throw new Error("Could not enable study:", err);
+          }
         },
         async getRemoteSettings() {
           return RemoteSettings(STUDY_COLLECTION_KEY).get();

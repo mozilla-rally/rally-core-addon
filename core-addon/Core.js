@@ -472,6 +472,7 @@ module.exports = class Core {
 
   /**
    * Update the `studyInstalled` property for the available studies.
+   * If any studies should be disabled or enabled, then do so.
    *
    * @returns {Promise(Array<Object>)} resolved with an array of studies
    *          objects, or an empty array on failures. Each study object
@@ -487,6 +488,21 @@ module.exports = class Core {
       await browser.management.getAll().then(addons =>
         addons.filter(a => a.type == "extension")
           .map(a => a.id));
+
+    // Attempt to resume any paused studies, or pause any running
+    // studies, as appropriate.
+    try {
+      for (const study of studies) {
+        if (study.studyPaused) {
+          browser.firefoxPrivilegedApi.disableStudy(study.addonId);
+        } else {
+          browser.firefoxPrivilegedApi.enableStudy(study.addonId);
+        }
+      }
+    } catch (err) {
+      console.err("Changing study enable state failed:", err);
+    }
+
     return studies.map(s => {
       s.studyInstalled = installedAddonsIds.includes(s.addonId);
       return s;
