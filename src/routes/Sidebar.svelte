@@ -126,7 +126,16 @@ li a {
         Manage Profile
       </button>
       <div style="color: var(--color-light-gray-90); font-size: 10px; font-weight: 400; padding-top: 4px;">
-        {profileQuestionsAnswered} / 7 Questions Answered
+        <span style="position: relative;
+        display: inline-block;
+        transform: translateY(-11px);
+        font-variant-numeric: tabular-nums;
+        min-width: 6.5px;">
+          {#key profileQuestionsAnswered}
+          <span style="display: inline-block; position: absolute;" in:fly={{duration: 500, y: -24}} out:fly={{duration: 500, y: 24}}>{profileQuestionsAnswered}</span>
+          {/key}
+        </span>
+        / 7 Questions Answered
       </div>
 
     </li>
