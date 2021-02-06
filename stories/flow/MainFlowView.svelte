@@ -16,7 +16,7 @@ let view = 'manage-profile';
 
 function changeView(event) {
     if (event.detail !== 'manage-profile') {
-        intermediateResults = {...$demoResults};
+        intermediateResults = $demoResults ? {...$demoResults} : undefined;
     }
     view = event.detail;
 }
@@ -26,7 +26,10 @@ function changeView(event) {
 // update the intermediate deep copy when demoResults changes.
 let demoResults = writable(undefined);
 let intermediateResults;
+let questionsAnswered = 0;
 $: if ($demoResults) intermediateResults = { ...$demoResults };
+// get the total number of profile questions answered
+$: questionsAnswered = $demoResults ? Object.keys($demoResults).filter(k => $demoResults[k] || (Array.isArray($demoResults[k]) ? $demoResults[k].length : false)).length : 0;
 
 // add one nicer study with all the information.
 const nicerStudy = {
@@ -73,7 +76,7 @@ function leaveStudy(studyID) { toggleStudyJoinStatus(studyID, false); }
 
 </script>
 
-<Layout on:change-view={changeView}>
+<Layout on:change-view={changeView} profileQuestionsAnswered={questionsAnswered}>
     {#if view === 'manage-profile'}
         <MainContent>
             <Demographics results={intermediateResults}>
