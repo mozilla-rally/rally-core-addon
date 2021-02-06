@@ -120,6 +120,7 @@ li a {
   </ul>
   <ul slot="settings" class="app-controls"  in:fly={{duration: 800, delay: 600, x: -10}}>
     <ul class="app-controls">
+      <li><button class:active={currentView === 'manage-profile'} on:click={send('manage-profile')}>Manage Profile</button></li>
       <li><button class:active={currentView === 'privacy-notice'} on:click={send('privacy-notice')}>Privacy Notice</button></li>
       <!-- <li><button class:active={currentView === 'complete-profile'} on:click={send('complete-profile')}>Complete Profile</button></li> -->
       <li><button class:active={currentView === 'leave-rally'} on:click={send('leave-rally')}>Leave Mozilla Rally</button></li>

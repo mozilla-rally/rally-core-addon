@@ -9,12 +9,24 @@ import CurrentStudies from '../../src/routes/current-studies/Content.svelte';
 import StudyBG from '../../src/routes/current-studies/Background.svelte';
 import PrivacyNotice from '../../src/routes/terms-of-service/Content.svelte';
 import Demographics from '../../src/routes/demographics/Content.svelte';
+import Button from '../../src/components/Button.svelte';
+import { writable } from 'svelte/store';
 
+let view = 'manage-profile';
 
-let view = 'current-studies';
 function changeView(event) {
+    if (event.detail !== 'manage-profile') {
+        intermediateResults = {...$demoResults};
+    }
     view = event.detail;
 }
+
+// Create a deep copy of the demoResults for the manage profile view.
+// Only update the store when the submit button is explicitly clicked;
+// update the intermediate deep copy when demoResults changes.
+let demoResults = writable(undefined);
+let intermediateResults;
+$: if ($demoResults) intermediateResults = { ...$demoResults };
 
 // add one nicer study with all the information.
 const nicerStudy = {
@@ -62,9 +74,27 @@ function leaveStudy(studyID) { toggleStudyJoinStatus(studyID, false); }
 </script>
 
 <Layout on:change-view={changeView}>
-    {#if view === 'complete-profile'}
+    {#if view === 'manage-profile'}
         <MainContent>
-            <Demographics />
+            <Demographics results={intermediateResults}>
+                <span slot="title">Manage Profile</span>
+                <p slot="description">
+                    Here's what you've shared with us so far. You can update, add, or rescind your answers as 
+                    you see fit. Just a reminder, this info helps us better understand the representitivity of our study
+                    participants, and we'll always ask before we share this data with a research partner.
+                </p>
+                <div slot="call-to-action" let:results let:validated>
+                    <hr />
+                    <div style="display: grid; grid-auto-flow: column; grid-column-gap: 12px; width: max-content;">
+                        <Button size="lg" product leave={!validated} disabled={!validated} on:click={() => {
+                            demoResults.set(results);
+                        }}>Save Changes</Button>
+                        <Button size="lg" product disabled={!validated} secondary on:click={() => {
+                            intermediateResults = $demoResults;
+                        }}>Cancel</Button>
+                    </div>
+                </div>
+            </Demographics>
         </MainContent>
     {:else if view === 'privacy-notice'}
         <MainContent>

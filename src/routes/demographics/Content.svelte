@@ -107,11 +107,17 @@
 </style>
 
 <div in:fly={{ duration: 800, y: 5 }}>
-  <h2 class='section-header'>Tell Us About Yourself</h2>
+  <h2 class='section-header'>
+    <slot name="title">
+      <span>Tell Us About Yourself</span>
+    </slot>
+  </h2>
 
-  <p>
-    Each question is completely optional, and can be updated at any time by clicking Manage Profile. The answers you give will help us understand the composition and representivity of the Rally community.
-  </p>
+  <slot name="description">
+    <p>
+      Each question is completely optional, and can be updated at any time by clicking Manage Profile. The answers you give will help us understand the composition and representivity of the Rally community.
+    </p>
+  </slot>
 
   <hr />
 
@@ -140,13 +146,16 @@
                 use:validateZip={results[question]}
                 type="text"
                 bind:value={results[question]} />
-              {#if $zipValidity.dirty && !$zipValidity.valid}
-                <span
-                  class="mzp-c-fieldnote"
-                  transition:fly={{ duration: 300, y: 5 }}>
-                  {$zipValidity.message}
-                </span>
-              {/if}
+              <!-- show validation errors here -->
+              <span style="min-height: 24px; display: block;">
+                {#if $zipValidity.dirty && !$zipValidity.valid}
+                  <span
+                    class="mzp-c-fieldnote"
+                    transition:fly={{ duration: 300, y: 5 }}>
+                    {$zipValidity.message}
+                  </span>
+                {/if}
+              </span>
             </div>
           {:else}
             {#each schema[question].values as answer}
@@ -176,4 +185,6 @@
       </fieldset>
     {/each}
   </form>
+  <!-- Add a slot to aid in  -->
+  <slot name='call-to-action' results={results} validated={!($zipValidity.dirty && !$zipValidity.valid)}></slot>
 </div>
