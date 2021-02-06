@@ -248,9 +248,11 @@ module.exports = class Core {
    */
   async _handleExternalMessage(message, sender) {
     // We only expect messages coming from known installed studies.
-    let installedStudies = (await this._availableStudies)
+    const availableStudies = await this._availableStudies;
+    let installedStudies = availableStudies
       .filter(s => s.studyInstalled)
       .map(s => s.addonId);
+
     if (!installedStudies.includes(sender.id)) {
       throw new Error(`Core._handleExternalMessage - unexpected sender ${sender.id}`);
     }
@@ -259,6 +261,10 @@ module.exports = class Core {
     if (!joinedStudies.includes(sender.id)) {
       throw new Error(`Core._handleExternalMessage - ${sender.id} not joined`);
     }
+
+    const pausedStudies = availableStudies
+      .filter(s => s.studyPaused)
+      .map(s => s.addonId);
 
     switch (message.type) {
       case "core-check": {
@@ -271,6 +277,9 @@ module.exports = class Core {
         };
       }
       case "telemetry-ping": {
+        if (pausedStudies.includes(sender.id)) {
+          throw new Error(`Core._handleExternalMessage - ${sender.id} is paused and may not send data`);
+        }
         const { payloadType, payload, namespace, keyId, key } = message.data;
         let rallyId = await this._storage.getRallyID();
         return await this._dataCollection.sendPing(
@@ -487,6 +496,8 @@ module.exports = class Core {
    */
   async _sendMessageToStudy(studyId, type, payload) {
     const VALID_TYPES = [
+      "pause",
+      "resume",
       "uninstall",
     ];
 
@@ -515,6 +526,7 @@ module.exports = class Core {
 
   /**
    * Update the `studyInstalled` property for the available studies.
+   * If any studies should be disabled or enabled, then do so now.
    *
    * @returns {Promise(Array<Object>)} resolved with an array of studies
    *          objects, or an empty array on failures. Each study object
@@ -530,10 +542,38 @@ module.exports = class Core {
       await browser.management.getAll().then(addons =>
         addons.filter(a => a.type == "extension")
           .map(a => a.id));
+
+    // Attempt to resume any paused studies, or pause any running
+    // studies, as appropriate.
+    await this._sendRunState(studies, installedAddonsIds);
+
     return studies.map(s => {
       s.studyInstalled = installedAddonsIds.includes(s.addonId);
       return s;
     });
+  }
+
+  /**
+   * Send run state (paused, running) message to study add-on(s).
+   *
+   * @param {Array} studies - list of available studies
+   * @param {Array} installedAddonsIds - list of installed study add-on IDs
+   */
+
+  async _sendRunState(studies, installedAddonsIds) {
+    for (const study of studies) {
+      if (installedAddonsIds.includes(study.addonId)) {
+        try {
+          if (study.studyPaused) {
+            await this._sendMessageToStudy(study.addonId, "pause", {});
+          } else {
+            await this._sendMessageToStudy(study.addonId, "resume", {});
+          }
+        } catch (err) {
+          console.error("Changing study state failed:", err);
+        }
+      }
+    }
   }
 
   /**
@@ -603,15 +643,17 @@ module.exports = class Core {
   async _sendStateUpdateToUI() {
     let enrolled = !!(await this._storage.getRallyID());
     let firstRunCompleted = !!(await this._storage.getFirstRunCompletion());
+
     let availableStudies = await this._availableStudies;
     let demographicsData = await this._storage.getDemographicsData();
 
     // Report a study as joined only if consent was given.
+    // Filter out any paused studies, unless the user is currently enrolled, so they can still leave a study even if paused.
     let joinedStudies = await this._storage.getActivatedStudies();
     availableStudies = availableStudies.map(s => {
       s.studyJoined = joinedStudies.includes(s.addonId);
       return s;
-    });
+    }).filter(study => (!study.studyPaused || study.studyJoined));
 
     const newState = {
       enrolled,

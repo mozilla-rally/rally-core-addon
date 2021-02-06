@@ -5,6 +5,11 @@
 const CORE_ADDON_ID = "rally-core@mozilla.org";
 const SIGNUP_URL = "https://rally.mozilla.org/rally-required";
 
+const STATES = {
+	RUNNING: "running",
+	PAUSED: "paused",
+}
+
 export default class Rally {
   /**
    * Initialize the Rally library.
@@ -27,11 +32,24 @@ export default class Rally {
    *        Whether or not to initialize Rally.js in developer mode.
    *        In this mode we ignore problems when communicating with
    *        core add-on.
+   *
+   * @param {Function} stateChangeCallback
+   *        A function to call when the study is paused or running.
+   *        Takes a single parameter, `message`, which is the {String}
+   *        received regarding the current study state ("paused" or "running".)
    */
-  async initialize(keyId, key, enableDevMode) {
+  async initialize(keyId, key, enableDevMode, stateChangeCallback) {
     console.debug("Rally.initialize");
 
     this._validateEncryptionKey(keyId, key);
+
+    if (!stateChangeCallback) {
+      throw new Error("Rally.initialize - Initialization failed, stateChangeCallback is required.")
+    }
+
+    if (typeof stateChangeCallback !== "function") {
+      throw new Error("Rally.initialize - Initialization failed, stateChangeCallback is not a function.")
+    }
 
     this._keyId = keyId;
     this._key = key;
@@ -62,6 +80,11 @@ export default class Rally {
     // Listen for incoming messages from the Core addon.
     browser.runtime.onMessageExternal.addListener(
       (m, s) => this._handleExternalMessage(m, s));
+
+
+    // Set the initial state to running, and register callback for future changes.
+    this._state = STATES.RUNNING;
+    this._stateChangeCallback = stateChangeCallback;
 
     // We went through the whole init process, it's now safe
     // to use the Rally public APIs.
@@ -94,6 +117,26 @@ export default class Rally {
   }
 
   /**
+   * Pause the current study.
+   */
+  _pause() {
+    if (this._state !== STATES.PAUSED) {
+      this._stateChangeCallback("pause");
+      this._state = STATES.PAUSED;
+    }
+  }
+
+  /**
+   * Resume the current study, if paused.
+   */
+  _resume() {
+    if (this._state !== STATES.RUNNING) {
+      this._stateChangeCallback("resume");
+      this._state = STATES.RUNNING;
+    }
+  }
+
+  /**
    * Handles messages coming in from external addons.
    *
    * @param {Object} message
@@ -113,6 +156,12 @@ export default class Rally {
     }
 
     switch (message.type) {
+      case "pause":
+        this._pause();
+        break;
+      case "resume":
+        this._resume();
+        break;
       case "uninstall":
         return browser.management.uninstallSelf({showConfirmDialog: false});
       default:
@@ -173,6 +222,12 @@ export default class Rally {
         `Rally.sendPing - Developer mode. ${payloadType} will not be submitted`,
         payload
       );
+      return;
+    }
+
+    // When paused, not send data.
+    if (this._state === STATES.PAUSED) {
+      console.debug("Rally.sendPing - Study is currently paused, not sending data");
       return;
     }
 
