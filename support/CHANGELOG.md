@@ -1,5 +1,7 @@
 # Unreleased changes
 
+# v0.3.0 (2021-02-08)
+
 * [#337](https://github.com/mozilla-rally/rally-core-addon/pull/337): `initialize` rejects if the study is not allowed to start.
 
 # v0.2.0 (2021-02-02)
