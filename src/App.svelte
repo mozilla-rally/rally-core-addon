@@ -8,6 +8,7 @@
 
   import Onboarding from "./routes/Onboarding.svelte";
   import Main from './routes/Main.svelte';
+  import NonUSSplashPage from './routes/non-eligible-splashes/NonUSUser.svelte';
   setContext("rally:store", store);
 
   // As soon as the store has its initial value, let's
@@ -47,5 +48,10 @@
     {/if}
   {/if}
 {:else}
-  <div>Sorry, Rally is not supported in this locale.</div>
+  <NonUSSplashPage on:remove-extension={() => {
+    // we will use store.UpdatePlatformEnrollment to
+    // uninstall the add-on, even though the user technically
+    // does not need to have any deletion pings sent.
+    store.updatePlatformEnrollment(false);
+  }} />
 {/if}
