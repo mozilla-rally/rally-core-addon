@@ -1,6 +1,6 @@
 {
   "name": "@mozilla/rally",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "The Rally partner support library.",
   "main": "rally.js",
   "type": "module",
