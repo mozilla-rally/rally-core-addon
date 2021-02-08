@@ -26,7 +26,7 @@ async function sendToCore(port, type, payload) {
     "study-enrollment",
     "study-unenrollment",
     "unenrollment",
-    "update-demographics"
+    "update-demographics",
   ];
 
   // Make sure `type` is one of the expected values.
