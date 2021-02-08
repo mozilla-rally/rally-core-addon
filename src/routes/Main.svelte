@@ -6,7 +6,7 @@ import { getContext, onMount } from 'svelte';
 import Layout from './Layout.svelte';
 import CurrentStudies from './current-studies/Content.svelte';
 import PrivacyNotice from './terms-of-service/Content.svelte';
-import Demographics from './demographics/Content.svelte';
+import Demographics from './demographics/MainDemographicsView.svelte';
 import StudyBackgroundElement from './current-studies/Background.svelte';
 import MainContent from '../components/layouts/MainContent.svelte';
 
@@ -20,6 +20,12 @@ function changeView(event) {
 function joinStudy(studyID) { store.updateStudyEnrollment(studyID, true); }
 function leaveStudy(studyID) { store.updateStudyEnrollment(studyID, false); }
 
+/* ------------------------------ PROFILE COMPLETION ------------------------------ */
+// get the number of profile questions answered
+$: profileQuestionsAnswered = $store.demographicsData ? Object.keys($store.demographicsData).filter(k => $store.demographicsData[k] || (Array.isArray($store.demographicsData[k]) ? $store.demographicsData[k].length : false)).length : 0;
+// get the total number of available profile questions
+$: totalProfileQuestions = $store.demographicsData ? Object.keys($store.demographicsData).length : 7;
+
 let mounted = false;
 
 onMount(() => { mounted = true; })
@@ -31,8 +37,10 @@ onMount(() => { mounted = true; })
 <Layout 
     on:change-view={changeView}
     on:leave-rally
+    {profileQuestionsAnswered}
+    {totalProfileQuestions}
 >
-        {#if view === 'complete-profile'}
+        {#if view === 'manage-profile'}
             <MainContent>
                 <Demographics />
             </MainContent>

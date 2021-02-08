@@ -562,10 +562,13 @@ module.exports = class Core {
   async _sendStateUpdateToUI() {
     let enrolled = !!(await this._storage.getRallyID());
     let availableStudies = await this._availableStudies;
+    let demographicsData = await this._storage.getDemographicsData();
+    console.log({demographicsData});
 
     const newState = {
       enrolled,
       availableStudies,
+      demographicsData
     };
 
     // Send a message to the UI to update the list of studies.
@@ -580,12 +583,14 @@ module.exports = class Core {
    * is sent to the pipeline.
    *
    * @param {Object} data
-   *        A JSON-serializable object containing the demographics
+   *        A JSON-serializable obj0ect containing the demographics
    *        information submitted by the user.
    */
   async _updateDemographics(data) {
     await this._storage.setItem("demographicsData", data)
       .catch(e => console.error(`Core._updateDemographics - failed to save data`, e));
+
+    await this._sendStateUpdateToUI();
 
     let rallyId = await this._storage.getRallyID();
     return await this._dataCollection.sendDemographicSurveyPing(rallyId, data);

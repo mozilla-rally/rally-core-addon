@@ -8,6 +8,7 @@
   import ExternalLink from "../components/icons/ExternalLink.svelte";
 
   export let profileQuestionsAnswered = 0;
+  export let totalProfileQuestions = 7;
 
   const dispatch = createEventDispatcher();
   function send(view) {
@@ -135,7 +136,7 @@ li a {
           <span style="display: inline-block; position: absolute;" in:fly={{duration: 500, y: -24}} out:fly={{duration: 500, y: 24}}>{profileQuestionsAnswered}</span>
           {/key}
         </span>
-        / 7 Questions Answered
+        / {totalProfileQuestions} Questions Answered
       </div>
 
     </li>
