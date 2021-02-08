@@ -47,6 +47,9 @@
   {/if}
 {:else}
   <NonUSSplashPage on:remove-extension={() => {
-    store.uninstallRally();
+    // we will use store.UpdatePlatformEnrollment to
+    // uninstall the add-on, even though the user technically
+    // does not need to have any deletion pings sent.
+    store.updatePlatformEnrollment(false);
   }} />
 {/if}

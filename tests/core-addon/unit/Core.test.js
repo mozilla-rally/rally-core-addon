@@ -287,14 +287,6 @@ describe('Core', function () {
         ).calledOnce
       );
     });
-
-    it('dispatches uninstall-rally messages', async function () {
-      await this.core._handleMessage(
-        {type: "uninstall-rally", data: {}}
-      );
-      assert.ok(browser.management.uninstallSelf.calledOnce);
-    });
-
   });
 
   describe('_handleExternalMessage()', function () {

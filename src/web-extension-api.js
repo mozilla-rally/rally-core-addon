@@ -26,8 +26,7 @@ async function sendToCore(port, type, payload) {
     "study-enrollment",
     "study-unenrollment",
     "unenrollment",
-    "update-demographics",
-    "uninstall-rally"
+    "update-demographics"
   ];
 
   // Make sure `type` is one of the expected values.
@@ -172,22 +171,6 @@ export default {
   async updatePlatformEnrollment(enroll) {
     await sendToCore(
       this._connectionPort, enroll ? "enrollment" : "unenrollment", {});
-
-    return true;
-  },
-
-    /**
-   * Removes the Rally add-on if requested by the user.
-   * Note: unenrolling from Rally via updatePlatformEnrollment
-   * also removes the add-on. This API method is for cases where
-   * the user is requesting the add-on to be explicitly uninstalled,
-   * eg if they are non-US and get the welcome splash page that
-   * enables them to remove the extension.
-   * @returns {Boolean} `true` if add-on will uninstall itself.
-   */
-  async uninstallRally(enroll) {
-    await sendToCore(
-      this._connectionPort, "uninstall-rally");
 
     return true;
   },
