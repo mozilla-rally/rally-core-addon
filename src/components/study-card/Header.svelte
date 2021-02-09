@@ -15,6 +15,9 @@
     grid-template-columns: var(--study-card-header-columns);
   }
 
+  .study-card-header-info {
+    margin-top: 8px;
+  }
   .study-card-author {
     /* explicitly set this field to prevent Zilla in some contexts */
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -27,7 +30,6 @@
     margin: 0;
     grid-area: title;
     width: 100%;
-    padding-top: 8px;
     margin-bottom: 2px;
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",

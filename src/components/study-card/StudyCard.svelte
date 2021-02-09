@@ -35,6 +35,7 @@
     padding: 1.25rem;
     box-shadow: var(--rally-box-shadow-sm);
     background-color: var(--color-white);
+    border: 1px solid #ECECED;
   }
 
   .study-card-content {

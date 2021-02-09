@@ -17,7 +17,7 @@
     <span slot="name">Political & COVID-18 News Information</span>
     <span slot="author">Princeton University</span>
     <p slot="description">
-      This study examines the political and COVID-19 news information flows across the web.
+      This study examines political and COVID-19 news information flows across the web.
       Our goal is to understand how web users are exposed to, consume, and share these types of
       information, which can inform effort to distinguish trustworthy and untrustworthy content.
     </p>
