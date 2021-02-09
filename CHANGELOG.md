@@ -10,6 +10,7 @@
 * [#286](https://github.com/mozilla-rally/core-addon/pull/286): Adds a "clear this response" button to demographic survey questions.
 * [#349](https://github.com/mozilla-rally/core-addon/pull/349): Adds a "manage profile" page, where a user can update their demographic survey answers.
 * [#350](https://github.com/mozilla-rally/rally-core-addon/pull/350): Simplify study schema for the remote settings, and make code consistent with new names.
+* [#361](https://github.com/mozilla-rally/rally-core-addon/pull/361): Implements a new study card design.
 
 # v0.8.0 (2021-02-01)
 
