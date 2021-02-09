@@ -17,8 +17,8 @@ button.mzp-t-sm.mzp-c-button.mzp-t-neutral.mzp-t-product {
     position: absolute;
     display: inline-grid;
     grid-column-gap: 5.66px;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     /* note: border is 1px */
     padding-left: 7px;
     padding-right: 7px;
