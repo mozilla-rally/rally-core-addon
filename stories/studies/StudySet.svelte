@@ -12,12 +12,14 @@
     joinedDate={new Date(2020, 9, 12)}
     imageSrc="https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png"
     dataCollectionDetails={['Your time spent on a given website', 'Your screen Resolution', 'Your default language in the browser']}
-    tags={['artificial intelligence', 'misinformation']}
+    tags={['social media', 'misinformation']}
     privacyPolicyLink={'/'}>
     <span slot="name">Political & COVID-18 News Information</span>
     <span slot="author">Princeton University</span>
     <p slot="description">
-      Rally is a new tool and we are still working out the bugs. This study helps us understand if Rally is working.
+      This study examines the political and COVID-19 news information flows across the web.
+      Our goal is to understand how web users are exposed to, consume, and share these types of
+      information, which can inform efforst to distinguish trustworthy and untrustworthy content.
     </p>
     <div slot="details">
       Full study details can be found on the
