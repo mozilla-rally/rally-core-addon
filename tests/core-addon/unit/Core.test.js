@@ -480,7 +480,6 @@ describe('Core', function () {
           sinon.match({"demographicsData": TEST_SURVEY_DATA})
         ).calledOnce
       );
-      assert.ok(this.core._sendStateUpdateToUI.calledOnce);
     });
   });
 
