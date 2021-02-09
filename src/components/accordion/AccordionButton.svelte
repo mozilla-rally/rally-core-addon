@@ -12,7 +12,7 @@
   };
 </script>
 
-<style>
+<style> 
   .accordion-summary {
     cursor: pointer;
     background-color: transparent;
@@ -33,6 +33,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    max-height: 20px;
+    overflow: hidden;
   }
 
   .title {
