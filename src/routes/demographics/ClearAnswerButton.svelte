@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
   import { fly } from 'svelte/transition';
-  import Close from '../../components/icons/Close.svelte';
+  import CloseSmall from '../../components/icons/CloseSmall.svelte';
 </script>
 
 <style>
@@ -16,22 +16,26 @@
 button.mzp-t-sm.mzp-c-button.mzp-t-neutral.mzp-t-product {
     position: absolute;
     display: inline-grid;
-    grid-column-gap: 6.66px;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 4.5px;
+    grid-column-gap: 5.66px;
+    margin:0;
+    padding:0;
+    /* note: border is 1px */
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 5.5px;
     padding-bottom: 5.5px;
     font-size: 10px;
     font-weight: 600;
     line-height: 1;
     margin-left: 12px;
+    color: #000;
     /* protocol seems to insert a 1px margin that
         shifts the survey questions when the button appears.
         This margin correction prevents that shift. */
-    margin-bottom: -1px;
+    /* margin-bottom: -1px; */
 }
 </style>
 
 <button transition:fly={{duration:150, y: 2.5}} class="gafc mzp-t-sm mzp-c-button mzp-t-neutral mzp-t-product" on:click>
-    <Close /> Clear this response
+    <CloseSmall /> Clear this response
 </button>
