@@ -32,6 +32,7 @@ export function questionIsAnswered(answer, questionType) {
     if (questionType === 'text') return answer.length > 0;
     if (questionType === 'single') return answer !== undefined;
     if (questionType === 'multi') return answer.length > 0;
+    throw Error('unknown question type');
 }
 
 export function clearAnswer(questionType) {
