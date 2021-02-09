@@ -133,6 +133,7 @@
     padding-left: var(--left-pad);
     display: grid;
     grid-template-columns: auto max-content;
+    grid-gap: 36px;
   }
 
   .joined-study-accordion h4 {
