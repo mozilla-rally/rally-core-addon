@@ -190,7 +190,9 @@
             {:else}
               joined
             {/if}
-            <CheckCircle size="20px" color="var(--color-green-60)" />
+            <span class='gafc' style="transform: translateY(-1px);">
+              <CheckCircle size="20px" color="var(--color-green-60)" />
+            </span>
           </div>
         {/if}
     </div>
