@@ -17,7 +17,7 @@ module.exports = class Core {
    *             Default is `true`.
    * @param {String} args.website the URL of the platform website.
    */
-  constructor(args) {    
+  constructor(args) {
     this._userArguments = args;
 
     this._storage = new Storage();
