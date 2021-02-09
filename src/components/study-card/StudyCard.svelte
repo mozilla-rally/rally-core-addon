@@ -230,7 +230,7 @@
         </div>
     
         <div class="study-card-privacy-policy">
-          <a class="external-link" href={privacyPolicyLink}>View Full Study Details <ExternalLink /></a>
+          <a class="external-link" style="--spacing: 6px;" href={privacyPolicyLink}>View Full Study Details <ExternalLink /></a>
         </div>
       </div>
     </div>
