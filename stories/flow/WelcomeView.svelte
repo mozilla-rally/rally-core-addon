@@ -8,7 +8,6 @@
   import Layout from "../../src/components/layouts/OnboardingLayout.svelte";
   import Body from "../../src/components/layouts/OnboardingBody.svelte";
   import Welcome from "../../src/routes/welcome/Content.svelte";
-  import FirstRunArrow from "../../src/routes/welcome/FirstRunArrow.svelte";
   import OnboardingCTAContainer from "../../src/components/OnboardingCTAContainer.svelte";
 
   let mounted = false;
@@ -23,12 +22,9 @@
   <Layout>
     <Body>
       <div in:fly={{ duration: 800, y: 5 }}>
-        <Welcome on:get-started={() => console.log('get started')} {firstRun} />
+        <Welcome {firstRun} on:get-started={() => console.log('get started')} />
       </div>
     </Body>
     <OnboardingCTAContainer step={1} transparent />
   </Layout>
-  {#if firstRun}
-    <FirstRunArrow />
-  {/if}
 {/if}

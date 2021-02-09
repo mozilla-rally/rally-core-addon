@@ -16,6 +16,7 @@
 
   let which = "welcome";
   let mounted = false;
+  let firstRun = true;
 
   onMount(() => {
     mounted = true;
@@ -41,7 +42,7 @@
     <Layout>
       <Body padForOnboarding={which !== 'welcome'}>
         {#if which === 'welcome'}
-          <Welcome on:get-started={() => send('terms')} />
+          <Welcome {firstRun} on:get-started={() => {send('terms'); firstRun = false; }} />
         {:else if which === 'terms'}
           <TermsOfService />
         {:else if which === 'demographics'}
