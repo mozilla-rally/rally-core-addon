@@ -27,7 +27,7 @@
     margin: 0;
     grid-area: title;
     width: 100%;
-    padding-top: 4px;
+    padding-top: 8px;
     margin-bottom: 2px;
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",

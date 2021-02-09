@@ -67,6 +67,9 @@
     justify-content: flex-start;
     align-items: flex-end;
     height: 0;
+    /* add additional margin to offset buttons from card pad */
+    margin-top: 4px;
+    margin-right: 4px;
   }
 
   .study-card-subheader {
