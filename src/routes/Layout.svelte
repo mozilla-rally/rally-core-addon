@@ -12,10 +12,11 @@
   let leaveModal = false;
   const dispatch = createEventDispatcher();
   export let profileQuestionsAnswered = 0;
+  export let totalProfileQuestions = 7;
 </script>
 
 <Layout>
-  <Sidebar {profileQuestionsAnswered} on:change-view on:leave-rally={() => {
+  <Sidebar {totalProfileQuestions} {profileQuestionsAnswered} on:change-view on:leave-rally={() => {
     leaveModal = true;
   }} />
   <Body>

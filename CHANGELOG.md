@@ -8,6 +8,7 @@
  * [341](https://github.com/mozilla-rally/rally-core-addon/pull/341): Update options page favicon, toolbar icon, and addon image to use the new Rally branding.
 * [#344](https://github.com/mozilla-rally/rally-core-addon/pull/344): Create splash page for non-US users in the Core Add-On.
 * [#286](https://github.com/mozilla-rally/core-addon/pull/286): Adds a "clear this response" button to demographic survey questions.
+* [#349](https://github.com/mozilla-rally/core-addon/pull/349): Adds a "manage profile" page, where a user can update their demographic survey answers.
 
 # v0.8.0 (2021-02-01)
 
