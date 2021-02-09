@@ -297,6 +297,12 @@ src/components/icons/ExternalLink.svelte:
   color: var(--color-marketing-gray-90);
 }
 
+/* study card: fix the padding on md buttons in the study join cta */
+.study-card-cta .mzp-c-button.mzp-t-md.mzp-t-product,
+.study-card-cta .mzp-c-button.mzp-t-md.mzp-t-leave {
+  padding: 4px 16px;
+}
+
 /* some modals have text on the left, image on the right (e.g. leaving study, leaving Rally). Use this class. */
 .split-content-modal {
   display: grid;

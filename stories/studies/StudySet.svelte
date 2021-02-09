@@ -8,14 +8,14 @@
 {#each [false, true] as joined}
   <StudyCard
     {joined}
-    endDate={new Date(2021, 5, 5)}
-    joinedDate={new Date(2020, 12, 5)}
+    endDate={new Date(2021, 4, 31)}
+    joinedDate={new Date(2020, 9, 12)}
     imageSrc="https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png"
     dataCollectionDetails={['Your time spent on a given website', 'Your screen Resolution', 'Your default language in the browser']}
     tags={['artificial intelligence', 'misinformation']}
     privacyPolicyLink={'/'}>
-    <span slot="name">Smoke Test Example Study 1</span>
-    <span slot="author">The Mozilla Foundation</span>
+    <span slot="name">Political & COVID-18 News Information</span>
+    <span slot="author">Princeton University</span>
     <p slot="description">
       Rally is a new tool and we are still working out the bugs. This study helps us understand if Rally is working.
     </p>

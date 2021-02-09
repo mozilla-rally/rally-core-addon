@@ -92,7 +92,6 @@
     gap: 0.5rem;
   }
 
-
   .data-collection-details li {
     margin: 0;
   }
@@ -167,6 +166,7 @@
     <span slot="study-cta">
       <div class="study-card-cta">
         <Button
+          size={"md"}
           product={!joined}
           leave={joined}
           on:click={() => {
