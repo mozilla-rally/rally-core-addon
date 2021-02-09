@@ -195,7 +195,8 @@ module.exports = class Core {
       case "unenrollment":
         return this._unenroll();
       case "update-demographics":
-        return this._updateDemographics(message.data);
+        return this._updateDemographics(message.data)
+          .then(r => this._sendStateUpdateToUI());
       default:
         return Promise.reject(
           new Error(`Core - unexpected message type ${message.type}`));
@@ -563,7 +564,6 @@ module.exports = class Core {
     let enrolled = !!(await this._storage.getRallyID());
     let availableStudies = await this._availableStudies;
     let demographicsData = await this._storage.getDemographicsData();
-    console.log({demographicsData});
 
     const newState = {
       enrolled,
@@ -583,14 +583,12 @@ module.exports = class Core {
    * is sent to the pipeline.
    *
    * @param {Object} data
-   *        A JSON-serializable obj0ect containing the demographics
+   *        A JSON-serializable object containing the demographics
    *        information submitted by the user.
    */
   async _updateDemographics(data) {
-    await this._storage.setItem("demographicsData", data)
+    await this._storage.setDemographicsData(data)
       .catch(e => console.error(`Core._updateDemographics - failed to save data`, e));
-
-    await this._sendStateUpdateToUI();
 
     let rallyId = await this._storage.getRallyID();
     return await this._dataCollection.sendDemographicSurveyPing(rallyId, data);
