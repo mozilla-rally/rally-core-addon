@@ -16,7 +16,7 @@
     margin: auto;
     grid-auto-flow: row;
     align-items: start;
-    grid-gap: 4rem;
+    grid-gap: 2rem;
   }
 </style>
 

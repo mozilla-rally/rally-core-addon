@@ -32,14 +32,6 @@
     text-align: center;
   }
 
-  .how-it-works a {
-    display: grid;
-    grid-auto-flow: column;
-    align-items: center;
-    justify-content: center;
-    grid-column-gap: 8px;
-  }
-
   .ion-three-cards {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -107,7 +99,7 @@
       </Button>
     </div>
     <div class="how-it-works">
-      <a target="_blank" href="__BASE_SITE__/how-rally-works/">Wait – how does it work again?
+      <a class="external-link" target="_blank" href="__BASE_SITE__/how-rally-works/">Wait – how does it work again?
         <ExternalLink /></a>
     </div>
   </div>

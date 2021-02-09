@@ -278,10 +278,31 @@ See #141: https://github.com/mozilla-rally/core-addon/issues/141
 
 */
 
+/*  use this class when you are putting a link with the ExternalLink icon at
+src/components/icons/ExternalLink.svelte:
+
+<a class="external-link" href="https://example.com">See More <ExternalLink /></a>
+*/
+.external-link {
+  --spacing: 8px;
+
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  grid-column-gap: var(--spacing);
+}
+
 /* study card: make all anchor tags a marketing gray color */
 .study-card-container a,
 .study-card-container a:hover {
   color: var(--color-marketing-gray-90);
+}
+
+/* study card: fix the padding on md buttons in the study join cta */
+.study-card-cta .mzp-c-button.mzp-t-md.mzp-t-product,
+.study-card-cta .mzp-c-button.mzp-t-md.mzp-t-leave {
+  padding: 4px 16px;
 }
 
 /* some modals have text on the left, image on the right (e.g. leaving study, leaving Rally). Use this class. */
