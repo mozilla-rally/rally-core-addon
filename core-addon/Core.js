@@ -17,7 +17,7 @@ module.exports = class Core {
    *             Default is `true`.
    * @param {String} args.website the URL of the platform website.
    */
-  constructor(args) {
+  constructor(args) {    
     this._userArguments = args;
 
     this._storage = new Storage();
@@ -43,6 +43,8 @@ module.exports = class Core {
   }
 
   initialize() {
+    // set the URL to redirect when a user uninstalls Rally
+    browser.runtime.setUninstallURL("__BASE_SITE__/leaving-rally");
     // Whenever the addon icon is clicked, open the control page.
     browser.browserAction.onClicked.addListener(this._openControlPanel);
     // After installing the addon, make sure to show the control page.

@@ -93,6 +93,11 @@ describe('Core', function () {
       assert.ok(chrome.runtime.onConnect.addListener.calledOnce);
     });
 
+    it('sets a redirecting URL if the user uninstalls Rally', function () {
+      this.core.initialize();
+      assert.ok(chrome.runtime.setUninstallURL.calledOnce);
+    });
+
     it('listens for addon state changes', function () {
       this.core.initialize();
       assert.ok(chrome.management.onInstalled.addListener.calledOnce);

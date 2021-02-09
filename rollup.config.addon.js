@@ -21,6 +21,7 @@ export default (cliArgs) => {
           `'${cliArgs['config-studies-list-url']}'` :
           "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/rally-studies-v1/records'",
         __DISABLE_REMOTE_SETTINGS__: !!cliArgs["config-disable-remote-settings"],
+        __BASE_SITE__: "https://rally-stage.bespoke.nonprod.dataops.mozgcp.net",
         // Data submission is disabled by default. Use this option via the CLI
         // to enable it for testing until https://github.com/mozilla-rally/core-addon/issues/304
         // is fixed.
