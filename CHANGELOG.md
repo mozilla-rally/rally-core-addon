@@ -9,6 +9,7 @@
 * [#344](https://github.com/mozilla-rally/rally-core-addon/pull/344): Create splash page for non-US users in the Core Add-On.
 * [#286](https://github.com/mozilla-rally/core-addon/pull/286): Adds a "clear this response" button to demographic survey questions.
 * [#349](https://github.com/mozilla-rally/core-addon/pull/349): Adds a "manage profile" page, where a user can update their demographic survey answers.
+* [#350](https://github.com/mozilla-rally/rally-core-addon/pull/350): Simplify study schema for the remote settings, and make code consistent with new names.
 
 # v0.8.0 (2021-02-01)
 

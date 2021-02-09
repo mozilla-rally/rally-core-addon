@@ -6,7 +6,7 @@
 
   export let enrolled = false;
   export let studyEnrolled = false;
-  export let privacyPolicy = undefined;
+  export let privacyPolicyLink = undefined;
   export let imageSrc;
   export let dataCollectionDetails = [];
 
@@ -93,12 +93,12 @@
     <slot name="icon"><span class="missing" /></slot>
   </div>
 
-  {#if privacyPolicy}
+  {#if privacyPolicyLink}
     <div class="description">
       <slot name="description"><span class="description" /></slot>
       <p>
         You can always find the
-        <a href={privacyPolicy}>privacy policy</a>
+        <a href={privacyPolicyLink}>privacy policy</a>
         at our website.
       </p>
     </div>

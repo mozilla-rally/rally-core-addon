@@ -40,7 +40,7 @@ $: totalProfileQuestions = $demoResults ? Object.keys($demoResults).length : 7;
 
 // add one nicer study with all the information.
 const nicerStudy = {
-    addon_id: 'nicer-study-example@mozilla.org',
+    addonId: 'nicer-study-example@mozilla.org',
     name: "Rally Core Study",
     authors: {
         name: "Rally Team"
@@ -70,7 +70,7 @@ fetch('locally-available-studies.json')
 function toggleStudyJoinStatus(studyID, joined) {
     studies = [...studies.map(study => {
         const nextStudy = {...study};
-        if (nextStudy.addon_id === studyID) {
+        if (nextStudy.addonId === studyID) {
         nextStudy.studyInstalled = joined;
         nextStudy.joinedOn = new Date();
         }

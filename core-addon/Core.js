@@ -113,7 +113,7 @@ module.exports = class Core {
     // Don't do anything if we received an updated from an addon
     // that's not a study.
     let knownStudies = await this._availableStudies;
-    if (!knownStudies.map(s => s.addon_id).includes(info.id)) {
+    if (!knownStudies.map(s => s.addonId).includes(info.id)) {
       console.debug(
         `Core._handleAddonLifecycle - non-study addon ${info.id} was ${installed ? "installed" : "uninstalled"}`
       );
@@ -123,7 +123,7 @@ module.exports = class Core {
     // Update the available studies list with the installation
     // information.
     this._availableStudies = Promise.resolve(knownStudies.map(s => {
-      if (s.addon_id == info.id) {
+      if (s.addonId == info.id) {
         s.studyInstalled = installed;
       }
       return s;
@@ -224,7 +224,7 @@ module.exports = class Core {
     // We only expect messages coming from known installed studies.
     let installedStudies = (await this._availableStudies)
       .filter(s => s.studyInstalled)
-      .map(s => s.addon_id);
+      .map(s => s.addonId);
     if (!installedStudies.includes(sender.id)) {
       throw new Error(`Core._handleExternalMessage - unexpected sender ${sender.id}`);
     }
@@ -339,7 +339,7 @@ module.exports = class Core {
   async _enrollStudy(studyAddonId) {
     // We only expect to enroll in known studies.
     let knownStudies = await this._availableStudies;
-    if (!knownStudies.map(s => s.addon_id).includes(studyAddonId)) {
+    if (!knownStudies.map(s => s.addonId).includes(studyAddonId)) {
       return Promise.reject(
         new Error(`Core._enrollStudy - Unknown study ${studyAddonId}`));
     }
@@ -365,7 +365,7 @@ module.exports = class Core {
   async _unenrollStudy(studyAddonId) {
     // We only expect to unenroll in known studies.
     let knownStudies = await this._availableStudies;
-    if (!knownStudies.map(s => s.addon_id).includes(studyAddonId)) {
+    if (!knownStudies.map(s => s.addonId).includes(studyAddonId)) {
       return Promise.reject(
         new Error(`Core._unenrollStudy - Unknown study ${studyAddonId}`));
     }
@@ -399,7 +399,7 @@ module.exports = class Core {
     // Uninstall all known studies that are still installed.
     let installedStudies = (await this._availableStudies)
       .filter(s => s.studyInstalled)
-      .map(s => s.addon_id);
+      .map(s => s.addonId);
     for (let studyId of installedStudies) {
       // Attempt to send an uninstall message to each study, but
       // move on if the delivery fails: studies will not be able
@@ -476,7 +476,7 @@ module.exports = class Core {
    *
    * @returns {Promise(Array<Object>)} resolved with an array of studies
    *          objects, or an empty array on failures. Each study object
-   *          has at least the `addon_id` and `studyInstalled` properties.
+   *          has at least the `addonId` and `studyInstalled` properties.
    */
   async _updateInstalledStudies(studies) {
     console.debug("Core._updateInstalledStudies:", studies);
@@ -489,7 +489,7 @@ module.exports = class Core {
         addons.filter(a => a.type == "extension")
           .map(a => a.id));
     return studies.map(s => {
-      s.studyInstalled = installedAddonsIds.includes(s.addon_id);
+      s.studyInstalled = installedAddonsIds.includes(s.addonId);
       return s;
     });
   }
@@ -537,22 +537,18 @@ module.exports = class Core {
    *    {
    *      name: "Demo Study",
    *      icons: { ... },
-   *      schema: ...,
    *      authors { ... },
    *      version: "1.0",
-   *      addon_id: "demo-study@ion.org",
+   *      addonId: "demo-study@ion.org",
    *      moreInfo: { ... },
    *      isDefault: false,
-   *      sourceURI: { ... },
-   *      studyType: "extension",
-   *      studyEnded: false,
+   *      downloadLink: "https://example.com",
+   *      studyPaused: false,
    *      description: "Some nice description",
-   *      privacyPolicy: { ... },
+   *      privacyPolicyLink: "https://example.com",
    *      joinStudyConsent: "...",
    *      leaveStudyConsent: "...",
    *      dataCollectionDetails: [ ... ],
-   *      id:"...",
-   *      last_modified: ...,
    *      // Whether or not the study is currently installed.
    *      studyInstalled: false
    *    },

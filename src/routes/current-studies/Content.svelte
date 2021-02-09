@@ -58,7 +58,7 @@ p {
 
     <div class="studies">
 
-    {#each studies as study, i (study.addon_id)}
+    {#each studies as study, i (study.addonId)}
     <StudyCard
         title={study.name}
         author={study.authors.name}
@@ -70,14 +70,14 @@ p {
         dataCollectionDetails={study.dataCollectionDetails}
         detailsDirectName={study.detailsDirectName}
         detailsDirectLink={study.detailsDirectLink}
-        privacyPolicyLink={study.privacyPolicy.spec}
+        privacyPolicyLink={study.privacyPolicyLink}
         tags={study.tags}
         {sidebarOffset}
         on:join={() => {
-            joinStudy(study.addon_id);
+            joinStudy(study.addonId);
         }}
         on:leave={() => {
-            leaveStudy(study.addon_id);
+            leaveStudy(study.addonId);
         }}
     />
         {:else}
