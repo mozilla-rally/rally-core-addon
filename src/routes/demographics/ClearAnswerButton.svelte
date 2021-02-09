@@ -19,7 +19,7 @@ button.mzp-t-sm.mzp-c-button.mzp-t-neutral.mzp-t-product {
     grid-column-gap: 5.66px;
     margin: 0;
     padding: 0;
-    /* note: border is 1px */
+    /* note: Button component border is 1px */
     padding-left: 7px;
     padding-right: 7px;
     padding-top: 5.5px;
@@ -29,10 +29,6 @@ button.mzp-t-sm.mzp-c-button.mzp-t-neutral.mzp-t-product {
     line-height: 1;
     margin-left: 12px;
     color: #000;
-    /* protocol seems to insert a 1px margin that
-        shifts the survey questions when the button appears.
-        This margin correction prevents that shift. */
-    /* margin-bottom: -1px; */
 }
 </style>
 
