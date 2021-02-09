@@ -9,9 +9,9 @@ import Demographics from "./Content.svelte";
 import Button from "../../components/Button.svelte";
 
 const store = getContext('rally:store');
-// Create a deep copy of the demoResults for the manage profile view.
+// Create a deep copy of $store.demographicsData for the "manage profile" view.
 // Only update the store when the submit button is explicitly clicked;
-// update the intermediate deep copy when demoResults changes.
+// update the intermediate copy when $store.demographicsData changes.
 let intermediateResults;
 $: if ($store && $store.demographicsData) intermediateResults = { ...$store.demographicsData };
 </script>
@@ -28,7 +28,6 @@ $: if ($store && $store.demographicsData) intermediateResults = { ...$store.demo
         <div style="display: grid; grid-auto-flow: column; grid-column-gap: 12px; width: max-content;">
             <Button size="lg" product leave={!validated} disabled={!validated} on:click={() => {
                 store.updateDemographicSurvey(results);
-                //demoResults.set(results);
             }}>Save Changes</Button>
             <Button size="lg" product disabled={!validated} secondary on:click={() => {
                 intermediateResults = $store.demographicsData;

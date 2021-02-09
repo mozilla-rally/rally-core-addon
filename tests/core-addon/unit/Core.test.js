@@ -471,8 +471,6 @@ describe('Core', function () {
         .callsArgWith(1, {rallyId: "fake-rally-id"})
         .resolves();
 
-      sinon.spy(this.core, "_sendStateUpdateToUI");
-
       await this.core._updateDemographics(TEST_SURVEY_DATA);
 
       assert.ok(

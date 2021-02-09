@@ -55,13 +55,12 @@ module.exports = class Storage {
     return await this.getItem("demographicsData");
   }
 
-    /**
+  /**
    * Set the provided demographic data.
    *
    * @returns {Promise} 
    */
   async setDemographicsData(data) {
-    // Attempt to retrieve any previously stored study ids.
     return await this.setItem("demographicsData", data);
   }
 
