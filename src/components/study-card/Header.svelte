@@ -46,7 +46,7 @@
     <h3 class="text-head-sm">
       <slot name="study-name">Study</slot>
     </h3>
-    <div class="study-card-author text-body-xs">
+    <div class="study-card-author text-body-sm">
       by
       <slot name="study-author">author</slot>
       {#if endDate}

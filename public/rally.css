@@ -278,6 +278,19 @@ See #141: https://github.com/mozilla-rally/core-addon/issues/141
 
 */
 
+/*  use this class when you are putting a link with the ExternalLink icon at
+src/components/icons/ExternalLink.svelte:
+
+<a class="external-link" href="https://example.com">See More <ExternalLink /></a>
+*/
+.external-link {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  grid-column-gap: 8px;
+}
+
 /* study card: make all anchor tags a marketing gray color */
 .study-card-container a,
 .study-card-container a:hover {
