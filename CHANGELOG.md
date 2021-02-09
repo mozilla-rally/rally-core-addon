@@ -11,6 +11,7 @@
 * [#349](https://github.com/mozilla-rally/core-addon/pull/349): Adds a "manage profile" page, where a user can update their demographic survey answers.
 * [#350](https://github.com/mozilla-rally/rally-core-addon/pull/350): Simplify study schema for the remote settings, and make code consistent with new names.
 * [#361](https://github.com/mozilla-rally/rally-core-addon/pull/361): Implements a new study card design.
+* [#362](https://github.com/mozilla-rally/rally-core-addon/pull/362): Adds redirect to "sorry to see you go" page when user uninstalls Rally.
 * [#363](https://github.com/mozilla-rally/rally-core-addon/pull/363): Adds an arrow flourish to the first run welcome page.
 
 # v0.8.0 (2021-02-01)
