@@ -7,7 +7,7 @@
 * [#334](https://github.com/mozilla-rally/rally-core-addon/pull/334): Make Mocha stricter about unhandled exceptions in tests; fix the enable data submission option.
  * [341](https://github.com/mozilla-rally/rally-core-addon/pull/341): Update options page favicon, toolbar icon, and addon image to use the new Rally branding.
 * [#344](https://github.com/mozilla-rally/rally-core-addon/pull/344): Create splash page for non-US users in the Core Add-On.
-* [#350](https://github.com/mozilla-rally/rally-core-addon/pull/350): Simplify study schema, and make code consistent with new names.
+* [#350](https://github.com/mozilla-rally/rally-core-addon/pull/350): Simplify study schema for the remote settings, and make code consistent with new names.
 
 # v0.8.0 (2021-02-01)
 
