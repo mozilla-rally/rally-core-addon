@@ -10,6 +10,9 @@ import Demographics from './demographics/MainDemographicsView.svelte';
 import StudyBackgroundElement from './current-studies/Background.svelte';
 import MainContent from '../components/layouts/MainContent.svelte';
 
+import demographicsSchema from './demographics/survey-schema';
+import { questionIsAnswered } from './demographics/survey-tools';
+
 const store = getContext("rally:store");
 
 let view = 'current-studies';
@@ -23,10 +26,8 @@ function leaveStudy(studyID) { store.updateStudyEnrollment(studyID, false); }
 
 /* ------------------------------ PROFILE COMPLETION ------------------------------ */
 // get the number of profile questions answered
-$: profileQuestionsAnswered = $store.demographicsData ? Object.keys($store.demographicsData).filter(key => {
-    if (Array.isArray($store.demographicsData[key]) || typeof $store.demographicsData[key] === 'string') return $store.demographicsData[key].length > 0;
-    return $store.demographicsData[key] !== undefined;
-}).length : 0;
+$: profileQuestionsAnswered = $store.demographicsData  ? Object.keys(demographicsSchema)
+    .filter(key => questionIsAnswered($store.demographicsData[key], demographicsSchema[key].type)).length : 0;
 // get the total number of available profile questions
 $: totalProfileQuestions = $store.demographicsData ? Object.keys($store.demographicsData).length : 7;
 

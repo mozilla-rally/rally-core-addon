@@ -10,6 +10,10 @@ import StudyBG from '../../src/routes/current-studies/Background.svelte';
 import PrivacyNotice from '../../src/routes/terms-of-service/Content.svelte';
 import Demographics from '../../src/routes/demographics/Content.svelte';
 import Button from '../../src/components/Button.svelte';
+
+import demographicsSchema from '../../src/routes/demographics/survey-schema';
+import { questionIsAnswered } from '../../src/routes/demographics/survey-tools';
+
 import { writable } from 'svelte/store';
 
 let view = 'manage-profile';
@@ -29,10 +33,8 @@ let demoResults = writable(undefined);
 let intermediateResults;
 $: if ($demoResults) intermediateResults = { ...$demoResults };
 // get the total number of profile questions answered
-$: profileQuestionsAnswered = $demoResults ? Object.keys($demoResults).filter(key => {
-    if (Array.isArray($demoResults[key]) || typeof $demoResults[key] === 'string') return $demoResults[key].length > 0;
-    return $demoResults[key] !== undefined;
-}).length : 0;
+$: profileQuestionsAnswered = $demoResults  ? Object.keys(demographicsSchema)
+    .filter(key => questionIsAnswered($demoResults[key], demographicsSchema[key].type)).length : 0;
 // get the total number of available profile questions
 $: totalProfileQuestions = $demoResults ? Object.keys($demoResults).length : 7;
 
