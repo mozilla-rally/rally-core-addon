@@ -39,9 +39,6 @@
 
   .study-card-content {
     padding-left: var(--left-pad);
-    display: grid;
-    /* padding-bottom: 1.25rem; */
-    grid-column-gap: 1.5rem;
   }
 
   .study-card-description {

@@ -11,7 +11,7 @@
     endDate={new Date(2021, 4, 31)}
     joinedDate={new Date(2020, 9, 12)}
     imageSrc="https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png"
-    dataCollectionDetails={['Your time spent on a given website', 'Your screen Resolution', 'Your default language in the browser']}
+    dataCollectionDetails={['how often you visit news and health websites', 'The amount of time you spend looking at these websites', 'The sources that lead you to visit these websites', 'Whether you shared links to these websites on social media']}
     tags={['social media', 'misinformation']}
     privacyPolicyLink={'/'}>
     <span slot="name">Political & COVID-18 News Information</span>
