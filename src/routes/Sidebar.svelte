@@ -7,6 +7,9 @@
   import MainSidebar from "../components/layouts/MainSidebar.svelte";
   import ExternalLink from "../components/icons/ExternalLink.svelte";
 
+  export let profileQuestionsAnswered = 0;
+  export let totalProfileQuestions = 7;
+
   const dispatch = createEventDispatcher();
   function send(view) {
     return () => {
@@ -120,6 +123,23 @@ li a {
   </ul>
   <ul slot="settings" class="app-controls"  in:fly={{duration: 800, delay: 600, x: -10}}>
     <ul class="app-controls">
+      <li><button class:active={currentView === 'manage-profile'} on:click={send('manage-profile')}>
+        Manage Profile
+      </button>
+      <div style="color: var(--color-light-gray-90); font-size: 10px; font-weight: 400; padding-top: 4px;">
+        <span style="position: relative;
+        display: inline-block;
+        transform: translateY(-11.5px);
+        font-variant-numeric: tabular-nums;
+        min-width: 6.5px;">
+          {#key profileQuestionsAnswered}
+          <span style="display: inline-block; position: absolute;" in:fly={{duration: 500, y: -24}} out:fly={{duration: 500, y: 24}}>{profileQuestionsAnswered}</span>
+          {/key}
+        </span>
+        / {totalProfileQuestions} Questions Answered
+      </div>
+
+    </li>
       <li><button class:active={currentView === 'privacy-notice'} on:click={send('privacy-notice')}>Privacy Notice</button></li>
       <!-- <li><button class:active={currentView === 'complete-profile'} on:click={send('complete-profile')}>Complete Profile</button></li> -->
       <li><button class:active={currentView === 'leave-rally'} on:click={send('leave-rally')}>Leave Mozilla Rally</button></li>

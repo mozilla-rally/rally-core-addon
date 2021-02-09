@@ -195,7 +195,8 @@ module.exports = class Core {
       case "unenrollment":
         return this._unenroll();
       case "update-demographics":
-        return this._updateDemographics(message.data);
+        return this._updateDemographics(message.data)
+          .then(r => this._sendStateUpdateToUI());
       default:
         return Promise.reject(
           new Error(`Core - unexpected message type ${message.type}`));
@@ -558,10 +559,12 @@ module.exports = class Core {
   async _sendStateUpdateToUI() {
     let enrolled = !!(await this._storage.getRallyID());
     let availableStudies = await this._availableStudies;
+    let demographicsData = await this._storage.getDemographicsData();
 
     const newState = {
       enrolled,
       availableStudies,
+      demographicsData
     };
 
     // Send a message to the UI to update the list of studies.
@@ -580,7 +583,7 @@ module.exports = class Core {
    *        information submitted by the user.
    */
   async _updateDemographics(data) {
-    await this._storage.setItem("demographicsData", data)
+    await this._storage.setDemographicsData(data)
       .catch(e => console.error(`Core._updateDemographics - failed to save data`, e));
 
     let rallyId = await this._storage.getRallyID();

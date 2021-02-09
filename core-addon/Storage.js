@@ -46,6 +46,25 @@ module.exports = class Storage {
   }
 
   /**
+   * Get the provided demographic data.
+   *
+   * @returns {Promise} resolved with the list of demographic answers
+   *          already provided by the user.
+   */
+  async getDemographicsData() {
+    return await this.getItem("demographicsData");
+  }
+
+  /**
+   * Set the provided demographic data.
+   *
+   * @returns {Promise} 
+   */
+  async setDemographicsData(data) {
+    return await this.setItem("demographicsData", data);
+  }
+
+  /**
    * Get the list of study ids user took part to.
    *
    * @returns {Promise} resolved with the list of activated studies
