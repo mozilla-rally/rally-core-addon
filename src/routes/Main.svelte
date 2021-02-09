@@ -15,6 +15,7 @@ const store = getContext("rally:store");
 let view = 'current-studies';
 function changeView(event) {
     view = event.detail;
+    window.scrollTo(0, 0);
 }
 
 function joinStudy(studyID) { store.updateStudyEnrollment(studyID, true); }
@@ -22,12 +23,14 @@ function leaveStudy(studyID) { store.updateStudyEnrollment(studyID, false); }
 
 /* ------------------------------ PROFILE COMPLETION ------------------------------ */
 // get the number of profile questions answered
-$: profileQuestionsAnswered = $store.demographicsData ? Object.keys($store.demographicsData).filter(k => $store.demographicsData[k] || (Array.isArray($store.demographicsData[k]) ? $store.demographicsData[k].length : false)).length : 0;
+$: profileQuestionsAnswered = $store.demographicsData ? Object.keys($store.demographicsData).filter(key => {
+    if (Array.isArray($store.demographicsData[key]) || typeof $store.demographicsData[key] === 'string') return $store.demographicsData[key].length > 0;
+    return $store.demographicsData[key] !== undefined;
+}).length : 0;
 // get the total number of available profile questions
 $: totalProfileQuestions = $store.demographicsData ? Object.keys($store.demographicsData).length : 7;
 
 let mounted = false;
-
 onMount(() => { mounted = true; })
 
 </script>

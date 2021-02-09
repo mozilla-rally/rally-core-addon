@@ -19,6 +19,7 @@ function changeView(event) {
         intermediateResults = $demoResults ? {...$demoResults} : undefined;
     }
     view = event.detail;
+    window.scrollTo(0, 0);
 }
 
 // Create a deep copy of the demoResults for the manage profile view.
@@ -28,7 +29,10 @@ let demoResults = writable(undefined);
 let intermediateResults;
 $: if ($demoResults) intermediateResults = { ...$demoResults };
 // get the total number of profile questions answered
-$: profileQuestionsAnswered = $demoResults ? Object.keys($demoResults).filter(k => $demoResults[k] || (Array.isArray($demoResults[k]) ? $demoResults[k].length : false)).length : 0;
+$: profileQuestionsAnswered = $demoResults ? Object.keys($demoResults).filter(key => {
+    if (Array.isArray($demoResults[key]) || typeof $demoResults[key] === 'string') return $demoResults[key].length > 0;
+    return $demoResults[key] !== undefined;
+}).length : 0;
 // get the total number of available profile questions
 $: totalProfileQuestions = $demoResults ? Object.keys($demoResults).length : 7;
 
