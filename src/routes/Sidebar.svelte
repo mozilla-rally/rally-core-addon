@@ -129,7 +129,7 @@ li a {
       <div style="color: var(--color-light-gray-90); font-size: 10px; font-weight: 400; padding-top: 4px;">
         <span style="position: relative;
         display: inline-block;
-        transform: translateY(-10px);
+        transform: translateY(-11.5px);
         font-variant-numeric: tabular-nums;
         min-width: 6.5px;">
           {#key profileQuestionsAnswered}
