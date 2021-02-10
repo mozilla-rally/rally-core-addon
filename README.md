@@ -13,7 +13,6 @@ The "source of truth" for Rally study metadata is on the [Firefox remote setting
 Install the dependencies...
 
 ```bash
-cd ion-svelte
 npm install
 ```
 
