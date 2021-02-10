@@ -13,12 +13,13 @@ const FAKE_STUDY_ID = "test@ion-studies.com";
 const FAKE_STUDY_ID_NOT_INSTALLED = "test-not-installed@ion-studies.com";
 const FAKE_STUDY_LIST = [
   {
-    "addon_id": FAKE_STUDY_ID
+    "addonId": FAKE_STUDY_ID
   },
   {
-    "addon_id": FAKE_STUDY_ID_NOT_INSTALLED
+    "addonId": FAKE_STUDY_ID_NOT_INSTALLED
   }
 ];
+const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
 const FAKE_WEBSITE = "https://test.website";
 
 describe('Core', function () {
@@ -44,6 +45,18 @@ describe('Core', function () {
         }
       }
     });
+
+    // Create a mock for the privileged API.
+    chrome.firefoxPrivilegedApi = {
+      generateUUID: async function() { return FAKE_UUID; },
+      submitEncryptedPing: async function(type, payload, options) {},
+      getRemoteSettings: async () => FAKE_STUDY_LIST,
+      onRemoteSettingsSync: {
+        addListener: async (callback) => {
+          callback(FAKE_STUDY_LIST);
+        }
+      },
+    };
 
     this.core = new Core({
       website: FAKE_WEBSITE
@@ -78,6 +91,11 @@ describe('Core', function () {
       this.core.initialize();
       assert.ok(chrome.browserAction.onClicked.addListener.calledOnce);
       assert.ok(chrome.runtime.onConnect.addListener.calledOnce);
+    });
+
+    it('sets a redirecting URL if the user uninstalls Rally', function () {
+      this.core.initialize();
+      assert.ok(chrome.runtime.setUninstallURL.calledOnce);
     });
 
     it('listens for addon state changes', function () {
@@ -145,20 +163,13 @@ describe('Core', function () {
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
 
-      // Create a mock for the privileged API.
-      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
-      chrome.firefoxPrivilegedApi = {
-        generateUUID: async function() { return FAKE_UUID; },
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
-
       // Return an empty object from the local storage. Note that this
       // needs to use `browser` and must use `callsArgWith` to guarantee
       // that the promise resolves, due to a bug in sinon-chrome. See
       // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
       browser.storage.local.get.callsArgWith(1, {}).resolves();
       // Make sure to mock the local storage calls as well.
-      chrome.storage.local.set.yields();
+      browser.storage.local.set.yields();
 
       sinon.spy(this.core._dataCollection, "sendEnrollmentPing");
       sinon.spy(this.core._storage, "setRallyID");
@@ -177,11 +188,6 @@ describe('Core', function () {
       // Mock the URL of the options page.
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
-
-      // Create a mock for the telemetry API.
-      chrome.firefoxPrivilegedApi = {
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
 
       sinon.spy(this.core._dataCollection, "sendEnrollmentPing");
 
@@ -205,11 +211,6 @@ describe('Core', function () {
       // Mock the URL of the options page.
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
-
-      // Create a mock for the telemetry API.
-      chrome.firefoxPrivilegedApi = {
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
 
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       this.core._storage = {
@@ -252,15 +253,20 @@ describe('Core', function () {
       assert.ok(browser.management.uninstallSelf.calledOnce);
     });
 
+    it('dispatches first-run-completion message', async function () {
+      sinon.spy(this.core._storage, "setFirstRunCompletion");
+
+      await this.core._handleMessage({
+        type: "first-run-completion", data: {firstRunCompleted: true}
+      });
+
+      assert.ok(this.core._storage.setFirstRunCompletion.calledOnce);
+    });
+
     it('dispatches study-unenrollment messages', async function () {
       // Mock the URL of the options page.
       const TEST_OPTIONS_URL = "install.sample.html";
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
-
-      // Create a mock for the telemetry API.
-      chrome.firefoxPrivilegedApi = {
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
 
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       this.core._storage = {
@@ -322,11 +328,6 @@ describe('Core', function () {
     });
 
     it('dispatches telemetry-ping messages', async function () {
-      // Create a mock for the telemetry API.
-      chrome.firefoxPrivilegedApi = {
-        submitEncryptedPing: async function(type, payload, options) {},
-      };
-
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       this.core._storage = {
         getRallyID: async function() { return FAKE_UUID; },
@@ -399,18 +400,21 @@ describe('Core', function () {
     it('returns a list of addons', async function () {
       let studies = await this.core._fetchAvailableStudies();
       assert.equal(studies.length, 2);
-      assert.ok(studies.filter(a => (a.addon_id === FAKE_STUDY_ID)));
-      assert.ok(studies.filter(a => (a.addon_id === FAKE_STUDY_ID_NOT_INSTALLED)));
+      assert.ok(studies.filter(a => (a.addonId === FAKE_STUDY_ID)));
+      assert.ok(studies.filter(a => (a.addonId === FAKE_STUDY_ID_NOT_INSTALLED)));
     });
 
     it('returns an empty list on errors', async function () {
-      // Mock the 'fetch' to reject.
-      global.fetch = () => Promise.reject();
+      // Create a mock for the privileged API.
+      chrome.firefoxPrivilegedApi = {
+        getRemoteSettings: async () => [],
+      };
+
       let studies = await this.core._fetchAvailableStudies();
       assert.equal(studies.length, 0);
     });
-  });
 
+  });
   describe('_updateInstalledStudies()', function () {
     it('adds the studyInstalled property', async function () {
       // Kick off an update task.
@@ -420,13 +424,13 @@ describe('Core', function () {
       // Check that the FAKE_STUDY_ID is marked as installed (as per
       // our fake data, see the beginning of this file).
       assert.equal(studies
-        .filter(a => (a.addon_id === FAKE_STUDY_ID))
+        .filter(a => (a.addonId === FAKE_STUDY_ID))
         .map(a => a.studyInstalled)[0],
         true);
       // Check that the FAKE_STUDY_ID_NOT_INSTALLED is marked as
       // NOT installed.
       assert.equal(studies
-        .filter(a => (a.addon_id === FAKE_STUDY_ID_NOT_INSTALLED))
+        .filter(a => (a.addonId === FAKE_STUDY_ID_NOT_INSTALLED))
         .map(a => a.studyInstalled)[0],
         false);
     });

@@ -7,6 +7,7 @@ import TermsView from './TermsView.svelte';
 import DemographicsView from './DemographicsView.svelte';
 import OnboardingFlowView from './OnboardingFlowView.svelte';
 import MainFlowView from './MainFlowView.svelte';
+import NonUSView from '../../src/routes/non-eligible-splashes/NonUSUser.svelte';
 
 export default {
   title: "Core Add-On User Flows",
@@ -46,5 +47,8 @@ export const OnboardingFlow = () => ({
 
 export const MainFlow = () => ({
   Component: MainFlowView
+})
 
+export const NonUSPage = () => ({
+  Component: NonUSView
 })

@@ -61,7 +61,7 @@
 
   .onboarding-cta-inner,
   .onboarding-cta-steps {
-    width: 660px;
+    width: var(--content-width);
     margin: auto;
   }
 

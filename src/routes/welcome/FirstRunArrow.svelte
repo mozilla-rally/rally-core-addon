@@ -10,8 +10,8 @@
 <style>
   .first-run {
     position: fixed;
-    right: 60px;
-    top: 8px;
+    right: 90px;
+    top: 45px;
   }
 
   .first-run div {
@@ -21,7 +21,7 @@
 
 <div class="first-run" in:fade={{ delay: 500 }}>
   <Arrow00 delay={500} />
-  <div transition:fade={{ duration: 500, delay: 500 }} class="shortcut-callout">
+  <div in:fade={{ duration: 500, delay: 500 }} class="shortcut-callout">
     shortcut added!
   </div>
 </div>

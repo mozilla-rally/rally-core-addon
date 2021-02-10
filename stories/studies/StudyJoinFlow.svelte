@@ -10,7 +10,7 @@
 
   // add one nicer study with all the information.
   const nicerStudy = {
-    addon_id: 'nicer-study-example@mozilla.org',
+    addonId: 'nicer-study-example@mozilla.org',
     name: "Rally Core Study",
     authors: {
       name: "Rally Team"
@@ -38,7 +38,7 @@
     // set study.studyInstalled if studyID = study.study_id.
     studies = [...studies.map(study => {
       const nextStudy = {...study};
-      if (nextStudy.addon_id === studyID) {
+      if (nextStudy.addonId === studyID) {
         nextStudy.studyInstalled = joined;
       }
       return nextStudy;

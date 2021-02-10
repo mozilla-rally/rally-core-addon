@@ -14,6 +14,8 @@
   import TermsCallToAction from "./terms-of-service/CallToAction.svelte";
 
   export let view = "welcome";
+  export let firstRunCompleted = false;
+
   let mounted = false;
 
   const store = getContext("rally:store");
@@ -22,6 +24,12 @@
 
   onMount(() => {
     mounted = true;
+    // dispatch the first-run-initiated event.
+    // This will tell the Core Add-On's store
+    // that we don't need to show first-run graphics
+    // such as the arrow pointing to the add-on
+    // in the toolbar.
+    dispatch("first-run-initiated");
   });
 
   function send(next) {
@@ -48,7 +56,11 @@
     <Layout>
       <Main padForOnboarding={view !== 'welcome'}>
         {#if view === 'welcome'}
-          <Welcome on:get-started={() => send('terms')} />
+          <Welcome
+            firstRunCompleted={firstRunCompleted}
+            on:get-started={() => {
+              send('terms');
+          }} />
         {:else if view === 'terms'}
           <TermsOfService />
         {:else if view === 'demographics'}

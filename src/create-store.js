@@ -11,7 +11,7 @@ export default function createStore() {
 
   // initialize from the API.
   api.initialize().then(async (newState) => {
-    console.log(`initialize: updated state - ${JSON.stringify(newState)}`);
+    console.log(`initialize: updated state -`, newState);
     set(newState);
   });
 
@@ -53,6 +53,13 @@ export default function createStore() {
         await api.updateDemographicSurvey(data);
       } catch (err) {
         console.error(`Rally - failed to update the demographic survey`, err);
+      }
+    },
+    async setFirstRunCompletion(firstRun) {
+      try {
+        await api.setFirstRunCompletion(firstRun);
+      } catch (err) {
+        console.error(`Rally - failed to set first run flag`, err);
       }
     }
   };

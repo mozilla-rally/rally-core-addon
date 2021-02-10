@@ -6,20 +6,32 @@ import { getContext, onMount } from 'svelte';
 import Layout from './Layout.svelte';
 import CurrentStudies from './current-studies/Content.svelte';
 import PrivacyNotice from './terms-of-service/Content.svelte';
-import Demographics from './demographics/Content.svelte';
+import Demographics from './demographics/MainDemographicsView.svelte';
+import StudyBackgroundElement from './current-studies/Background.svelte';
+import MainContent from '../components/layouts/MainContent.svelte';
+
+import demographicsSchema from './demographics/survey-schema';
+import { questionIsAnswered } from './demographics/survey-tools';
 
 const store = getContext("rally:store");
 
 let view = 'current-studies';
 function changeView(event) {
     view = event.detail;
+    window.scrollTo(0, 0);
 }
 
 function joinStudy(studyID) { store.updateStudyEnrollment(studyID, true); }
 function leaveStudy(studyID) { store.updateStudyEnrollment(studyID, false); }
 
-let mounted = false;
+/* ------------------------------ PROFILE COMPLETION ------------------------------ */
+// get the number of profile questions answered
+$: profileQuestionsAnswered = $store.demographicsData  ? Object.keys(demographicsSchema)
+    .filter(key => questionIsAnswered($store.demographicsData[key], demographicsSchema[key].type)).length : 0;
+// get the total number of available profile questions
+$: totalProfileQuestions = $store.demographicsData ? Object.keys($store.demographicsData).length : 7;
 
+let mounted = false;
 onMount(() => { mounted = true; })
 
 </script>
@@ -29,17 +41,27 @@ onMount(() => { mounted = true; })
 <Layout 
     on:change-view={changeView}
     on:leave-rally
+    {profileQuestionsAnswered}
+    {totalProfileQuestions}
 >
-        {#if view === 'complete-profile'}
-            <Demographics />
+        {#if view === 'manage-profile'}
+            <MainContent>
+                <Demographics />
+            </MainContent>
         {:else if view === 'privacy-notice'}
-            <PrivacyNotice />
+            <MainContent>
+                <PrivacyNotice onboarding={false} />
+            </MainContent>
         {:else}
-            <CurrentStudies
-                sidebarOffset
-                studies={$store.availableStudies}
-                on:join-study={(evt) => { joinStudy(evt.detail); }}
-                on:leave-study={(evt) => { leaveStudy(evt.detail); }} />
+            <StudyBackgroundElement>
+                <MainContent  pad={false}>
+                    <CurrentStudies
+                        sidebarOffset
+                        studies={$store.availableStudies}
+                        on:join-study={(evt) => { joinStudy(evt.detail); }}
+                        on:leave-study={(evt) => { leaveStudy(evt.detail); }} />
+                </MainContent>
+            </StudyBackgroundElement>
         {/if}
 </Layout>
 {/if}

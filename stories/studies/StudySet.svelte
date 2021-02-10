@@ -8,18 +8,18 @@
 {#each [false, true] as joined}
   <StudyCard
     {joined}
-    endDate={new Date(2021, 5, 5)}
-    joinedDate={new Date(2020, 12, 5)}
+    endDate={new Date(2021, 4, 31)}
+    joinedDate={new Date(2020, 9, 12)}
     imageSrc="https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png"
-    dataCollectionDetails={['the date and time', 'number of browser tabs open']}
-    tags={['artificial intelligence', 'misinformation']}
+    dataCollectionDetails={['how often you visit news and health websites', 'The amount of time you spend looking at these websites', 'The sources that lead you to visit these websites', 'Whether you shared links to these websites on social media']}
+    tags={['social media', 'misinformation']}
     privacyPolicyLink={'/'}>
-    <span slot="name">Smoke Test Example Study 1</span>
-    <span slot="author">The Mozilla Foundation</span>
+    <span slot="name">Political & COVID-18 News Information</span>
+    <span slot="author">Princeton University</span>
     <p slot="description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, ut enim ad minim veniam, ut enim ad minim veniam.
+      This study examines political and COVID-19 news information flows across the web.
+      Our goal is to understand how web users are exposed to, consume, and share these types of
+      information, which can inform effort to distinguish trustworthy and untrustworthy content.
     </p>
     <div slot="details">
       Full study details can be found on the

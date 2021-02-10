@@ -8,6 +8,7 @@
 
   import Onboarding from "./routes/Onboarding.svelte";
   import Main from './routes/Main.svelte';
+  import NonUSSplashPage from './routes/non-eligible-splashes/NonUSUser.svelte';
   setContext("rally:store", store);
 
   // As soon as the store has its initial value, let's
@@ -23,6 +24,7 @@
   let isRallySupported = __DISABLE_LOCALE_CHECK__
     ? true
     : navigator.language === "en-US";
+  
 </script>
 
 {#if isRallySupported}
@@ -31,7 +33,13 @@
       <!-- onboarding flow -->
       <!-- the onboarding-complete event occurs once the user has
       gotten through the profile completion step. -->
+      <!-- the first-run-initiated event occurs once the user has
+      loaded the Welcome page. -->
       <Onboarding
+        firstRunCompleted={$store.firstRunCompleted}
+        on:first-run-initiated={() => {
+          store.setFirstRunCompletion(true);
+        }}
         on:onboarding-complete={() => {
           firstRun = false;
         }} />
@@ -47,5 +55,10 @@
     {/if}
   {/if}
 {:else}
-  <div>Sorry, Rally is not supported in this locale.</div>
+  <NonUSSplashPage on:remove-extension={() => {
+    // we will use store.UpdatePlatformEnrollment to
+    // uninstall the add-on, even though the user technically
+    // does not need to have any deletion pings sent.
+    store.updatePlatformEnrollment(false);
+  }} />
 {/if}

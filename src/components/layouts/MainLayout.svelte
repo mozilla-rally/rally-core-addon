@@ -4,14 +4,14 @@
 <style>
   div {
     min-height: 100vh;
-    background: url('/public/texture.png');
+    background-color: green;
     display: grid;
     grid-template-columns: max-content auto;
     justify-content: stretch;
-    justify-items: start;
+    justify-items: stretch;
   }
 </style>
 
-<div>
+<div class='noise-background'>
   <slot />
 </div>

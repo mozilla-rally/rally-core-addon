@@ -46,6 +46,45 @@ module.exports = class Storage {
   }
 
   /**
+   * Get the provided demographic data.
+   *
+   * @returns {Promise} resolved with the list of demographic answers
+   *          already provided by the user.
+   */
+  async getDemographicsData() {
+    return await this.getItem("demographicsData");
+  }
+
+  /**
+   * Set the provided demographic data.
+   *
+   * @returns {Promise} 
+   */
+  async setDemographicsData(data) {
+    return await this.setItem("demographicsData", data);
+  }
+
+    /**
+   * Get the provided demographic data.
+   *
+   * @returns {Promise} resolved with a boolean denoting
+   *          if the user finished the first run of the 
+   *          Core Add-On.
+   */
+  async getFirstRunCompletion() {
+    return await this.getItem("firstRunCompleted");
+  }
+
+  /**
+   * Set the provided demographic data.
+   *
+   * @returns {Promise} 
+   */
+  async setFirstRunCompletion(firstRun) {
+    return await this.setItem("firstRunCompleted", firstRun);
+  }
+
+  /**
    * Get the list of study ids user took part to.
    *
    * @returns {Promise} resolved with the list of activated studies

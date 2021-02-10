@@ -188,7 +188,7 @@ module.exports = class DataCollection {
     const FIELD_MAPPING = {
       "age": "age",
       "gender": "gender",
-      "hispanicLatinoSpanishOrigin": "origin",
+      "hispanicLatinxSpanishOrigin": "origin",
       "school": "education",
       "income": "income",
     };

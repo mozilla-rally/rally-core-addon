@@ -1,6 +1,22 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.8.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.9.0...master)
+
+# v0.9.0 (2021-02-09)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.8.0...v0.9.0)
+
+* [#318](https://github.com/mozilla-rally/rally-core-addon/pull/311): Use Remote Settings for fetching study metadata.
+* [#328](https://github.com/mozilla-rally/rally-core-addon/pull/328): Update demographic survey to use "Latinx"; list answers for race question 4 alphabetically.
+* [#334](https://github.com/mozilla-rally/rally-core-addon/pull/334): Make Mocha stricter about unhandled exceptions in tests; fix the enable data submission option.
+ * [341](https://github.com/mozilla-rally/rally-core-addon/pull/341): Update options page favicon, toolbar icon, and addon image to use the new Rally branding.
+* [#344](https://github.com/mozilla-rally/rally-core-addon/pull/344): Create splash page for non-US users in the Core Add-On.
+* [#286](https://github.com/mozilla-rally/core-addon/pull/286): Adds a "clear this response" button to demographic survey questions.
+* [#349](https://github.com/mozilla-rally/core-addon/pull/349): Adds a "manage profile" page, where a user can update their demographic survey answers.
+* [#350](https://github.com/mozilla-rally/rally-core-addon/pull/350): Simplify study schema for the remote settings, and make code consistent with new names.
+* [#361](https://github.com/mozilla-rally/rally-core-addon/pull/361): Implements a new study card design.
+* [#362](https://github.com/mozilla-rally/rally-core-addon/pull/362): Adds redirect to "sorry to see you go" page when user uninstalls Rally.
+* [#363](https://github.com/mozilla-rally/rally-core-addon/pull/363): Adds an arrow flourish to the first run welcome page.
 
 # v0.8.0 (2021-02-01)
 

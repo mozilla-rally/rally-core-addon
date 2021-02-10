@@ -8,36 +8,43 @@ const DataCollection = require("./DataCollection.js");
 // The path of the embedded resource used to control options.
 const OPTIONS_PAGE_PATH = "public/index.html";
 
-const DEFAULT_ARGS = {
-  // NOTE: if this URL ever changes, you will have to update the domain in
-  // the permissions in manifest.json.
-  availableStudiesURI: "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/pioneer-study-addons-v1/records",
-  website: "https://mozilla-rally.github.io",
-}
-
 module.exports = class Core {
- /**
-  * @param {Object} args arguments passed in from the user.
-  * @param {String} args.availableStudiesURI the URI where the available studies
-  *             information is listed.
-  * @param {String} args.website the URL of the platform website.
-  */
-  constructor(args = {}) {
-    this._userArguments = {...DEFAULT_ARGS, ...args};
+  /**
+   * @param {Object} args arguments passed in from the user.
+   * @param {String} args.availableStudiesURI the URI where the available studies
+   *             information is listed. Only used when disableRemoteSettings is `true`.
+   * @param {Boolean} args.disableRemoteSettings do not use the official RemoteSettings server.
+   *             Default is `true`.
+   * @param {String} args.website the URL of the platform website.
+   */
+  constructor(args) {
+    this._userArguments = args;
 
     this._storage = new Storage();
     this._dataCollection = new DataCollection();
 
     // Asynchronously get the available studies. We don't need to wait
     // for this to finish, the UI can handle the wait.
-    this._availableStudies =
-      this._fetchAvailableStudies()
-          .then(studies => this._updateInstalledStudies(studies));
-
+    this._availableStudies = this._fetchAvailableStudies().then((studies) =>
+      this._updateInstalledStudies(studies)
+    );
+    if (this._userArguments.disableRemoteSettings) {
+      console.warn("RemoteSettings disabled, not adding a new studies listener.");
+    } else {
+      // Register a listener to react to remote-settings updates.
+      browser.firefoxPrivilegedApi.onRemoteSettingsSync.addListener((studies) => {
+        // FIXME Important: this may be racing with the initial update or if there's two consecutive updates?
+        // @see https://github.com/mozilla-rally/rally-core-addon/issues/318
+        this._availableStudies = this._updateInstalledStudies(studies);
+        this._sendStateUpdateToUI();
+      });
+    }
     this._connectionPort = null;
   }
 
   initialize() {
+    // set the URL to redirect when a user uninstalls Rally
+    browser.runtime.setUninstallURL("__BASE_SITE__/leaving-rally");
     // Whenever the addon icon is clicked, open the control page.
     browser.browserAction.onClicked.addListener(this._openControlPanel);
     // After installing the addon, make sure to show the control page.
@@ -108,7 +115,7 @@ module.exports = class Core {
     // Don't do anything if we received an updated from an addon
     // that's not a study.
     let knownStudies = await this._availableStudies;
-    if (!knownStudies.map(s => s.addon_id).includes(info.id)) {
+    if (!knownStudies.map(s => s.addonId).includes(info.id)) {
       console.debug(
         `Core._handleAddonLifecycle - non-study addon ${info.id} was ${installed ? "installed" : "uninstalled"}`
       );
@@ -118,11 +125,11 @@ module.exports = class Core {
     // Update the available studies list with the installation
     // information.
     this._availableStudies = Promise.resolve(knownStudies.map(s => {
-        if (s.addon_id == info.id) {
-          s.studyInstalled = installed;
-        }
-        return s;
-      })
+      if (s.addonId == info.id) {
+        s.studyInstalled = installed;
+      }
+      return s;
+    })
     );
 
     if (installed) {
@@ -179,7 +186,7 @@ module.exports = class Core {
     switch (message.type) {
       case "enrollment":
         return this._enroll()
-                   .then(r => this._sendStateUpdateToUI());
+          .then(r => this._sendStateUpdateToUI());
       case "get-studies":
         return this._sendStateUpdateToUI();
       case "study-unenrollment":
@@ -190,7 +197,11 @@ module.exports = class Core {
       case "unenrollment":
         return this._unenroll();
       case "update-demographics":
-        return this._updateDemographics(message.data);
+        return this._updateDemographics(message.data)
+          .then(r => this._sendStateUpdateToUI());
+      case "first-run-completion":
+        return this._storage.setFirstRunCompletion(message.data.firstRunCompleted)
+          .then(() => this._sendStateUpdateToUI());
       default:
         return Promise.reject(
           new Error(`Core - unexpected message type ${message.type}`));
@@ -218,7 +229,7 @@ module.exports = class Core {
     // We only expect messages coming from known installed studies.
     let installedStudies = (await this._availableStudies)
       .filter(s => s.studyInstalled)
-      .map(s => s.addon_id);
+      .map(s => s.addonId);
     if (!installedStudies.includes(sender.id)) {
       throw new Error(`Core._handleExternalMessage - unexpected sender ${sender.id}`);
     }
@@ -234,7 +245,7 @@ module.exports = class Core {
         };
       }
       case "telemetry-ping": {
-        const {payloadType, payload, namespace, keyId, key} = message.data;
+        const { payloadType, payload, namespace, keyId, key } = message.data;
         let rallyId = await this._storage.getRallyID();
         return await this._dataCollection.sendPing(
           rallyId, payloadType, payload, namespace, keyId, key
@@ -333,7 +344,7 @@ module.exports = class Core {
   async _enrollStudy(studyAddonId) {
     // We only expect to enroll in known studies.
     let knownStudies = await this._availableStudies;
-    if (!knownStudies.map(s => s.addon_id).includes(studyAddonId)) {
+    if (!knownStudies.map(s => s.addonId).includes(studyAddonId)) {
       return Promise.reject(
         new Error(`Core._enrollStudy - Unknown study ${studyAddonId}`));
     }
@@ -359,7 +370,7 @@ module.exports = class Core {
   async _unenrollStudy(studyAddonId) {
     // We only expect to unenroll in known studies.
     let knownStudies = await this._availableStudies;
-    if (!knownStudies.map(s => s.addon_id).includes(studyAddonId)) {
+    if (!knownStudies.map(s => s.addonId).includes(studyAddonId)) {
       return Promise.reject(
         new Error(`Core._unenrollStudy - Unknown study ${studyAddonId}`));
     }
@@ -393,7 +404,7 @@ module.exports = class Core {
     // Uninstall all known studies that are still installed.
     let installedStudies = (await this._availableStudies)
       .filter(s => s.studyInstalled)
-      .map(s => s.addon_id);
+      .map(s => s.addonId);
     for (let studyId of installedStudies) {
       // Attempt to send an uninstall message to each study, but
       // move on if the delivery fails: studies will not be able
@@ -422,7 +433,7 @@ module.exports = class Core {
     await this._storage.clearActivatedStudies();
 
     // Finally, uninstall the addon.
-    await browser.management.uninstallSelf({showConfirmDialog: false});
+    await browser.management.uninstallSelf({ showConfirmDialog: false });
   }
 
   /**
@@ -470,10 +481,10 @@ module.exports = class Core {
    *
    * @returns {Promise(Array<Object>)} resolved with an array of studies
    *          objects, or an empty array on failures. Each study object
-   *          has at least the `addon_id` and `studyInstalled` properties.
+   *          has at least the `addonId` and `studyInstalled` properties.
    */
   async _updateInstalledStudies(studies) {
-    console.debug("Core._updateInstalledStudies");
+    console.debug("Core._updateInstalledStudies:", studies);
 
     // If we were able to fetch studies definitions, see if any
     // of them were installed. Start by getting the list of installed
@@ -481,9 +492,9 @@ module.exports = class Core {
     let installedAddonsIds =
       await browser.management.getAll().then(addons =>
         addons.filter(a => a.type == "extension")
-              .map(a => a.id));
+          .map(a => a.id));
     return studies.map(s => {
-      s.studyInstalled = installedAddonsIds.includes(s.addon_id);
+      s.studyInstalled = installedAddonsIds.includes(s.addonId);
       return s;
     });
   }
@@ -492,14 +503,23 @@ module.exports = class Core {
    * Fetch the available studies.
    *
    * This loads the studies from the Firefox Remote Settings service.
+   * If `disableRemoteSettings` is `true`, then an URL will be used instead. This is intended for local testing.
    *
    * @returns {Promise(Array<Object>)} resolved with an array of studies
    *          objects, or an empty array on failures.
    */
   async _fetchAvailableStudies() {
     try {
-      const request = await fetch(this._userArguments.availableStudiesURI);
-      return (await request.json()).data;
+      let studies = [];
+      if (this._userArguments.disableRemoteSettings) {
+        console.warn("Not using RemoteSettings, fetching from:", this._userArguments.availableStudiesURI);
+        const request = await fetch(this._userArguments.availableStudiesURI);
+        studies = await request.json();
+      } else {
+        console.debug("Using RemoteSettings for studies.");
+        studies = await browser.firefoxPrivilegedApi.getRemoteSettings();
+      }
+      return studies;
     } catch (err) {
       console.error(err);
       return [];
@@ -522,22 +542,18 @@ module.exports = class Core {
    *    {
    *      name: "Demo Study",
    *      icons: { ... },
-   *      schema: ...,
    *      authors { ... },
    *      version: "1.0",
-   *      addon_id: "demo-study@ion.org",
+   *      addonId: "demo-study@ion.org",
    *      moreInfo: { ... },
    *      isDefault: false,
-   *      sourceURI: { ... },
-   *      studyType: "extension",
-   *      studyEnded: false,
+   *      downloadLink: "https://example.com",
+   *      studyPaused: false,
    *      description: "Some nice description",
-   *      privacyPolicy: { ... },
+   *      privacyPolicyLink: "https://example.com",
    *      joinStudyConsent: "...",
    *      leaveStudyConsent: "...",
    *      dataCollectionDetails: [ ... ],
-   *      id:"...",
-   *      last_modified: ...,
    *      // Whether or not the study is currently installed.
    *      studyInstalled: false
    *    },
@@ -547,16 +563,20 @@ module.exports = class Core {
    */
   async _sendStateUpdateToUI() {
     let enrolled = !!(await this._storage.getRallyID());
+    let firstRunCompleted = !!(await this._storage.getFirstRunCompletion());
     let availableStudies = await this._availableStudies;
+    let demographicsData = await this._storage.getDemographicsData();
 
     const newState = {
       enrolled,
+      firstRunCompleted,
       availableStudies,
+      demographicsData,
     };
 
     // Send a message to the UI to update the list of studies.
     this._connectionPort.postMessage(
-      {type: "update-state", data: newState});
+      { type: "update-state", data: newState });
   }
 
   /**
@@ -570,7 +590,7 @@ module.exports = class Core {
    *        information submitted by the user.
    */
   async _updateDemographics(data) {
-    await this._storage.setItem("demographicsData", data)
+    await this._storage.setDemographicsData(data)
       .catch(e => console.error(`Core._updateDemographics - failed to save data`, e));
 
     let rallyId = await this._storage.getRallyID();

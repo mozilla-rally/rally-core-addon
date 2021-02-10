@@ -2,9 +2,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var assert = require('assert').strict;
+import { strict as assert } from 'assert';
 
-var Rally = require('../../support/rally');
+import Rally from '../../support/rally.js';
 
 describe('Rally', function () {
   beforeEach(function () {
@@ -33,7 +33,7 @@ describe('Rally', function () {
       assert.ok(browser.tabs.create.notCalled);
     });
 
-    it('no core addon opens an info page in production', async function () {
+    it('no core addon rejects init and opens signup', async function () {
       chrome.tabs.create.yields();
 
       // Mock the check to make it fail.
@@ -41,9 +41,11 @@ describe('Rally', function () {
         throw "Core Add-On not available.";
       };
 
-      await this.rally.initialize(
-        "key-id",
-        {},
+      await assert.rejects(
+        this.rally.initialize(
+          "key-id",
+          {},
+        )
       );
 
       assert.ok(chrome.tabs.create.calledOnce);

@@ -12,7 +12,7 @@
   };
 </script>
 
-<style>
+<style> 
   .accordion-summary {
     cursor: pointer;
     background-color: transparent;
@@ -33,6 +33,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    max-height: 20px;
+    overflow: hidden;
   }
 
   .title {
@@ -44,9 +46,10 @@
     justify-items: start;
     grid-column-gap: 0.25em;
   }
-  .carat {
+  .caret {
     justify-self: end;
     transition: transform 200ms;
+    display: inline-grid;
   }
 </style>
 
@@ -57,7 +60,7 @@
   class="accordion-summary">
   <div class="title">
     <slot>Channel</slot>
-    <span class="carat gafc" style="transform: rotate({revealed ? 90 : 0}deg);">
+    <span class="caret gafc" style="transform: rotate({revealed ? 90 : 0}deg) translateY(.5px);">
       <CaretRight size="1em" />
     </span>
   </div></button>

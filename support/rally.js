@@ -5,7 +5,7 @@
 const CORE_ADDON_ID = "rally-core@mozilla.org";
 const SIGNUP_URL = "https://mozilla-rally.github.io/core-addon/";
 
-class Rally {
+export default class Rally {
   /**
    * Initialize the Rally library.
    *
@@ -37,19 +37,27 @@ class Rally {
     this._key = key;
     this._enableDevMode = Boolean(enableDevMode);
 
-    await this._checkRallyCore().then(
-        () => console.debug("Rally.initialize - Found the Core Add-on")
-      ).catch(
-        async () => {
-          // Do not prompt recommend installing Rally in
-          // developer mode.
-          if (!this._enableDevMode) {
-            await browser.tabs.create({ url: SIGNUP_URL });
-          } else {
-            console.warn("Rally.initialize - Executing in developer mode.");
-          }
-        }
-      );
+    let hasRally = await this._checkRallyCore().then(() => {
+      console.debug("Rally.initialize - Found the Core Add-on.");
+      return true;
+    }).catch(async () => {
+      // We did not find the Rally Core Add-on. But maybe we
+      // are in developer mode. Do not trigger the sign-up flow
+      // if that's the case.
+      if (this._enableDevMode) {
+        console.warn("Rally.initialize - Executing in developer mode.");
+        return true;
+      }
+
+      // The Core Add-on was not found and we're not in developer
+      // mode.
+      await browser.tabs.create({ url: SIGNUP_URL });
+      return false;
+    });
+
+    if (!hasRally) {
+      throw new Error("Rally.initialize - Initialization failed.");
+    }
 
     // Listen for incoming messages from the Core addon.
     browser.runtime.onMessageExternal.addListener(
@@ -196,9 +204,4 @@ class Rally {
       console.error(`Rally.sendPing - error while sending ${payloadType}`, ex);
     }
   }
-}
-
-// Make this library Require-able.
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = Rally;
 }

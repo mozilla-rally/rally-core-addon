@@ -6,8 +6,8 @@
   import { slide } from "svelte/transition";
   import Header from "./Header.svelte";
   import Button from "../Button.svelte";
-  import DataCollected from "../icons/DataCollected.svelte";
-  import Details from "../icons/Details.svelte";
+  import CheckCircle from "../icons/CheckCircle.svelte";
+  import ExternalLink from '../icons/ExternalLink.svelte';
   import niceDate from "./nice-date";
 
   import AccordionButton from "../accordion/AccordionButton.svelte";
@@ -33,25 +33,20 @@
     --left-pad: calc(var(--icon-size) + var(--gap));
 
     padding: 1.25rem;
-    box-shadow: var(--rally-box-shadow-xs);
+    box-shadow: var(--rally-box-shadow-sm);
     background-color: var(--color-white);
+    border: 1px solid #ECECED;
   }
 
-  .study-card-body {
+  .study-card-content {
     padding-left: var(--left-pad);
-    display: grid;
-    grid-template-columns: auto auto;
-    padding-bottom: 1.25rem;
-    grid-row-gap: 1.5rem;
-    grid-column-gap: 1.5rem;
   }
 
   .study-card-description {
     grid-column: 1 / span 2;
-  }
-
-  .study-card-description h4 {
-    padding-bottom: 0.5rem;
+    /* offset the last paragraph text margin by a bit more */
+    margin-top: 5.5px;
+    margin-bottom: 4px;
   }
 
   h4 {
@@ -70,31 +65,9 @@
     justify-content: flex-start;
     align-items: flex-end;
     height: 0;
-  }
-
-  .study-card-joined-date {
-    margin: auto;
-    margin-top: 0.75rem;
-    font-size: 12px;
-    text-align: center;
-    color: var(--color-ink-30);
-    display: grid;
-    grid-auto-flow: column;
-    align-items: center;
-    grid-column-gap: 0.25rem;
-  }
-
-  .study-card-section {
-    display: grid;
-    align-self: start;
-    grid-template-columns: 20px auto;
-    grid-template-rows: auto auto;
-    grid-column-gap: 6px;
-    grid-row-gap: 0.5rem;
-    align-items: center;
-    grid-template-areas:
-      "icon title"
-      "icon body";
+    /* add additional margin to offset buttons from card pad */
+    margin-top: 4px;
+    margin-right: 4px;
   }
 
   .study-card-subheader {
@@ -110,7 +83,7 @@
     display: grid;
     grid-template-columns: auto max-content;
     align-items: center;
-    padding-top: 1rem;
+    padding-top: 14px;
     grid-column-gap: 3rem;
   }
 
@@ -120,9 +93,12 @@
     gap: 0.5rem;
   }
 
-  .study-card-icon {
-    display: contents;
-    color: var(--color-ink-50);
+  .data-collection-details li {
+    margin: 0;
+  }
+
+  .data-collection-details li + li {
+    margin-top: 8px;
   }
 
   .study-card-privacy-policy {
@@ -149,6 +125,34 @@
     border-bottom: 1px solid #c4c4c4;
   }
 
+  .header-divider {
+    margin-bottom: 20px;
+  }
+
+  .joined-study-accordion {
+    padding-left: var(--left-pad);
+    display: grid;
+    grid-template-columns: auto max-content;
+    grid-gap: 36px;
+  }
+
+  .joined-study-accordion h4 {
+    margin: 0;
+  }
+
+  .study-card-joined-date {
+    margin: auto;
+    font-size: 12px;
+    text-align: center;
+    color: var(--color-ink-10);
+    font-weight: 600;
+    font-style: italic;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    grid-column-gap: 6px;
+  }
+
 </style>
 
 <div class="study-card-container radius-sm">
@@ -158,12 +162,13 @@
       class="study-card-image"
       width="60"
       alt="study icon"
-      src={imageSrc || "public/default-study-icon.png"} />
+      src={imageSrc || "img/default-study-icon.png"} />
     <span slot="study-name"><slot name="name">Study Title</slot></span>
     <span slot="study-author"><slot name="author">Study Author</slot></span>
     <span slot="study-cta">
       <div class="study-card-cta">
         <Button
+          size={"md"}
           product={!joined}
           leave={joined}
           on:click={() => {
@@ -171,7 +176,15 @@
           }}>
           {#if joined}Leave Study{:else}Join Study{/if}
         </Button>
-        {#if joined}
+      </div></span>
+  </Header>
+  <hr class="header-divider" />
+  {#if joined}
+    <div class="joined-study-accordion">
+      <AccordionButton bind:revealed>
+        <h4 class="study-card-subheader text-display-xxs">Study Description</h4>
+      </AccordionButton>
+      {#if joined}
           <div class="study-card-joined-date">
             {#if joinedDate}
               joined on
@@ -179,22 +192,18 @@
             {:else}
               joined
             {/if}
+            <span class='gafc' style="transform: translateY(-1px);">
+              <CheckCircle size="20px" color="var(--color-green-60)" />
+            </span>
           </div>
         {/if}
-      </div></span>
-  </Header>
-  {#if joined}
-    <div style="padding-bottom: 1rem; padding-left: var(--left-pad);">
-      <AccordionButton bind:revealed>
-        <h4 class="study-card-subheader text-display-xxs">Study Description</h4>
-      </AccordionButton>
     </div>
   {/if}
-
   {#if revealed || !joined}
     <div class="study-card-body" transition:slide|local={{ duration: 200 }}>
+      <div class="study-card-content">
+      {#if !joined}<h4 class="study-card-subheader text-display-xxs">Study Description</h4>{/if}
       <div class="study-card-description body-copy text-body-sm">
-        {#if !joined}<h4 class="study-card-subheader text-display-xxs">Study Description</h4>{/if}
         <slot name="description">
           <p>description missing</p>
         </slot>
@@ -202,41 +211,29 @@
       {#if dataCollectionDetails.length}
         <div
           class="study-card-section study-card-collected body-copy text-body-sm">
-          <span class='study-card-icon'>
-            <DataCollected />
-          </span>
-          <h4 class="study-card-subheader text-display-xxs">Data Collected</h4>
+          <h4 class="study-card-subheader text-display-xxs" style="margin-bottom: 10px;">Key Data Collected</h4>
           <ul
-            class="mzp-u-list-styled study-card-section-body body-copy text-body-sm">
+            class="mzp-u-list-styled study-card-section-body data-collection-details body-copy text-body-sm">
             {#each dataCollectionDetails as detail}
               <li>{detail}</li>
             {/each}
           </ul>
         </div>
       {/if}
-      <div class="study-card-section study-card-details body-copy text-body-sm">
-        <span class='study-card-icon'>
-          <Details />
-        </span>
-        <h4 class="study-card-subheader text-display-xxs">Additional Details</h4>
-        <div class="study-card-section-body">
-          <slot name="details">more details</slot>
+      </div>
+      <hr />
+
+      <div class="study-card-footer">
+        <div class="study-card-tags">
+          {#each tags as tag}
+            <div class="tag radius-sm">{tag}</div>
+          {/each}
+        </div>
+    
+        <div class="study-card-privacy-policy">
+          <a class="external-link" style="--spacing: 6px;" href={privacyPolicyLink}>View Full Study Details <ExternalLink /></a>
         </div>
       </div>
     </div>
   {/if}
-
-  <hr />
-
-  <div class="study-card-footer">
-    <div class="study-card-tags">
-      {#each tags as tag}
-        <div class="tag radius-sm">{tag}</div>
-      {/each}
-    </div>
-
-    <div class="study-card-privacy-policy">
-      <a href={privacyPolicyLink}>privacy policy</a>
-    </div>
-  </div>
 </div>

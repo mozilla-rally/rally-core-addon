@@ -2,6 +2,13 @@
   {
     "namespace": "firefoxPrivilegedApi",
     "description": "experimental API extensions for exposing privileged Firefox APIs",
+    "events": [
+      {
+        "name": "onRemoteSettingsSync",
+        "type": "function",
+        "parameters": []
+      }
+    ],
     "functions": [
       {
         "name": "submitEncryptedPing",
@@ -63,6 +70,13 @@
         "name": "generateUUID",
         "type": "function",
         "description": "Generate a random UUID using the Firefox APIs",
+        "parameters": [],
+        "async": true
+      },
+      {
+        "name": "getRemoteSettings",
+        "type": "function",
+        "description": "Get a RemoteSettings collection",
         "parameters": [],
         "async": true
       }
