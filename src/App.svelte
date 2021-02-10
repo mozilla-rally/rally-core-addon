@@ -38,7 +38,6 @@
       <Onboarding
         firstRunCompleted={$store.firstRunCompleted}
         on:first-run-initiated={() => {
-          console.log('did this fire?')
           store.setFirstRunCompletion(true);
         }}
         on:onboarding-complete={() => {
