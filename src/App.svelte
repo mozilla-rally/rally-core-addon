@@ -4,6 +4,7 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { setContext } from "svelte";
+  import { get } from 'svelte/store';
   import { store } from "./stores.js";
 
   import Onboarding from "./routes/Onboarding.svelte";
@@ -24,15 +25,24 @@
   let isRallySupported = __DISABLE_LOCALE_CHECK__
     ? true
     : navigator.language === "en-US";
+  
 </script>
 
 {#if isRallySupported}
   {#if $store}
+    {$store.firstRunCompleted}
     {#if firstRun}
       <!-- onboarding flow -->
       <!-- the onboarding-complete event occurs once the user has
       gotten through the profile completion step. -->
+      <!-- the first-run-complete event occurs once the user has
+      clicked on "Get Started" on the Welcome page. -->
       <Onboarding
+        firstRunCompleted={$store.firstRunCompleted}
+        on:first-run-initiated={() => {
+          console.log('did this fire?')
+          store.setFirstRunCompletion(true);
+        }}
         on:onboarding-complete={() => {
           firstRun = false;
         }} />

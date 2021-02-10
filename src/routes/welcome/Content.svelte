@@ -10,7 +10,11 @@
   import FirstRunArrow from "./FirstRunArrow.svelte";
   const dispatch = createEventDispatcher();
 
-  export let firstRun = false;
+  export let firstRunCompleted = false;
+
+  // capture only the first value of firstRunCompleted.
+  const showArrow = !firstRunCompleted;
+
 </script>
 
 <style>
@@ -107,6 +111,6 @@
     </div>
   </div>
 </section>
-{#if firstRun}
+{#if showArrow}
   <FirstRunArrow />
 {/if}

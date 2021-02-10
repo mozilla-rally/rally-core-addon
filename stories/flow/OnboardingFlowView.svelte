@@ -16,10 +16,11 @@
 
   let which = "welcome";
   let mounted = false;
-  let firstRun = true;
+  let firstRunCompleted = false;
 
   onMount(() => {
     mounted = true;
+    firstRunCompleted = true;
   });
 
   function send(next) {
@@ -42,7 +43,7 @@
     <Layout>
       <Body padForOnboarding={which !== 'welcome'}>
         {#if which === 'welcome'}
-          <Welcome {firstRun} on:get-started={() => {send('terms'); firstRun = false; }} />
+          <Welcome firstRunCompleted={firstRunCompleted} on:get-started={() => {send('terms'); }} />
         {:else if which === 'terms'}
           <TermsOfService />
         {:else if which === 'demographics'}

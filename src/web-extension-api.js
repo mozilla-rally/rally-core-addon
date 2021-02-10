@@ -22,6 +22,7 @@ import browser from "webextension-polyfill";
 async function sendToCore(port, type, payload) {
   const VALID_TYPES = [
     "enrollment",
+    "first-run-completion",
     "get-studies",
     "study-enrollment",
     "study-unenrollment",
@@ -187,6 +188,15 @@ export default {
   },
 
   /**
+   * Updates the stored version of the demographics data.
+   *
+   * @param {Boolean} firstRunCompleted
+   */
+  async setFirstRunCompletion(firstRunCompleted) {
+    await sendToCore(this._connectionPort, "first-run-completion", { firstRunCompleted });
+  },
+
+  /**
    * Handle messages coming from the background script.
    *
    * @param {Object} message
@@ -202,6 +212,7 @@ export default {
     switch (message.type) {
       case "update-state": {
         // update the UI.
+        console.log("updatestate")
         this._stateChangeCallbacks.forEach(callback => callback(message.data));
       } break;
       default:

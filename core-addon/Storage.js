@@ -64,6 +64,27 @@ module.exports = class Storage {
     return await this.setItem("demographicsData", data);
   }
 
+    /**
+   * Get the provided demographic data.
+   *
+   * @returns {Promise} resolved with a boolean denoting
+   *          if the user finished the first run of the 
+   *          Core Add-On.
+   */
+  async getFirstRunCompletion() {
+    return await this.getItem("firstRunCompleted");
+  }
+
+  /**
+   * Set the provided demographic data.
+   *
+   * @returns {Promise} 
+   */
+  async setFirstRunCompletion(firstRun) {
+    console.log('FIRST RUN COMPLETION SET', firstRun)
+    return await this.setItem("firstRunCompleted", firstRun);
+  }
+
   /**
    * Get the list of study ids user took part to.
    *
