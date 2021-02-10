@@ -5,7 +5,6 @@
 * Core-Addon
   * [#376](https://github.com/mozilla-rally/rally-core-addon/pull/376): Updates Core Add-On privacy notice to include note about collecting basic health metrics.
 
-
 # v0.9.0 (2021-02-09)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.8.0...v0.9.0)
@@ -21,6 +20,7 @@
 * [#361](https://github.com/mozilla-rally/rally-core-addon/pull/361): Implements a new study card design.
 * [#362](https://github.com/mozilla-rally/rally-core-addon/pull/362): Adds redirect to "sorry to see you go" page when user uninstalls Rally.
 * [#363](https://github.com/mozilla-rally/rally-core-addon/pull/363): Adds an arrow flourish to the first run welcome page.
+
 # v0.8.0 (2021-02-01)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.7.1...v0.8.0)
