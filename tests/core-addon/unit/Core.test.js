@@ -248,13 +248,13 @@ describe('Core', function () {
       assert.ok(browser.management.uninstallSelf.calledOnce);
     });
 
-    it('sets firstRunCompleted', async function () {
+    it('dispatches first-run-completion message', async function () {
       sinon.spy(this.core._storage, "setFirstRunCompletion");
 
       await this.core._handleMessage({
         type: "first-run-completion", data: {firstRunCompleted: true}
       });
-      
+
       assert.ok(this.core._storage.setFirstRunCompletion.calledOnce);
     });
 
