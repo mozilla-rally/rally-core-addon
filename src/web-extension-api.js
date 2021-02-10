@@ -212,7 +212,6 @@ export default {
     switch (message.type) {
       case "update-state": {
         // update the UI.
-        console.log("updatestate")
         this._stateChangeCallbacks.forEach(callback => callback(message.data));
       } break;
       default:
