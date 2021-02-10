@@ -190,7 +190,7 @@ export default {
   /**
    * Updates the "first run" completion state. This is primarily fired
    * after a user has viewed the Welcome page once. After this,
-   * we do not show any of the visual artifacts to the user, even
+   * we do not show any of the first run visual artifacts to the user, even
    * if they close the Rally options page and revisit it later.
    *
    * @param {Boolean} firstRunCompleted
