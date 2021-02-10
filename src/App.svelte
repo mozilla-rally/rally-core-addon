@@ -30,7 +30,6 @@
 
 {#if isRallySupported}
   {#if $store}
-    {$store.firstRunCompleted}
     {#if firstRun}
       <!-- onboarding flow -->
       <!-- the onboarding-complete event occurs once the user has
