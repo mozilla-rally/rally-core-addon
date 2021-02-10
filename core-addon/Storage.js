@@ -81,7 +81,6 @@ module.exports = class Storage {
    * @returns {Promise} 
    */
   async setFirstRunCompletion(firstRun) {
-    console.log('FIRST RUN COMPLETION SET', firstRun)
     return await this.setItem("firstRunCompleted", firstRun);
   }
 
