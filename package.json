@@ -29,7 +29,7 @@
     "@storybook/addon-links": "^6.1.15",
     "@storybook/svelte": "^6.1.15",
     "babel-loader": "^8.1.0",
-    "core-js": "^3.6.5",
+    "core-js": "^3.8.3",
     "eslint": "^7.12.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-mocha": "^8.0.0",
