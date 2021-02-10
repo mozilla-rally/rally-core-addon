@@ -248,6 +248,16 @@ describe('Core', function () {
       assert.ok(browser.management.uninstallSelf.calledOnce);
     });
 
+    it('dispatches first-run-completion message', async function () {
+      sinon.spy(this.core._storage, "setFirstRunCompletion");
+
+      await this.core._handleMessage({
+        type: "first-run-completion", data: {firstRunCompleted: true}
+      });
+
+      assert.ok(this.core._storage.setFirstRunCompletion.calledOnce);
+    });
+
     it('dispatches study-unenrollment messages', async function () {
       // Mock the URL of the options page.
       const TEST_OPTIONS_URL = "install.sample.html";

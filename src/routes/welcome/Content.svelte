@@ -7,7 +7,14 @@
   import { createEventDispatcher } from "svelte";
   import Button from "../../components/Button.svelte";
   import ExternalLink from "../../components/icons/ExternalLink.svelte";
+  import FirstRunArrow from "./FirstRunArrow.svelte";
   const dispatch = createEventDispatcher();
+
+  export let firstRunCompleted = false;
+
+  // capture only the first value of firstRunCompleted.
+  const showArrow = !firstRunCompleted;
+
 </script>
 
 <style>
@@ -104,3 +111,6 @@
     </div>
   </div>
 </section>
+{#if showArrow}
+  <FirstRunArrow />
+{/if}

@@ -24,6 +24,7 @@
   let isRallySupported = __DISABLE_LOCALE_CHECK__
     ? true
     : navigator.language === "en-US";
+  
 </script>
 
 {#if isRallySupported}
@@ -32,7 +33,13 @@
       <!-- onboarding flow -->
       <!-- the onboarding-complete event occurs once the user has
       gotten through the profile completion step. -->
+      <!-- the first-run-initiated event occurs once the user has
+      loaded the Welcome page. -->
       <Onboarding
+        firstRunCompleted={$store.firstRunCompleted}
+        on:first-run-initiated={() => {
+          store.setFirstRunCompletion(true);
+        }}
         on:onboarding-complete={() => {
           firstRun = false;
         }} />

@@ -22,6 +22,7 @@ import browser from "webextension-polyfill";
 async function sendToCore(port, type, payload) {
   const VALID_TYPES = [
     "enrollment",
+    "first-run-completion",
     "get-studies",
     "study-enrollment",
     "study-unenrollment",
@@ -184,6 +185,15 @@ export default {
    */
   async updateDemographicSurvey(data) {
     await sendToCore(this._connectionPort, "update-demographics", data);
+  },
+
+  /**
+   * Updates the stored version of the demographics data.
+   *
+   * @param {Boolean} firstRunCompleted
+   */
+  async setFirstRunCompletion(firstRunCompleted) {
+    await sendToCore(this._connectionPort, "first-run-completion", { firstRunCompleted });
   },
 
   /**

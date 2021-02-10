@@ -197,6 +197,9 @@ module.exports = class Core {
       case "update-demographics":
         return this._updateDemographics(message.data)
           .then(r => this._sendStateUpdateToUI());
+      case "first-run-completion":
+        return this._storage.setFirstRunCompletion(message.data.firstRunCompleted)
+          .then(() => this._sendStateUpdateToUI());
       default:
         return Promise.reject(
           new Error(`Core - unexpected message type ${message.type}`));
@@ -558,13 +561,15 @@ module.exports = class Core {
    */
   async _sendStateUpdateToUI() {
     let enrolled = !!(await this._storage.getRallyID());
+    let firstRunCompleted = !!(await this._storage.getFirstRunCompletion());
     let availableStudies = await this._availableStudies;
     let demographicsData = await this._storage.getDemographicsData();
 
     const newState = {
       enrolled,
+      firstRunCompleted,
       availableStudies,
-      demographicsData
+      demographicsData,
     };
 
     // Send a message to the UI to update the list of studies.

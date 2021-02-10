@@ -54,6 +54,13 @@ export default function createStore() {
       } catch (err) {
         console.error(`Rally - failed to update the demographic survey`, err);
       }
+    },
+    async setFirstRunCompletion(firstRun) {
+      try {
+        await api.setFirstRunCompletion(firstRun);
+      } catch (err) {
+        console.error(`Rally - failed to set first run flag`, err);
+      }
     }
   };
 }
