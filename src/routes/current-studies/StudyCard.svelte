@@ -5,6 +5,8 @@
  // ^^^ the linter currently forces this block even though it appears below.
  // see https://github.com/mozilla-rally/core-addon/issues/184.
 import { writable, get } from 'svelte/store';
+import irb from "../irbs/";
+import IRBWindow from "../irbs/IRBWindow.svelte";
 
 let notificationID = writable(undefined);
 let whichNotification = writable(false);
@@ -137,18 +139,9 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
     </div>
     <div class:split-content-modal={joined} slot="body">
         {#if !joined}
-            {#if joinStudyConsentNotice}
-                {@html joinStudyConsentNotice}
-            {:else}
-            <!-- default "join study" consent notice -->
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, ut enim ad minim veniam, ut enim ad minim
-                veniam.
-                </p>
-                <p>TBD approach based on explorations with SimplySecure.</p>
-            {/if}
+            <IRBWindow>
+                <svelte:component this={irb['princeton-study']} />
+            </IRBWindow>
         {:else}
                 <div style="width: 368px;">
                     <p style="padding-top: 20px;">
