@@ -139,6 +139,9 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
     </div>
     <div class:split-content-modal={joined} slot="body">
         {#if !joined}
+            <!-- Bake in the Princeton IRB. Once we have more studies, we will key this
+                 by the study id.
+            -->
             <IRBWindow>
                 <svelte:component this={irb['princeton-study']} />
             </IRBWindow>
