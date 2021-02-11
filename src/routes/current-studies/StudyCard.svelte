@@ -70,7 +70,6 @@ export let privacyPolicyLink;
 export let tags;
 export let detailsDirectName;
 export let detailsDirectLink;
-export let joinStudyConsentNotice;
 export let sidebarOffset = false; // sidebar offset for notifications
 
 const dispatch = createEventDispatcher();
