@@ -172,7 +172,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
             dispatch(!joined ? "join" : "leave");
             joinModal = false;
         }}>
-        {#if joined}Leave Study{:else}Join Study{/if}
+        {#if joined}Leave Study{:else}Accept & Enroll{/if}
         </Button>
         <Button
         size="lg"

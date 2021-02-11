@@ -16,7 +16,7 @@ import { questionIsAnswered } from '../../src/routes/demographics/survey-tools';
 
 import { writable } from 'svelte/store';
 
-let view = 'manage-profile';
+let view = 'current-studies';
 
 function changeView(event) {
     if (event.detail !== 'manage-profile') {

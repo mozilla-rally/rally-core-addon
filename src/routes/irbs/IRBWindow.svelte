@@ -19,7 +19,9 @@
         position: sticky;
         left: 0;
         bottom: 0;
-        height: calc(var(--pad) + 1em);
+        height: 0;
+        padding-top: calc(var(--pad) + 1em);
+        margin-top: -1em;
         background: linear-gradient(to top, var(--irb-background-color) 1.125em, transparent);
     }
 </style>
