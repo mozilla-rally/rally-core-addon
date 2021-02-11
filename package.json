@@ -25,7 +25,7 @@
     "@rollup/plugin-node-resolve": "^11.1.1",
     "@rollup/plugin-replace": "^2.3.3",
     "@storybook/addon-actions": "^6.1.17",
-    "@storybook/addon-essentials": "^6.1.15",
+    "@storybook/addon-essentials": "^6.1.17",
     "@storybook/addon-links": "^6.1.17",
     "@storybook/svelte": "^6.1.17",
     "babel-loader": "^8.1.0",
