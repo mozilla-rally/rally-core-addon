@@ -19,7 +19,7 @@
     "test-support-library": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.js\" \"./tests/support/*.mjs\")"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
+    "@babel/core": "^7.12.13",
     "@mozilla-protocol/core": "^12.1.0",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^11.1.1",
