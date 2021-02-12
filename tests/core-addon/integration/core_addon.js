@@ -23,7 +23,7 @@ describe("Core-Addon", function () {
 
     await this.driver.wait(until.elementLocated(By.css("button")));
     await utils.findAndAct(this.driver, By.xpath(`//button[text()="Join Study"]`), e => e.click());
-    await utils.findAndAct(this.driver, By.xpath(`(//button[text()="Join Study"])[2]`), e => e.click());
+    await utils.findAndAct(this.driver, By.xpath(`(//button[text()="Accept & Enroll"])`), e => e.click());
 
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
     await this.driver.setContext(firefox.Context.CHROME);
@@ -124,7 +124,7 @@ describe("Core-Addon", function () {
     // Check that studies are installable.
     await this.driver.wait(until.elementLocated(By.css("button")));
     await utils.findAndAct(this.driver, By.xpath(`//button[text()="Join Study"]`), e => e.click());
-    await utils.findAndAct(this.driver, By.xpath(`(//button[text()="Join Study"])[2]`), e => e.click());
+    await utils.findAndAct(this.driver, By.xpath(`(//button[text()="Accept & Enroll"])`), e => e.click());
 
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
     await this.driver.setContext(firefox.Context.CHROME);
