@@ -8,33 +8,19 @@ The "source of truth" for Rally study metadata is on the [Firefox remote setting
 
 ## Get started
 
-# Build the UI
-
-Install the dependencies...
+# Install the dependencies
 
 ```bash
-cd ion-svelte
 npm install
 ```
 
-To run a local webserver (`http://localhost:5000`) for the UI which auto-reloads on file save:
+# Building and running the Core addon
 
-```bash
-npm run dev
-```
-
-# Build the Core addon
-
-When ready, package up for use inside the web extension:
+Build a local version of the add-on using the list of studies from `public/locally-available-studies.json`
 
 ```bash
 npm run build
-```
-
-Build the local version of the addon:
-
-```bash
-npm run build-addon
+npm run build-local-addon
 ```
 
 ...then start [web-ext](https://github.com/mozilla/web-ext):
@@ -49,10 +35,11 @@ web-ext run
 web-ext run -t chromium
 ```
 
-To run test coverage:
+# Testing the Core addon
+To run unit test coverage:
 
 ```bash
-npm run test-addon
+npm run test
 ```
 
 To run a full integration test using Selenium, in headless browser mode:
@@ -61,13 +48,28 @@ To run a full integration test using Selenium, in headless browser mode:
 npm run test-integration
 ```
 
-To generate an installable extension file:
+# Generating an installable extension file
+This produces the production-ready build. However, until it is signed by Mozilla it may not be installed
+by end users.
+
+This build will fetch the study list from the Firefox Remote Settings server.
+See also [Testing Remote Settings changes](#testing-remote-settings-changes).
 
 ```bash
-web-ext build
+npm run build
 ```
 
-The output will be a `.zip` file in `web-ext-artifacts/` - this should be renamed to `.xpi` for Firefox and `.crx` for Chrome.
+The output will be a `rally_core.xpi` file in `web-ext-artifacts/`. `.xpi` is the standard file extension for Firefox add-ons,
+Chrome uses `.crx`.
+
+Since `rally_core.xpi` is not signed by Mozilla, it may only be installed in a Firefox Nightly build, or an [unbranded Firefox Release/Beta build](https://wiki.mozilla.org/Add-ons/Extension_Signing#Unbranded_Builds).
+
+The following must be set in `about:config`:
+
+```
+extensions.experiments.enabled = true
+xpinstall.signatures.required = false
+```
 
 ## Building and testing a study locally
 
@@ -83,7 +85,7 @@ To walk through the Core Add-On experience with your study.
 
 ## Testing the QA-signed extension
 
-To test the QA-signed extension in Firefox, you must be running the Nightly release or an unbranded build (there are equivalents for Release and Beta), then navigate to `about:config` and create a new boolean pref named `xpinstall.signatures.dev-root` and set it to `true`.
+To test the QA-signed extension in Firefox, you must be running the Nightly channel or an [unbranded Firefox Release/Beta build](https://wiki.mozilla.org/Add-ons/Extension_Signing#Unbranded_Builds), then navigate to `about:config` and create a new boolean pref named `xpinstall.signatures.dev-root` and set it to `true`.
 
 > **Note:** this will cause production-signed extensions (such as those from addons.mozilla.org) to not load. To allow these, set `xpinstall.signatures.required` pref to `false`.
 
@@ -99,7 +101,7 @@ changes to staging or production require multiple sign-offs from Mozilla.
 
 You may also set up your own [local remote settings server](https://remote-settings.readthedocs.io/en/latest/tutorial-local-server.html).
 
-> **Note:** Firefox Release cannot be reconfigured to use a different server, an unbranded build such as Firefox Nightly must be used for testing.
+> **Note:** Firefox Release cannot be reconfigured to use a different server, Firefox Nightly or an [unbranded Firefox Release/Beta build](https://wiki.mozilla.org/Add-ons/Extension_Signing#Unbranded_Builds) must be used for testing.
 
 1. In `about:config` on Firefox Nightly, change `services.settings.server` to the URL for your server. If you're using the public remote-settings dev server
 described above, then the value will be `https://kinto.dev.mozaws.net/v1`.
