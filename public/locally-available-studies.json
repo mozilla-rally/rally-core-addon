@@ -13,6 +13,7 @@
     "version": "0.3.1",
     "addonId": "ion-basic-study@mozilla.org",
     "downloadLink": "https://addons.mozilla.org/firefox/downloads/latest/ion-basic-study",
+    "studyEnded": false,
     "studyPaused": false,
     "description": "Study purpose: Testing Rally.",
     "privacyPolicyLink": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
