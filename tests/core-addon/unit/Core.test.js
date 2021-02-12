@@ -306,6 +306,10 @@ describe('Core', function () {
 
   describe('_handleExternalMessage()', function () {
     it('rejects unknown messages', function () {
+      browser.storage.local.get
+        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
+        .resolves();
+
       // Provide an unknown message type and a valid sender:
       // it should fail due to the unexpected type.
       assert.rejects(
@@ -330,6 +334,7 @@ describe('Core', function () {
     it('dispatches telemetry-ping messages', async function () {
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
       this.core._storage = {
+        getActivatedStudies: async function() { return [FAKE_STUDY_ID]; },
         getRallyID: async function() { return FAKE_UUID; },
       };
 
@@ -367,6 +372,25 @@ describe('Core', function () {
               SENT_PING.keyId,
               sinon.match(SENT_PING.key)
             ).calledOnce
+      );
+    });
+
+    it('do not process telemetry-ping unless study is joined', async function () {
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      this.core._storage = {
+        // Intentionally return an empty list here so that no
+        // study is marked as joined.
+        getActivatedStudies: async function() { return []; },
+        getRallyID: async function() { return FAKE_UUID; },
+      };
+
+      // Provide a valid study enrollment message.
+      assert.rejects(
+        this.core._handleExternalMessage(
+          {type: "telemetry-ping", data: {}},
+          {id: FAKE_STUDY_ID}
+        ),
+        { message: "Core._handleExternalMessage - test@ion-studies.com not joined"}
       );
     });
   });

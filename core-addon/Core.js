@@ -129,11 +129,30 @@ module.exports = class Core {
         s.studyInstalled = installed;
       }
       return s;
-    })
-    );
+    }));
 
     if (installed) {
-      await this._enrollStudy(info.id);
+      // We don't mark studies as active unless user has consented to them.
+      // This is to prevent side-loaded studies to suddenly start running
+      // without user approval. How does this work?
+      //
+      // 1. Whenever a study is consented and installation is triggered from
+      //    the core add-on UI, we record a "pending consent" (i.e. user
+      //    consented but the study is not yet installed).
+      // 2. When a study is installed we hit _this code_ and check if we
+      //    had a prior "pending consent" for it. If so, join the study.
+      // 3. Joined installed studies are marked as such in the UI. If a study
+      //    is installed, but not joined, they get uninstalled at the earliest
+      //    opportunity by the core add-on.
+      //
+      // Note that pending consent is cleared whenever the core add-on is initialized
+      // again, so that pending consent is not retained across browser restarts.
+      let hasConsent = await this._storage.removePendingConsent(info.id);
+      if (hasConsent) {
+        // If we had a pending consent for this study, go on and confirm the
+        // study as active/joined.
+        await this._enrollStudy(info.id);
+      }
     } else {
       // Handle the case of addons being uninstalled manually.
       await this._unenrollStudy(info.id);
@@ -202,6 +221,9 @@ module.exports = class Core {
       case "first-run-completion":
         return this._storage.setFirstRunCompletion(message.data.firstRunCompleted)
           .then(() => this._sendStateUpdateToUI());
+      case "pending-consent":
+        return Promise.resolve(
+          this._storage.addPendingConsent(message.data.studyID));
       default:
         return Promise.reject(
           new Error(`Core - unexpected message type ${message.type}`));
@@ -232,6 +254,11 @@ module.exports = class Core {
       .map(s => s.addonId);
     if (!installedStudies.includes(sender.id)) {
       throw new Error(`Core._handleExternalMessage - unexpected sender ${sender.id}`);
+    }
+
+    let joinedStudies = await this._storage.getActivatedStudies();
+    if (!joinedStudies.includes(sender.id)) {
+      throw new Error(`Core._handleExternalMessage - ${sender.id} not joined`);
     }
 
     switch (message.type) {
@@ -555,7 +582,9 @@ module.exports = class Core {
    *      leaveStudyConsent: "...",
    *      dataCollectionDetails: [ ... ],
    *      // Whether or not the study is currently installed.
-   *      studyInstalled: false
+   *      studyInstalled: false,
+   *      // Whether or not the study is joined (consent given).
+   *      studyJoined: false,
    *    },
    *  ]
    * }
@@ -566,6 +595,13 @@ module.exports = class Core {
     let firstRunCompleted = !!(await this._storage.getFirstRunCompletion());
     let availableStudies = await this._availableStudies;
     let demographicsData = await this._storage.getDemographicsData();
+
+    // Report a study as joined only if consent was given.
+    let joinedStudies = await this._storage.getActivatedStudies();
+    availableStudies = availableStudies.map(s => {
+      s.studyJoined = joinedStudies.includes(s.addonId);
+      return s;
+    });
 
     const newState = {
       enrolled,
