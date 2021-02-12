@@ -35,11 +35,11 @@
     });
 
   function toggleStudyJoinStatus(studyID, joined) {
-    // set study.studyInstalled if studyID = study.study_id.
+    // set study.studyJoined if studyID = study.study_id.
     studies = [...studies.map(study => {
       const nextStudy = {...study};
       if (nextStudy.addonId === studyID) {
-        nextStudy.studyInstalled = joined;
+        nextStudy.studyJoined = joined;
       }
       return nextStudy;
     })];
