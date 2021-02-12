@@ -222,8 +222,7 @@ module.exports = class Core {
         return this._storage.setFirstRunCompletion(message.data.firstRunCompleted)
           .then(() => this._sendStateUpdateToUI());
       case "pending-consent":
-        return Promise.resolve(
-          this._storage.addPendingConsent(message.data.studyID));
+        return this._storePendingConsent(message.data.studyID);
       default:
         return Promise.reject(
           new Error(`Core - unexpected message type ${message.type}`));
@@ -489,8 +488,10 @@ module.exports = class Core {
     }
 
     // Validate the studyId against the list of known studies.
+    // Only do this for "uninstall" messages.
     let studyList = await this._storage.getActivatedStudies();
-    if (!studyList.includes(studyId)) {
+    if (!studyList.includes(studyId)
+        && type != "uninstall") {
       return Promise.reject(
         new Error(`Core._sendMessageToStudy - "${studyId}" is not a known study`));
     }
@@ -631,5 +632,24 @@ module.exports = class Core {
 
     let rallyId = await this._storage.getRallyID();
     return await this._dataCollection.sendDemographicSurveyPing(rallyId, data);
+  }
+
+  /**
+   * Record that consent was given and attempt to uninstall
+   * any sideloaded add-on with the same id.
+   *
+   * We need to uninstall as sideloaded studies did not go
+   * through the UI for showing the consent.
+   *
+   * @param {String} the study id.
+   */
+  async _storePendingConsent(studyId) {
+    this._storage.addPendingConsent(studyId);
+
+    try {
+      await this._sendMessageToStudy(studyId, "uninstall", {});
+    } catch (e) {
+      console.error(`Core._storePendingConsent - Unable to uninstall ${studyId}`, e);
+    }
   }
 }
