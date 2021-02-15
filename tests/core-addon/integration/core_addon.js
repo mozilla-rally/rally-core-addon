@@ -84,40 +84,13 @@ async function joinRally(driver) {
   await findAndAct(driver, By.xpath(`//button[text()="Save & Continue"]`), e => e.click());
 }
 
-const rallyTestStudy = JSON.parse(fs.readFileSync("public/locally-available-studies.json"))[0];
-
-/**
- * Initialize Remote Settings and populate the local database with test studies.
- * Intended to be run by `driver.executeScript()` in CHROME context.
- */
-async function initRemoteSettings(testStudy, timestamp) {
-  const { RemoteSettings } = ChromeUtils.import("resource://services-settings/remote-settings.js");
-  const remoteSettingsKey = "rally-studies-v1";
-
-  const db = await RemoteSettings(remoteSettingsKey).db;
-  await db.create(testStudy);
-  await db.importChanges({}, timestamp);
-
-  await RemoteSettings(remoteSettingsKey).get();
-}
-
-/**
- * Trigger a Remote Settings update.
- */
-async function updateRemoteSettings(modifiedTestStudy, timestamp) {
-  const { RemoteSettings } = ChromeUtils.import("resource://services-settings/remote-settings.js");
-  const remoteSettingsKey = "rally-studies-v1";
-
-  await RemoteSettings(remoteSettingsKey).emit("sync", { data: { current: [modifiedTestStudy] } });
-}
-
 describe("Core-Addon", function () {
   it("should un/enroll in Rally", async function () {
     this.driver = await utils.getFirefoxDriver(true, {});
 
     // Switch to browser UI context, so we can inject script to set up Remote Settings.
     await this.driver.setContext(firefox.Context.CHROME);
-    await this.driver.executeScript(initRemoteSettings, rallyTestStudy, 1234567);
+    await this.driver.executeScript(utils.initRemoteSettings, utils.RALLY_TEST_STUDY_REGISTRY, 1234567);
 
     // Switch back to web content context (options page).
     await this.driver.setContext(firefox.Context.CONTENT);
@@ -201,7 +174,7 @@ describe("Core-Addon", function () {
 
     // Switch to browser UI context, so we can inject script to set up Remote Settings.
     await this.driver.setContext(firefox.Context.CHROME);
-    await this.driver.executeScript(initRemoteSettings, rallyTestStudy, 1234567);
+    await this.driver.executeScript(utils.initRemoteSettings, utils.RALLY_TEST_STUDY_REGISTRY, 1234567);
     // Switch back to web content context (options page).
     await this.driver.setContext(firefox.Context.CONTENT);
 
@@ -213,10 +186,10 @@ describe("Core-Addon", function () {
     await this.driver.findElement(baseStudySelector);
 
     // Switch to browser UI context, so we can inject script to modify Remote Settings.
-    const modifiedTestStudy = Object.assign({}, rallyTestStudy);
+    const modifiedTestStudy = Object.assign({}, utils.RALLY_TEST_STUDY_REGISTRY);
     modifiedTestStudy.name = "Another Rally Study";
     await this.driver.setContext(firefox.Context.CHROME);
-    await this.driver.executeScript(updateRemoteSettings, modifiedTestStudy, (1234567 + 1));
+    await this.driver.executeScript(utils.updateRemoteSettings, modifiedTestStudy, (1234567 + 1));
     // Switch back to web content context (options page).
     await this.driver.setContext(firefox.Context.CONTENT);
 
