@@ -7,12 +7,84 @@ const firefox = require("selenium-webdriver/firefox");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
+const { Readable } = require("stream");
 
 // An object containing the sample remote-settings read from
 // a local file: they must contain, at least, the study template
 // add-on that has been published.
 const RALLY_TEST_STUDY_REGISTRY =
   JSON.parse(fs.readFileSync("public/locally-available-studies.json"))[0];
+
+const STUDY_BACKGROUND_SCRIPT = `
+const rally = new Rally();
+rally.initialize(
+  // A sample key id used for encrypting data.
+  "sample-invalid-key-id",
+  // A sample *valid* JWK object for the encryption.
+  {
+    "kty":"EC",
+    "crv":"P-256",
+    "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+    "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0",
+    "kid":"Public key used in JWS spec Appendix A.3 example"
+  }
+);`;
+
+/**
+ * Generate a Rally test study add-on.
+ *
+ * @param {String} directory
+ *        The directory in which to create the add-on file.
+ * @param {String} [backgroundScript=STUDY_BACKGROUND_SCRIPT]
+ *        A string containing the code for the background script.
+ *
+ * @return {String} the full path of the addon file.
+ */
+async function generateTestStudyAddon(
+  directory,
+  backgroundScript=STUDY_BACKGROUND_SCRIPT
+) {
+  // Define the manifest.
+  const manifest = `
+{
+  "manifest_version": 2,
+  "name": "Rally Integration Test Add-on",
+  "version": "1.0",
+  "applications": {
+    "gecko": {
+      "id": "rally-integration-test@mozilla.org",
+      "strict_min_version": "84.0a1"
+    }
+  },
+  "permissions": [],
+  "background": {
+    "scripts": [
+      "rally.js",
+      "background.js"
+    ]
+  }
+}
+`;
+  let tempFile =
+    path.join(directory, "test-rally-study.xpi");
+
+  var output = fs.createWriteStream(tempFile);
+  var archive = archiver("zip", { store: true });
+  archive.on("error", err => { throw err; });
+  archive.pipe(output);
+
+  // For this to be a valid study add-on, we need: a manifest,
+  // rally.js and a background script.
+  await archive
+    .append(Readable.from(manifest), { name: "manifest.json" })
+    .append(
+      Readable.from(backgroundScript), { name: "background.js" })
+    .append(
+      fs.createReadStream("./support/rally.js"), { name: 'rally.js' })
+    .finalize();
+
+  return tempFile;
+}
 
 /**
  * Get a Selenium driver for using the Firefox browser.
