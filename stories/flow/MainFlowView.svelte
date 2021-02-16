@@ -124,6 +124,7 @@ function leaveStudy(studyID) { toggleStudyJoinStatus(studyID, false); }
             <CurrentStudies
                 sidebarOffset
                 {studies} 
+                on:cta-clicked={() => { notification.clear(); }}
                 on:join-study={(evt) => { joinStudy(evt.detail); notification.send({code: "SUCCESSFULLY_JOINED_STUDY"}); }}
                 on:leave-study={(evt) => { leaveStudy(evt.detail); notification.send({code: "SUCCESSFULLY_LEFT_STUDY"}); }} />
         </MainContent>
