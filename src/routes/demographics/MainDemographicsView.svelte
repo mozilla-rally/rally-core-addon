@@ -7,6 +7,7 @@
 import { getContext, createEventDispatcher } from "svelte";
 import Demographics from "./Content.svelte";
 import Button from "../../components/Button.svelte";
+import { notification } from "../notification-store";
 
 const store = getContext('rally:store');
 const dispatch = createEventDispatcher();
@@ -29,11 +30,12 @@ $: if ($store && $store.demographicsData) intermediateResults = { ...$store.demo
         <div style="display: grid; grid-auto-flow: column; grid-column-gap: 12px; width: max-content;">
             <Button size="lg" product leave={!validated} disabled={!validated} on:click={() => {
                 store.updateDemographicSurvey(results);
-                dispatch("profile-updated", true);
+                notification.send({code: "SUCCESSFULLY_UPDATED_PROFILE"});
+                dispatch("redirect-to", {view: "current-studies", suppressNotifications: false});
             }}>Save Changes</Button>
             <Button size="lg" product disabled={!validated} secondary on:click={() => {
                 intermediateResults = $store.demographicsData;
-                dispatch("profile-updated", false);
+                dispatch("redirect-to", {view: "current-studies"});
             }}>Cancel</Button>
         </div>
     </div>
