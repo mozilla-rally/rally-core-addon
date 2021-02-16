@@ -11,6 +11,9 @@ import PrivacyNotice from '../../src/routes/terms-of-service/Content.svelte';
 import Demographics from '../../src/routes/demographics/Content.svelte';
 import Button from '../../src/components/Button.svelte';
 
+import { notification } from '../../src/routes/notification-store';
+import NotificationCenter from "../../src/routes/NotificationCenter.svelte";
+
 import demographicsSchema from '../../src/routes/demographics/survey-schema';
 import { questionIsAnswered } from '../../src/routes/demographics/survey-tools';
 
@@ -19,6 +22,9 @@ import { writable } from 'svelte/store';
 let view = 'current-studies';
 
 function changeView(event) {
+    if (event.detail !== view) {
+        notification.clear();
+    }
     if (event.detail !== 'manage-profile') {
         intermediateResults = $demoResults ? {...$demoResults} : undefined;
     }
@@ -97,9 +103,12 @@ function leaveStudy(studyID) { toggleStudyJoinStatus(studyID, false); }
                     <div style="display: grid; grid-auto-flow: column; grid-column-gap: 12px; width: max-content;">
                         <Button size="lg" product leave={!validated} disabled={!validated} on:click={() => {
                             demoResults.set(results);
+                            changeView({detail: "current-studies"});
+                            notification.send({code: "SUCCESSFULLY_UPDATED_PROFILE"});
                         }}>Save Changes</Button>
                         <Button size="lg" product disabled={!validated} secondary on:click={() => {
                             intermediateResults = $demoResults;
+                            changeView({detail: "current-studies"});
                         }}>Cancel</Button>
                     </div>
                 </div>
@@ -115,9 +124,11 @@ function leaveStudy(studyID) { toggleStudyJoinStatus(studyID, false); }
             <CurrentStudies
                 sidebarOffset
                 {studies} 
-                on:join-study={(evt) => { joinStudy(evt.detail); }}
-                on:leave-study={(evt) => { leaveStudy(evt.detail); }} />
+                on:join-study={(evt) => { joinStudy(evt.detail); notification.send({code: "SUCCESSFULLY_JOINED_STUDY"}); }}
+                on:leave-study={(evt) => { leaveStudy(evt.detail); notification.send({code: "SUCCESSFULLY_LEFT_STUDY"}); }} />
         </MainContent>
     </StudyBG>
     {/if}
 </Layout>
+
+<NotificationCenter  sidebarOffset={true}  />
