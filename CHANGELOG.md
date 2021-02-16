@@ -9,6 +9,7 @@
 * [#443](https://github.com/mozilla-rally/rally-core-addon/pull/443): Prepare for release:
   * enable data submission;
   * change the website URL to `rally.mozilla.org`;
+* [#400](https://github.com/mozilla-rally/rally-core-addon/pull/400):  Changes the "Manage Profile" flow to redirect back to the "Current Studies" page after update.
 
 # v0.10.0 (2021-02-19)
 
