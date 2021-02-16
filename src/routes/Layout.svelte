@@ -3,7 +3,7 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
   import Layout from "../components/layouts/MainLayout.svelte";
   import Body from "../components/layouts/MainBody.svelte";
   import Dialog from '../components/Dialog.svelte';
@@ -11,12 +11,13 @@
   import Sidebar from "./Sidebar.svelte";
   let leaveModal = false;
   const dispatch = createEventDispatcher();
+  export let view;
   export let profileQuestionsAnswered = 0;
   export let totalProfileQuestions = 7;
 </script>
 
 <Layout>
-  <Sidebar {totalProfileQuestions} {profileQuestionsAnswered} on:change-view on:leave-rally={() => {
+  <Sidebar {view} {totalProfileQuestions} {profileQuestionsAnswered} on:change-view on:leave-rally={() => {
     leaveModal = true;
   }} />
   <Body>

@@ -7,22 +7,22 @@
   import MainSidebar from "../components/layouts/MainSidebar.svelte";
   import ExternalLink from "../components/icons/ExternalLink.svelte";
 
+  export let view = "current-studies";
   export let profileQuestionsAnswered = 0;
   export let totalProfileQuestions = 7;
 
   const dispatch = createEventDispatcher();
-  function send(view) {
+  function send(nextView) {
     return () => {
-      if (view === 'leave-rally') {
+      if (nextView === 'leave-rally') {
         dispatch("leave-rally");
       } else {
-        currentView = view;
-        dispatch("change-view", view);
+        view = nextView;
+        dispatch("change-view", { view });
       }
     }
   }
 
-  let currentView = 'current-studies';
 </script>
 
 <style>
@@ -111,7 +111,7 @@ li a {
     </h1>
   </button>
   <ul slot="navigation" in:fly={{duration: 800, delay: 300, x: -10}}>
-    <li><button class:active={currentView === 'current-studies'} on:click={send('current-studies')}>Current Studies</button></li>
+    <li><button class:active={view === 'current-studies'} on:click={send('current-studies')}>Current Studies</button></li>
     <li>
       <a class="external" target="_blank" rel="noopener noreferrer" href="https://support.mozilla.org/en-US/kb/about-mozilla-rally">Support
         <ExternalLink /></a>
@@ -123,7 +123,7 @@ li a {
   </ul>
   <ul slot="settings" class="app-controls"  in:fly={{duration: 800, delay: 600, x: -10}}>
     <ul class="app-controls">
-      <li><button class:active={currentView === 'manage-profile'} on:click={send('manage-profile')}>
+      <li><button class:active={view === 'manage-profile'} on:click={send('manage-profile')}>
         Manage Profile
       </button>
       <div style="color: var(--color-light-gray-90); font-size: 10px; font-weight: 400; padding-top: 4px;">
@@ -140,9 +140,9 @@ li a {
       </div>
 
     </li>
-      <li><button class:active={currentView === 'privacy-notice'} on:click={send('privacy-notice')}>Privacy Notice</button></li>
+      <li><button class:active={view === 'privacy-notice'} on:click={send('privacy-notice')}>Privacy Notice</button></li>
       <!-- <li><button class:active={currentView === 'complete-profile'} on:click={send('complete-profile')}>Complete Profile</button></li> -->
-      <li><button class:active={currentView === 'leave-rally'} on:click={send('leave-rally')}>Leave Mozilla Rally</button></li>
+      <li><button class:active={view === 'leave-rally'} on:click={send('leave-rally')}>Leave Mozilla Rally</button></li>
     </ul>
   </ul>
 </MainSidebar>

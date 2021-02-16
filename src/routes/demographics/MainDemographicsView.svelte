@@ -31,7 +31,7 @@ $: if ($store && $store.demographicsData) intermediateResults = { ...$store.demo
             <Button size="lg" product leave={!validated} disabled={!validated} on:click={() => {
                 store.updateDemographicSurvey(results);
                 notification.send({code: "SUCCESSFULLY_UPDATED_PROFILE"});
-                dispatch("redirect-to", {view: "current-studies", suppressNotifications: false});
+                dispatch("redirect-to", {view: "current-studies", suppressNotifications: true});
             }}>Save Changes</Button>
             <Button size="lg" product disabled={!validated} secondary on:click={() => {
                 intermediateResults = $store.demographicsData;
