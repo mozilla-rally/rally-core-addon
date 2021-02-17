@@ -24,6 +24,7 @@ async function sendToCore(port, type, payload) {
     "enrollment",
     "first-run-completion",
     "get-studies",
+    "pending-consent",
     "study-enrollment",
     "study-unenrollment",
     "unenrollment",
@@ -152,6 +153,15 @@ export default {
     const state = await this.getAvailableStudies();
     const studies = state.availableStudies;
     const studyMetadata = studies.find(s => s.addonId === studyID);
+
+    // Make sure to record that consent was given. We call this
+    // "pending consent" because we can't directly install the
+    // study add-on. We can exclusively say that user consented,
+    // trigger installation (that can still be cancelled), and
+    // finalize the consent once the study is installed.
+    await sendToCore(
+      this._connectionPort, "pending-consent", { studyID }
+    );
 
     // This triggers the install by directing the page toward the downloadLink,
     // which is the study add-on's xpi.

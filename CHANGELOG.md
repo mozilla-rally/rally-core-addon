@@ -2,6 +2,8 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.9.0...master)
 
+* [#392](https://github.com/mozilla-rally/rally-core-addon/pull/392): Implement the new consent logic to prevent running side-loaded studies.
+
 # v0.9.0 (2021-02-09)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.8.0...v0.9.0)

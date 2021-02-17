@@ -3,6 +3,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 module.exports = class Storage {
+  constructor() {
+    // We don't want a persistent storage for pending consent,
+    // we must clear it across browser restarts and whenever the
+    // core add-on is deactivated.
+    this.pendingConsents = [];
+  }
+
   /**
    * Gets the stored value from the local browser storage.
    *
@@ -144,5 +151,33 @@ module.exports = class Storage {
 
   async clearActivatedStudies() {
     return await browser.storage.local.remove("activatedStudies");
+  }
+
+  /**
+   * Record that user consented to join a study, but
+   * the study was not installed yet.
+   *
+   * @param {String} the study id.
+   */
+  addPendingConsent(studyId) {
+    if (!this.pendingConsents.includes(studyId)) {
+      this.pendingConsents.push(studyId);
+    }
+  }
+
+  /**
+   * Remove the given study from the pending consent state.
+   *
+   * @returns {Boolean} whether or not the study was in the
+   *          "pending consent" state.
+   */
+  removePendingConsent(studyId) {
+    if (!this.pendingConsents.includes(studyId)) {
+      return false;
+    }
+
+    this.pendingConsents = this.pendingConsents.filter(s => s !== studyId);
+
+    return true;
   }
 };

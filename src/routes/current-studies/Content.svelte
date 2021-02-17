@@ -62,7 +62,7 @@ p {
     <StudyCard
         title={study.name}
         author={study.authors.name}
-        joined={(!!study.studyInstalled)}
+        joined={(!!study.studyJoined)}
         imageSrc={study.icons[64]}
         endDate={study.endDate}
         joinedDate={study.joinedOn}

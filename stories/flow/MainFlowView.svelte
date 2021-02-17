@@ -71,7 +71,7 @@ function toggleStudyJoinStatus(studyID, joined) {
     studies = [...studies.map(study => {
         const nextStudy = {...study};
         if (nextStudy.addonId === studyID) {
-        nextStudy.studyInstalled = joined;
+        nextStudy.studyJoined = joined;
         nextStudy.joinedOn = new Date();
         }
         return nextStudy;
