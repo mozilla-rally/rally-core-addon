@@ -1,9 +1,10 @@
 # Unreleased changes
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.9.0...master)
-* [#398](https://github.com/mozilla-rally/rally-core-addon/pull/398): Use shorter name for core add-on, for UI display purposes.
 
+* [#398](https://github.com/mozilla-rally/rally-core-addon/pull/398): Use shorter name for core add-on, for UI display purposes.
 * [#392](https://github.com/mozilla-rally/rally-core-addon/pull/392): Implement the new consent logic to prevent running side-loaded studies.
+* [#403](https://github.com/mozilla-rally/rally-core-addon/pull/403): Support opening the Rally control panel from the Rally website through the `open-rally` custom event.
 
 # v0.9.0 (2021-02-09)
 
