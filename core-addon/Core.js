@@ -325,17 +325,26 @@ module.exports = class Core {
     // Do not ever add other features or messages here without thinking
     // thoroughly of the implications: can the message be used to leak
     // information out? Can it be used to mess with studies?
-    //
-    // The `web-check` message should be safe: any installed addon with
-    // the `management` privileges could check for the presence of the
-    // core addon and expose that to the web. By exposing this ourselves
-    // through content scripts enabled on our domain, we don't make things
-    // worse.
-    if (message.type && message.type === "web-check") {
-      return Promise.resolve({
-        type: "web-check-response",
-        data: {}
-      });
+
+    switch (message.type) {
+      case "web-check":
+        // The `web-check` message should be safe: any installed addon with
+        // the `management` privileges could check for the presence of the
+        // core addon and expose that to the web. By exposing this ourselves
+        // through content scripts enabled on our domain, we don't make things
+        // worse.
+        return Promise.resolve({
+          type: "web-check-response",
+          data: {}
+        });
+      case "open-rally":
+        // The `open-rally` message should be safe: it exclusively opens
+        // the addon options page. It's a one-direction communication from the
+        // page, as no data gets exfiltrated or no message is reported back.
+        return Promise.resolve(this._openControlPanel());
+      default:
+        return Promise.reject(
+          new Error(`Core._handleWebMessage - unexpected message type "${message.type}"`));
     }
   }
 

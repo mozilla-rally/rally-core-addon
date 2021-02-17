@@ -409,6 +409,14 @@ describe('Core', function () {
         { message: "Core - received message from an unexpected webextension unknown-test-id"}
       );
     });
+
+    it('rejects unknown messages', function () {
+      browser.runtime.id = "testid";
+      assert.rejects(
+        this.core._handleWebMessage({type: "well, not known"}, {url: FAKE_WEBSITE, id: "testid"}),
+        { message: `Core._handleWebMessage - unexpected message type "well, not known"`}
+      );
+    });
   });
 
   describe('_enrollStudy()', function () {
