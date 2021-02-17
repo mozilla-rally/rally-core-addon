@@ -5,7 +5,7 @@ import { writable, derived } from "svelte/store";
 
 const NOTIFICATION_TIMEOUT = 2000;
 
-const createNotificationStore = () => {
+export function createNotificationStore() {
   const _notification = writable({ id: undefined});
   let timeout;
 
@@ -17,29 +17,26 @@ const createNotificationStore = () => {
     _notification.set({ id: undefined });
   }
 
-  const notifications = derived(_notification, ($_notification, set) => {
+  const notifications = derived(_notification, ($notification, set) => {
 		// if there already was a notification, let's clear the timer
 		// and reset it here.
 		clearTimeout(timeout);
-    set($_notification);
+    set($notification);
 		// if this is not the reset message, set the timer.
-    if ($_notification.id) {
+    if ($notification.id) {
       timeout = setTimeout(clear, NOTIFICATION_TIMEOUT);
     }
   })
   const { subscribe } = notifications;
 
   return {
+    timeoutID: timeout,
     subscribe,
     send,
     clear: () => {
       clearTimeout(timeout);
       clear();
     },
-    danger: msg => send(msg, "danger"),
-    warning: msg => send(msg, "warning"),
-    info: msg => send(msg, "info"),
-    success: msg => send(msg, "success"),
   }
 }
 
