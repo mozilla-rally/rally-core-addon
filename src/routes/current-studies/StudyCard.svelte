@@ -117,6 +117,8 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
 
 {#if joinModal}
     <Dialog
+    height={joined ? undefined : "80vh"}
+    topPadding={joined ? undefined : "calc(10vh - 20px)"}
     width={joined ? "var(--content-width)" : undefined}
     on:dismiss={() => {
         joinModal = false;

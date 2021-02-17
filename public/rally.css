@@ -9,7 +9,8 @@
   );
   /* --------- shared component variables ---------- */
   /* study card variables */
-  --study-card-header-columns: 60px auto max-content;
+  --study-card-image-size: 60px;
+  --study-card-header-columns: var(--study-card-image-size) auto max-content;
   --study-card-header-areas: "image title cta";
 }
 
