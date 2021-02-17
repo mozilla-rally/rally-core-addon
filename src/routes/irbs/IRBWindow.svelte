@@ -7,12 +7,13 @@
         --irb-background-color: var(--color-light-gray-20);
         --irb-text-color: var(--color-marketing-gray-70);
         --pad: 20px;
+        --element-height: var(--height, calc(386px + var(--pad) * 2 + var(--study-card-image-size) + 20px));
 
         box-sizing: border-box;
         width: 660px;
         /* make the height conform to --height in the Dialog.svelte component. */
         /* element height - header size - dialog padding - margin before buttons */
-        height: calc(var(--height, calc(386px + var(--pad) * 2 + var(--study-card-image-size) + 20px)) - 80px - 40px - var(--pad));
+        height: calc(var(--element-height) - 80px - 40px - var(--pad));
         padding: var(--pad);
         padding-bottom: 0;
         background-color: var(--irb-background-color);
