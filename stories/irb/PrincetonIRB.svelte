@@ -7,6 +7,8 @@ import IRB from "../../src/routes/irbs/PrincetonCovidDisinformationIRB.svelte";
 import IRBWindow from "../../src/routes/irbs/IRBWindow.svelte";
 </script>
 
+<div style="--height: 700px;">
 <IRBWindow>
     <IRB />
 </IRBWindow>
+</div>
