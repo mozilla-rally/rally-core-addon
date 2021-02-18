@@ -33,7 +33,7 @@ function sendAddonAliveEvent() {
  */
 async function sendToCore(type, data) {
   // TODO: can we automatically get the addon id for the right platform
-  // at build time?
+  // at build time? See https://github.com/mozilla-rally/rally-core-addon/issues/409
   await browser.runtime.sendMessage(
     "rally-core@mozilla.org",
     {type: type, data: data},
