@@ -9,7 +9,7 @@
 
 .research-is-voluntary {
     font-size: 16px;
-    margin: 1em 0;
+    margin-bottom: 28px;
 }
 
 h1 {
@@ -17,7 +17,7 @@ h1 {
     font-family: "Zilla Slab", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
-    margin-bottom: 12px;
+    margin-bottom: 28px;
 }
 h2 {
     font-size: 16px;
@@ -39,8 +39,7 @@ p {
 }
 
 dl {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    margin-bottom: 32px;
 }
 
 dt {
