@@ -4,7 +4,7 @@
 
 import Button from "../../src/components/Button.svelte";
 import NotificationCenter from "../../src/routes/NotificationCenter.svelte";
-import { notification } from "../../src/routes/notification-store";
+import { notification } from "../../src/notification-store";
 let sidebarOffset = false;
 </script>
 

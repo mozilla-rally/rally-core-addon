@@ -5,7 +5,7 @@
 import { writable } from "svelte/store";
 import api from "./web-extension-api";
 
-export default function createStore() {
+export function createAppStore() {
   // initialize the writable store.
   const { subscribe, set } = writable();
 
@@ -64,3 +64,5 @@ export default function createStore() {
     }
   };
 }
+
+export const store = createAppStore();

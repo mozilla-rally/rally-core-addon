@@ -6,7 +6,7 @@
 import { setContext } from "svelte";
 
 import Main from "../../src/routes/Main.svelte";
-import { notification } from "../../src/routes/notification-store";
+import { notification } from "../../src/notification-store";
 
 import NotificationCenter from "../../src/routes/NotificationCenter.svelte";
 

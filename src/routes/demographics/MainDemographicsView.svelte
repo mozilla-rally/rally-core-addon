@@ -7,7 +7,7 @@
 import { getContext, createEventDispatcher } from "svelte";
 import Demographics from "./Content.svelte";
 import Button from "../../components/Button.svelte";
-import { notification } from "../notification-store";
+import { notification } from "../../notification-store";
 
 const store = getContext('rally:store');
 const dispatch = createEventDispatcher();

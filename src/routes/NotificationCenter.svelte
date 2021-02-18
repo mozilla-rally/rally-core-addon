@@ -1,5 +1,5 @@
 <script>
-	import { notification } from './notification-store.js';
+	import { notification } from '../notification-store';
     import SuccessfullyJoinedStudyNotification from "./current-studies/SuccessfullyJoinedStudyNotification.svelte";
     import SuccessfullyLeftStudyNotification from "./current-studies/SuccessfullyLeftStudyNotification.svelte";
     import SuccessfullyUpdatedProfileNotification from "./demographics/SuccessfullyUpdatedProfileNotification.svelte";

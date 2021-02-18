@@ -4,8 +4,8 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { setContext } from "svelte";
-  import { store } from "./stores.js";
-  import { notification } from "./routes/notification-store";
+  import { store } from "./app-store";
+  import { notification } from "./notification-store";
 
   import Onboarding from "./routes/Onboarding.svelte";
   import Main from './routes/Main.svelte';
