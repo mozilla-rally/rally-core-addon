@@ -5,6 +5,7 @@
 * [#398](https://github.com/mozilla-rally/rally-core-addon/pull/398): Use shorter name for core add-on, for UI display purposes.
 * [#392](https://github.com/mozilla-rally/rally-core-addon/pull/392): Implement the new consent logic to prevent running side-loaded studies.
 * [#403](https://github.com/mozilla-rally/rally-core-addon/pull/403): Support opening the Rally control panel from the Rally website through the `open-rally` custom event.
+* [#417](https://github.com/mozilla-rally/rally-core-addon/pull/417): Add `rel="noopener noreferrer"` to `a` tags with target="_blank".
 
 # v0.9.0 (2021-02-09)
 
