@@ -6,6 +6,7 @@
 * [#392](https://github.com/mozilla-rally/rally-core-addon/pull/392): Implement the new consent logic to prevent running side-loaded studies.
 * [#403](https://github.com/mozilla-rally/rally-core-addon/pull/403): Support opening the Rally control panel from the Rally website through the `open-rally` custom event.
 * [#417](https://github.com/mozilla-rally/rally-core-addon/pull/417): Add `rel="noopener noreferrer"` to `a` tags with target="_blank".
+* [#407](https://github.com/mozilla-rally/rally-core-addon/pull/407): Update the study card background parallax to be a fixed height.
 
 # v0.9.0 (2021-02-09)
 
