@@ -98,7 +98,7 @@ to ensure access to the background images. */
     ),
     url("img/data1-bg.png"), url("img/data2-bg.png"), url("img/cards1-bg.png"),
     url("img/cards2-bg.png");
-  background-size: auto 100%;
+  background-size: auto 900px;
   background-repeat: no-repeat;
   background-position: left top,
     calc(15rem + var(--content-width) * 0.85) var(--data1, 0),
