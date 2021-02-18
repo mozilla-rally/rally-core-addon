@@ -18,9 +18,9 @@ export function createNotificationStore() {
   }
 
   const notifications = derived(_notification, ($notification, set) => {
-		// if there already was a notification, let's clear the timer
-		// and reset it here.
-		clearTimeout(timeout);
+    // if there already was a notification, let's clear the timer
+    // and reset it here.
+    clearTimeout(timeout);
     set($notification);
 		// if this is not the reset message, set the timer.
     if ($notification.id) {
