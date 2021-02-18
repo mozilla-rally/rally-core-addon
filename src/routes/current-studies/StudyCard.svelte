@@ -160,9 +160,8 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
                             collection will proceed as planned.
                         </li>
                         <li>
-                            Researchers working on this study will <br />
-                            <b>no longer receive data from you</b>, but will
-                            retain access to the data that you've <b>already contributed</b>.
+                            Researchers working on this study will <b>no longer receive data from you</b>, 
+                            and we will <b>delete any data that we’ve collected from you</b> to date.
                         </li>
                     </ul>
                 </div>
