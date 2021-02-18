@@ -106,7 +106,7 @@
       </Button>
     </div>
     <div class="how-it-works">
-      <a class="external-link" target="_blank" href="__BASE_SITE__/how-rally-works/">Wait – how does it work again?
+      <a class="external-link" target="_blank" rel="noopener noreferrer" href="__BASE_SITE__/how-rally-works/">Wait – how does it work again?
         <ExternalLink /></a>
     </div>
   </div>

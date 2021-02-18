@@ -81,7 +81,7 @@ onMount(() => {
                 </Button>
                 </div>
                 <div class="waitlist">
-                <a target="_blank" href="__BASE_SITE__/waitlist/">Join the Waitlist
+                <a target="_blank" rel="noopener noreferrer" href="__BASE_SITE__/waitlist/">Join the Waitlist
                     <ExternalLink /></a>
                 </div>
             </div>
