@@ -55,7 +55,7 @@
     "stylelint-config-standard": "^20.0.0",
     "svelte": "^3.32.3",
     "svelte-accessible-dialog": "^2.1.2",
-    "svelte-loader": "^2.13.6",
+    "svelte-loader": "^3.0.0",
     "web-ext": "^5.5.0",
     "webextension-polyfill": "^0.7.0"
   },
