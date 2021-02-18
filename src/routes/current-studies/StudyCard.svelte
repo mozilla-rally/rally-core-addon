@@ -161,7 +161,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
                         </li>
                         <li>
                             Researchers working on this study will <b>no longer receive data from you</b>, 
-                            and we will <b>delete any data that we’ve collected from you</b> to date.
+                            and we will <b>delete any study data that we’ve collected from you</b> to date.
                         </li>
                     </ul>
                 </div>
