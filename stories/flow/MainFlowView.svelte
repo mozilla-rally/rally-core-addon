@@ -16,7 +16,7 @@ import { questionIsAnswered } from '../../src/routes/demographics/survey-tools';
 
 import { writable } from 'svelte/store';
 
-let view = 'manage-profile';
+let view = 'current-studies';
 
 function changeView(event) {
     if (event.detail !== 'manage-profile') {
@@ -41,7 +41,7 @@ $: totalProfileQuestions = $demoResults ? Object.keys($demoResults).length : 7;
 // add one nicer study with all the information.
 const nicerStudy = {
     addonId: 'nicer-study-example@mozilla.org',
-    name: "Rally Core Study",
+    name: "An Example Study",
     authors: {
         name: "Rally Team"
     },
@@ -52,8 +52,7 @@ const nicerStudy = {
     tags: ['ad trackers', 'misinformation', 'profiling'],
     privacyPolicy: {spec: 'https://example.com'},
 
-    description: `This study is a a simple scaffold. Researchers can add any description they prefer here.
-    Perpetual sincerity out suspected necessary one but provision satisfied. Respect nothing use set waiting pursuit nay you looking. If on prevailed concluded ye abilities. Address say you new but minuter greater. Do denied agreed in innate. Can and middletons thoroughly themselves him. Tolerably sportsmen belonging in september no am immediate newspaper. Theirs expect dinner it pretty indeed having no of. Principle september she conveying did eat may extensive. `,
+    description: `This is a mock study description. All of the information here is for illustrative purposes only.`,
     dataCollectionDetails: ['page views', 'time and date of joining study', 'etc.'],
     detailsDirectName: "Rally Website",
     detailsDirectLink: '#'

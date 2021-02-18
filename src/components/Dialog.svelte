@@ -13,13 +13,28 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
   import Close from "./icons/Close.svelte";
 
   export let width;
-  $: styles = width ? `--width: ${width};` : undefined;
+  export let height;
+  export let topPadding;
+
+  function toVariable(key, value) {
+    return value ? `${key}: ${value};` : undefined;
+  }
+
+  function addStyleVariables({width, height, topPadding}) {
+    const values = [
+      toVariable("--width", width), 
+      toVariable("--height", height),
+      toVariable("--top-padding", topPadding)].filter(d=> d !== undefined);
+    if (values.length === 0) return undefined;
+    return values.join('; ');
+  }
+
+  $: styles = addStyleVariables({width, height, topPadding});
 
   const dispatch = createEventDispatcher();
   const key =
     `modal-${Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)}`;
-  
 
   function onCancel() {
     MicroModal.close(key);
@@ -55,13 +70,14 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
 <style>
   .overlay {
     --modal-min-height: calc(400px - 40px);
+    --top-padding: calc(var(--modal-min-height) / 3);
 
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    padding-top: calc(var(--modal-min-height) / 3);
+    padding-top: var(--top-padding);
     background: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
@@ -78,6 +94,7 @@ MicroModal.init({ disableScroll: true, disableFocus: true });
   }
   .container {
     width: calc(var(--width, var(--content-width)) - 40px);
+    height: calc(var(--height, auto));
     min-width: calc(var(--width, var(--content-width)) - 40px);
     min-height: var(--modal-min-height);
     background-color: var(--color-white);
