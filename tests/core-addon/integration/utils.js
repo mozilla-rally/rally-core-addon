@@ -2,13 +2,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const archiver = require("archiver");
-const { Builder, By, Capabilities, until } = require("selenium-webdriver");
-const firefox = require("selenium-webdriver/firefox");
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
-const { Readable } = require("stream");
+import archiver from "archiver";
+import { Builder, By, Capabilities, until } from "selenium-webdriver";
+import firefox from "selenium-webdriver/firefox";
+import fs from "fs";
+import os from "os";
+import path from "path";
+import { Readable } from "stream";
 
 // An object containing the sample remote-settings read from
 // a local file: they must contain, at least, the study template
