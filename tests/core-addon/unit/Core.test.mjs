@@ -34,6 +34,10 @@ describe('Core', function () {
       .resolves();
     chrome.management.getAll.yields(
       [{type: "extension", id: FAKE_STUDY_ID}]);
+    browser.storage.local.get
+      .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
+      .resolves();
+    chrome.runtime.sendMessage.yields();
 
     // NodeJS doesn't support "fetch" so we need to mock it
     // manually (or use a third party package). This isn't too
@@ -170,6 +174,9 @@ describe('Core', function () {
       browser.storage.local.get.callsArgWith(1, {}).resolves();
       // Make sure to mock the local storage calls as well.
       browser.storage.local.set.yields();
+
+      // Do not wait on this._availableStudies
+      this.core._sendStateUpdateToUI = async () => {};
 
       sinon.spy(this.core._dataCollection, "sendEnrollmentPing");
       sinon.spy(this.core._storage, "setRallyID");
@@ -469,7 +476,8 @@ describe('Core', function () {
   });
 
   describe('_sendMessageToStudy()', function () {
-    it('rejects on unknown message types', async function () {
+    it('rejects on unknown studies', async function () {
+      chrome.runtime.sendMessage.flush();
       assert.rejects(
         this.core._sendMessageToStudy(
           "unknown-test-study-id@ion.com", "uninstall", {}
@@ -524,6 +532,110 @@ describe('Core', function () {
         browser.storage.local.set.withArgs(
           sinon.match({"demographicsData": TEST_SURVEY_DATA})
         ).calledOnce
+      );
+    });
+  });
+
+  describe('_sendRunState', function() {
+    it('resumes studies properly', async function () {
+      chrome.runtime.sendMessage.flush();
+      // Make sure the functions yield during tests!
+      browser.storage.local.get
+        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
+        .resolves();
+      chrome.runtime.sendMessage.yields();
+
+      await this.core._sendRunState(FAKE_STUDY_LIST, [FAKE_STUDY_ID]);
+
+      assert.ok(
+        chrome.runtime.sendMessage.withArgs(
+          FAKE_STUDY_ID,
+          sinon.match({type: "resume", data: {}}),
+          // We're not providing any option.
+          {},
+          // This is the callback hidden away by webextension-polyfill.
+          sinon.match.any
+        ).calledOnce
+      );
+    });
+
+    it('pauses studies properly', async function () {
+      // Make sure the functions yield during tests!
+      browser.storage.local.get
+        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
+        .resolves();
+      chrome.runtime.sendMessage.yields();
+
+      const fakeStudy = FAKE_STUDY_LIST[0];
+      fakeStudy.studyPaused = true;
+      await this.core._sendRunState(FAKE_STUDY_LIST, [FAKE_STUDY_ID]);
+
+      assert.ok(
+        chrome.runtime.sendMessage.withArgs(
+          FAKE_STUDY_ID,
+          sinon.match({type: "pause", data: {}}),
+          // We're not providing any option.
+          {},
+          // This is the callback hidden away by webextension-polyfill.
+          sinon.match.any
+        ).calledOnce
+      );
+    });
+
+    it('may not send telemetry when paused', async function () {
+     // Make sure the functions yield during tests!
+     browser.storage.local.get
+        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
+        .resolves();
+      chrome.runtime.sendMessage.yields();
+
+      const fakeStudy = FAKE_STUDY_LIST[0];
+      fakeStudy.studyPaused = true;
+      await this.core._sendRunState(FAKE_STUDY_LIST, [FAKE_STUDY_ID]);
+
+      sinon.spy(this.core._dataCollection, "sendPing");
+
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      this.core._storage = {
+        getActivatedStudies: async function() { return [FAKE_STUDY_ID]; },
+        getRallyID: async function() { return FAKE_UUID; },
+      };
+
+      const SENT_PING = {
+        payloadType: "test-telemetry-ping",
+        payload: {
+          testData: 38
+        },
+        namespace: "test-namespace",
+        keyId: "some-id",
+        key: {
+          kty:"EC",
+          crv:"P-256",
+          x:"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+          y:"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0",
+          kid:"Public key used in JWS spec Appendix A.3 example"
+        }
+      };
+
+      // Provide a valid study ping message.
+      assert.rejects(
+        this.core._handleExternalMessage(
+          {type: "telemetry-ping", data: SENT_PING},
+          {id: FAKE_STUDY_ID}
+        ),
+        { message: "Core._handleExternalMessage - test@ion-studies.com is paused and may not send data"}
+      );
+
+      assert.ok(
+        this.core._dataCollection.sendPing
+            .withArgs(
+              FAKE_UUID,
+              SENT_PING.payloadType,
+              sinon.match(SENT_PING.payload),
+              SENT_PING.namespace,
+              SENT_PING.keyId,
+              sinon.match(SENT_PING.key)
+            ).notCalled
       );
     });
   });

@@ -97,7 +97,9 @@ export default (cliArgs) => [{
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
-    production && terser(),
+    production && terser({
+      mangle: false,
+    }),
   ],
   watch: {
     clearScreen: false,
