@@ -2,10 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var assert = require('assert').strict;
-var sinon = require('sinon');
+import { strict as assert } from 'assert';
+import { sinon } from 'sinon';
 
-var Core = require('../../../core-addon/Core');
+import Core from '../../../core-addon/Core';
 
 // A fake study id to use in the tests when looking for a
 // "known" study.
