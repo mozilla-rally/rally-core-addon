@@ -16,9 +16,9 @@
   rm -rf test-template template && git clone sveltejs/template test-template && node scripts/setupTypeScript.js test-template
 */
 
-const fs = require("fs")
-const path = require("path")
-const { argv } = require("process")
+import fs from "fs"
+import path from "path"
+import { argv } from "process"
 
 const projectRoot = argv[2] || path.join(__dirname, "..")
 
