@@ -4,7 +4,7 @@
 
 import { strict as assert } from "assert";
 import firefox from "selenium-webdriver/firefox";
-import * as utils from "./utils.js";
+import * as utils from "./utils.mjs";
 
 import { By, until } from "selenium-webdriver";
 
