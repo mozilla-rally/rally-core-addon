@@ -1,15 +1,19 @@
-/* This Source Code Form is subject to the terms of the Mozilla Public
+/**
+ * /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * @format
+ */
 
-import { chrome } from 'sinon-chrome/extensions';
+import * as chrome from "sinon-chrome/extensions/index.js";
 // We need to provide the `browser.runtime.id` for sinon-chrome to
 // be happy and play nice with webextension-polyfill. See this issue:
 // https://github.com/mozilla/webextension-polyfill/issues/218
 chrome.runtime.id = "testid";
 global.chrome = chrome;
 
-import { browser } from "webextension-polyfill";
+import * as browser from "webextension-polyfill";
 
 exports.mochaHooks = {
   beforeAll() {
