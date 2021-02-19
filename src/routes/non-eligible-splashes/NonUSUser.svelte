@@ -80,6 +80,7 @@ onMount(() => {
                     Remove Extension
                 </Button>
                 </div>
+                <!-- uncomment out this block and update the link when we have the waitlist available -->
                 <!-- <div class="waitlist">
                 <a target="_blank" rel="noopener noreferrer" href="__BASE_SITE__/waitlist/">Join the Waitlist
                     <ExternalLink /></a>
