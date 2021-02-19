@@ -2,8 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const Storage = require("./Storage.js");
-const DataCollection = require("./DataCollection.js");
+import { Storage } from "./Storage.js";
+import { DataCollection } from "./DataCollection.js";
 
 // The path of the embedded resource used to control options.
 const OPTIONS_PAGE_PATH = "public/index.html";
