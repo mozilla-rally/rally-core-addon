@@ -5,6 +5,8 @@
  // ^^^ the linter currently forces this block even though it appears below.
  // see https://github.com/mozilla-rally/core-addon/issues/184.
 import { writable, get } from 'svelte/store';
+import irb from "../irbs/";
+import IRBWindow from "../irbs/IRBWindow.svelte";
 
 let notificationID = writable(undefined);
 let whichNotification = writable(false);
@@ -68,7 +70,6 @@ export let privacyPolicyLink;
 export let tags;
 export let detailsDirectName;
 export let detailsDirectLink;
-export let joinStudyConsentNotice;
 export let sidebarOffset = false; // sidebar offset for notifications
 
 const dispatch = createEventDispatcher();
@@ -116,6 +117,8 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
 
 {#if joinModal}
     <Dialog
+    height={joined ? undefined : "80vh"}
+    topPadding={joined ? undefined : "calc(10vh - 20px)"}
     width={joined ? "var(--content-width)" : undefined}
     on:dismiss={() => {
         joinModal = false;
@@ -137,18 +140,12 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
     </div>
     <div class:split-content-modal={joined} slot="body">
         {#if !joined}
-            {#if joinStudyConsentNotice}
-                {@html joinStudyConsentNotice}
-            {:else}
-            <!-- default "join study" consent notice -->
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, ut enim ad minim veniam, ut enim ad minim
-                veniam.
-                </p>
-                <p>TBD approach based on explorations with SimplySecure.</p>
-            {/if}
+            <!-- Bake in the Princeton IRB. Once we have more studies, we will key this
+                 by the study id.
+            -->
+            <IRBWindow>
+                <svelte:component this={irb['princeton-study']} />
+            </IRBWindow>
         {:else}
                 <div style="width: 368px;">
                     <p style="padding-top: 20px;">
@@ -160,9 +157,8 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
                             collection will proceed as planned.
                         </li>
                         <li>
-                            Researchers working on this study will <br />
-                            <b>no longer receive data from you</b>, but will
-                            retain access to the data that you've <b>already contributed</b>.
+                            Researchers working on this study will <b>no longer receive data from you</b>, 
+                            and we will <b>delete any study data that we’ve collected from you</b> to date.
                         </li>
                     </ul>
                 </div>
@@ -180,7 +176,7 @@ $: isActive = $activeKey !== undefined && $activeKey === key;
             dispatch(!joined ? "join" : "leave");
             joinModal = false;
         }}>
-        {#if joined}Leave Study{:else}Join Study{/if}
+        {#if joined}Leave Study{:else}Accept & Enroll{/if}
         </Button>
         <Button
         size="lg"

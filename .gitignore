@@ -9,3 +9,5 @@ public/protocol-extra.css
 public/protocol.css
 
 .DS_Store
+
+/web-ext-artifacts/

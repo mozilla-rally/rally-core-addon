@@ -117,6 +117,36 @@ describe('Storage', function () {
     });
   });
 
+  describe('pending consent', function () {
+    it('addPendingConsent does not add the same id twice', function () {
+      const TEST_ADDON_ID = "test-id@ion.com";
+      this.storage.addPendingConsent(TEST_ADDON_ID);
+      this.storage.addPendingConsent(TEST_ADDON_ID);
+      const consentedStudies = this.storage.pendingConsents;
+      assert.equal(consentedStudies.length, 1);
+      assert.ok(consentedStudies.includes(TEST_ADDON_ID));
+    });
+
+    it('removePendingConsent returns false for unknown ids', function () {
+      assert.ok(
+        !this.storage.removePendingConsent("i-do-not-exist")
+      );
+    });
+
+    it('removePendingConsent returns true for known ids', function () {
+      const TEST_ADDON_ID = "test-id@ion.com";
+      this.storage.addPendingConsent(TEST_ADDON_ID);
+
+      assert.equal(this.storage.pendingConsents.length, 1);
+
+      assert.ok(
+        this.storage.removePendingConsent(TEST_ADDON_ID)
+      );
+
+      assert.equal(this.storage.pendingConsents.length, 0);
+    });
+  });
+
   afterEach(function () {
     chrome.flush();
   });

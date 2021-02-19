@@ -1,6 +1,24 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.9.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...master)
+
+# v0.10.0 (2021-02-19)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...v0.10.0)
+
+# v0.9.0 (2021-02-09)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.9.0...v0.10.0)
+
+* [#431](https://github.com/mozilla-rally/rally-core-addon/pull/431): change displayed add-on name to Mozilla Rally.
+* [#386](https://github.com/mozilla-rally/rally-core-addon/pull/386): add remote-controllable "pause" state for studies.
+* [#398](https://github.com/mozilla-rally/rally-core-addon/pull/398): Use shorter name for core add-on, for UI display purposes.
+* [#392](https://github.com/mozilla-rally/rally-core-addon/pull/392): Implement the new consent logic to prevent running side-loaded studies.
+* [#403](https://github.com/mozilla-rally/rally-core-addon/pull/403): Support opening the Rally control panel from the Rally website through the `open-rally` custom event.
+* [#417](https://github.com/mozilla-rally/rally-core-addon/pull/417): Add `rel="noopener noreferrer"` to `a` tags with target="_blank".
+* [#407](https://github.com/mozilla-rally/rally-core-addon/pull/407): Update the study card background parallax to be a fixed height.
+* [#419](https://github.com/mozilla-rally/rally-core-addon/pull/419): Update the "leave rally" and "leave this study" modal copy.
+* [#383](https://github.com/mozilla-rally/rally-core-addon/pull/383): Adds IRB consent notice into the Core Add-On.
 
 # v0.9.0 (2021-02-09)
 

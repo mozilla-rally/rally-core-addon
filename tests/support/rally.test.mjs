@@ -14,7 +14,13 @@ describe('Rally', function () {
   describe('initialize()', function () {
     it('must fail with invalid keys', function () {
       assert.rejects(
-        this.rally.initialize("key-id", "not-an-object, will fail")
+        this.rally.initialize("key-id", "not-an-object, will fail", true, () => {})
+      );
+    });
+
+    it('must fail with an invalid callback function', function () {
+      assert.rejects(
+        this.rally.initialize("key-id", {}, true, "not-a-function, will fail")
       );
     });
 
@@ -28,6 +34,7 @@ describe('Rally', function () {
         "key-id",
         {},
         true, // Developer mode.
+        () => {},
       );
 
       assert.ok(browser.tabs.create.notCalled);
@@ -45,6 +52,8 @@ describe('Rally', function () {
         this.rally.initialize(
           "key-id",
           {},
+          false,
+          () => {},
         )
       );
 
@@ -67,11 +76,59 @@ describe('Rally', function () {
       );
     });
 
-    it('must succeede if the core addon is installed', async function () {
+    it('must succeed if the core addon is installed', async function () {
       chrome.runtime.sendMessage.yields(
         {type: "core-check-response", data: {enrolled: true}});
 
       await this.rally._checkRallyCore();
+    });
+  });
+
+  describe('_pause()', function () {
+    it('pauses when receiving message', async function() {
+      chrome.runtime.sendMessage.flush();
+      chrome.runtime.sendMessage.yields();
+
+      let callbackCalled = false;
+      await this.rally.initialize(
+        "key-id",
+        {},
+        true, // Developer mode.
+        (message) => {
+          callbackCalled = true;
+          assert.equal(message, "pause");
+        },
+      )
+
+      this.rally._state = "running";
+      this.rally._handleExternalMessage({ type: "pause" }, { id: "rally-core@mozilla.org" });
+
+      assert.equal(this.rally._state, "paused");
+      assert.ok(callbackCalled);
+    });
+  });
+
+  describe('_resume()', function () {
+    it('resumes when receiving message', async function () {
+      chrome.runtime.sendMessage.flush();
+      chrome.runtime.sendMessage.yields();
+
+      let callbackCalled = false;
+      await this.rally.initialize(
+        "key-id",
+        {},
+        true, // Developer mode.
+        (message) => {
+          callbackCalled = true;
+          assert.equal(message, "resume");
+        },
+      )
+
+      this.rally._state = "paused";
+      this.rally._handleExternalMessage({ type: "resume" }, { id: "rally-core@mozilla.org" });
+
+      assert.equal(this.rally._state, "running");
+      assert.ok(callbackCalled);
     });
   });
 
@@ -106,6 +163,7 @@ describe('Rally', function () {
         "key-id",
         {},
         true, // Developer mode.
+        () => {},
       );
 
       // This API should never throw. We catch errors and
@@ -116,8 +174,45 @@ describe('Rally', function () {
 
       assert.ok(chrome.runtime.sendMessage.notCalled);
     });
-  });
 
+    it('must not send data when paused', async function () {
+      chrome.runtime.sendMessage.flush();
+      // Make sure the core add-on is detected. This test
+      // would work even if it wasn't detected, as long as
+      // `_checkRallyCore` returns something.
+      this.rally._checkRallyCore = async () => {
+        return {
+          "type": "core-check-response",
+          "data": {
+            "enrolled": true
+          }
+        };
+      };
+
+      await this.rally.initialize(
+        "key-id",
+        {},
+        true, // Non-developer mode.
+        () => {},
+      );
+
+      this.rally._state = "running";
+      await this.rally.sendPing("test running", {});
+      assert.ok(chrome.runtime.sendMessage.notCalled);
+
+      this.rally._state = "paused";
+      await this.rally.sendPing("test running", {});
+      assert.ok(chrome.runtime.sendMessage.notCalled);
+
+      // This API should never throw. We catch errors and
+      // log them, but we have no way to assert that something
+      // was logged. We can only assert that no message was
+      // sent.
+      await this.rally.sendPing("test", {});
+
+      assert.ok(chrome.runtime.sendMessage.notCalled);
+    });
+  });
   afterEach(function () {
     delete global.fetch;
     chrome.flush();

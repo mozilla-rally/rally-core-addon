@@ -9,7 +9,8 @@
   );
   /* --------- shared component variables ---------- */
   /* study card variables */
-  --study-card-header-columns: 60px auto max-content;
+  --study-card-image-size: 60px;
+  --study-card-header-columns: var(--study-card-image-size) auto max-content;
   --study-card-header-areas: "image title cta";
 }
 
@@ -98,7 +99,7 @@ to ensure access to the background images. */
     ),
     url("img/data1-bg.png"), url("img/data2-bg.png"), url("img/cards1-bg.png"),
     url("img/cards2-bg.png");
-  background-size: auto 100%;
+  background-size: auto 900px;
   background-repeat: no-repeat;
   background-position: left top,
     calc(15rem + var(--content-width) * 0.85) var(--data1, 0),

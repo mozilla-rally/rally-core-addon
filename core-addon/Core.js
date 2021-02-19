@@ -129,11 +129,30 @@ module.exports = class Core {
         s.studyInstalled = installed;
       }
       return s;
-    })
-    );
+    }));
 
     if (installed) {
-      await this._enrollStudy(info.id);
+      // We don't mark studies as active unless user has consented to them.
+      // This is to prevent side-loaded studies to suddenly start running
+      // without user approval. How does this work?
+      //
+      // 1. Whenever a study is consented and installation is triggered from
+      //    the core add-on UI, we record a "pending consent" (i.e. user
+      //    consented but the study is not yet installed).
+      // 2. When a study is installed we hit _this code_ and check if we
+      //    had a prior "pending consent" for it. If so, join the study.
+      // 3. Joined installed studies are marked as such in the UI. If a study
+      //    is installed, but not joined, they get uninstalled at the earliest
+      //    opportunity by the core add-on.
+      //
+      // Note that pending consent is cleared whenever the core add-on is initialized
+      // again, so that pending consent is not retained across browser restarts.
+      let hasConsent = await this._storage.removePendingConsent(info.id);
+      if (hasConsent) {
+        // If we had a pending consent for this study, go on and confirm the
+        // study as active/joined.
+        await this._enrollStudy(info.id);
+      }
     } else {
       // Handle the case of addons being uninstalled manually.
       await this._unenrollStudy(info.id);
@@ -202,6 +221,8 @@ module.exports = class Core {
       case "first-run-completion":
         return this._storage.setFirstRunCompletion(message.data.firstRunCompleted)
           .then(() => this._sendStateUpdateToUI());
+      case "pending-consent":
+        return this._storePendingConsent(message.data.studyID);
       default:
         return Promise.reject(
           new Error(`Core - unexpected message type ${message.type}`));
@@ -227,12 +248,23 @@ module.exports = class Core {
    */
   async _handleExternalMessage(message, sender) {
     // We only expect messages coming from known installed studies.
-    let installedStudies = (await this._availableStudies)
+    const availableStudies = await this._availableStudies;
+    let installedStudies = availableStudies
       .filter(s => s.studyInstalled)
       .map(s => s.addonId);
+
     if (!installedStudies.includes(sender.id)) {
       throw new Error(`Core._handleExternalMessage - unexpected sender ${sender.id}`);
     }
+
+    let joinedStudies = await this._storage.getActivatedStudies();
+    if (!joinedStudies.includes(sender.id)) {
+      throw new Error(`Core._handleExternalMessage - ${sender.id} not joined`);
+    }
+
+    const pausedStudies = availableStudies
+      .filter(s => s.studyPaused)
+      .map(s => s.addonId);
 
     switch (message.type) {
       case "core-check": {
@@ -245,6 +277,9 @@ module.exports = class Core {
         };
       }
       case "telemetry-ping": {
+        if (pausedStudies.includes(sender.id)) {
+          throw new Error(`Core._handleExternalMessage - ${sender.id} is paused and may not send data`);
+        }
         const { payloadType, payload, namespace, keyId, key } = message.data;
         let rallyId = await this._storage.getRallyID();
         return await this._dataCollection.sendPing(
@@ -299,17 +334,26 @@ module.exports = class Core {
     // Do not ever add other features or messages here without thinking
     // thoroughly of the implications: can the message be used to leak
     // information out? Can it be used to mess with studies?
-    //
-    // The `web-check` message should be safe: any installed addon with
-    // the `management` privileges could check for the presence of the
-    // core addon and expose that to the web. By exposing this ourselves
-    // through content scripts enabled on our domain, we don't make things
-    // worse.
-    if (message.type && message.type === "web-check") {
-      return Promise.resolve({
-        type: "web-check-response",
-        data: {}
-      });
+
+    switch (message.type) {
+      case "web-check":
+        // The `web-check` message should be safe: any installed addon with
+        // the `management` privileges could check for the presence of the
+        // core addon and expose that to the web. By exposing this ourselves
+        // through content scripts enabled on our domain, we don't make things
+        // worse.
+        return Promise.resolve({
+          type: "web-check-response",
+          data: {}
+        });
+      case "open-rally":
+        // The `open-rally` message should be safe: it exclusively opens
+        // the addon options page. It's a one-direction communication from the
+        // page, as no data gets exfiltrated or no message is reported back.
+        return Promise.resolve(this._openControlPanel());
+      default:
+        return Promise.reject(
+          new Error(`Core._handleWebMessage - unexpected message type "${message.type}"`));
     }
   }
 
@@ -452,6 +496,8 @@ module.exports = class Core {
    */
   async _sendMessageToStudy(studyId, type, payload) {
     const VALID_TYPES = [
+      "pause",
+      "resume",
       "uninstall",
     ];
 
@@ -462,8 +508,10 @@ module.exports = class Core {
     }
 
     // Validate the studyId against the list of known studies.
+    // Only do this for "uninstall" messages.
     let studyList = await this._storage.getActivatedStudies();
-    if (!studyList.includes(studyId)) {
+    if (!studyList.includes(studyId)
+        && type != "uninstall") {
       return Promise.reject(
         new Error(`Core._sendMessageToStudy - "${studyId}" is not a known study`));
     }
@@ -478,6 +526,7 @@ module.exports = class Core {
 
   /**
    * Update the `studyInstalled` property for the available studies.
+   * If any studies should be disabled or enabled, then do so now.
    *
    * @returns {Promise(Array<Object>)} resolved with an array of studies
    *          objects, or an empty array on failures. Each study object
@@ -493,10 +542,38 @@ module.exports = class Core {
       await browser.management.getAll().then(addons =>
         addons.filter(a => a.type == "extension")
           .map(a => a.id));
+
+    // Attempt to resume any paused studies, or pause any running
+    // studies, as appropriate.
+    await this._sendRunState(studies, installedAddonsIds);
+
     return studies.map(s => {
       s.studyInstalled = installedAddonsIds.includes(s.addonId);
       return s;
     });
+  }
+
+  /**
+   * Send run state (paused, running) message to study add-on(s).
+   *
+   * @param {Array} studies - list of available studies
+   * @param {Array} installedAddonsIds - list of installed study add-on IDs
+   */
+
+  async _sendRunState(studies, installedAddonsIds) {
+    for (const study of studies) {
+      if (installedAddonsIds.includes(study.addonId)) {
+        try {
+          if (study.studyPaused) {
+            await this._sendMessageToStudy(study.addonId, "pause", {});
+          } else {
+            await this._sendMessageToStudy(study.addonId, "resume", {});
+          }
+        } catch (err) {
+          console.error("Changing study state failed:", err);
+        }
+      }
+    }
   }
 
   /**
@@ -555,7 +632,9 @@ module.exports = class Core {
    *      leaveStudyConsent: "...",
    *      dataCollectionDetails: [ ... ],
    *      // Whether or not the study is currently installed.
-   *      studyInstalled: false
+   *      studyInstalled: false,
+   *      // Whether or not the study is joined (consent given).
+   *      studyJoined: false,
    *    },
    *  ]
    * }
@@ -564,8 +643,17 @@ module.exports = class Core {
   async _sendStateUpdateToUI() {
     let enrolled = !!(await this._storage.getRallyID());
     let firstRunCompleted = !!(await this._storage.getFirstRunCompletion());
+
     let availableStudies = await this._availableStudies;
     let demographicsData = await this._storage.getDemographicsData();
+
+    // Report a study as joined only if consent was given.
+    // Filter out any paused studies, unless the user is currently enrolled, so they can still leave a study even if paused.
+    let joinedStudies = await this._storage.getActivatedStudies();
+    availableStudies = availableStudies.map(s => {
+      s.studyJoined = joinedStudies.includes(s.addonId);
+      return s;
+    }).filter(study => (!study.studyPaused || study.studyJoined));
 
     const newState = {
       enrolled,
@@ -595,5 +683,24 @@ module.exports = class Core {
 
     let rallyId = await this._storage.getRallyID();
     return await this._dataCollection.sendDemographicSurveyPing(rallyId, data);
+  }
+
+  /**
+   * Record that consent was given and attempt to uninstall
+   * any sideloaded add-on with the same id.
+   *
+   * We need to uninstall as sideloaded studies did not go
+   * through the UI for showing the consent.
+   *
+   * @param {String} the study id.
+   */
+  async _storePendingConsent(studyId) {
+    this._storage.addPendingConsent(studyId);
+
+    try {
+      await this._sendMessageToStudy(studyId, "uninstall", {});
+    } catch (e) {
+      console.error(`Core._storePendingConsent - Unable to uninstall ${studyId}`, e);
+    }
   }
 }

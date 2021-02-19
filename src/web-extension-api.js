@@ -24,6 +24,7 @@ async function sendToCore(port, type, payload) {
     "enrollment",
     "first-run-completion",
     "get-studies",
+    "pending-consent",
     "study-enrollment",
     "study-unenrollment",
     "unenrollment",
@@ -153,6 +154,15 @@ export default {
     const studies = state.availableStudies;
     const studyMetadata = studies.find(s => s.addonId === studyID);
 
+    // Make sure to record that consent was given. We call this
+    // "pending consent" because we can't directly install the
+    // study add-on. We can exclusively say that user consented,
+    // trigger installation (that can still be cancelled), and
+    // finalize the consent once the study is installed.
+    await sendToCore(
+      this._connectionPort, "pending-consent", { studyID }
+    );
+
     // This triggers the install by directing the page toward the downloadLink,
     // which is the study add-on's xpi.
     window.location.href = studyMetadata.downloadLink;
@@ -188,7 +198,10 @@ export default {
   },
 
   /**
-   * Updates the stored version of the demographics data.
+   * Updates the "first run" completion state. This is primarily fired
+   * after a user has viewed the Welcome page once. After this,
+   * we do not show any of the first run visual artifacts to the user, even
+   * if they close the Rally options page and revisit it later.
    *
    * @param {Boolean} firstRunCompleted
    */
