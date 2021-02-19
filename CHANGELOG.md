@@ -12,6 +12,7 @@
 * [#419](https://github.com/mozilla-rally/rally-core-addon/pull/419): Update the "leave rally" and "leave this study" modal copy.
 * [#383](https://github.com/mozilla-rally/rally-core-addon/pull/383): Add IRB consent notice into the Core Add-On.
 * [#432](https://github.com/mozilla-rally/rally-core-addon/pull/432): Add additional `target="_blank"` and `rel="noopener noreferrer"` to external links.
+* [#434](https://github.com/mozilla-rally/rally-core-addon/pull/434): Change "will" to "may" in the "leave rally" modal copy.
 
 # v0.9.0 (2021-02-09)
 
