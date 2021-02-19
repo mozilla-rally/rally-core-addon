@@ -2,8 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import { Core } from "./Core.js"
 window.browser = require("webextension-polyfill");
-const Core = require("./Core.js");
 
 const core = new Core({
     availableStudiesURI: __STUDIES_LIST__,
