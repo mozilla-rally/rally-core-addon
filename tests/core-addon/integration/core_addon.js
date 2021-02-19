@@ -2,10 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const assert = require('assert').strict;
-const utils = require("./utils.js");
-const { By, until } = require("selenium-webdriver");
-const firefox = require("selenium-webdriver/firefox");
+import { strict as assert } from "assert";
+import firefox from "selenium-webdriver/firefox";
+import * as utils from "./utils.js";
+
+import { By, until } from "selenium-webdriver";
 
 describe("Core-Addon", function () {
   it("should un/enroll in Rally", async function () {
