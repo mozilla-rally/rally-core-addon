@@ -4,10 +4,6 @@
 
 # v0.10.0 (2021-02-19)
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...v0.10.0)
-
-# v0.9.0 (2021-02-09)
-
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.9.0...v0.10.0)
 
 * [#431](https://github.com/mozilla-rally/rally-core-addon/pull/431): change displayed add-on name to Mozilla Rally.
