@@ -3,8 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import { Core } from "./Core.js"
-import * as browser from "webextension-polyfill";
-window.browser = browser;
+import "webextension-polyfill";
 
 const core = new Core({
     availableStudiesURI: __STUDIES_LIST__,
