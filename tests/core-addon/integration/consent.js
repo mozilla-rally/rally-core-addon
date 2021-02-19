@@ -2,11 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const assert = require("assert").strict;
-const firefox = require("selenium-webdriver/firefox");
-const utils = require("./utils.js");
+import { strict as assert } from "assert";
+import firefox from "selenium-webdriver/firefox";
+import * as utils from "./utils.js";
 
-const { By, until } = require("selenium-webdriver");
+import { By, until } from "selenium-webdriver";
 
 describe("side-loaded studies found before Rally installs", function () {
   it("pre-existing side-loaded studies must not be joined", async function () {
