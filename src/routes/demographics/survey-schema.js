@@ -39,7 +39,7 @@ export default {
     },
     race: {
       key: "race",
-      label: "4. What is your race?",
+      label: "4. What is your race / ethnicity?",
       type: "multi",
       columns: true,
       values: [
