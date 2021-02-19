@@ -33,7 +33,9 @@ onMount(() => {
 .mzp-c-call-out-title {
     margin-bottom: -12px;
 }
-.waitlist {
+
+/* NOTE: once we have a waitlist link, uncomment out these classes */
+/* .waitlist {
     margin-top: 24px;
     text-align: center;
 }
@@ -44,7 +46,7 @@ onMount(() => {
     align-items: center;
     justify-content: center;
     grid-column-gap: 8px;
-}
+} */
 
 </style>
 
