@@ -108,8 +108,8 @@ async function generateTestStudyAddon(
   const backgroundScript =
     options.backgroundScript || STUDY_BACKGROUND_SCRIPT;
 
-  var output = fs.createWriteStream(tempFile);
-  var archive = archiver("zip", { store: true });
+  let output = fs.createWriteStream(tempFile);
+  let archive = archiver("zip", { store: true });
   archive.on("error", err => { throw err; });
   archive.pipe(output);
 
