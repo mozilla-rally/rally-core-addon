@@ -5,7 +5,8 @@
 import { createEventDispatcher, onMount } from "svelte";
 import {  fly } from 'svelte/transition';
 import Button from "../../components/Button.svelte";
-import ExternalLink from "../../components/icons/ExternalLink.svelte";
+// NOTE: uncomment this when we have a waitlist.
+// import ExternalLink from "../../components/icons/ExternalLink.svelte";
 
 import Layout from "../../components/layouts/OnboardingLayout.svelte";
 import Main from "../../components/layouts/OnboardingBody.svelte";
