@@ -1,6 +1,9 @@
 # Unreleased changes
 
+# v0.4.0 (2021-02-19)
+
 * [#402](https://github.com/mozilla-rally/rally-core-addon/pull/402): point to the correct URL when no core add-on is found.
+* [#386](https://github.com/mozilla-rally/rally-core-addon/pull/386): add remote-controllable "pause" state for studies.
 
 # v0.3.0 (2021-02-08)
 
