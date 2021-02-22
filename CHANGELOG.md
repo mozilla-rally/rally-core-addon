@@ -2,6 +2,11 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...master)
 
+* [#432](https://github.com/mozilla-rally/rally-core-addon/pull/432): Add additional `target="_blank"` and `rel="noopener noreferrer"` to external links.
+* [#434](https://github.com/mozilla-rally/rally-core-addon/pull/434): Change "will" to "may" in the "leave rally" modal copy.
+* [#436](https://github.com/mozilla-rally/rally-core-addon/pull/436/): Change wording on demographic survey to "race / ethnicity".
+* [#435](https://github.com/mozilla-rally/rally-core-addon/pull/435): Remove waitlist link from non-US add-on splash page.
+
 # v0.10.0 (2021-02-19)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.9.0...v0.10.0)
@@ -15,10 +20,6 @@
 * [#407](https://github.com/mozilla-rally/rally-core-addon/pull/407): Update the study card background parallax to be a fixed height.
 * [#419](https://github.com/mozilla-rally/rally-core-addon/pull/419): Update the "leave rally" and "leave this study" modal copy.
 * [#383](https://github.com/mozilla-rally/rally-core-addon/pull/383): Add IRB consent notice into the Core Add-On.
-* [#432](https://github.com/mozilla-rally/rally-core-addon/pull/432): Add additional `target="_blank"` and `rel="noopener noreferrer"` to external links.
-* [#434](https://github.com/mozilla-rally/rally-core-addon/pull/434): Change "will" to "may" in the "leave rally" modal copy.
-* [#436](https://github.com/mozilla-rally/rally-core-addon/pull/436/): Change wording on demographic survey to "race / ethnicity".
-* [#435](https://github.com/mozilla-rally/rally-core-addon/pull/435): Remove waitlist link from non-US add-on splash page.
 
 # v0.9.0 (2021-02-09)
 
