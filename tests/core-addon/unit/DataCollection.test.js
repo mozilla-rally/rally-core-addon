@@ -33,8 +33,9 @@ describe('DataCollection', function () {
       // We expect to submit a ping with the expected type ...
       const submitArgs = telemetrySpy.getCall(0).args;
       assert.equal(submitArgs[0], "pioneer-study");
-      // ... an empty payload ...
-      assert.equal(Object.keys(submitArgs[1]).length, 0);
+      // ... a payload containing only the deletion ID ...
+      assert.equal(Object.keys(submitArgs[1]).length, 1);
+      assert.ok(Object.keys(submitArgs[1]).includes("deletionId"));
       // ... and a specific set of options.
       assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, "pioneer-core");

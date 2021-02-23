@@ -9,6 +9,8 @@
 * [#443](https://github.com/mozilla-rally/rally-core-addon/pull/443): Prepare for release:
   * enable data submission;
   * change the website URL to `rally.mozilla.org`;
+* [#453](https://github.com/mozilla-rally/rally-core-addon/pull/453): Send deletion ID in uninstall URL, to handle deletion pings when add-on is removed directly.
+
 
 # v0.10.0 (2021-02-19)
 
