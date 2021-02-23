@@ -6,6 +6,9 @@
 * [#434](https://github.com/mozilla-rally/rally-core-addon/pull/434): Change "will" to "may" in the "leave rally" modal copy.
 * [#436](https://github.com/mozilla-rally/rally-core-addon/pull/436/): Change wording on demographic survey to "race / ethnicity".
 * [#435](https://github.com/mozilla-rally/rally-core-addon/pull/435): Remove waitlist link from non-US add-on splash page.
+* [#443](https://github.com/mozilla-rally/rally-core-addon/pull/443): Prepare for release:
+  * enable data submission;
+  * change the website URL to `rally.mozilla.org`;
 
 # v0.10.0 (2021-02-19)
 

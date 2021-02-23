@@ -3,7 +3,7 @@
   "version": "0.10.0",
   "scripts": {
     "build": "rollup -c && npm run build-addon && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/rally_core.xpi",
-    "build-addon": "rollup -c rollup.config.addon.js",
+    "build-addon": "rollup -c rollup.config.addon.js --config-enable-data-submission",
     "build-local-addon": "rollup -c rollup.config.addon.js --config-disable-remote-settings --config-studies-list-url=/public/locally-available-studies.json",
     "build-storybook": "build-storybook -s ./public",
     "lint": "npm run build && npm-run-all lint-*",
