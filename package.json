@@ -28,7 +28,6 @@
     "@storybook/addon-essentials": "^6.1.18",
     "@storybook/addon-links": "^6.1.18",
     "@storybook/svelte": "^6.1.18",
-    "@types/sinon-chrome": "^2.2.10",
     "archiver": "^5.2.0",
     "babel-loader": "^8.2.2",
     "core-js": "^3.8.3",
