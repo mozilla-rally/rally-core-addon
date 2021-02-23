@@ -14,9 +14,9 @@
     "start": "sirv public",
     "storybook": "start-storybook -p 6006 -s ./public",
     "test": "npm run --silent skip-taskcluster || (npm run test-addon && npm run test-support-library)",
-    "test-addon": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.mjs\" \"./tests/core-addon/unit/*.mjs\")",
+    "test-addon": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.js\" \"./tests/core-addon/unit/*.mjs\")",
     "test-integration": "npm run --silent skip-taskcluster || (npm run build && mocha --unhandled-rejections=strict --timeout 30000 \"./tests/core-addon/integration/*.mjs\")",
-    "test-support-library": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.mjs\" \"./tests/support/*.mjs\")"
+    "test-support-library": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.js\" \"./tests/support/*.mjs\")"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
