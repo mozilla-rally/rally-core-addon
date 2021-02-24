@@ -9,6 +9,7 @@
   import CheckCircle from "../icons/CheckCircle.svelte";
   import ExternalLink from '../icons/ExternalLink.svelte';
   import niceDate from "./nice-date";
+  import studyCategories from "./study-categories";
 
   import AccordionButton from "../accordion/AccordionButton.svelte";
 
@@ -109,10 +110,11 @@
   .tag {
     background-color: var(--background, var(--color-marketing-gray-80));
     color: var(--text, var(--color-white));
-    padding: 2px 6px 1px 6px;
+    padding: 0px 4px;
     font-size: 12px;
-    line-height: 18px;
-    height: 18px;
+    line-height: 21px;
+    height: 20px;
+    font-weight: 600;
     display: grid;
     place-items: center;
     text-transform: uppercase;
@@ -226,7 +228,9 @@
       <div class="study-card-footer">
         <div class="study-card-tags">
           {#each tags as tag}
-            <div class="tag radius-sm">{tag}</div>
+            <div 
+              class="tag radius-sm" 
+              style="color: {(studyCategories[tag] && studyCategories[tag].color) || "var(--color-marketing-gray-100)"}; background: {(studyCategories[tag] && studyCategories[tag].background) || "var(--color-marketing-gray-20)"};">{tag}</div>
           {/each}
         </div>
     
