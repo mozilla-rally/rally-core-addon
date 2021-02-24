@@ -9,6 +9,7 @@
 * [#443](https://github.com/mozilla-rally/rally-core-addon/pull/443): Prepare for release:
   * enable data submission;
   * change the website URL to `rally.mozilla.org`;
+* [#457](https://github.com/mozilla-rally/rally-core-addon/pull/457): Integrate color palette for study categories.
 
 # v0.10.0 (2021-02-19)
 
