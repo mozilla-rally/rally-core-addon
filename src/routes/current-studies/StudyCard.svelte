@@ -16,6 +16,8 @@ import StudyCard from '../../components/study-card/StudyCard.svelte';
 import StudyCardHeader from '../../components/study-card/Header.svelte';
 import Button from '../../components/Button.svelte';
 import Dialog from '../../components/Dialog.svelte';
+import IRBWindow from '../irbs/IRBWindow.svelte';
+import irb from "../irbs";
 
 export let joined = false;
 export let imageSrc;
@@ -29,7 +31,6 @@ export let privacyPolicyLink;
 export let tags;
 export let detailsDirectName;
 export let detailsDirectLink;
-export let joinStudyConsentNotice;
 
 const dispatch = createEventDispatcher();
 
