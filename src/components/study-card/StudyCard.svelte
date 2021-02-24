@@ -110,7 +110,7 @@
   .tag {
     background-color: var(--background, var(--color-marketing-gray-80));
     color: var(--text, var(--color-white));
-    padding: 0px 4px;
+    padding: 0 4px;
     font-size: 12px;
     line-height: 21px;
     height: 20px;
@@ -230,7 +230,11 @@
           {#each tags as tag}
             <div 
               class="tag radius-sm" 
-              style="color: {(studyCategories[tag] && studyCategories[tag].color) || "var(--color-marketing-gray-100)"}; background: {(studyCategories[tag] && studyCategories[tag].background) || "var(--color-marketing-gray-20)"};">{tag}</div>
+              style={`
+                /* stylelint-disable */
+                color: {(studyCategories[tag] && studyCategories[tag].color) || "var(--color-marketing-gray-100)"}; 
+                background: {(studyCategories[tag] && studyCategories[tag].background) || "var(--color-marketing-gray-20)"};
+                `}>{tag}</div>
           {/each}
         </div>
     
