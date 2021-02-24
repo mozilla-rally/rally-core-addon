@@ -231,7 +231,6 @@
             <div 
               class="tag radius-sm" 
               style={`
-                /* stylelint-disable */
                 color: ${(studyCategories[tag] && studyCategories[tag].color) || "var(--color-marketing-gray-100)"}; 
                 background: ${(studyCategories[tag] && studyCategories[tag].background) || "var(--color-marketing-gray-20)"};
                 `}>{tag}</div>
