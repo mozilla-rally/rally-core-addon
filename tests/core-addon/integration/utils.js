@@ -17,7 +17,7 @@ const RALLY_TEST_STUDY_REGISTRY =
   JSON.parse(fs.readFileSync("public/locally-available-studies.json"))[0];
 
 const STUDY_BACKGROUND_SCRIPT = `
-import Rally from './rally.js';
+import { Rally } from './rally.js';
 const rally = new Rally();
 rally.initialize(
   // A sample key id used for encrypting data.
