@@ -5,12 +5,12 @@
 const CORE_ADDON_ID = "rally-core@mozilla.org";
 const SIGNUP_URL = "https://rally.mozilla.org/rally-required";
 
-const STATES = {
+export const runStates = {
 	RUNNING: "running",
 	PAUSED: "paused",
 }
 
-export default class Rally {
+export class Rally {
   /**
    * Initialize the Rally library.
    *
@@ -83,7 +83,7 @@ export default class Rally {
 
 
     // Set the initial state to running, and register callback for future changes.
-    this._state = STATES.RUNNING;
+    this._state = runStates.RUNNING;
     this._stateChangeCallback = stateChangeCallback;
 
     // We went through the whole init process, it's now safe
@@ -120,9 +120,9 @@ export default class Rally {
    * Pause the current study.
    */
   _pause() {
-    if (this._state !== STATES.PAUSED) {
+    if (this._state !== runStates.PAUSED) {
       this._stateChangeCallback("pause");
-      this._state = STATES.PAUSED;
+      this._state = runStates.PAUSED;
     }
   }
 
@@ -130,9 +130,9 @@ export default class Rally {
    * Resume the current study, if paused.
    */
   _resume() {
-    if (this._state !== STATES.RUNNING) {
+    if (this._state !== runStates.RUNNING) {
       this._stateChangeCallback("resume");
-      this._state = STATES.RUNNING;
+      this._state = runStates.RUNNING;
     }
   }
 
@@ -226,7 +226,7 @@ export default class Rally {
     }
 
     // When paused, not send data.
-    if (this._state === STATES.PAUSED) {
+    if (this._state === runStates.PAUSED) {
       console.debug("Rally.sendPing - Study is currently paused, not sending data");
       return;
     }
