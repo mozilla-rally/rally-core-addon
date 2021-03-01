@@ -36,7 +36,7 @@
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-notice": "^0.9.10",
-    "eslint-plugin-svelte3": "^3.1.1",
+    "eslint-plugin-svelte3": "^3.1.2",
     "geckodriver": "^1.22.1",
     "micromodal": "^0.4.6",
     "mocha": "^8.3.0",
