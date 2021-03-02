@@ -1,5 +1,7 @@
 # Unreleased changes
 
+* [#468](https://github.com/mozilla-rally/rally-core-addon/pull/468): export rally run states instead of using strings.
+
 # v0.4.0 (2021-02-19)
 
 * [#402](https://github.com/mozilla-rally/rally-core-addon/pull/402): point to the correct URL when no core add-on is found.
