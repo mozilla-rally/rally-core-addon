@@ -53,7 +53,7 @@
     "sinon-chrome": "^3.0.1",
     "stylelint": "^13.11.0",
     "stylelint-config-standard": "^20.0.0",
-    "svelte": "^3.34.0",
+    "svelte": "^3.35.0",
     "svelte-accessible-dialog": "^2.1.2",
     "svelte-loader": "^3.0.0",
     "web-ext": "^5.5.0",
