@@ -1,5 +1,8 @@
 # Study Extension Publishing
 
+Study extensions are unprivileged and hosted on addons.mozilla.org, and should follow the same experience as a normal third-party add-on.
+This is documented in more detail in the (study-template repositry)[https://github.com/mozilla-rally/study-template/blob/main/README.md#publishing-a-study].
+
 ## Update RemoteSettings Server
 
 The Rally Core extension checks the Firefox RemoteSettings server for a list of the currently-approved studies.
