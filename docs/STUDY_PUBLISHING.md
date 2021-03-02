@@ -1,7 +1,7 @@
 # Study Extension Publishing
 
 Study extensions are unprivileged and hosted on addons.mozilla.org, and should follow the same experience as a normal third-party add-on.
-This is documented in more detail in the (study-template repositry)[https://github.com/mozilla-rally/study-template/blob/main/README.md#publishing-a-study].
+This is documented in more detail in the [study-template repositry](https://github.com/mozilla-rally/study-template/blob/main/README.md#publishing-a-study).
 
 ## Update RemoteSettings Server
 
@@ -12,7 +12,7 @@ There is also a RemoteSettings dev server you may use for local testing / QA: ht
 
 Updates to the staging and production RemoteSettings servers must receive sign off. The current reviewers are @knowtheory, @rhelmer, and @Dexterp37.
 
-You can find an example of the expected JSON output of the RemoteSettings in the (locally-available-studies.json)[https://github.com/mozilla-rally/rally-core-addon/blob/master/public/locally-available-studies.json] file of the core add-on repository. Note that this file must conform to the (studies-schema.json)[https://github.com/mozilla-rally/rally-core-addon/blob/master/public/studies-schema.json] in the same repository.
+You can find an example of the expected JSON output of the RemoteSettings in the [locally-available-studies.json](https://github.com/mozilla-rally/rally-core-addon/blob/master/public/locally-available-studies.json) file of the core add-on repository. Note that this file must conform to the [studies-schema.json](https://github.com/mozilla-rally/rally-core-addon/blob/master/public/studies-schema.json) in the same repository.
 
 The JSON may be edited directly, but since the RemoteSettings server is aware of the above schema, a simple HTML form may be used instead.
 Reviewers will automatically receive an email when review is requested.
