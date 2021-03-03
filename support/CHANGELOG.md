@@ -1,5 +1,7 @@
 # Unreleased changes
 
+# v0.5.0 (2021-03-03)
+
 * [#468](https://github.com/mozilla-rally/rally-core-addon/pull/468): export rally run states instead of using strings.
 
 # v0.4.0 (2021-02-19)
