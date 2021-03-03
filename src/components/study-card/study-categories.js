@@ -4,10 +4,26 @@
 export default {
     "social media": {
         text: "var(--color-marketing-gray-100)",
-        background: "hsla(56, 100%, 65%, 0.35)"
+        background: "#F5F1BA"
     },
     "misinformation": {
         text: "var(--color-marketing-gray-100)",
-        background: "hsla(27, 100%, 85%, 1)"
-    }
+        background: "#FFD5B2"
+    },
+    "artificial intelligence": {
+        text: "var(--color-marketing-gray-100)",
+        background: "#D98FFF"
+    },
+    "devices": {
+        text: "var(--color-marketing-gray-100)",
+        background: "#FFB4DC"
+    },
+    "data & privacy": {
+        text: "var(--color-marketing-gray-100)",
+        background: "#B6F4F7"
+    },
+    "accessibility": {
+        text: "var(--color-marketing-gray-100)",
+        background: "#E0ECEC"
+    },
 }
