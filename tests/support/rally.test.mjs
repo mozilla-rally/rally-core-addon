@@ -4,7 +4,7 @@
 
 import { strict as assert } from 'assert';
 
-import Rally from '../../support/rally.js';
+import {Rally, runStates} from '../../support/rally.js';
 
 describe('Rally', function () {
   beforeEach(function () {
@@ -59,6 +59,15 @@ describe('Rally', function () {
 
       assert.ok(chrome.tabs.create.calledOnce);
     });
+
+    it('must export the list of valid run states', function () {
+      assert.ok(runStates instanceof Object);
+      // Expect this to be an enum where the value is a lower-case string matching the key.
+      for (const [key,val] of Object.entries(runStates)) {
+        assert.equal(key, val.toUpperCase());
+      }
+    });
+
   });
 
   describe('_checkRallyCore()', function () {
