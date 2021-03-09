@@ -2,6 +2,8 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.0.0...master)
 
+* [#457](https://github.com/mozilla-rally/rally-core-addon/pull/457): Integrate color palette for study categories.
+
 # v1.0.0 (2021-03-09)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...v1.0.0)
@@ -14,7 +16,6 @@
   * enable data submission;
   * change the website URL to `rally.mozilla.org`;
 * [#453](https://github.com/mozilla-rally/rally-core-addon/pull/453): Send deletion ID in uninstall URL, to handle deletion pings when add-on is removed directly.
-
 
 # v0.10.0 (2021-02-19)
 
