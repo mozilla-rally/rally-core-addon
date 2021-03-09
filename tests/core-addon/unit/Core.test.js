@@ -7,6 +7,9 @@ var sinon = require('sinon');
 
 var Core = require('../../../core-addon/Core');
 
+// The website to post deletion IDs to.
+const OFFBOARD_URL = "https://production.rally.mozilla.org/offboard";
+
 // A fake study id to use in the tests when looking for a
 // "known" study.
 const FAKE_STUDY_ID = "test@ion-studies.com";
@@ -97,9 +100,22 @@ describe('Core', function () {
       assert.ok(chrome.runtime.onConnect.addListener.calledOnce);
     });
 
-    it('sets a redirecting URL if the user uninstalls Rally', function () {
-      this.core.initialize();
-      assert.ok(chrome.runtime.setUninstallURL.calledOnce);
+    it('sets a redirecting URL in case the user uninstalls Rally', async function () {
+      await this.core.setUninstallURL();
+      assert.ok(chrome.runtime.setUninstallURL.withArgs(`__BASE_SITE__/leaving-rally`).calledOnce);
+    });
+
+    it('sets an URL with the deletionID after enrollment and restart, in case the user uninstalls Rally', async function () {
+      const FAKE_RALLY_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      const FAKE_DELETION_UUID = "deadbeef-ffee-c0ff-eec0-ffeec0ffeec0";
+
+      this.core._storage = {
+        getRallyID: async function() { return FAKE_RALLY_UUID; },
+        getDeletionID: async function() { return FAKE_DELETION_UUID; },
+      };
+
+      await this.core.setUninstallURL();
+      assert.ok(chrome.runtime.setUninstallURL.withArgs(`${OFFBOARD_URL}?id=${FAKE_DELETION_UUID}`).calledOnce);
     });
 
     it('listens for addon state changes', function () {
@@ -225,10 +241,12 @@ describe('Core', function () {
         clearActivatedStudies: async function() {},
         getRallyID: async function() { return FAKE_UUID; },
         clearRallyID: async function() {},
+        clearDeletionID: async function() {},
       };
 
       sinon.spy(this.core._dataCollection, "sendDeletionPing");
       sinon.spy(this.core._storage, "clearRallyID");
+      sinon.spy(this.core._storage, "clearDeletionID");
 
       chrome.runtime.sendMessage.yields();
       browser.management.uninstallSelf.yields();
@@ -238,8 +256,9 @@ describe('Core', function () {
         {type: "unenrollment", data: {}}
       );
 
-      // We expect to remove the fake rally ID...
+      // We expect to remove the fake rally and deletion IDs...
       assert.ok(this.core._storage.clearRallyID.calledOnce);
+      assert.ok(this.core._storage.clearDeletionID.calledOnce);
       // ... to submit a ping with the expected type ...
       assert.ok(
         this.core._dataCollection.sendDeletionPing.withArgs(FAKE_UUID, FAKE_STUDY_ID).calledOnce

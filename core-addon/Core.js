@@ -7,6 +7,10 @@ const DataCollection = require("./DataCollection.js");
 
 // The path of the embedded resource used to control options.
 const OPTIONS_PAGE_PATH = "public/index.html";
+// The website to post deletion IDs to.
+const OFFBOARD_URL = "https://production.rally.mozilla.org/offboard";
+// The static website to send offboarded users to (those with no deletion ID).
+const LEAVE_URL = "__BASE_SITE__/leaving-rally";
 
 module.exports = class Core {
   /**
@@ -42,9 +46,27 @@ module.exports = class Core {
     this._connectionPort = null;
   }
 
+  /**
+   * Set the URL to be opened in a new tab when the core add-on is uninstalled.
+   *
+   * After enrollment, a deletion ID will be available to provide to this URL.
+   * However, if the user uninstalls the core add-on without enrolling first, then
+   * this will open the offboarding URL without the deletion ID.
+   */
+  async setUninstallURL() {
+    // set the URL to redirect when a user uninstalls Rally.
+    const deletionId = await this._storage.getDeletionID();
+    if (deletionId) {
+      // if enrolled,include the deletion ID, for deleting data without exposing the Rally ID.
+      browser.runtime.setUninstallURL(`${OFFBOARD_URL}?id=${deletionId}`);
+    } else {
+      browser.runtime.setUninstallURL(LEAVE_URL);
+    }
+  }
+
   initialize() {
-    // set the URL to redirect when a user uninstalls Rally
-    browser.runtime.setUninstallURL("__BASE_SITE__/leaving-rally");
+    this.setUninstallURL();
+
     // Whenever the addon icon is clicked, open the control page.
     browser.browserAction.onClicked.addListener(this._openControlPanel);
     // After installing the addon, make sure to show the control page.
@@ -367,14 +389,19 @@ module.exports = class Core {
    *          is complete (does not block on data upload).
    */
   async _enroll() {
-    // Generate a proper random UUID.
-    const uuid = await browser.firefoxPrivilegedApi.generateUUID();
+    // Generate a proper random UUID, for Rally and also for the deletion ping.
+    const rallyId = await browser.firefoxPrivilegedApi.generateUUID();
+    const deletionId = await browser.firefoxPrivilegedApi.generateUUID();
 
-    // Store it locally for future use.
-    await this._storage.setRallyID(uuid);
+    // Store IDs locally for future use.
+    await this._storage.setRallyID(rallyId);
+    await this._storage.setDeletionID(rallyId);
+
+    // Override the uninstall URL to include the rallyID, for deleting data without exposing the Rally ID.
+    await this.setUninstallURL();
 
     // Finally send the ping.
-    await this._dataCollection.sendEnrollmentPing(uuid);
+    await this._dataCollection.sendEnrollmentPing(rallyId, undefined, deletionId);
   }
 
   /**
@@ -470,8 +497,9 @@ module.exports = class Core {
       await this._dataCollection.sendDeletionPing(rallyId, studyId);
     }
 
-    // Clear locally stored ID.
+    // Clear locally stored IDs.
     await this._storage.clearRallyID();
+    await this._storage.clearDeletionID();
 
     // Clear the list of studies user took part in.
     await this._storage.clearActivatedStudies();

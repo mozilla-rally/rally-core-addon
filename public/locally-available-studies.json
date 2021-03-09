@@ -19,8 +19,7 @@
     "privacyPolicyLink": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
     "joinStudyConsent": "This study will send an encrypted ping, only when the toolbar icon is clicked.",
     "leaveStudyConsent": "This study cannot be re-joined.",
-    "dataCollectionDetails": [
-      "The date and time"
-    ]
+    "dataCollectionDetails": ["The date and time"],
+    "tags": ["misinformation", "social media", "demo"]
   }
 ]

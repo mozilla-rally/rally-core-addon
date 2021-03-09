@@ -1,6 +1,13 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.0.0...master)
+
+* [#457](https://github.com/mozilla-rally/rally-core-addon/pull/457): Integrate color palette for study categories.
+* [#400](https://github.com/mozilla-rally/rally-core-addon/pull/400):  Changes the "Manage Profile" flow to redirect back to the "Current Studies" page after update.
+
+# v1.0.0 (2021-03-09)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...v1.0.0)
 
 * [#432](https://github.com/mozilla-rally/rally-core-addon/pull/432): Add additional `target="_blank"` and `rel="noopener noreferrer"` to external links.
 * [#434](https://github.com/mozilla-rally/rally-core-addon/pull/434): Change "will" to "may" in the "leave rally" modal copy.
@@ -9,7 +16,7 @@
 * [#443](https://github.com/mozilla-rally/rally-core-addon/pull/443): Prepare for release:
   * enable data submission;
   * change the website URL to `rally.mozilla.org`;
-* [#400](https://github.com/mozilla-rally/rally-core-addon/pull/400):  Changes the "Manage Profile" flow to redirect back to the "Current Studies" page after update.
+* [#453](https://github.com/mozilla-rally/rally-core-addon/pull/453): Send deletion ID in uninstall URL, to handle deletion pings when add-on is removed directly.
 
 # v0.10.0 (2021-02-19)
 
