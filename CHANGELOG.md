@@ -1,6 +1,20 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.0.0...master)
+
+# v1.0.0 (2021-03-09)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...v1.0.0)
+
+* [#432](https://github.com/mozilla-rally/rally-core-addon/pull/432): Add additional `target="_blank"` and `rel="noopener noreferrer"` to external links.
+* [#434](https://github.com/mozilla-rally/rally-core-addon/pull/434): Change "will" to "may" in the "leave rally" modal copy.
+* [#436](https://github.com/mozilla-rally/rally-core-addon/pull/436/): Change wording on demographic survey to "race / ethnicity".
+* [#435](https://github.com/mozilla-rally/rally-core-addon/pull/435): Remove waitlist link from non-US add-on splash page.
+* [#443](https://github.com/mozilla-rally/rally-core-addon/pull/443): Prepare for release:
+  * enable data submission;
+  * change the website URL to `rally.mozilla.org`;
+* [#453](https://github.com/mozilla-rally/rally-core-addon/pull/453): Send deletion ID in uninstall URL, to handle deletion pings when add-on is removed directly.
+
 
 # v0.10.0 (2021-02-19)
 
@@ -11,10 +25,10 @@
 * [#398](https://github.com/mozilla-rally/rally-core-addon/pull/398): Use shorter name for core add-on, for UI display purposes.
 * [#392](https://github.com/mozilla-rally/rally-core-addon/pull/392): Implement the new consent logic to prevent running side-loaded studies.
 * [#403](https://github.com/mozilla-rally/rally-core-addon/pull/403): Support opening the Rally control panel from the Rally website through the `open-rally` custom event.
-* [#417](https://github.com/mozilla-rally/rally-core-addon/pull/417): Add `rel="noopener noreferrer"` to `a` tags with target="_blank".
+* [#417](https://github.com/mozilla-rally/rally-core-addon/pull/417): Add `rel="noopener noreferrer"` to `a` tags with `target="_blank"`.
 * [#407](https://github.com/mozilla-rally/rally-core-addon/pull/407): Update the study card background parallax to be a fixed height.
 * [#419](https://github.com/mozilla-rally/rally-core-addon/pull/419): Update the "leave rally" and "leave this study" modal copy.
-* [#383](https://github.com/mozilla-rally/rally-core-addon/pull/383): Adds IRB consent notice into the Core Add-On.
+* [#383](https://github.com/mozilla-rally/rally-core-addon/pull/383): Add IRB consent notice into the Core Add-On.
 
 # v0.9.0 (2021-02-09)
 

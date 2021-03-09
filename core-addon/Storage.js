@@ -48,8 +48,20 @@ module.exports = class Storage {
     return await this.setItem("rallyId", uuid);
   }
 
+  async getDeletionID() {
+    return await this.getItem("deletionId");
+  }
+
+  async setDeletionID(uuid) {
+    return await this.setItem("deletionId", uuid);
+  }
+
   async clearRallyID() {
     return await browser.storage.local.remove("rallyId");
+  }
+
+  async clearDeletionID() {
+    return await browser.storage.local.remove("deletionId");
   }
 
   /**

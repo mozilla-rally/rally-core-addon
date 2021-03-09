@@ -5,7 +5,8 @@
 import { createEventDispatcher, onMount } from "svelte";
 import {  fly } from 'svelte/transition';
 import Button from "../../components/Button.svelte";
-import ExternalLink from "../../components/icons/ExternalLink.svelte";
+// NOTE: uncomment this when we have a waitlist.
+// import ExternalLink from "../../components/icons/ExternalLink.svelte";
 
 import Layout from "../../components/layouts/OnboardingLayout.svelte";
 import Main from "../../components/layouts/OnboardingBody.svelte";
@@ -33,7 +34,9 @@ onMount(() => {
 .mzp-c-call-out-title {
     margin-bottom: -12px;
 }
-.waitlist {
+
+/* NOTE: once we have a waitlist link, uncomment out these classes */
+/* .waitlist {
     margin-top: 24px;
     text-align: center;
 }
@@ -44,7 +47,7 @@ onMount(() => {
     align-items: center;
     justify-content: center;
     grid-column-gap: 8px;
-}
+} */
 
 </style>
 
@@ -80,10 +83,11 @@ onMount(() => {
                     Remove Extension
                 </Button>
                 </div>
-                <div class="waitlist">
+                <!-- uncomment out this block and update the link when we have the waitlist available -->
+                <!-- <div class="waitlist">
                 <a target="_blank" rel="noopener noreferrer" href="__BASE_SITE__/waitlist/">Join the Waitlist
                     <ExternalLink /></a>
-                </div>
+                </div> -->
             </div>
         </section>
     </Main>

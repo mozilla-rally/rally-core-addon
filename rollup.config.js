@@ -50,7 +50,7 @@ export default (cliArgs) => [{
     replace({
       // the following replacements build the site URLs.
       // In the templates, use (for example) __BASE_SITE_URL__/__FAQ_PATH__
-      __BASE_SITE__: "https://rally-stage.bespoke.nonprod.dataops.mozgcp.net",
+      __BASE_SITE__: "https://rally.mozilla.org",
       // Support enabling/disabling the locale check to enable
       // the development workflows on other locales.
       __DISABLE_LOCALE_CHECK__: !!cliArgs["config-disable-locale-check"],

@@ -3,8 +3,8 @@
   "author": "Mozilla",
   "manifest_version": 2,
   "name": "Mozilla Rally",
-  "version": "0.10.0",
-  "homepage_url": "https://github.com/mozilla-extensions/pioneer-v2-core-example",
+  "version": "1.0.0",
+  "homepage_url": "https://github.com/mozilla-rally/rally-core-addon",
 
   "icons": {
     "48": "public/img/rally-favicon.svg",
@@ -47,7 +47,7 @@
 
   "content_scripts": [
     {
-      "matches": ["https://rally-stage.bespoke.nonprod.dataops.mozgcp.net/*"],
+      "matches": ["https://rally.mozilla.org/*"],
       "js": ["public/addon-build/content-script.js"]
     }
   ],
