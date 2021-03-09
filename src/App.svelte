@@ -4,12 +4,15 @@
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
   import { setContext } from "svelte";
-  import { store } from "./stores.js";
+  import { store } from "./app-store";
+  import { notification } from "./notification-store";
 
   import Onboarding from "./routes/Onboarding.svelte";
   import Main from './routes/Main.svelte';
+  import NotificationCenter from "./routes/NotificationCenter.svelte";
   import NonUSSplashPage from './routes/non-eligible-splashes/NonUSUser.svelte';
   setContext("rally:store", store);
+  setContext("rally:notification", notification);
 
   // As soon as the store has its initial value, let's
   // set firstRun = !enrolled.
@@ -52,6 +55,7 @@
             firstRun = true;
           }}
         />
+      <NotificationCenter sidebarOffset />
     {/if}
   {/if}
 {:else}

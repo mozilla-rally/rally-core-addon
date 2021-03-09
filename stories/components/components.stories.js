@@ -4,6 +4,7 @@
 import Dialog01 from './Dialog01.svelte';
 import BasicNotificationElementStory from './Notification01.svelte';
 import NotificationPositioningStory from './NotificationPositioning.svelte';
+import NotificationCenterStory from "./NotificationCenter.svelte";
 
 export default {
     title: "Components",
@@ -19,4 +20,7 @@ export const BasicNotificationElement = () => ({
 
 export const NotificationPositioning = () => ({
   Component: NotificationPositioningStory,
+});
+export const NotificationCenter = () => ({
+  Component: NotificationCenterStory,
 });

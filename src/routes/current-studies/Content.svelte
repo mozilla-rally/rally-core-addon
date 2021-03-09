@@ -73,6 +73,7 @@ p {
         privacyPolicyLink={study.privacyPolicyLink}
         tags={study.tags}
         {sidebarOffset}
+        on:cta-clicked
         on:join={() => {
             joinStudy(study.addonId);
         }}

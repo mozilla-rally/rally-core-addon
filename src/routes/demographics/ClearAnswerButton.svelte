@@ -32,6 +32,6 @@ button.mzp-t-sm.mzp-c-button.mzp-t-neutral.mzp-t-product {
 }
 </style>
 
-<button transition:fly={{duration:150, y: 2.5}} class="gafc mzp-t-sm mzp-c-button mzp-t-neutral mzp-t-product" on:click>
+<button transition:fly|local={{duration:150, y: 2.5}} class="gafc mzp-t-sm mzp-c-button mzp-t-neutral mzp-t-product" on:click>
     <CloseSmall /> Clear this response
 </button>
