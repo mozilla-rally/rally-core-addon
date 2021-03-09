@@ -16,7 +16,7 @@ const CORE_ENCRYPTION_JWK = {
 
 module.exports = class DataCollection {
   /**
-   * Sends an empty ping with the provided info.
+   * Sends an otherwise-empty ping with the deletion ID other provided info.
    *
    * @param {String} rallyId
    *        The id of the Rally platform.
@@ -26,16 +26,20 @@ module.exports = class DataCollection {
    * @param {String} namespace
    *        The namespace to route the ping. This will define the
    *        `schemaNamespace` and `studyName` properties of the ping.
+   * @param {String} deletionId
+   *        It's sent in the ping, if present, to track deletion of user data without exposing the Rally ID.
    */
-  async _sendEmptyPing(rallyId, payloadType, namespace) {
+  async _sendPingWithDeletionId(rallyId, payloadType, namespace, deletionId) {
     let publicKey;
     let keyId;
+    let payload = {};
 
     if (namespace === "pioneer-core") {
       // When routing pings to the "core" environment, we need to use
       // the proper encryption key.
       keyId = CORE_ENCRYPTION_KEY_ID;
       publicKey = CORE_ENCRYPTION_JWK;
+      payload = { deletionId };
     } else {
       // When routing empty pings to the environments for the specific
       // studies, we can use a bogus key (the payload is empty).
@@ -59,8 +63,7 @@ module.exports = class DataCollection {
     await this.sendPing(
       rallyId,
       payloadType,
-      // We expect to send an empty payload.
-      {},
+      payload,
       namespace,
       keyId,
       publicKey
@@ -78,19 +81,21 @@ module.exports = class DataCollection {
    * @param {String} [studyAddonid=undefined]
    *        optional study id. It's sent in the ping, if present, to signal
    *        that user enroled in the study.
+   * @param {String} deletionId
+   *        It's sent in the ping, if present, to track deletion of user data without exposing the Rally ID.
    */
-  async sendEnrollmentPing(rallyId, studyAddonId) {
+  async sendEnrollmentPing(rallyId, studyAddonId, deletionId) {
     // If we were provided with a study id, then this is an enrollment to a study.
     // Send the id alongside with the data and change the schema namespace to simplify
     // the work on the ingestion pipeline.
     if (studyAddonId !== undefined) {
-      return await this._sendEmptyPing(rallyId, "pioneer-enrollment", studyAddonId);
+      return await this._sendPingWithDeletionId(rallyId, "pioneer-enrollment", studyAddonId);
     }
 
     // Note that the schema namespace directly informs how data is segregated after ingestion.
     // If this is an enrollment ping for the pioneer program (in contrast to the enrollment to
     // a specific study), use a meta namespace.
-    return await this._sendEmptyPing(rallyId, "pioneer-enrollment", "pioneer-core");
+    return await this._sendPingWithDeletionId(rallyId, "pioneer-enrollment", "pioneer-core", deletionId);
   }
 
   /**
@@ -106,7 +111,7 @@ module.exports = class DataCollection {
       throw new Error("DataCollection - the deletion-request ping requires a study id");
     }
 
-    return await this._sendEmptyPing(rallyId, "deletion-request", studyAddonId);
+    return await this._sendPingWithDeletionId(rallyId, "deletion-request", studyAddonId);
   }
 
   /**
