@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.0.0...master)
+
+# v1.0.0 (2021-03-09)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v0.10.0...v1.0.0)
 
 * [#432](https://github.com/mozilla-rally/rally-core-addon/pull/432): Add additional `target="_blank"` and `rel="noopener noreferrer"` to external links.
 * [#434](https://github.com/mozilla-rally/rally-core-addon/pull/434): Change "will" to "may" in the "leave rally" modal copy.
