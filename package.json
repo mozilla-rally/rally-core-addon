@@ -1,6 +1,6 @@
 {
   "name": "rally_core",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "scripts": {
     "build": "rollup -c && npm run build-addon && web-ext build --overwrite-dest && mv web-ext-artifacts/*.zip web-ext-artifacts/rally_core.xpi",
     "build-addon": "rollup -c rollup.config.addon.js --config-enable-data-submission",
@@ -19,7 +19,7 @@
     "test-support-library": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.js\" \"./tests/support/*.mjs\")"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.8",
+    "@babel/core": "^7.13.10",
     "@mozilla-protocol/core": "^12.1.0",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
@@ -42,7 +42,7 @@
     "mocha": "^8.3.1",
     "npm-run-all": "^4.1.5",
     "react-is": "^17.0.1",
-    "rollup": "^2.40.0",
+    "rollup": "^2.41.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",

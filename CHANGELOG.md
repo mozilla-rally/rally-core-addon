@@ -1,6 +1,14 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.0.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.1.0...master)
+
+# v1.1.0 (2021-03-10)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.0.0...v1.1.0)
+
+* [#457](https://github.com/mozilla-rally/rally-core-addon/pull/457): Integrate color palette for study categories.
+* [#400](https://github.com/mozilla-rally/rally-core-addon/pull/400):  Changes the "Manage Profile" flow to redirect back to the "Current Studies" page after update.
+* [#486](https://github.com/mozilla-rally/rally-core-addon/pull/486): Properly report the `deletionId` in the enrollment ping.
 
 # v1.0.0 (2021-03-09)
 
@@ -14,7 +22,6 @@
   * enable data submission;
   * change the website URL to `rally.mozilla.org`;
 * [#453](https://github.com/mozilla-rally/rally-core-addon/pull/453): Send deletion ID in uninstall URL, to handle deletion pings when add-on is removed directly.
-
 
 # v0.10.0 (2021-02-19)
 

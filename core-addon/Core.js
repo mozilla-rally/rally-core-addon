@@ -395,7 +395,7 @@ module.exports = class Core {
 
     // Store IDs locally for future use.
     await this._storage.setRallyID(rallyId);
-    await this._storage.setDeletionID(rallyId);
+    await this._storage.setDeletionID(deletionId);
 
     // Override the uninstall URL to include the rallyID, for deleting data without exposing the Rally ID.
     await this.setUninstallURL();
