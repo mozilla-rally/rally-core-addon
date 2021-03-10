@@ -92,6 +92,12 @@ module.exports = class DataCollection {
       return await this._sendPingWithDeletionId(rallyId, "pioneer-enrollment", studyAddonId);
     }
 
+    // If this is a platform enrollment ping (not coming from the study), then the
+    // `deletionId` should always be sent.
+    if (deletionId === undefined) {
+      throw new Error("DataCollection - the enrollment ping must have a deletion id");
+    }
+
     // Note that the schema namespace directly informs how data is segregated after ingestion.
     // If this is an enrollment ping for the pioneer program (in contrast to the enrollment to
     // a specific study), use a meta namespace.

@@ -4,6 +4,7 @@
 
 * [#457](https://github.com/mozilla-rally/rally-core-addon/pull/457): Integrate color palette for study categories.
 * [#400](https://github.com/mozilla-rally/rally-core-addon/pull/400):  Changes the "Manage Profile" flow to redirect back to the "Current Studies" page after update.
+* [#486](https://github.com/mozilla-rally/rally-core-addon/pull/486): Properly report the `deletionId` in the enrollment ping.
 
 # v1.0.0 (2021-03-09)
 

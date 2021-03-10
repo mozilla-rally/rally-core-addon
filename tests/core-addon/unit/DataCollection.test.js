@@ -28,7 +28,7 @@ describe('DataCollection', function () {
         sinon.spy(chrome.firefoxPrivilegedApi, "submitEncryptedPing");
 
       // Provide a valid enrollment message.
-      await this.dataCollection.sendEnrollmentPing("some-rally-id");
+      await this.dataCollection.sendEnrollmentPing("some-rally-id", undefined, "deletion-id");
 
       // We expect to submit a ping with the expected type ...
       const submitArgs = telemetrySpy.getCall(0).args;
@@ -36,6 +36,7 @@ describe('DataCollection', function () {
       // ... a payload containing only the deletion ID ...
       assert.equal(Object.keys(submitArgs[1]).length, 1);
       assert.ok(Object.keys(submitArgs[1]).includes("deletionId"));
+      assert.equal(submitArgs[1]["deletionId"], "deletion-id");
       // ... and a specific set of options.
       assert.equal(submitArgs[2].overridePioneerId, "some-rally-id");
       assert.equal(submitArgs[2].studyName, "pioneer-core");
