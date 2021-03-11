@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.0.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.1.0...master)
+
+# v1.1.0 (2021-03-10)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.0.0...v1.1.0)
 
 * [#457](https://github.com/mozilla-rally/rally-core-addon/pull/457): Integrate color palette for study categories.
 * [#400](https://github.com/mozilla-rally/rally-core-addon/pull/400):  Changes the "Manage Profile" flow to redirect back to the "Current Studies" page after update.
