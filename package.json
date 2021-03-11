@@ -56,7 +56,7 @@
     "svelte": "^3.35.0",
     "svelte-accessible-dialog": "^2.1.2",
     "svelte-loader": "^3.0.0",
-    "web-ext": "^5.5.0",
+    "web-ext": "^6.0.0",
     "webextension-polyfill": "^0.7.0"
   },
   "dependencies": {
