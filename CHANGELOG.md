@@ -2,6 +2,8 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.1.0...master)
 
+* [#295](https://github.com/mozilla-rally/rally-core-addon/pull/295): Enable watching the repository and a better developer workflow using `npm run watch`.
+
 # v1.1.0 (2021-03-10)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.0.0...v1.1.0)
