@@ -12,7 +12,7 @@
     "lint-css": "stylelint 'public/*.css' '.storybook/*.css' 'src/**/*.svelte' 'stories/**/*.svelte'",
     "lint-js": "eslint . .storybook",
     "skip-taskcluster": "node -e \"process.exit(!('TASK_ID' in process.env))\"",
-    "start": "sirv public",
+    "start": "sirv public --quiet",
     "storybook": "start-storybook -p 6006 -s ./public",
     "test": "npm run --silent skip-taskcluster || (npm run test-addon && npm run test-support-library)",
     "test-addon": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.cjs\" \"./tests/core-addon/unit/*.js\")",
