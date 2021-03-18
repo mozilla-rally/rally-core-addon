@@ -14,7 +14,7 @@ const CORE_ENCRYPTION_JWK = {
   "y": "xrLUev8_yUrSFAlabnHInvU4JKc6Ew3YXaaoDloQxw8",
 };
 
-module.exports = class DataCollection {
+export default class DataCollection {
   /**
    * Sends an otherwise-empty ping with the deletion ID other provided info.
    *
