@@ -4,6 +4,7 @@
 
 import Storage from "./Storage.js";
 import DataCollection from "./DataCollection.js";
+import * as rallyMetrics from "../public/generated/rally.js";
 
 // The path of the embedded resource used to control options.
 const OPTIONS_PAGE_PATH = "public/index.html";
@@ -26,6 +27,11 @@ export default class Core {
 
     this._storage = new Storage();
     this._dataCollection = new DataCollection();
+
+    // Initialize the collection engine once we know if
+    // user is enrolled or not.
+    this._storage.getRallyID().finally(id =>
+      this._dataCollection.initialize(id !== undefined));
 
     // Asynchronously get the available studies. We don't need to wait
     // for this to finish, the UI can handle the wait.
@@ -396,6 +402,8 @@ export default class Core {
     // Store IDs locally for future use.
     await this._storage.setRallyID(rallyId);
     await this._storage.setDeletionID(deletionId);
+
+    rallyMetrics.id.set(rallyId);
 
     // Override the uninstall URL to include the rallyID, for deleting data without exposing the Rally ID.
     await this.setUninstallURL();
