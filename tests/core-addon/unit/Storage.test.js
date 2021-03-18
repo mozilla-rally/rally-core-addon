@@ -2,9 +2,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const assert = require('assert').strict;
+import { strict as assert } from 'assert';
 
-var Storage = require('../../../core-addon/Storage');
+import Storage from '../../../core-addon/Storage.js';
 
 describe('Storage', function () {
   beforeEach(function () {
