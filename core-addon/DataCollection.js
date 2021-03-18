@@ -248,4 +248,4 @@ export default class DataCollection {
       CORE_ENCRYPTION_JWK,
     );
   }
-};
+}
