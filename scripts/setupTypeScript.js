@@ -17,7 +17,7 @@
 */
 
 import fs from "fs";
-import { dirname, path } from 'path';
+import { dirname }, path from 'path';
 import { argv } from "process";
 import { fileURLToPath } from 'url';
 
