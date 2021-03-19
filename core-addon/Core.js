@@ -2,8 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const Storage = require("./Storage.js");
-const DataCollection = require("./DataCollection.js");
+import Storage from "./Storage.js";
+import DataCollection from "./DataCollection.js";
 
 // The path of the embedded resource used to control options.
 const OPTIONS_PAGE_PATH = "public/index.html";
@@ -12,7 +12,7 @@ const OFFBOARD_URL = "https://production.rally.mozilla.org/offboard";
 // The static website to send offboarded users to (those with no deletion ID).
 const LEAVE_URL = "__BASE_SITE__/leaving-rally";
 
-module.exports = class Core {
+export default class Core {
   /**
    * @param {Object} args arguments passed in from the user.
    * @param {String} args.availableStudiesURI the URI where the available studies

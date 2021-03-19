@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-module.exports = class Storage {
+export default class Storage {
   constructor() {
     // We don't want a persistent storage for pending consent,
     // we must clear it across browser restarts and whenever the
@@ -192,4 +192,4 @@ module.exports = class Storage {
 
     return true;
   }
-};
+}
