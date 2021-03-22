@@ -241,7 +241,7 @@ async function installRally(driver) {
   // switch to browser UI context, to interact with Firefox add-on install prompts.
   await driver.setContext(firefox.Context.CHROME);
   await findAndAct(driver, By.css(`[label="Add"]`), e => e.click());
-  await findAndAct(driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+  await findAndAct(driver, By.css(`[label="Okay"]`), e => e.click());
 
   // We expect the extension to load its options page in a new tab.
   await driver.wait(async () => {

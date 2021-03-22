@@ -28,7 +28,7 @@ describe("Core-Addon", function () {
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
     await this.driver.setContext(firefox.Context.CHROME);
     await utils.findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
-    await utils.findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+    await utils.findAndAct(this.driver, By.css(`[label="Okay"]`), e => e.click());
 
     // Close options page tab and re-open it.
     await this.driver.close();
@@ -129,7 +129,7 @@ describe("Core-Addon", function () {
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
     await this.driver.setContext(firefox.Context.CHROME);
     await utils.findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
-    await utils.findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+    await utils.findAndAct(this.driver, By.css(`[label="Okay"]`), e => e.click());
 
     await this.driver.quit();
   });
@@ -179,7 +179,7 @@ describe("Core-Addon", function () {
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
     await this.driver.setContext(firefox.Context.CHROME);
     await utils.findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
-    await utils.findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+    await utils.findAndAct(this.driver, By.css(`[label="Okay"]`), e => e.click());
 
     // Switch to browser UI context, so we can inject script to modify Remote Settings.
     await this.driver.setContext(firefox.Context.CHROME);
