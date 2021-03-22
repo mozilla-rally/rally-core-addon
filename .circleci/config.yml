@@ -30,6 +30,9 @@ jobs:
           name: Install the dependencies
           command: npm install
       - run:
+          name: Build the Addon
+          command: npm run build-addon
+      - run:
           name: MochaJS unit tests
           command: npm run test-addon
 
@@ -59,6 +62,9 @@ jobs:
       - run:
           name: Install the dependencies
           command: npm install && sudo add-apt-repository ppa:ubuntu-mozilla-daily/ppa && sudo apt update && sudo apt install firefox-trunk
+      - run:
+          name: Build the Addon
+          command: npm run build-addon
       - run:
           name: Run Selenium tests
           command: export PATH=.:$PATH && npm run test-integration
