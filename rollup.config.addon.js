@@ -15,6 +15,9 @@ export default (cliArgs) => {
     },
     plugins: [
       replace({
+        // Turn this on to both disable the build-time warning and prepare for future releases,
+        // since this will become the default value.
+        preventAssignment: true,
         // NOTE: if this URL ever changes, you will have to update the domain in
         // the permissions in manifest.json.
         __STUDIES_LIST__: cliArgs['config-studies-list-url'] ?
