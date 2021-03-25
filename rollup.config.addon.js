@@ -34,7 +34,7 @@ export default (cliArgs) => {
           "'https://rally.mozilla.org'",
       }),
       resolve({
-        browser: true,
+        exportConditions: ["browser"],
         // This is required in order for rollup to pick up
         // the correct dependencies for ping encryption.
         preferBuiltins: false,
