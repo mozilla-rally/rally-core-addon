@@ -3,6 +3,7 @@
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.1.0...master)
 
 * [#295](https://github.com/mozilla-rally/rally-core-addon/pull/295): Enable watching the repository and a better developer workflow using `npm run watch`.
+* [#505](https://github.com/mozilla-rally/rally-core-addon/pull/505): Integrate Glean.js (disabled by default) and provide a way to enable it, as a developer, using the `config-enable-glean` option.
 
 # v1.1.0 (2021-03-10)
 
