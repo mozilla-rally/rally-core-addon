@@ -6,7 +6,11 @@ import { strict as assert } from 'assert';
 // eslint-disable-next-line  node/no-extraneous-import
 import sinon from 'sinon';
 
+import Glean from "@mozilla/glean/webext";
+
 import Core from '../../../core-addon/Core.js';
+import * as rallyMetrics from "../../../public/generated/rally.js";
+
 
 // The website to post deletion IDs to.
 const OFFBOARD_URL = "https://production.rally.mozilla.org/offboard";
@@ -27,7 +31,12 @@ const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
 const FAKE_WEBSITE = "https://test.website";
 
 describe('Core', function () {
-  beforeEach(function () {
+  // eslint-disable-next-line mocha/no-setup-in-describe
+  const testAppId = `core.test.${this.title}`;
+
+  beforeEach(async function() {
+    await Glean.testResetGlean(testAppId);
+
     // Force the sinon-chrome stubbed API to resolve its promise
     // in tests. Without the next two lines, tests querying the
     // `browser.management.getAll` API will be stuck and timeout.
@@ -202,6 +211,8 @@ describe('Core', function () {
       await this.core._handleMessage(
         {type: "enrollment", data: {}}
       );
+
+      assert.equal(await rallyMetrics.id.testGetValue(), FAKE_UUID);
 
       // We expect to store the fake ion ID.
       assert.ok(this.core._storage.setRallyID.withArgs(FAKE_UUID).calledOnce);
