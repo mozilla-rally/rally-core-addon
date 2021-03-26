@@ -25,6 +25,11 @@ export default class DataCollection {
    *        Whether or not user has enrolled in the platform.
    */
   initialize(userEnrolled) {
+    if (!__ENABLE_GLEAN__) {
+      console.warn("DataCollection - Glean disabled by the build configuration.");
+      return;
+    }
+
     // Initialize Glean. Note that we always set 'uploadEnabled=true' if user
     // consented to join Rally. Upload is always enabled unless the web-extension
     // is uninstalled.

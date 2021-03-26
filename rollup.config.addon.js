@@ -29,6 +29,9 @@ export default (cliArgs) => {
         // to enable it for testing until https://github.com/mozilla-rally/core-addon/issues/304
         // is fixed.
         __ENABLE_DATA_SUBMISSION__: !!cliArgs["config-enable-data-submission"],
+        // In order to ease the integration, Glean will be embedded in the code but disabled
+        // until the integration is fully complete.
+        __ENABLE_GLEAN__: !!cliArgs["config-enable-glean"],
         __WEBSITE_URL__: cliArgs['config-website'] ?
           `'${cliArgs['config-website']}'` :
           "'https://rally.mozilla.org'",
