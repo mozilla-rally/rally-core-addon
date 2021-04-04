@@ -27,19 +27,6 @@ In addition to those built-in metrics, the following metrics are added to the pi
 
 ## onboarding
 
-This ping is sent at the end of the user onboarding journey.
-It helps the Rally team assess the usability of the onboarding
-experience.
-
-
-**Data reviews for this ping:**
-
-- <TODO>
-
-**Bugs related to this ping:**
-
-- <https://github.com/mozilla-rally/rally-core-addon/issues/117>
-
 All Glean pings contain built-in metrics in the [`ping_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section) and [`client_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section) sections.
 
 In addition to those built-in metrics, the following metrics are added to the ping:
