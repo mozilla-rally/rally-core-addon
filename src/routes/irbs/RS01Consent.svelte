@@ -19,7 +19,7 @@
 <p>
   To understand browsing better we will collect <b>data about your attention</b> when you are 
   browsing the internet as well as a number of characteristics including <b>time on site, 
-  scroll depth, tab switching, origin URL, the origin URL that brought you to the current webpage, 
+  scroll depth, tab switching, origin of the page URL, the origin of the page URL that brought you to the current webpage, 
   title and description of each page you are on. It will additionally collect time stamps when audio 
   is playing in the browser, but will not collect information about what audio is playing nor what 
   video might be playing with the audio</b>. This data is not aggregated before it is sent to our servers; 
