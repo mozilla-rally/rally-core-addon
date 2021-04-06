@@ -19,12 +19,30 @@ rally:
     lifetime: user
     send_in_pings:
       - deletion-request
+      - enrollment
+      - study-enrollment
     description: |
       The id of the Rally client.
     bugs:
       - https://github.com/mozilla-rally/rally-core-addon/issues/117
     data_reviews:
       - https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+enrollment:
+  study_id:
+    type: string
+    lifetime: ping
+    send_in_pings:
+      - study-enrollment
+    description: |
+      The id of the study user has joined.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://bugzilla.mozilla.org/show_bug.cgi?id=1663857#c5
     notification_emails:
       - than@mozilla.com
     expires: never
