@@ -40,28 +40,47 @@ const mockStore = (function() {
 
 // add one nicer study with all the information.
 const nicerStudy = {
-    addonId: 'nicer-study-example@mozilla.org',
-    name: "An Example Study",
+    addonId: 'rally-study-01@mozilla.org',
+    name: "How Much Do You Doomscroll?",
     authors: {
-        name: "Rally Team"
+        name: "Mozilla Rally"
     },
     icons: {
         64: undefined
     },
     endDate: new Date('2021-07-03'),
-    tags: ['ad trackers', 'misinformation', 'profiling'],
+    tags: ['social media', 'quantified self'],
     privacyPolicy: {spec: 'https://example.com'},
 
     description: `This is a mock study description. All of the information here is for illustrative purposes only.`,
     dataCollectionDetails: ['page views', 'time and date of joining study', 'etc.'],
     detailsDirectName: "Rally Website",
-    detailsDirectLink: '#'
+    detailsDirectLink: '/'
+}
+
+const mockAcademicPartnerStudy = {
+    addonId: 'rally.news.study@princeton.edu',
+    name: "Generic Partner Study",
+    authors: {
+        name: "Generic Partner University"
+    },
+    icons: {
+        64: undefined
+    },
+    endDate: new Date('2021-07-03'),
+    tags: ['social media', 'quantified self'],
+    privacyPolicy: {spec: 'https://example.com'},
+
+    description: `This is a mock study description. All of the information here is for illustrative purposes only.`,
+    dataCollectionDetails: ['page views', 'time and date of joining study', 'etc.'],
+    detailsDirectName: "Rally Website",
+    detailsDirectLink: '/'
 }
 
 fetch('locally-available-studies.json')
     .then(r => r.json())
     .then(s => {
-        mockStore.set({...get(mockStore), availableStudies: [nicerStudy, ...s]});
+        mockStore.set({...get(mockStore), availableStudies: [nicerStudy, mockAcademicPartnerStudy, ...s]});
 });
 
 setContext("rally:store", mockStore);

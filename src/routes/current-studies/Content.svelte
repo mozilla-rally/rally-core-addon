@@ -64,6 +64,7 @@ p {
         author={study.authors.name}
         joined={(!!study.studyJoined)}
         imageSrc={study.icons[64]}
+        addonID={study.addonId}
         endDate={study.endDate}
         joinedDate={study.joinedOn}
         description={study.description}

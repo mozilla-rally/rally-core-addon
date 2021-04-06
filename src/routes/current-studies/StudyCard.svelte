@@ -24,6 +24,7 @@ export let imageSrc;
 export let title = "Untitled Study";
 export let author = "Author Unknown";
 export let description = "no description.";
+export let addonID;
 export let endDate;
 export let joinedDate;
 export let dataCollectionDetails;
@@ -96,7 +97,7 @@ function triggerJoinEvent() {
                  by the study id.
             -->
             <IRBWindow>
-                <svelte:component this={irb['princeton-study']} />
+                <svelte:component this={irb[addonID || 'rally-study-01@mozilla.org']} />
             </IRBWindow>
         {:else}
                 <div style="width: 368px;">
