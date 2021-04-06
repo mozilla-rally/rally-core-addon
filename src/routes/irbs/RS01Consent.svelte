@@ -130,8 +130,7 @@
   .research-is-voluntary,
   h1,
   h2,
-  p
-   {
+  p {
     color: var(--irb-text-color, var(--color-marketing-gray-70));
   }
 
