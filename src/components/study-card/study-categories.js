@@ -26,4 +26,12 @@ export default {
         text: "var(--color-marketing-gray-100)",
         background: "#E0ECEC"
     },
+    "rally community insights": {
+        text: "var(--color-marketing-gray-100)",
+        background: "#D9BFFF"
+    },
+    "product discovery": {
+        text: "var(--color-marketing-gray-100)",
+        background: "#FFB4DC"
+    }
 }
