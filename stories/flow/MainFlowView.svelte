@@ -49,7 +49,7 @@ const nicerStudy = {
         64: undefined
     },
     endDate: new Date('2021-10-31'),
-    tags: ['product discovery', 'rally community insights'],
+    tags: ['product discovery', 'community insights'],
     privacyPolicy: {spec: 'https://example.com'},
 
     description: `When you participate in this study you are helping Rally discover how our community browses the internet. We will explore interesting online patterns like “doomscrolling” -- the popular term for browsing outrageous or depressing online news for a long period of time.  Our findings will lead to new Rally features or blog posts about aggregate online behavior.`,
