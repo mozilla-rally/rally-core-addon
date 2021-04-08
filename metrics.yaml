@@ -1,0 +1,31 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# This file defines the metrics that are recorded by the Glean SDK.
+# APIs to use these pings are automatically generated at build time using
+# the `glean_parser` PyPI package.
+
+# Metrics in this file may make use of SDK reserved ping names. See
+# https://mozilla.github.io/glean/book/dev/core/internal/reserved-ping-names.html
+# for additional information.
+
+---
+$schema: moz://mozilla.org/schemas/glean/metrics/2-0-0
+
+rally:
+  id:
+    type: uuid
+    lifetime: user
+    send_in_pings:
+      - deletion-request
+      - onboarding
+    description: |
+      The id of the Rally client.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/117
+    data_reviews:
+      - TODO
+    notification_emails:
+      - than@mozilla.com
+    expires: never

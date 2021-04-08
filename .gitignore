@@ -11,3 +11,8 @@ public/protocol.css
 .DS_Store
 
 /web-ext-artifacts/
+
+# Ignore Glean's virtual environment and
+# generated files.
+.venv
+generated/

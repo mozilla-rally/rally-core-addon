@@ -18,6 +18,7 @@ exports.mochaHooks = {
     // TODO: remove the next line once https://github.com/mozilla-rally/core-addon/issues/304
     // is merged.
     global.__ENABLE_DATA_SUBMISSION__ = true;
+    global.__ENABLE_GLEAN__ = true;
   },
   afterAll() {
     chrome.flush();
@@ -26,5 +27,6 @@ exports.mochaHooks = {
     // TODO: remove the next line once https://github.com/mozilla-rally/core-addon/issues/304
     // is merged.
     delete global.__ENABLE_DATA_SUBMISSION__;
+    delete global.__ENABLE_GLEAN__;
   },
 };

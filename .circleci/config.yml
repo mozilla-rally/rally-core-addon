@@ -8,7 +8,7 @@ version: 2.1
 jobs:
   Build:
     docker:
-      - image: cimg/node:14.13.1
+      - image: cimg/python:3.8.8-node
     steps:
       - checkout
       - run:
@@ -23,19 +23,22 @@ jobs:
 
   Addon unit tests:
     docker:
-      - image: cimg/node:14.13.1
+      - image: cimg/python:3.8.8-node
     steps:
       - checkout
       - run:
           name: Install the dependencies
           command: npm install
       - run:
+          name: Build the Addon
+          command: npm run build-addon
+      - run:
           name: MochaJS unit tests
           command: npm run test-addon
 
   Addon code linting:
     docker:
-      - image: cimg/node:14.13.1
+      - image: cimg/python:3.8.8-node
     steps:
       - checkout
       - run:
@@ -53,12 +56,15 @@ jobs:
 
   Firefox integration tests:
     docker:
-      - image: cimg/node:14.13.1
+      - image: cimg/python:3.8.8-node
     steps:
       - checkout
       - run:
           name: Install the dependencies
           command: npm install && sudo add-apt-repository ppa:ubuntu-mozilla-daily/ppa && sudo apt update && sudo apt install firefox-trunk
+      - run:
+          name: Build the Addon
+          command: npm run build-addon
       - run:
           name: Run Selenium tests
           command: export PATH=.:$PATH && npm run test-integration

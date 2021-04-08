@@ -22,6 +22,7 @@ module.exports = {
     __DISABLE_REMOTE_SETTINGS__: false,
     __DISABLE_LOCALE_CHECK__: false,
     __ENABLE_DATA_SUBMISSION__: false,
+    __ENABLE_GLEAN__: false,
     __WEBSITE_URL__: false,
   },
   overrides: [
