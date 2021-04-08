@@ -19,13 +19,12 @@ rally:
     lifetime: user
     send_in_pings:
       - deletion-request
-      - onboarding
     description: |
       The id of the Rally client.
     bugs:
       - https://github.com/mozilla-rally/rally-core-addon/issues/117
     data_reviews:
-      - TODO
+      - https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426
     notification_emails:
       - than@mozilla.com
     expires: never
