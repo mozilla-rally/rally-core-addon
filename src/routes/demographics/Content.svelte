@@ -115,7 +115,9 @@
 
   <slot name="description">
     <p>
-      Each question is completely optional, and can be updated at any time by clicking Manage Profile. The answers you give will help us understand the composition and representivity of the Rally community.
+      Each question is completely optional, and can be updated at any time by clicking Manage Profile. 
+      The answers you give will help us understand the composition and representivity of the Rally community.
+      Additionally, collaborators will combine your answers with the data collected in the studies you join to enrich their findings and answer research questions.
     </p>
   </slot>
 
