@@ -5,35 +5,47 @@
 <h1>Rally Study Consent Notice</h1>
 
 <p>
-  The goal of this study is to improve our understanding of how our community browses the internet, 
-  where they spend their time, and <b>how these browsing dynamics differ across segments of people</b>.
+  The goal of this study is to improve our understanding of how our community
+  browses the internet, where they spend their time, and <b
+    >how these browsing dynamics differ across segments of people</b
+  >.
 </p>
 
 <p>
-  To understand this we will collect data about your browsing experience. More specifically, what websites 
-  you browse (e.g., wikipedia.org), how long you view pages, how far you scroll on pages, when a 
-  page plays audio, and for how long audio is playing.  
-  The data we collect about the specific pages you browse is limited to the page title, description, and category. 
-  For more information take a look at our <a target="_blank" href="#FIXME">additional details page</a>.
+  To understand this we will collect data about your browsing experience. More
+  specifically, what websites you browse (e.g., wikipedia.org), how long you
+  view pages, how far you scroll on pages, when a page plays audio, and for how
+  long audio is playing. The data we collect about the specific pages you browse
+  is limited to the page title, description, and category. For more information
+  take a look at our <a
+    target="_blank"
+    href="http://rally.mozilla.org/current-studies/your-time-online-and-doomscrolling/"
+    >additional details page</a
+  >.
 </p>
 
 <p>
-  This data is not aggregated before it is sent to our servers; this study will record all events. 
-  After we analyze our data we will publish aggregated insights on our blog or other channels. 
-  When we do so, <b>we will minimize what we’re sharing publicly by ensuring we aggregate the data</b>.
+  This data is not aggregated before it is sent to our servers; this study will
+  record all events. After we analyze our data we will publish aggregated
+  insights on our blog or other channels. When we do so, <b
+    >we will minimize what we’re sharing publicly by ensuring we aggregate the
+    data</b
+  >.
 </p>
 
 <p>
-  Data will be collected through a custom browser web extension developed by the Rally team.  
-  We will install the web extension and data will be collected through browser data after you opt-in. 
-  Mozilla will store the data on Google Cloud where all analysis will be conducted. 
-  This server is restricted to the Rally team researchers and is encrypted. 
-  Data will be transferred by TLS between the participant's browser and the Mozilla analysis database. 
-  TLS stands for "transport layer security" which encrypts browser data.
+  Data will be collected through a custom browser web extension developed by the
+  Rally team. We will install the web extension and data will be collected
+  through browser data after you opt-in. Mozilla will store the data on Google
+  Cloud where all analysis will be conducted. This server is restricted to the
+  Rally team researchers and is encrypted. Data will be transferred by TLS
+  between the participant's browser and the Mozilla analysis database. TLS
+  stands for "transport layer security" which encrypts browser data.
 </p>
 
 <p>
-  This study will be open for 6 months, and you can unenroll at any time by following the steps below.
+  This study will be open for 6 months, and you can unenroll at any time by
+  following the steps below.
 </p>
 
 <h2>Leaving the Study</h2>
@@ -57,7 +69,6 @@
   you leave Rally, you will also leave the studies that you are enrolled in, including
   this study.
 </p>
-
 
 <style>
   .research-is-voluntary,
