@@ -17,6 +17,7 @@ import StudyCardHeader from '../../components/study-card/Header.svelte';
 import Button from '../../components/Button.svelte';
 import Dialog from '../../components/Dialog.svelte';
 import IRBWindow from '../irbs/IRBWindow.svelte';
+import GenericConsent from "../irbs/GenericConsent.svelte";
 import irb from "../irbs";
 
 export let joined = false;
@@ -88,9 +89,13 @@ function triggerJoinEvent() {
             <!-- Bake in the Princeton IRB. Once we have more studies, we will key this
                  by the study id.
             -->
-            <IRBWindow>
-                <svelte:component this={irb[addonId || 'rally-study-01@mozilla.org']} />
-            </IRBWindow>
+                <IRBWindow>
+                    {#if addonId in irb}
+                        <svelte:component this={irb[addonId || 'rally-study-01@mozilla.org']} />
+                    {:else}
+                        <GenericConsent />
+                    {/if}
+                </IRBWindow>
         {:else}
                 <div style="width: 368px;">
                     <p style="padding-top: 20px;">
