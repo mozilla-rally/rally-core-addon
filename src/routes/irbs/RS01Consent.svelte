@@ -11,8 +11,8 @@
 
 <p>
   To understand this we will collect data about your browsing experience. More specifically, what websites 
-  (e.g., rally.mozilla.org) you browse, how long you view pages, how far you scroll on pages, and when a 
-  page plays audio, and for how long.  
+  you browse (e.g., wikipedia.org), how long you view pages, how far you scroll on pages, when a 
+  page plays audio, and for how long audio is playing.  
   The data we collect about the specific pages you browse is limited to the page title, description, and category. 
   For more information take a look at our <a target="_blank" href="#FIXME">additional details page</a>.
 </p>
@@ -47,7 +47,7 @@
   />
   in your browser toolbar. The button is usually near the top right of the browser
   window. If you have removed the Rally button from your toolbar, you can also access
-  the Rally options page from the browser’s Add-ons settings. The Rally options page
+  the Rally options page from the browser’s add-ons settings. The Rally options page
   will show you a list of studies that you are currently enrolled in. You can leave
   this study by clicking the “Leave Study” button on the associated study card. If
   you leave the study, the study’s browser extension will be automatically uninstalled,
