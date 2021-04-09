@@ -13,6 +13,7 @@
     "version": "0.3.1",
     "addonId": "ion-basic-study@mozilla.org",
     "downloadLink": "https://addons.mozilla.org/firefox/downloads/latest/ion-basic-study",
+    "endDate": "2022-04-04",
     "studyEnded": false,
     "studyPaused": false,
     "description": "Study purpose: Testing Rally.",
