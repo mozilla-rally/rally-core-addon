@@ -9,7 +9,6 @@ This means you might have to go searching through the dependency tree to get a f
 # Pings
 
 - [deletion-request](#deletion-request)
-- [onboarding](#onboarding)
 
 ## deletion-request
 
@@ -23,17 +22,7 @@ In addition to those built-in metrics, the following metrics are added to the pi
 
 | Name | Type | Description | Data reviews | Extras | Expiration | [Data Sensitivity](https://wiki.mozilla.org/Firefox/Data_Collection) |
 | --- | --- | --- | --- | --- | --- | --- |
-| rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[Review 1](TODO)||never | |
-
-## onboarding
-
-All Glean pings contain built-in metrics in the [`ping_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section) and [`client_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section) sections.
-
-In addition to those built-in metrics, the following metrics are added to the ping:
-
-| Name | Type | Description | Data reviews | Extras | Expiration | [Data Sensitivity](https://wiki.mozilla.org/Firefox/Data_Collection) |
-| --- | --- | --- | --- | --- | --- | --- |
-| rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[Review 1](TODO)||never | |
+| rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
 
 Data categories are [defined here](https://wiki.mozilla.org/Firefox/Data_Collection).
 
