@@ -91,7 +91,7 @@ function triggerJoinEvent() {
             -->
                 <IRBWindow>
                     {#if addonId in irb}
-                        <svelte:component this={irb[addonId || 'rally-study-01@mozilla.org']} />
+                        <svelte:component this={irb[addonId]} />
                     {:else}
                         <GenericConsent />
                     {/if}
