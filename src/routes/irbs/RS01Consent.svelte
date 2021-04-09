@@ -71,16 +71,10 @@
 </p>
 
 <style>
-  .research-is-voluntary,
   h1,
   h2,
   p {
     color: var(--irb-text-color, var(--color-marketing-gray-70));
-  }
-
-  .research-is-voluntary {
-    font-size: 16px;
-    margin-bottom: 28px;
   }
 
   h1 {

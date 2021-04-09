@@ -35,7 +35,6 @@
   this study.
 </p>
 
-
 <style>
   h1,
   h2,
