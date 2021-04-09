@@ -48,7 +48,7 @@ const nicerStudy = {
     icons: {
         64: undefined
     },
-    endDate: new Date('2021-10-31'),
+    endDate: new Date(2021, 9, 31),
     tags: ['product discovery', 'community insights'],
     studyDetailsLink: 'https://example.com',
 
