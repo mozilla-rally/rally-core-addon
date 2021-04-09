@@ -64,14 +64,12 @@ p {
         author={study.authors.name}
         joined={(!!study.studyJoined)}
         imageSrc={study.icons[64]}
-        addonID={study.addonId}
+        addonId={study.addonId}
         endDate={study.endDate}
         joinedDate={study.joinedOn}
         description={study.description}
         dataCollectionDetails={study.dataCollectionDetails}
-        detailsDirectName={study.detailsDirectName}
-        detailsDirectLink={study.detailsDirectLink}
-        privacyPolicyLink={study.privacyPolicyLink}
+        studyDetailsLink={study.studyDetailsLink}
         tags={study.tags}
         {sidebarOffset}
         on:cta-clicked

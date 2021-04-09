@@ -18,7 +18,7 @@
   export let endDate;
   export let joined = false;
   export let joinedDate = undefined;
-  export let privacyPolicyLink = undefined;
+  export let studyDetailsLink = undefined;
   export let imageSrc;
   export let dataCollectionDetails = [];
   export let tags = [];
@@ -238,7 +238,7 @@
         </div>
     
         <div class="study-card-privacy-policy">
-          <a target="_blank" rel="noopener noreferrer" class="external-link" style="--spacing: 6px;" href={privacyPolicyLink}>View Full Study Details <ExternalLink /></a>
+          <a target="_blank" rel="noopener noreferrer" class="external-link" style="--spacing: 6px;" href={studyDetailsLink}>View Full Study Details <ExternalLink /></a>
         </div>
       </div>
     </div>

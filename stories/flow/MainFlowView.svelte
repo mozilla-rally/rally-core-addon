@@ -50,7 +50,7 @@ const nicerStudy = {
     },
     endDate: new Date('2021-10-31'),
     tags: ['product discovery', 'community insights'],
-    privacyPolicy: {spec: 'https://example.com'},
+    studyDetailsLink: 'https://example.com',
 
     description: `When you participate in this study you are helping Rally discover how our community browses the internet. We will explore interesting online patterns like “doomscrolling” -- the popular term for browsing outrageous or depressing online news for a long period of time.  Our findings will lead to new Rally features or blog posts about aggregate online behavior.`,
     dataCollectionDetails: [
@@ -60,7 +60,6 @@ const nicerStudy = {
         'We will measure how far you scroll down on the page'
     ],
     detailsDirectName: "Rally Website",
-    detailsDirectLink: '/'
 }
 
 const mockAcademicPartnerStudy = {
@@ -79,7 +78,7 @@ const mockAcademicPartnerStudy = {
     description: `This is a mock study description. All of the information here is for illustrative purposes only.`,
     dataCollectionDetails: ['page views', 'time and date of joining study', 'etc.'],
     detailsDirectName: "Rally Website",
-    detailsDirectLink: '/'
+    studyDetailsLink: '/'
 }
 
 fetch('locally-available-studies.json')

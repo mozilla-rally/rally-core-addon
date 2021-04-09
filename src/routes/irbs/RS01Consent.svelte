@@ -4,84 +4,36 @@
 
 <h1>Rally Study Consent Notice</h1>
 
-<div class="research-is-voluntary">
-  <div>You are invited to participate in a research study.</div>
-  <div>Participation in this study is voluntary.</div>
-</div>
-
-<h2>Study Purpose</h2>
 <p>
-  The goal of this study is to begin understanding how people browse the
-  internet, where they spend their time, and how these browsing dynamics differ
-  according to a demographic survey completed in the Rally onboarding process.
+  The goal of this study is to improve our understanding of how our community browses the internet, 
+  where they spend their time, and <b>how these browsing dynamics differ across segments of people</b>.
 </p>
 
 <p>
-  To understand browsing better we will collect <b>data about your attention</b> when you are 
-  browsing the internet as well as a number of characteristics including <b>time on site, 
-  scroll depth, tab switching, origin of the page URL, the origin of the page URL that brought you to the current webpage, 
-  title and description of each page you are on. It will additionally collect time stamps when audio 
-  is playing in the browser, but will not collect information about what audio is playing nor what 
-  video might be playing with the audio</b>. This data is not aggregated before it is sent to our servers; 
-  this study will record all events.  After we analyze our data we might publish aggregated insights 
-  on our blog or other channels.  For our intended output – blog posts, data visualizations, and 
-  product prototypes – <b>we will minimize what we’re exposing through careful aggregation, to be 
-  vetted by a Mozilla data steward, before making anything available to the public</b>.
+  To understand this we will collect data about your browsing experience. More specifically, what websites 
+  (e.g., rally.mozilla.org) you browse, how long you view pages, how far you scroll on pages, and when a 
+  page plays audio, and for how long.  
+  The data we collect about the specific pages you browse is limited to the page title, description, and category. 
+  For more information take a look at our <a target="_blank" href="#FIXME">additional details page</a>.
 </p>
 
 <p>
-  Data will be collected through a custom browser web extension developed by the
-  Rally team. The web extension will be offered on a voluntary basis to a pool
-  of browser users that have opted in to the Mozilla Rally experience. If you
-  opt in to the study, we will install the web extension and data will be
-  collected through browser telemetry. Mozilla will store the data on Google
-  Cloud where all analysis will be conducted. This server is restricted to the
-  Rally team researchers and is encrypted. Data will be transferred between the
-  participant's browser and the Mozilla analysis database protected by TLS.
-</p>
-
-<h2>Time Involvement</h2>
-
-<p>This research will take 6 months.</p>
-
-<h2>Risks and Benefits</h2>
-
-<p>
-  <b
-    >We cannot and do not guarantee or promise that you will receive any
-    benefits from this study.</b
-  >
-  There are individual risks to you related to your identification. You can read
-  more here. There are no benefits to you when you participate.
+  This data is not aggregated before it is sent to our servers; this study will record all events. 
+  After we analyze our data we will publish aggregated insights on our blog or other channels. 
+  When we do so, <b>we will minimize what we’re sharing publicly by ensuring we aggregate the data</b>.
 </p>
 
 <p>
-  Answers to these questions will enhance understanding of internet usage for
-  the Rally product and help us create data stories and quantified self reports
-  that help users understand themselves and where they fit in. give-back
-  development.
+  Data will be collected through a custom browser web extension developed by the Rally team.  
+  We will install the web extension and data will be collected through browser data after you opt-in. 
+  Mozilla will store the data on Google Cloud where all analysis will be conducted. 
+  This server is restricted to the Rally team researchers and is encrypted. 
+  Data will be transferred by TLS between the participant's browser and the Mozilla analysis database. 
+  TLS stands for "transport layer security" which encrypts browser data.
 </p>
 
-<h2>Compensation</h2>
-<p>No payment is provided.</p>
-
-<h2>Participants Rights</h2>
 <p>
-  If you have read this form and have decided to participate in this project,
-  please understand your
-  <b>participation is voluntary</b> and you have the
-  <b
-    >right to withdraw your consent or discontinue participation at any time
-    without penalty or loss of benefits to which you are otherwise entitled. The
-    alternative is not to participate.</b
-  >
-  You have the right to refuse to answer particular questions. The results of
-  this research study may be published in product development, blog posts or
-  other marketing materials.
-  <b
-    >Your individual privacy will be maintained in all published data in text
-    and charts resulting from the study</b
-  >.
+  This study will be open for 6 months, and you can unenroll at any time by following the steps below.
 </p>
 
 <h2>Leaving the Study</h2>
@@ -106,25 +58,6 @@
   this study.
 </p>
 
-<h2>Confidentiality</h2>
-<p>
-  Your private information collected as part of the research, even if
-  identifiers are removed, will not be used or distributed for future research
-  studies.
-</p>
-
-<h2>Contact Information</h2>
-<p>
-  If you have any questions, concerns or complaints about this
-  research, its procedures, risks and benefits, contact the Protocol Director,
-  Rebecca Weiss (<a href="mailto:studies@mozilla.com">studies@mozilla.com</a>).
-</p>
-<p>Please print a copy of this page for your records.</p>
-
-<p>
-  If you agree to participate in this research, please click <b>“Accept &
-  Participate”</b>.
-</p>
 
 <style>
   .research-is-voluntary,

@@ -24,14 +24,12 @@ export let imageSrc;
 export let title = "Untitled Study";
 export let author = "Author Unknown";
 export let description = "no description.";
-export let addonID;
+export let addonId;
 export let endDate;
 export let joinedDate;
 export let dataCollectionDetails;
-export let privacyPolicyLink;
+export let studyDetailsLink;
 export let tags;
-export let detailsDirectName;
-export let detailsDirectLink;
 
 const dispatch = createEventDispatcher();
 
@@ -54,18 +52,12 @@ function triggerJoinEvent() {
     {dataCollectionDetails}
     {tags}
     {imageSrc}
-    {privacyPolicyLink}>
+    {studyDetailsLink}>
         <span slot="name">{title}</span>
         <span slot="author">{author}</span>
         <p slot="description">
         {description}
         </p>
-        <div slot="details" style="display: {(detailsDirectName !== undefined && detailsDirectLink !== undefined) ? 'auto' : 'none'};">
-        {#if detailsDirectName && detailsDirectLink}
-            Full study details can be found on the
-            <a href={detailsDirectLink}>{detailsDirectName}</a>
-        {/if}
-        </div>
 </StudyCard>
 
 {#if joinModal}
@@ -97,7 +89,7 @@ function triggerJoinEvent() {
                  by the study id.
             -->
             <IRBWindow>
-                <svelte:component this={irb[addonID || 'rally-study-01@mozilla.org']} />
+                <svelte:component this={irb[addonId || 'rally-study-01@mozilla.org']} />
             </IRBWindow>
         {:else}
                 <div style="width: 368px;">
