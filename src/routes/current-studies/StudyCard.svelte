@@ -17,6 +17,7 @@ import StudyCardHeader from '../../components/study-card/Header.svelte';
 import Button from '../../components/Button.svelte';
 import Dialog from '../../components/Dialog.svelte';
 import IRBWindow from '../irbs/IRBWindow.svelte';
+import GenericConsent from "../irbs/GenericConsent.svelte";
 import irb from "../irbs";
 
 export let joined = false;
@@ -24,13 +25,12 @@ export let imageSrc;
 export let title = "Untitled Study";
 export let author = "Author Unknown";
 export let description = "no description.";
+export let addonId;
 export let endDate;
 export let joinedDate;
 export let dataCollectionDetails;
-export let privacyPolicyLink;
+export let studyDetailsLink;
 export let tags;
-export let detailsDirectName;
-export let detailsDirectLink;
 
 const dispatch = createEventDispatcher();
 
@@ -53,18 +53,12 @@ function triggerJoinEvent() {
     {dataCollectionDetails}
     {tags}
     {imageSrc}
-    {privacyPolicyLink}>
+    {studyDetailsLink}>
         <span slot="name">{title}</span>
         <span slot="author">{author}</span>
         <p slot="description">
         {description}
         </p>
-        <div slot="details" style="display: {(detailsDirectName !== undefined && detailsDirectLink !== undefined) ? 'auto' : 'none'};">
-        {#if detailsDirectName && detailsDirectLink}
-            Full study details can be found on the
-            <a href={detailsDirectLink}>{detailsDirectName}</a>
-        {/if}
-        </div>
 </StudyCard>
 
 {#if joinModal}
@@ -95,9 +89,13 @@ function triggerJoinEvent() {
             <!-- Bake in the Princeton IRB. Once we have more studies, we will key this
                  by the study id.
             -->
-            <IRBWindow>
-                <svelte:component this={irb['princeton-study']} />
-            </IRBWindow>
+                <IRBWindow>
+                    {#if addonId in irb}
+                        <svelte:component this={irb[addonId]} />
+                    {:else}
+                        <GenericConsent />
+                    {/if}
+                </IRBWindow>
         {:else}
                 <div style="width: 368px;">
                     <p style="padding-top: 20px;">

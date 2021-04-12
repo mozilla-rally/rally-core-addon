@@ -13,12 +13,11 @@
     "version": "0.3.1",
     "addonId": "ion-basic-study@mozilla.org",
     "downloadLink": "https://addons.mozilla.org/firefox/downloads/latest/ion-basic-study",
+    "endDate": "2022-04-04",
     "studyEnded": false,
     "studyPaused": false,
     "description": "Study purpose: Testing Rally.",
-    "privacyPolicyLink": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
-    "joinStudyConsent": "This study will send an encrypted ping, only when the toolbar icon is clicked.",
-    "leaveStudyConsent": "This study cannot be re-joined.",
+    "studyDetailsLink": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
     "dataCollectionDetails": ["The date and time"],
     "tags": ["misinformation", "social media", "demo"]
   }
