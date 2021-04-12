@@ -2,10 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var assert = require('assert').strict;
-var sinon = require('sinon');
+import { strict as assert } from 'assert';
+// eslint-disable-next-line  node/no-extraneous-import
+import sinon from 'sinon';
 
-var DataCollection = require('../../../core-addon/DataCollection');
+import DataCollection from '../../../core-addon/DataCollection.js';
 
 // A fake study id to use in the tests when looking for a
 // "known" study.

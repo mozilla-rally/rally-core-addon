@@ -20,19 +20,13 @@ Build a local version of the add-on using the list of studies from `public/local
 
 ```bash
 npm run build
-npm run build-local-addon
 ```
 
-...then start [web-ext](https://github.com/mozilla/web-ext):
+...then start the add-on in "watch" mode, which will cause the add-on to auto-reload as you make changes
+to the source code:
 
 ```bash
-web-ext run
-```
-
-`web-ext` defaults to Firefox, it can be run with Chrome:
-
-```bash
-web-ext run -t chromium
+npm run watch
 ```
 
 # Testing the Core addon

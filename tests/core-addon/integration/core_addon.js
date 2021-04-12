@@ -2,10 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const assert = require('assert').strict;
-const utils = require("./utils.js");
-const { By, until } = require("selenium-webdriver");
-const firefox = require("selenium-webdriver/firefox");
+import { strict as assert } from 'assert';
+import * as utils from "./utils.js";
+import { By, until } from "selenium-webdriver";
+import firefox from "selenium-webdriver/firefox.js";
 
 describe("Core-Addon", function () {
   it("should un/enroll in Rally", async function () {
@@ -28,7 +28,7 @@ describe("Core-Addon", function () {
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
     await this.driver.setContext(firefox.Context.CHROME);
     await utils.findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
-    await utils.findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+    await utils.findAndAct(this.driver, By.css(`[label="Okay"]`), e => e.click());
 
     // Close options page tab and re-open it.
     await this.driver.close();
@@ -129,7 +129,7 @@ describe("Core-Addon", function () {
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
     await this.driver.setContext(firefox.Context.CHROME);
     await utils.findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
-    await utils.findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+    await utils.findAndAct(this.driver, By.css(`[label="Okay"]`), e => e.click());
 
     await this.driver.quit();
   });
@@ -179,7 +179,7 @@ describe("Core-Addon", function () {
     // Switch to browser UI context, to interact with Firefox add-on install prompts.
     await this.driver.setContext(firefox.Context.CHROME);
     await utils.findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
-    await utils.findAndAct(this.driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+    await utils.findAndAct(this.driver, By.css(`[label="Okay"]`), e => e.click());
 
     // Switch to browser UI context, so we can inject script to modify Remote Settings.
     await this.driver.setContext(firefox.Context.CHROME);

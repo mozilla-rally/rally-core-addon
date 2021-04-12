@@ -3,17 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-/*
--------------- Current Studies --------------
-
-Data points we'll need to support in the store to make this a reality:
-- study join date (study.joinedOn, added from the partner support library as soon as the study is successfully joined)
-- study end date (study.endDate, this should come from the partner)
-- study details link (study.detailsLink), which should be provided by partner
-- study details page name (study.detailsLinkName), which should be provided by partner
-
-*/
-
 import { createEventDispatcher } from 'svelte';
 import { fly } from 'svelte/transition';
 import StudyCard from './StudyCard.svelte';
@@ -30,6 +19,22 @@ function joinStudy(studyID) {
 function leaveStudy(studyID) {
     dispatch("leave-study", studyID);
 }
+
+function parseDateIfNeeded(date) {
+    if (date === undefined || (typeof date === 'object' && typeof date.getMonth === 'function')) return date;
+    try {
+        let endDate = date.split('-');
+        let day = +endDate[2];
+        let month = +endDate[1] - 1;
+        let year = +endDate[0];
+        return new Date(year, month, day);
+    } catch (err) {
+        console.error(err);
+        return undefined;
+    }
+}
+
+$: console.log(studies)
 
 </script>
 
@@ -64,13 +69,12 @@ p {
         author={study.authors.name}
         joined={(!!study.studyJoined)}
         imageSrc={study.icons[64]}
-        endDate={study.endDate}
-        joinedDate={study.joinedOn}
+        addonId={study.addonId}
+        endDate={parseDateIfNeeded(study.endDate)}
+        joinedDate={parseDateIfNeeded(study.joinedOn)}
         description={study.description}
         dataCollectionDetails={study.dataCollectionDetails}
-        detailsDirectName={study.detailsDirectName}
-        detailsDirectLink={study.detailsDirectLink}
-        privacyPolicyLink={study.privacyPolicyLink}
+        studyDetailsLink={study.studyDetailsLink}
         tags={study.tags}
         {sidebarOffset}
         on:cta-clicked

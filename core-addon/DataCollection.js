@@ -2,6 +2,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import Glean from "@mozilla/glean/webext";
+import PingEncryptionPlugin from "@mozilla/glean/webext/plugins/encryption";
+
 // The encryption key id and JWK to encrypt data that go
 // to the "core" environment (i.e. `pioneer-core`). See
 // bug 1677761 for additional details.
@@ -14,7 +17,30 @@ const CORE_ENCRYPTION_JWK = {
   "y": "xrLUev8_yUrSFAlabnHInvU4JKc6Ew3YXaaoDloQxw8",
 };
 
-module.exports = class DataCollection {
+export default class DataCollection {
+  /**
+   * Initializes the data collection engine.
+   *
+   * @param {boolean} userEnrolled
+   *        Whether or not user has enrolled in the platform.
+   */
+  initialize(userEnrolled) {
+    if (!__ENABLE_GLEAN__) {
+      console.warn("DataCollection - Glean disabled by the build configuration.");
+      return;
+    }
+
+    // Initialize Glean. Note that we always set 'uploadEnabled=true' if user
+    // consented to join Rally. Upload is always enabled unless the web-extension
+    // is uninstalled.
+    Glean.initialize("rally-core", userEnrolled, {
+        plugins: [
+          new PingEncryptionPlugin(CORE_ENCRYPTION_JWK)
+        ]
+      }
+    );
+  }
+
   /**
    * Sends an otherwise-empty ping with the deletion ID other provided info.
    *
@@ -248,4 +274,4 @@ module.exports = class DataCollection {
       CORE_ENCRYPTION_JWK,
     );
   }
-};
+}

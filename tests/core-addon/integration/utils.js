@@ -2,13 +2,19 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const archiver = require("archiver");
-const { Builder, By, Capabilities, until } = require("selenium-webdriver");
-const firefox = require("selenium-webdriver/firefox");
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
-const { Readable } = require("stream");
+import archiver from "archiver";
+import { Builder, By, Capabilities, until } from "selenium-webdriver";
+import firefox from "selenium-webdriver/firefox.js";
+import fs from "fs";
+import os from "os";
+import path, { dirname } from "path";
+import { Readable } from "stream";
+import { fileURLToPath } from 'url';
+
+// Using ES6 in NodeJS makes __filename and __dirname not
+// available. Work around this: https://stackoverflow.com/a/64383997/261698
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // An object containing the sample remote-settings read from
 // a local file: they must contain, at least, the study template
@@ -241,7 +247,7 @@ async function installRally(driver) {
   // switch to browser UI context, to interact with Firefox add-on install prompts.
   await driver.setContext(firefox.Context.CHROME);
   await findAndAct(driver, By.css(`[label="Add"]`), e => e.click());
-  await findAndAct(driver, By.css(`[label="Okay, Got It"]`), e => e.click());
+  await findAndAct(driver, By.css(`[label="Okay"]`), e => e.click());
 
   // We expect the extension to load its options page in a new tab.
   await driver.wait(async () => {
@@ -307,7 +313,7 @@ async function joinRally(driver) {
   await findAndAct(driver, By.xpath(`//button[text()="Save & Continue"]`), e => e.click());
 }
 
-module.exports = {
+export {
   RALLY_TEST_STUDY_REGISTRY,
   WAIT_FOR_PROPERTY,
   findAndAct,

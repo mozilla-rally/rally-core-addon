@@ -13,7 +13,7 @@
     imageSrc="https://addons.cdn.mozilla.net/static/img/addon-icons/default-64.png"
     dataCollectionDetails={['how often you visit news and health websites', 'The amount of time you spend looking at these websites', 'The sources that lead you to visit these websites', 'Whether you shared links to these websites on social media']}
     tags={['social media', 'misinformation']}
-    privacyPolicyLink={'/'}>
+    studyDetailsLink={'/'}>
     <span slot="name">Political & COVID-18 News Information</span>
     <span slot="author">Princeton University</span>
     <p slot="description">
@@ -34,7 +34,7 @@
     joinedDate={new Date(2021, 8, 9)}
     dataCollectionDetails={['the date and time', 'number of browser tabs open', 'the time of day when the browser is first used, additional thoughts', 'the temperature outside near the data center where their data will be stored', 'the date and time', 'number of browser tabs open', 'the time of day when the browser is first used, additional thoughts']}
     tags={['social media', 'misinformation', 'data & privacy', 'devices', 'accessibility', 'other']}
-    privacyPolicyLink={'/'}>
+    studyDetailsLink={'/'}>
     <span slot="name">Very, very long Study 1a.05 (long title, and also this doesn't have study icon)</span>
     <span slot="author">The Mozilla Foundation, The Mozilla Corporation, and
       others</span>
