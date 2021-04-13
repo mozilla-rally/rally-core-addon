@@ -29,7 +29,7 @@
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "@mozilla-protocol/core": "^12.1.0",
-    "@mozilla/glean": "^0.7.0",
+    "@mozilla/glean": "^0.8.1",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
     "@rollup/plugin-replace": "^2.4.1",
