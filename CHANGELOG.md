@@ -1,7 +1,12 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.1.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.0...master)
 
+# v1.2.0 (2021-04-12)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.1.0...v1.2.0)
+
+* [#529](https://github.com/mozilla-rally/rally-core-addon/pull/529): Implement the RS01 consent content.
 * [#295](https://github.com/mozilla-rally/rally-core-addon/pull/295): Enable watching the repository and a better developer workflow using `npm run watch`.
 * [#505](https://github.com/mozilla-rally/rally-core-addon/pull/505): Integrate Glean.js (disabled by default) and provide a way to enable it, as a developer, using the `config-enable-glean` option.
 
