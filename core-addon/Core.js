@@ -5,6 +5,7 @@
 import Storage from "./Storage.js";
 import DataCollection from "./DataCollection.js";
 import * as rallyMetrics from "../public/generated/rally.js";
+import * as enrollmentMetrics from "../public/generated/enrollment.js";
 import * as rallyPings from "../public/generated/pings.js";
 
 // The path of the embedded resource used to control options.
@@ -435,7 +436,11 @@ export default class Core {
     // Record that user activated this study.
     await this._storage.appendActivatedStudy(studyAddonId);
 
-    // Finally send the ping.
+    enrollmentMetrics.studyId.set(studyAddonId);
+    rallyPings.studyEnrollment.submit();
+
+    // Finally send the ping. Important: remove this line once the migration
+    // to Glean.js is finally complete.
     let rallyId = await this._storage.getRallyID();
     await this._dataCollection.sendEnrollmentPing(rallyId, studyAddonId);
   }
