@@ -5,6 +5,7 @@
 import Storage from "./Storage.js";
 import DataCollection from "./DataCollection.js";
 import * as rallyMetrics from "../public/generated/rally.js";
+import * as rallyPings from "../public/generated/pings.js";
 
 // The path of the embedded resource used to control options.
 const OPTIONS_PAGE_PATH = "public/index.html";
@@ -408,7 +409,10 @@ export default class Core {
     // Override the uninstall URL to include the rallyID, for deleting data without exposing the Rally ID.
     await this.setUninstallURL();
 
-    // Finally send the ping.
+    rallyPings.enrollment.submit();
+
+    // Finally send the ping. Important: remove this line once the migration
+    // to Glean.js is finally complete.
     await this._dataCollection.sendEnrollmentPing(rallyId, undefined, deletionId);
   }
 

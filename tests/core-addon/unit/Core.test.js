@@ -10,6 +10,7 @@ import Glean from "@mozilla/glean/webext";
 
 import Core from '../../../core-addon/Core.js';
 import * as rallyMetrics from "../../../public/generated/rally.js";
+import * as rallyPings from "../../../public/generated/pings.js";
 
 
 // The website to post deletion IDs to.
@@ -206,17 +207,19 @@ describe('Core', function () {
 
       sinon.spy(this.core._dataCollection, "sendEnrollmentPing");
       sinon.spy(this.core._storage, "setRallyID");
+      const enrollmentPingSpy = sinon.spy(rallyPings.enrollment, "submit");
 
       // Provide a valid enrollment message.
       await this.core._handleMessage(
         {type: "enrollment", data: {}}
       );
 
-      assert.equal(await rallyMetrics.id.testGetValue(), FAKE_UUID);
+      assert.equal(await rallyMetrics.id.testGetValue("enrollment"), FAKE_UUID);
 
       // We expect to store the fake ion ID.
       assert.ok(this.core._storage.setRallyID.withArgs(FAKE_UUID).calledOnce);
       assert.ok(this.core._dataCollection.sendEnrollmentPing.calledOnce);
+      assert.ok(enrollmentPingSpy.calledOnce);
     });
 
     it('dispatches study-enrollment messages', async function () {
