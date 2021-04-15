@@ -10,6 +10,8 @@ import Glean from "@mozilla/glean/webext";
 
 import Core from '../../../core-addon/Core.js';
 import * as rallyMetrics from "../../../public/generated/rally.js";
+import * as enrollmentMetrics from "../../../public/generated/enrollment.js";
+import * as rallyPings from "../../../public/generated/pings.js";
 
 
 // The website to post deletion IDs to.
@@ -206,17 +208,19 @@ describe('Core', function () {
 
       sinon.spy(this.core._dataCollection, "sendEnrollmentPing");
       sinon.spy(this.core._storage, "setRallyID");
+      const enrollmentPingSpy = sinon.spy(rallyPings.enrollment, "submit");
 
       // Provide a valid enrollment message.
       await this.core._handleMessage(
         {type: "enrollment", data: {}}
       );
 
-      assert.equal(await rallyMetrics.id.testGetValue(), FAKE_UUID);
+      assert.equal(await rallyMetrics.id.testGetValue("enrollment"), FAKE_UUID);
 
       // We expect to store the fake ion ID.
       assert.ok(this.core._storage.setRallyID.withArgs(FAKE_UUID).calledOnce);
       assert.ok(this.core._dataCollection.sendEnrollmentPing.calledOnce);
+      assert.ok(enrollmentPingSpy.calledOnce);
     });
 
     it('dispatches study-enrollment messages', async function () {
@@ -225,6 +229,8 @@ describe('Core', function () {
       chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
 
       sinon.spy(this.core._dataCollection, "sendEnrollmentPing");
+      const enrollmentPingMock = sinon.mock(rallyPings.studyEnrollment);
+      enrollmentPingMock.expects("submit").once();
 
       // Mock the storage to provide a fake rally id.
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
@@ -236,10 +242,13 @@ describe('Core', function () {
       // Attempt to enroll to a study.
       await this.core._enrollStudy(FAKE_STUDY_ID);
 
+      assert.equal(await enrollmentMetrics.studyId.testGetValue("study-enrollment"), FAKE_STUDY_ID);
+
       // We expect to store the fake ion ID.
       assert.ok(
         this.core._dataCollection.sendEnrollmentPing.withArgs(FAKE_UUID, FAKE_STUDY_ID).calledOnce
       );
+      enrollmentPingMock.verify();
     });
 
     it('dispatches unenrollment messages', async function () {
