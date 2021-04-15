@@ -14,6 +14,7 @@
     "lint": "npm run build && npm-run-all lint-*",
     "lint-addon": "web-ext --config=web-ext-config.cjs lint",
     "lint-css": "stylelint 'public/*.css' '.storybook/*.css' 'src/**/*.svelte' 'stories/**/*.svelte'",
+    "lint-glean": "glean glinter ./metrics.yaml ./pings.yaml",
     "lint-js": "eslint . .storybook",
     "skip-taskcluster": "node -e \"process.exit(!('TASK_ID' in process.env))\"",
     "storybook": "start-storybook -p 6006 -s ./public",
