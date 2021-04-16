@@ -23,7 +23,7 @@ $: if ($store && $store.demographicsData) intermediateResults = { ...$store.demo
     <p slot="description">
         Here's what you've shared with us so far. You can update, add, or rescind your answers as 
         you see fit. Just a reminder, this info helps us better understand the representitivity of our study
-        participants, and we'll always ask before we share this data with a research partner.
+        participants, and we'll always ask before we share this data with a research collaborator.
     </p>
     <div slot="call-to-action" let:results let:validated>
         <hr />
