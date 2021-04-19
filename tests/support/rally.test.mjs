@@ -24,12 +24,17 @@ describe('Rally', function () {
       );
     });
 
-    it('must fail with an invalid key ID', function () {
+    it('must fail with a missing key ID', function () {
       assert.rejects(
-        this.rally.initialize("schema-namespace", { kid: false }, true, "not-a-function, will fail")
+        this.rally.initialize("schema-namespace", {}, true, "no-key-id, will fail")
       );
     });
 
+    it('must fail with an invalid key ID', function () {
+      assert.rejects(
+        this.rally.initialize("schema-namespace", { kid: false }, true, "bad-key-id, will fail")
+      );
+    });
 
     it('no core addon skips the info page in dev mode', async function () {
       // Mock the check to make it fail.
