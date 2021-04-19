@@ -193,7 +193,8 @@ export default class DataCollection {
     };
 
     if (!__ENABLE_DATA_SUBMISSION__) {
-      console.warn(`DataCollection.sendPing - data submission disabled, ping ${payloadType} not submitted`);
+      console.warn(`DataCollection.sendPing - data submission disabled, ping ${payloadType} not submitted with payload:`, payload);
+
       return;
     }
 

@@ -2,6 +2,8 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.0...master)
 
+* [#532](https://github.com/mozilla-rally/rally-core-addon/pull/532): Log the payload to console when data collection is disabled, for QA purposes.
+
 # v1.2.0 (2021-04-12)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.1.0...v1.2.0)
