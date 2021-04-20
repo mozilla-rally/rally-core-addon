@@ -1,5 +1,9 @@
 # Unreleased changes
 
+# v0.6.0 (2021-04-20)
+
+* [550](https://github.com/mozilla-rally/rally-core-addon/pull/550): Do not use extension ID as namespace, breaks the `rally.js` API (constructor arg change)
+
 # v0.5.0 (2021-03-03)
 
 * [#468](https://github.com/mozilla-rally/rally-core-addon/pull/468): export rally run states instead of using strings.
