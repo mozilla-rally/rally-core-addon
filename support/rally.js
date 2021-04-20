@@ -14,8 +14,8 @@ export class Rally {
   /**
    * Initialize the Rally library.
    *
-   * @param {String} keyId
-   *        The id of the key used to encrypt outgoing data.
+   * @param {String} schemaNamespace
+   *        The namespace for this study. Must match the server-side schema.
    * @param {Object} key
    *        The JSON Web Key (JWK) used to encrypt the outgoing data.
    *        See the RFC 7517 https://tools.ietf.org/html/rfc7517
@@ -38,10 +38,10 @@ export class Rally {
    *        Takes a single parameter, `message`, which is the {String}
    *        received regarding the current study state ("paused" or "running".)
    */
-  async initialize(keyId, key, enableDevMode, stateChangeCallback) {
+  async initialize(schemaNamespace, key, enableDevMode, stateChangeCallback) {
     console.debug("Rally.initialize");
 
-    this._validateEncryptionKey(keyId, key);
+    this._validateEncryptionKey(key);
 
     if (!stateChangeCallback) {
       throw new Error("Rally.initialize - Initialization failed, stateChangeCallback is required.")
@@ -51,7 +51,8 @@ export class Rally {
       throw new Error("Rally.initialize - Initialization failed, stateChangeCallback is not a function.")
     }
 
-    this._keyId = keyId;
+    this._namespace = schemaNamespace;
+    this._keyId = key.kid;
     this._key = key;
     this._enableDevMode = Boolean(enableDevMode);
 
@@ -173,8 +174,6 @@ export class Rally {
   /**
    * Validate the provided encryption keys.
    *
-   * @param {String} keyId
-   *        The id of the key used to encrypt outgoing data.
    * @param {Object} key
    *        The JSON Web Key (JWK) used to encrypt the outgoing data.
    *        See the RFC 7517 https://tools.ietf.org/html/rfc7517
@@ -191,13 +190,13 @@ export class Rally {
    * @throws {Error} if either the key id or the JWK key object are
    *         invalid.
    */
-  _validateEncryptionKey(keyId, key) {
-    if (typeof keyId !== "string") {
-      throw new Error(`Rally._validateEncryptionKey - Invalid encryption key id ${keyId}`);
+  _validateEncryptionKey(key) {
+    if (typeof key !== "object") {
+      throw new Error("Rally._validateEncryptionKey - Invalid encryption key", key);
     }
 
-    if (typeof key !== "object") {
-      throw new Error(`Rally._validateEncryptionKey - Invalid encryption key ${key}`);
+    if (!("kid" in key && typeof key.kid === "string")) {
+      throw new Error("Rally._validateEncryptionKey - Missing or invalid encryption key ID in key", key);
     }
   }
 
@@ -235,21 +234,16 @@ export class Rally {
     // data collection to be the culprit of a bug hindering user
     // experience.
     try {
-      // The unique identifier of the study can be used as the
-      // namespace, in order to make sure data is routed to the
-      // proper analysis sandbox.
-      const studyName = browser.runtime.id;
-
       // This function may be mistakenly called while init has not
       // finished. Let's be safe and check for key validity again.
-      this._validateEncryptionKey(this._keyId, this._key);
+      this._validateEncryptionKey(this._key);
 
       const msg = {
         type: "telemetry-ping",
         data: {
           payloadType: payloadType,
           payload: payload,
-          namespace: studyName,
+          namespace: this._namespace,
           keyId: this._keyId,
           key: this._key
         }

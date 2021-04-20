@@ -14,13 +14,25 @@ describe('Rally', function () {
   describe('initialize()', function () {
     it('must fail with invalid keys', function () {
       assert.rejects(
-        this.rally.initialize("key-id", "not-an-object, will fail", true, () => {})
+        this.rally.initialize("schema-namespace", "not-an-object, will fail", true, () => {})
       );
     });
 
     it('must fail with an invalid callback function', function () {
       assert.rejects(
-        this.rally.initialize("key-id", {}, true, "not-a-function, will fail")
+        this.rally.initialize("schema-namespace", {}, true, "not-a-function, will fail")
+      );
+    });
+
+    it('must fail with a missing key ID', function () {
+      assert.rejects(
+        this.rally.initialize("schema-namespace", {}, true, "no-key-id, will fail")
+      );
+    });
+
+    it('must fail with an invalid key ID', function () {
+      assert.rejects(
+        this.rally.initialize("schema-namespace", { kid: false }, true, "bad-key-id, will fail")
       );
     });
 
@@ -31,8 +43,8 @@ describe('Rally', function () {
       };
 
       await this.rally.initialize(
-        "key-id",
-        {},
+        "schema-namespace",
+        { kid: "key-id" },
         true, // Developer mode.
         () => {},
       );
@@ -50,8 +62,8 @@ describe('Rally', function () {
 
       await assert.rejects(
         this.rally.initialize(
-          "key-id",
-          {},
+          "schema-namespace",
+          { kid: "key-id" },
           false,
           () => {},
         )
@@ -100,8 +112,8 @@ describe('Rally', function () {
 
       let callbackCalled = false;
       await this.rally.initialize(
-        "key-id",
-        {},
+        "schema-namespace",
+        { kid: "key-id" },
         true, // Developer mode.
         (message) => {
           callbackCalled = true;
@@ -124,8 +136,8 @@ describe('Rally', function () {
 
       let callbackCalled = false;
       await this.rally.initialize(
-        "key-id",
-        {},
+        "schema-namespace",
+        { kid: "key-id" },
         true, // Developer mode.
         (message) => {
           callbackCalled = true;
@@ -169,8 +181,8 @@ describe('Rally', function () {
       };
 
       await this.rally.initialize(
-        "key-id",
-        {},
+        "schema-namespace",
+        { kid: "key-id" },
         true, // Developer mode.
         () => {},
       );
@@ -199,8 +211,8 @@ describe('Rally', function () {
       };
 
       await this.rally.initialize(
-        "key-id",
-        {},
+        "schema-namespace",
+        { kid: "key-id" },
         true, // Non-developer mode.
         () => {},
       );
