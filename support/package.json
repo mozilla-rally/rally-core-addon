@@ -1,6 +1,6 @@
 {
   "name": "@mozilla/rally",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "The Rally partner support library.",
   "main": "rally.js",
   "type": "module",
@@ -8,7 +8,6 @@
     "build": "echo FIXME, taskcluster requires a build target."
   },
   "devDependencies": {},
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mozilla-rally/rally-core-addon.git",
