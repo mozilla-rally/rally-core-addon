@@ -8,13 +8,9 @@ import { tick } from "svelte";
   import { fly } from "svelte/transition";
   import ClearAnswerButton from './ClearAnswerButton.svelte';
   import schema from './survey-schema';
-  import { questionIsAnswered, clearAnswer, createFieldValidator, zipcodeIsValid, incomeIsValid, createResultObject, inputFormatters } from './survey-tools';
-
-  const [zipValidity, validateZip] = createFieldValidator(zipcodeIsValid());
-  const [incomeValidity, validateIncome] = createFieldValidator(incomeIsValid());
+  import { questionIsAnswered, clearAnswer,  createResultObject, inputFormatters } from './survey-tools';
 
   export let results = createResultObject(schema);
-  $: console.log(inputFormatters.validateAllQuestions(schema, results))
 </script>
 
 <style>

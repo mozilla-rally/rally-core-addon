@@ -118,7 +118,8 @@ function formatZipcodeInput(event) {
 }
 
 /**
- * Formatters for free-text questions that require (1) formatting and (2) validation.
+ * Formatters for free-text questions that require (1) formatting and (2) validating the values entred in,
+ * usually on blur.
  */
 export const inputFormatters = {
   validateAllQuestions(schema, answers) {
