@@ -5,6 +5,9 @@
 import Glean from "@mozilla/glean/webext";
 import PingEncryptionPlugin from "@mozilla/glean/webext/plugins/encryption";
 
+import * as userMetrics from "../public/generated/user.js";
+import * as rallyPings from "../public/generated/pings.js";
+
 // The encryption key id and JWK to encrypt data that go
 // to the "core" environment (i.e. `pioneer-core`). See
 // bug 1677761 for additional details.
@@ -214,6 +217,63 @@ export default class DataCollection {
   }
 
   /**
+   * Sends a demographic-survey ping with Glean.js.
+   *
+   * @param {Object} data
+   *        A JSON-serializable object containing the demographics
+   *        information submitted by the user..
+   */
+  sendDemographicsInGlean(data) {
+    // The schema for the non-glean collection is hard to change.
+    // In order for us to not change it, we transform the provided
+    // fields in a way that's expected by Glean.
+
+    if ("age" in data) {
+      userMetrics.age[`band_${data["age"]}`].set(true);
+    }
+
+    if ("gender" in data) {
+      userMetrics.gender[data["gender"]].set(true);
+    }
+
+    if ("hispanicLatinxSpanishOrigin" in data) {
+      const label = (data["hispanicLatinxSpanishOrigin"] === "other")
+        ? "other" : "hispanicLatinxSpanish";
+      userMetrics.origin[label].set(true);
+    }
+
+    if ("race" in data) {
+      for (const raceLabel of data["race"]) {
+        const label = (raceLabel === "american_indian_or_alaska_native")
+          ? "am_indian_or_alaska_native" : raceLabel;
+        userMetrics.races[label].set(true);
+      }
+    }
+
+    if ("school" in data) {
+      const KEY_FIXUP = {
+        "high_school_graduate_or_equivalent": "high_school_grad_or_eq",
+        "some_college_but_no_degree_or_in_progress": "college_degree_in_progress",
+      };
+
+      const originalLabel = data["school"];
+      const label = (originalLabel in KEY_FIXUP)
+        ? KEY_FIXUP[originalLabel] : originalLabel;
+      userMetrics.school[label].set(true);
+    }
+
+    if ("income" in data) {
+      userMetrics.income[`band_${data["income"]}`].set(true);
+    }
+
+    if ("zipcode" in data) {
+      userMetrics.zipcode.set(data["zipcode"]);
+    }
+
+    rallyPings.demographics.submit();
+  }
+
+  /**
    * Sends a demographic-survey ping.
    *
    * @param {String} rallyId
@@ -223,6 +283,10 @@ export default class DataCollection {
    *        information submitted by the user..
    */
   async sendDemographicSurveyPing(rallyId, data) {
+    // Once Rally fully migrates to Glean.js, the whole content of
+    // `sendDemographicSurveyPing` should be replaced by `sendDemographicsInGlean`.
+    this.sendDemographicsInGlean(data);
+
     const FIELD_MAPPING = {
       "age": "age",
       "gender": "gender",

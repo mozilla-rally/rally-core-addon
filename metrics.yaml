@@ -21,6 +21,7 @@ rally:
       - deletion-request
       - enrollment
       - study-enrollment
+      - demographics
     description: |
       The id of the Rally client.
     bugs:
@@ -43,6 +44,159 @@ enrollment:
       - https://github.com/mozilla-rally/rally-core-addon/issues/545
     data_reviews:
       - https://bugzilla.mozilla.org/show_bug.cgi?id=1663857#c5
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+user:
+  age:
+    type: labeled_boolean
+    lifetime: ping
+    send_in_pings:
+      - demographics
+    labels:
+      - band_19_24
+      - band_25_34
+      - band_35_44
+      - band_45_54
+      - band_55_64
+      - band_over_65
+    description: |
+      The user age.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+  gender:
+    type: labeled_boolean
+    lifetime: ping
+    send_in_pings:
+      - demographics
+    labels:
+      - male
+      - female
+      - neither
+      - decline
+    description: |
+      The user gender.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+  origin:
+    type: labeled_boolean
+    lifetime: ping
+    send_in_pings:
+      - demographics
+    labels:
+      - hispanic_latinx_spanish
+      - other
+    description: |
+      The user origin: Hispanic, Latinx, Spanish or other.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+  races:
+    type: labeled_boolean
+    lifetime: ping
+    send_in_pings:
+      - demographics
+    labels:
+      - am_indian_or_alaska_native
+      - asian_indian
+      - black_or_african_american
+      - chamorro
+      - chinese
+      - filipino
+      - japanese
+      - korean
+      - native_hawaiian
+      - samoan
+      - vietnamese
+      - white
+      - other_asian
+      - other_pacific_islander
+      - some_other_race
+    description: |
+      The user race / ethnicity.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+  school:
+    type: labeled_boolean
+    lifetime: ping
+    send_in_pings:
+      - demographics
+    labels:
+      - less_than_high_school
+      - some_high_school
+      - high_school_grad_or_eq
+      - college_degree_in_progress
+      - associates_degree
+      - bachelors_degree
+      - graduate_degree
+    description: |
+      The highest level of school user has completed.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+  income:
+    type: labeled_boolean
+    lifetime: ping
+    send_in_pings:
+      - demographics
+    labels:
+      - band_0_24999
+      - band_25000_49999
+      - band_50000_74999
+      - band_75000_99999
+      - band_100000_149999
+      - band_ge_150000
+    description: |
+      The user household's combined annual income during the
+      past 12 months.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+  zipcode:
+    type: string
+    lifetime: ping
+    send_in_pings:
+      - demographics
+    description: |
+      The user zip code.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
     notification_emails:
       - than@mozilla.com
     expires: never
