@@ -21,6 +21,7 @@ rally:
       - deletion-request
       - enrollment
       - study-enrollment
+      - study-unenrollment
       - demographics
     description: |
       The id of the Rally client.
@@ -44,6 +45,22 @@ enrollment:
       - https://github.com/mozilla-rally/rally-core-addon/issues/545
     data_reviews:
       - https://bugzilla.mozilla.org/show_bug.cgi?id=1663857#c5
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+unenrollment:
+  study_id:
+    type: string
+    lifetime: ping
+    send_in_pings:
+      - study-unenrollment
+    description: |
+      The id of the study user has left.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://bugzilla.mozilla.org/show_bug.cgi?id=1646151#c32
     notification_emails:
       - than@mozilla.com
     expires: never
