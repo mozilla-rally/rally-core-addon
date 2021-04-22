@@ -22,6 +22,14 @@ import { tick } from "svelte";
     gap: 1rem;
   }
 
+  .mzp-c-choice-text {
+    min-height: 1rem;
+  }
+
+  .mzp-c-field-set-text {
+    padding-bottom: 0;
+  }
+
   .mzp-c-field-label.remove-bottom-margin {
     padding-bottom: 0;
   }
@@ -132,7 +140,7 @@ import { tick } from "svelte";
 
   <form class="mzp-c-form">
     {#each Object.keys(results) as question}
-      <fieldset class="mzp-c-field-set">
+      <fieldset class="mzp-c-field-set" class:mzp-c-field-set-text={schema[question].type === 'text'}>
         <legend class="mzp-c-field-label"
           for={schema[question].key}
           class:remove-bottom-margin={schema[question].sublabel}
@@ -146,7 +154,7 @@ import { tick } from "svelte";
           {/if}
         </legend>
         {#if schema[question].sublabel}
-        <div style="padding-top: -8px; padding-bottom: 8px;">
+        <div style="padding-top: -8px; padding-bottom: 20px;">
           {schema[question].sublabel}
         </div>
       {/if}
