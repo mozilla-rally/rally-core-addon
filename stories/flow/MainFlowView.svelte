@@ -64,9 +64,9 @@ const nicerStudy = {
 
 const mockAcademicPartnerStudy = {
     addonId: 'rally.news.study@princeton.edu',
-    name: "Generic Partner Study",
+    name: "Generic Collaborator Study",
     authors: {
-        name: "Generic Partner University"
+        name: "Generic Collaborator University"
     },
     icons: {
         64: undefined
