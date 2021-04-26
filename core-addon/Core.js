@@ -544,8 +544,7 @@ export default class Core {
       // to Glean.js is finally complete.
       const knownStudy = availableStudies.find(s => s.addonId == studyId);
       if (!("schemaNamespace" in knownStudy)) {
-        return Promise.reject(
-          new Error(`Core._handleExternalMessage - No schema namespace specified in remote settings for ${sender.id}`));
+        console.error(`Core._handleExternalMessage - No schema namespace specified in remote settings for ${studyId}`);
       }
       await this._dataCollection.sendDeletionPing(rallyId, knownStudy.schemaNamespace);
     }
@@ -596,7 +595,7 @@ export default class Core {
     // Only do this for "uninstall" messages.
     let studyList = await this._storage.getActivatedStudies();
     if (!studyList.includes(studyId)
-        && type != "uninstall") {
+      && type != "uninstall") {
       return Promise.reject(
         new Error(`Core._sendMessageToStudy - "${studyId}" is not a known study`));
     }
