@@ -286,7 +286,7 @@ describe('Core', function () {
       assert.ok(this.core._storage.clearDeletionID.calledOnce);
       // ... to submit a ping with the expected type ...
       assert.ok(
-        this.core._dataCollection.sendDeletionPing.withArgs(FAKE_UUID, FAKE_STUDY_ID).calledOnce
+        this.core._dataCollection.sendDeletionPing.withArgs(FAKE_UUID, FAKE_STUDY_NAMESPACE).calledOnce
       );
       // We also expect an "uninstall" message to be dispatched to
       // the one study marked as installed.

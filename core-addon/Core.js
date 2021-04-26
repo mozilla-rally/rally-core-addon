@@ -515,7 +515,8 @@ export default class Core {
    */
   async _unenroll() {
     // Uninstall all known studies that are still installed.
-    let installedStudies = (await this._availableStudies)
+    const availableStudies = await this._availableStudies;
+    let installedStudies = availableStudies
       .filter(s => s.studyInstalled)
       .map(s => s.addonId);
     for (let studyId of installedStudies) {
@@ -541,7 +542,12 @@ export default class Core {
 
       // Important: remove these lines once the migration
       // to Glean.js is finally complete.
-      await this._dataCollection.sendDeletionPing(rallyId, studyId);
+      const knownStudy = availableStudies.find(s => s.addonId == studyId);
+      if (!("schemaNamespace" in knownStudy)) {
+        return Promise.reject(
+          new Error(`Core._handleExternalMessage - No schema namespace specified in remote settings for ${sender.id}`));
+      }
+      await this._dataCollection.sendDeletionPing(rallyId, knownStudy.schemaNamespace);
     }
 
     // Clear locally stored IDs.
