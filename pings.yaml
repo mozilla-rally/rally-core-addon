@@ -35,6 +35,18 @@ study-enrollment:
   notification_emails:
     - than@mozilla.com
 
+study-unenrollment:
+  description: |
+    This ping is sent when user leaves a study.
+  include_client_id: false
+  send_if_empty: true
+  bugs:
+    - https://github.com/mozilla-rally/rally-core-addon/issues/545
+  data_reviews:
+    - https://bugzilla.mozilla.org/show_bug.cgi?id=1646151#c32
+  notification_emails:
+    - than@mozilla.com
+
 demographics:
   description: |
     After a user joins the platform they are asked to fill a

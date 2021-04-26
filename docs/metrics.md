@@ -12,6 +12,7 @@ This means you might have to go searching through the dependency tree to get a f
 - [demographics](#demographics)
 - [enrollment](#enrollment)
 - [study-enrollment](#study-enrollment)
+- [study-unenrollment](#study-unenrollment)
 
 ## deletion-request
 
@@ -108,6 +109,30 @@ In addition to those built-in metrics, the following metrics are added to the pi
 | --- | --- | --- | --- | --- | --- | --- |
 | enrollment.study_id |[string](https://mozilla.github.io/glean/book/user/metrics/string.html) |The id of the study user has joined.  |[Bug 1663857](https://bugzilla.mozilla.org/show_bug.cgi?id=1663857#c5)||never | |
 | rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
+
+## study-unenrollment
+
+This ping is sent when user leaves a study.
+
+
+This ping is sent if empty.
+
+**Data reviews for this ping:**
+
+- <https://bugzilla.mozilla.org/show_bug.cgi?id=1646151#c32>
+
+**Bugs related to this ping:**
+
+- <https://github.com/mozilla-rally/rally-core-addon/issues/545>
+
+All Glean pings contain built-in metrics in the [`ping_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section) and [`client_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section) sections.
+
+In addition to those built-in metrics, the following metrics are added to the ping:
+
+| Name | Type | Description | Data reviews | Extras | Expiration | [Data Sensitivity](https://wiki.mozilla.org/Firefox/Data_Collection) |
+| --- | --- | --- | --- | --- | --- | --- |
+| rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
+| unenrollment.study_id |[string](https://mozilla.github.io/glean/book/user/metrics/string.html) |The id of the study user has left.  |[Bug 1646151](https://bugzilla.mozilla.org/show_bug.cgi?id=1646151#c32)||never | |
 
 Data categories are [defined here](https://wiki.mozilla.org/Firefox/Data_Collection).
 

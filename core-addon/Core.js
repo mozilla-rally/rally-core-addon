@@ -4,8 +4,10 @@
 
 import Storage from "./Storage.js";
 import DataCollection from "./DataCollection.js";
+import Glean from "@mozilla/glean/webext";
 import * as rallyMetrics from "../public/generated/rally.js";
 import * as enrollmentMetrics from "../public/generated/enrollment.js";
+import * as unenrollmentMetrics from "../public/generated/unenrollment.js";
 import * as rallyPings from "../public/generated/pings.js";
 
 // The path of the embedded resource used to control options.
@@ -475,6 +477,11 @@ export default class Core {
 
     await this._storage.removeActivatedStudy(studyAddonId);
 
+    unenrollmentMetrics.studyId.set(studyAddonId);
+    rallyPings.studyUnenrollment.submit();
+
+    // Important: remove these lines once the migration
+    // to Glean.js is finally complete.
     let rallyId = await this._storage.getRallyID();
     await this._dataCollection.sendDeletionPing(rallyId, studyAddonId);
   }
@@ -511,6 +518,11 @@ export default class Core {
     // for each of them.
     let studyList = await this._storage.getActivatedStudies();
     for (let studyId of studyList) {
+      unenrollmentMetrics.studyId.set(studyId);
+      rallyPings.studyUnenrollment.submit();
+
+      // Important: remove these lines once the migration
+      // to Glean.js is finally complete.
       await this._dataCollection.sendDeletionPing(rallyId, studyId);
     }
 
@@ -520,6 +532,10 @@ export default class Core {
 
     // Clear the list of studies user took part in.
     await this._storage.clearActivatedStudies();
+
+    // Flip upload enabled to disabled: this will trigger a
+    // deletion-request.
+    Glean.setUploadEnabled(false);
 
     // Finally, uninstall the addon.
     await browser.management.uninstallSelf({ showConfirmDialog: false });
