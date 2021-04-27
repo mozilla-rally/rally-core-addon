@@ -20,13 +20,17 @@ const OFFBOARD_URL = "https://production.rally.mozilla.org/offboard";
 // A fake study id to use in the tests when looking for a
 // "known" study.
 const FAKE_STUDY_ID = "test@ion-studies.com";
+const FAKE_STUDY_NAMESPACE = "fake-study-installed-namespace"
 const FAKE_STUDY_ID_NOT_INSTALLED = "test-not-installed@ion-studies.com";
+const FAKE_STUDY_NOT_INSTALLED_NAMESPACE = "fake-study-not-installed-namespace"
 const FAKE_STUDY_LIST = [
   {
-    "addonId": FAKE_STUDY_ID
+    "addonId": FAKE_STUDY_ID,
+    "schemaNamespace": FAKE_STUDY_NAMESPACE
   },
   {
-    "addonId": FAKE_STUDY_ID_NOT_INSTALLED
+    "addonId": FAKE_STUDY_ID_NOT_INSTALLED,
+    "schemaNamespace": FAKE_STUDY_NOT_INSTALLED_NAMESPACE
   }
 ];
 const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
@@ -246,7 +250,7 @@ describe('Core', function () {
 
       // We expect to store the fake ion ID.
       assert.ok(
-        this.core._dataCollection.sendEnrollmentPing.withArgs(FAKE_UUID, FAKE_STUDY_ID).calledOnce
+        this.core._dataCollection.sendEnrollmentPing.withArgs(FAKE_UUID, FAKE_STUDY_NAMESPACE).calledOnce
       );
       enrollmentPingMock.verify();
     });
@@ -282,7 +286,7 @@ describe('Core', function () {
       assert.ok(this.core._storage.clearDeletionID.calledOnce);
       // ... to submit a ping with the expected type ...
       assert.ok(
-        this.core._dataCollection.sendDeletionPing.withArgs(FAKE_UUID, FAKE_STUDY_ID).calledOnce
+        this.core._dataCollection.sendDeletionPing.withArgs(FAKE_UUID, FAKE_STUDY_NAMESPACE).calledOnce
       );
       // We also expect an "uninstall" message to be dispatched to
       // the one study marked as installed.
@@ -333,7 +337,7 @@ describe('Core', function () {
 
       // We to submit a ping with the expected type.
       assert.ok(
-        this.core._dataCollection.sendDeletionPing.withArgs(FAKE_UUID, FAKE_STUDY_ID).calledOnce
+        this.core._dataCollection.sendDeletionPing.withArgs(FAKE_UUID, FAKE_STUDY_NAMESPACE).calledOnce
       );
 
       // Make sure that we're generating an uninstall message for
@@ -415,7 +419,7 @@ describe('Core', function () {
               FAKE_UUID,
               SENT_PING.payloadType,
               sinon.match(SENT_PING.payload),
-              SENT_PING.namespace,
+              FAKE_STUDY_NAMESPACE,
               SENT_PING.keyId,
               sinon.match(SENT_PING.key)
             ).calledOnce

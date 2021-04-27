@@ -289,6 +289,12 @@ export default class Core {
       throw new Error(`Core._handleExternalMessage - unexpected sender ${sender.id}`);
     }
 
+    const knownStudy = availableStudies.find(s => s.addonId == sender.id);
+    if (!("schemaNamespace" in knownStudy)) {
+      return Promise.reject(
+        new Error(`Core._handleExternalMessage - No schema namespace specified in remote settings for ${sender.id}`));
+    }
+
     let joinedStudies = await this._storage.getActivatedStudies();
     if (!joinedStudies.includes(sender.id)) {
       throw new Error(`Core._handleExternalMessage - ${sender.id} not joined`);
@@ -312,10 +318,11 @@ export default class Core {
         if (pausedStudies.includes(sender.id)) {
           throw new Error(`Core._handleExternalMessage - ${sender.id} is paused and may not send data`);
         }
-        const { payloadType, payload, namespace, keyId, key } = message.data;
+
+        const { payloadType, payload, keyId, key } = message.data;
         let rallyId = await this._storage.getRallyID();
         return await this._dataCollection.sendPing(
-          rallyId, payloadType, payload, namespace, keyId, key
+          rallyId, payloadType, payload, knownStudy.schemaNamespace, keyId, key
         );
       }
       default:
@@ -434,6 +441,11 @@ export default class Core {
       return Promise.reject(
         new Error(`Core._enrollStudy - Unknown study ${studyAddonId}`));
     }
+    const knownStudy = knownStudies.find(s => s.addonId == studyAddonId);
+    if (!("schemaNamespace" in knownStudy)) {
+      return Promise.reject(
+        new Error(`Core._enrollStudy - No schema namespace specified in remote settings for ${studyAddonId}`));
+    }
 
     // Record that user activated this study.
     await this._storage.appendActivatedStudy(studyAddonId);
@@ -444,7 +456,7 @@ export default class Core {
     // Finally send the ping. Important: remove this line once the migration
     // to Glean.js is finally complete.
     let rallyId = await this._storage.getRallyID();
-    await this._dataCollection.sendEnrollmentPing(rallyId, studyAddonId);
+    await this._dataCollection.sendEnrollmentPing(rallyId, knownStudy.schemaNamespace);
   }
 
   /**
@@ -465,6 +477,12 @@ export default class Core {
         new Error(`Core._unenrollStudy - Unknown study ${studyAddonId}`));
     }
 
+    const knownStudy = knownStudies.find(s => s.addonId == studyAddonId);
+    if (!("schemaNamespace" in knownStudy)) {
+      return Promise.reject(
+        new Error(`Core._enrollStudy - No schema namespace specified in remote settings for ${studyAddonId}`));
+    }
+
     // Attempt to send an uninstall message, but move on if the
     // delivery fails: studies will not be able to send anything
     // without the Core Add-on anyway. Moreover, they might have been
@@ -483,7 +501,7 @@ export default class Core {
     // Important: remove these lines once the migration
     // to Glean.js is finally complete.
     let rallyId = await this._storage.getRallyID();
-    await this._dataCollection.sendDeletionPing(rallyId, studyAddonId);
+    await this._dataCollection.sendDeletionPing(rallyId, knownStudy.schemaNamespace);
   }
 
   /**
@@ -497,7 +515,8 @@ export default class Core {
    */
   async _unenroll() {
     // Uninstall all known studies that are still installed.
-    let installedStudies = (await this._availableStudies)
+    const availableStudies = await this._availableStudies;
+    let installedStudies = availableStudies
       .filter(s => s.studyInstalled)
       .map(s => s.addonId);
     for (let studyId of installedStudies) {
@@ -523,7 +542,11 @@ export default class Core {
 
       // Important: remove these lines once the migration
       // to Glean.js is finally complete.
-      await this._dataCollection.sendDeletionPing(rallyId, studyId);
+      const knownStudy = availableStudies.find(s => s.addonId == studyId);
+      if (!("schemaNamespace" in knownStudy)) {
+        console.error(`Core._handleExternalMessage - No schema namespace specified in remote settings for ${studyId}`);
+      }
+      await this._dataCollection.sendDeletionPing(rallyId, knownStudy.schemaNamespace);
     }
 
     // Clear locally stored IDs.
@@ -572,7 +595,7 @@ export default class Core {
     // Only do this for "uninstall" messages.
     let studyList = await this._storage.getActivatedStudies();
     if (!studyList.includes(studyId)
-        && type != "uninstall") {
+      && type != "uninstall") {
       return Promise.reject(
         new Error(`Core._sendMessageToStudy - "${studyId}" is not a known study`));
     }

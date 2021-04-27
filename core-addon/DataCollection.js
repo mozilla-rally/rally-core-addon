@@ -107,18 +107,18 @@ export default class DataCollection {
    *
    * @param {String} rallyId
    *        The id of the Rally platform.
-   * @param {String} [studyAddonid=undefined]
-   *        optional study id. It's sent in the ping, if present, to signal
+   * @param {String} [schemaNamespace=undefined]
+   *        optional schema namespace. It's sent in the ping, if present, to signal
    *        that user enroled in the study.
    * @param {String} deletionId
    *        It's sent in the ping, if present, to track deletion of user data without exposing the Rally ID.
    */
-  async sendEnrollmentPing(rallyId, studyAddonId, deletionId) {
+  async sendEnrollmentPing(rallyId, schemaNamespace, deletionId) {
     // If we were provided with a study id, then this is an enrollment to a study.
     // Send the id alongside with the data and change the schema namespace to simplify
     // the work on the ingestion pipeline.
-    if (studyAddonId !== undefined) {
-      return await this._sendPingWithDeletionId(rallyId, "pioneer-enrollment", studyAddonId);
+    if (schemaNamespace !== undefined) {
+      return await this._sendPingWithDeletionId(rallyId, "pioneer-enrollment", schemaNamespace);
     }
 
     // If this is a platform enrollment ping (not coming from the study), then the
@@ -138,15 +138,15 @@ export default class DataCollection {
    *
    * @param {String} rallyId
    *        The id of the Rally platform.
-   * @param {String} studyAddonid
+   * @param {String} schemaNamespace
    *        It's sent in the ping to signal that user unenrolled from a study.
    */
-  async sendDeletionPing(rallyId, studyAddonId) {
-    if (studyAddonId === undefined) {
-      throw new Error("DataCollection - the deletion-request ping requires a study id");
+  async sendDeletionPing(rallyId, schemaNamespace) {
+    if (schemaNamespace === undefined) {
+      throw new Error("DataCollection - the deletion-request ping requires a schema namespace");
     }
 
-    return await this._sendPingWithDeletionId(rallyId, "deletion-request", studyAddonId);
+    return await this._sendPingWithDeletionId(rallyId, "deletion-request", schemaNamespace);
   }
 
   /**
