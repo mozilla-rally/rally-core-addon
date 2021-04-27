@@ -19,6 +19,7 @@
     "description": "Study purpose: Testing Rally.",
     "studyDetailsLink": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
     "dataCollectionDetails": ["The date and time"],
-    "tags": ["misinformation", "social media", "demo"]
+    "tags": ["misinformation", "social media", "demo"],
+    "schemaNamespace": "rally-basic-study-template"
   }
 ]

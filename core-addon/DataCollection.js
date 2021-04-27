@@ -5,6 +5,9 @@
 import Glean from "@mozilla/glean/webext";
 import PingEncryptionPlugin from "@mozilla/glean/webext/plugins/encryption";
 
+import * as userMetrics from "../public/generated/user.js";
+import * as rallyPings from "../public/generated/pings.js";
+
 // The encryption key id and JWK to encrypt data that go
 // to the "core" environment (i.e. `pioneer-core`). See
 // bug 1677761 for additional details.
@@ -104,18 +107,18 @@ export default class DataCollection {
    *
    * @param {String} rallyId
    *        The id of the Rally platform.
-   * @param {String} [studyAddonid=undefined]
-   *        optional study id. It's sent in the ping, if present, to signal
+   * @param {String} [schemaNamespace=undefined]
+   *        optional schema namespace. It's sent in the ping, if present, to signal
    *        that user enroled in the study.
    * @param {String} deletionId
    *        It's sent in the ping, if present, to track deletion of user data without exposing the Rally ID.
    */
-  async sendEnrollmentPing(rallyId, studyAddonId, deletionId) {
+  async sendEnrollmentPing(rallyId, schemaNamespace, deletionId) {
     // If we were provided with a study id, then this is an enrollment to a study.
     // Send the id alongside with the data and change the schema namespace to simplify
     // the work on the ingestion pipeline.
-    if (studyAddonId !== undefined) {
-      return await this._sendPingWithDeletionId(rallyId, "pioneer-enrollment", studyAddonId);
+    if (schemaNamespace !== undefined) {
+      return await this._sendPingWithDeletionId(rallyId, "pioneer-enrollment", schemaNamespace);
     }
 
     // If this is a platform enrollment ping (not coming from the study), then the
@@ -135,15 +138,15 @@ export default class DataCollection {
    *
    * @param {String} rallyId
    *        The id of the Rally platform.
-   * @param {String} studyAddonid
+   * @param {String} schemaNamespace
    *        It's sent in the ping to signal that user unenrolled from a study.
    */
-  async sendDeletionPing(rallyId, studyAddonId) {
-    if (studyAddonId === undefined) {
-      throw new Error("DataCollection - the deletion-request ping requires a study id");
+  async sendDeletionPing(rallyId, schemaNamespace) {
+    if (schemaNamespace === undefined) {
+      throw new Error("DataCollection - the deletion-request ping requires a schema namespace");
     }
 
-    return await this._sendPingWithDeletionId(rallyId, "deletion-request", studyAddonId);
+    return await this._sendPingWithDeletionId(rallyId, "deletion-request", schemaNamespace);
   }
 
   /**
@@ -193,7 +196,8 @@ export default class DataCollection {
     };
 
     if (!__ENABLE_DATA_SUBMISSION__) {
-      console.warn(`DataCollection.sendPing - data submission disabled, ping ${payloadType} not submitted`);
+      console.warn(`DataCollection.sendPing - data submission disabled, ping ${payloadType} not submitted with payload:`, payload);
+
       return;
     }
 
@@ -213,6 +217,63 @@ export default class DataCollection {
   }
 
   /**
+   * Sends a demographic-survey ping with Glean.js.
+   *
+   * @param {Object} data
+   *        A JSON-serializable object containing the demographics
+   *        information submitted by the user..
+   */
+  sendDemographicsInGlean(data) {
+    // The schema for the non-glean collection is hard to change.
+    // In order for us to not change it, we transform the provided
+    // fields in a way that's expected by Glean.
+
+    if ("age" in data) {
+      userMetrics.age[`band_${data["age"]}`].set(true);
+    }
+
+    if ("gender" in data) {
+      userMetrics.gender[data["gender"]].set(true);
+    }
+
+    if ("hispanicLatinxSpanishOrigin" in data) {
+      const label = (data["hispanicLatinxSpanishOrigin"] === "other")
+        ? "other" : "hispanicLatinxSpanish";
+      userMetrics.origin[label].set(true);
+    }
+
+    if ("race" in data) {
+      for (const raceLabel of data["race"]) {
+        const label = (raceLabel === "american_indian_or_alaska_native")
+          ? "am_indian_or_alaska_native" : raceLabel;
+        userMetrics.races[label].set(true);
+      }
+    }
+
+    if ("school" in data) {
+      const KEY_FIXUP = {
+        "high_school_graduate_or_equivalent": "high_school_grad_or_eq",
+        "some_college_but_no_degree_or_in_progress": "college_degree_in_progress",
+      };
+
+      const originalLabel = data["school"];
+      const label = (originalLabel in KEY_FIXUP)
+        ? KEY_FIXUP[originalLabel] : originalLabel;
+      userMetrics.school[label].set(true);
+    }
+
+    if ("income" in data) {
+      userMetrics.income[`band_${data["income"]}`].set(true);
+    }
+
+    if ("zipcode" in data) {
+      userMetrics.zipcode.set(data["zipcode"]);
+    }
+
+    rallyPings.demographics.submit();
+  }
+
+  /**
    * Sends a demographic-survey ping.
    *
    * @param {String} rallyId
@@ -222,6 +283,10 @@ export default class DataCollection {
    *        information submitted by the user..
    */
   async sendDemographicSurveyPing(rallyId, data) {
+    // Once Rally fully migrates to Glean.js, the whole content of
+    // `sendDemographicSurveyPing` should be replaced by `sendDemographicsInGlean`.
+    this.sendDemographicsInGlean(data);
+
     const FIELD_MAPPING = {
       "age": "age",
       "gender": "gender",

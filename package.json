@@ -1,6 +1,6 @@
 {
   "name": "rally_core",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "scripts": {
     "prebuild": "node scripts/setupTaskcluster.js",
@@ -9,11 +9,12 @@
     "build-local-addon": "npm run glean && rollup -c rollup.config.addon.js --config-disable-remote-settings --config-studies-list-url=/public/locally-available-studies.json",
     "build-storybook": "build-storybook -s ./public",
     "glean": "npm run glean-metrics && npm run glean-docs",
-    "glean-metrics": "glean translate ./metrics.yaml -f javascript -o public/generated",
-    "glean-docs": "glean translate ./metrics.yaml -f markdown -o docs",
+    "glean-metrics": "glean translate ./metrics.yaml ./pings.yaml -f javascript -o public/generated",
+    "glean-docs": "glean translate ./metrics.yaml ./pings.yaml -f markdown -o docs",
     "lint": "npm run build && npm-run-all lint-*",
     "lint-addon": "web-ext --config=web-ext-config.cjs lint",
     "lint-css": "stylelint 'public/*.css' '.storybook/*.css' 'src/**/*.svelte' 'stories/**/*.svelte'",
+    "lint-glean": "glean glinter ./metrics.yaml ./pings.yaml",
     "lint-js": "eslint . .storybook",
     "skip-taskcluster": "node -e \"process.exit(!('TASK_ID' in process.env))\"",
     "storybook": "start-storybook -p 6006 -s ./public",
@@ -29,7 +30,7 @@
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "@mozilla-protocol/core": "^12.1.0",
-    "@mozilla/glean": "^0.7.0",
+    "@mozilla/glean": "^0.10.2",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
     "@rollup/plugin-replace": "^2.4.1",

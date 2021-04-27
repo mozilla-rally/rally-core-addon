@@ -206,15 +206,15 @@
       </div>
     </div>
 
-    <img class="icon-block-left" width=117 src="img/our-research-partners.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
+    <img class="icon-block-left" width=117 src="img/our-research-collaborators.png" alt="It is currently available to Firefox users in the U.S. who are 19 or older." />
     <div class='icon-block-right'>
-      <h4>Our Research Partners</h4>
+      <h4>Our Research Collaborators</h4>
 
       <div>
-        Rally partners with trusted third parties to build and release studies. 
+        Rally collaborators with trusted third parties to build and release studies. 
         For any studies you join, we may ask you to share the data collected
         under <b>this Privacy Notice</b> with third party researcher(s)
-        administering the study. Our research partners are under contracts
+        administering the study. Our research collaborators are under contracts
         with Mozilla to ensure that <b>your data is protected</b> and handled only
         in ways we've approved.
       </div>
