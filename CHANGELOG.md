@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.1...master)
+
+# v1.2.1 (2021-04-27)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.0...v1.2.1)
 
 * [#558](https://github.com/mozilla-rally/rally-core-addon/pull/558): Fetch the schema namespace from remote-settings, and use for study-specific enrollment and deletion pings.
 * [#550](https://github.com/mozilla-rally/rally-core-addon/pull/550): Do not use the extension ID as the schema namespace. Re-use the "keyId" argument for this since it is redundant.
