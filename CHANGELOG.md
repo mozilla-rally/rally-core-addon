@@ -2,6 +2,8 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.1...master)
 
+* [#555](https://github.com/mozilla-rally/rally-core-addon/pull/555): Update the income question in the demographic survey to take in an integer.
+
 # v1.2.1 (2021-04-27)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.0...v1.2.1)
