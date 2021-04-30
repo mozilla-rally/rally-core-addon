@@ -2,8 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
  import { strict as assert } from 'assert';
+ // eslint-disable-next-line  node/no-extraneous-import
  import sinon from "sinon";
- //import {  } from '../../../src/routes/demographics/survey-schema';
  import { FieldFormatter, currencyFormatter, zipcodeFormatter, _formatFor, createInputFormatters } from '../../../src/routes/demographics/formatters.js';
 
  describe("formatters", function() {
