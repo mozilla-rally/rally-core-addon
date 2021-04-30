@@ -5,13 +5,14 @@
 
   import { fly } from "svelte/transition";
   import ClearAnswerButton from './ClearAnswerButton.svelte';
-  import schema from './survey-schema';
+  import { schema, inputFormatters } from './survey-schema';
   import { questionIsAnswered, clearAnswer,  createResultObject } from './survey-tools';
-  import { formatInput, createInputFormatters } from "./formatters";
+  import { formatInput, formatAnswersForResponse } from "./formatters";
 
   export let results = createResultObject(schema);
-  const inputFormatters = createInputFormatters(schema);
-
+  // create the outputted formatted results.
+  export let formattedResults = formatAnswersForResponse(schema, results, inputFormatters);
+  $: formattedResults = formatAnswersForResponse(schema, results, inputFormatters);
 </script>
 
 <style>
@@ -224,5 +225,5 @@
     {/each}
   </form>
   <!-- Add a slot to aid in  -->
-  <slot name='call-to-action' results={results} validated={inputFormatters.validateAllQuestions(schema, results)}></slot>
+  <slot name='call-to-action' formattedResults={formatAnswersForResponse(schema, results, inputFormatters)} validated={inputFormatters.validateAllQuestions(schema, results)}></slot>
 </div>

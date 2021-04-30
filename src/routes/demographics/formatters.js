@@ -100,15 +100,31 @@ export class FieldFormatter {
     const currency = new FieldFormatter({ alignRight: true });
     
     currency.formatForDisplay((value) => {
+      let intermediateValue = value;
+      // handle the v1 schema and transform it to an empty string.
+      // Note: this handling will not scale over time.
+      if (typeof intermediateValue === 'string' && intermediateValue.includes('_')) {
+        intermediateValue = '';
+      }
+      // handle the case of the response value being a number that neesd to be 
+      // turned into a number-string first.
+      if (typeof intermediateValue === 'number') {
+        intermediateValue = (Math.floor(intermediateValue)).toString();
+      } else if (typeof intermediateValue !== 'string') {
+        // Reset the intermediate value to be an empty string in this case.
+        // This will reset any non-standard or previous schema type response value
+        // for this field.
+        intermediateValue = '';
+      }
       var toCurrency = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         maximumFractionDigits: 0,
       });
       // strip the current input of any non-numerics.
-      const input = formatCurrencyInput(value);
+      const finalValue = formatCurrencyInput(intermediateValue);
       // don't display any currency if the string is empty
-      return input.length ? toCurrency.format(input) : '';
+      return finalValue.length ? toCurrency.format(finalValue) : '';
     })
   
     currency.formatForEditing(formatCurrencyInput);
@@ -145,70 +161,83 @@ export class FieldFormatter {
     zipcode: zipcodeFormatter
   }
   
-  export function createInputFormatters(schema) {
-    const availableFormatters = Object.keys(schema).reduce((acc,v) => {
-      const formatter = schema[v].formatter;
-      if (formatter) {
-        if (formatter in formatters) {
-          acc[v] = formatters[formatter]();
-        } else {
-          console.error(`error: formatter ${formatter} is not valid`)
-        }
+export function createInputFormatters(schema) {
+  const availableFormatters = Object.keys(schema).reduce((acc,v) => {
+    const formatter = schema[v].formatter;
+    if (formatter) {
+      if (formatter in formatters) {
+        acc[v] = formatters[formatter]();
+      } else {
+        console.error(`error: formatter ${formatter} is not valid`)
       }
-      return acc;
-    }, {});
-    return {
-        validateAllQuestions(schema, answers) {
-        return Object.keys(schema).every(key => {
-          if (!this.hasValidator(key)) return true;
-          return this.hasValidator(key) && !this[key].isInvalid(answers[key]);
-        })
-      },
-      exists(key) {
-        return (key in this);
-      },
-      has(key, functionName) {
-        return (this.exists(key) && functionName in this[key])
-      },
-      hasValidator(key) {
-        return this.has(key, 'isInvalid');
-      },
-      showErrors(key) {
-        return this[key].showValidationErrors;
-      },
-      hasInput(key) {
-        return this.has(key, 'edit');
-      },
-      hasBlur(key) {
-        return this.has(key, 'display');
-      },
-      hasFocus(key) {
-        return this.has(key, 'edit');
-      },
-      hasResponseTransformer(key) {
-        return this.has(key, 'response');
-      },
-      ...availableFormatters
     }
+    return acc;
+  }, {});
+  return {
+      validateAllQuestions(schema, answers) {
+      return Object.keys(schema).every(key => {
+        if (!this.hasValidator(key)) return true;
+        return this.hasValidator(key) && !this[key].isInvalid(answers[key]);
+      })
+    },
+    exists(key) {
+      return (key in this);
+    },
+    has(key, functionName) {
+      return (this.exists(key) && functionName in this[key])
+    },
+    hasValidator(key) {
+      return this.has(key, 'isInvalid');
+    },
+    showErrors(key) {
+      return this[key].showValidationErrors;
+    },
+    hasInput(key) {
+      return this.has(key, 'edit');
+    },
+    hasBlur(key) {
+      return this.has(key, 'display');
+    },
+    hasFocus(key) {
+      return this.has(key, 'edit');
+    },
+    hasDisplay(key) {
+      return this.has(key, 'display');
+    },
+    hasEdit(key) {
+      return this.has(key, 'edit');
+    },
+    hasResponse(key) {
+      return this.has(key, 'response');
+    },
+    ...availableFormatters
   }
+}
   
-  export function transformResponse(schema, answers, formatters) {
-    const transformedAnswers = {};
-    Object.keys(schema).forEach(key => {
-      const answer = answers[key];
-      // currently, only text fields can have response transformations.
-      if (schema[key].type === 'text') {
-        if (formatters.hasResponseTransformer(schema[key].formatter)) {
-          transformedAnswers[key] = formatters[key].response(answer);
-        } else {
-          transformedAnswers[key] = answer;
-        }
-      } else if (schema[key].type === 'multi') {
-        transformedAnswers[key] = [...answer];
-      } else if (schema[key].type === 'single') {
+export function _formatFor(schema, answers, formatters, formatType) {
+  const transformedAnswers = {};
+  Object.keys(schema).forEach(key => {
+    const answer = answers[key];
+    // currently, only text fields can have response transformations.
+    if (schema[key].type === 'text') {
+      if (formatters.has(key, formatType)) {
+        transformedAnswers[key] = formatters[key][formatType](answer);
+      } else {
         transformedAnswers[key] = answer;
       }
-    });
-    return transformedAnswers;
-  }
-  
+    } else if (schema[key].type === 'multi') {
+      transformedAnswers[key] = [...answer];
+    } else if (schema[key].type === 'single') {
+      transformedAnswers[key] = answer;
+    }
+  });
+  return transformedAnswers;
+}
+
+export function formatAnswersForResponse(schema, answers, formatters) {
+  return _formatFor(schema, answers, formatters, 'response');
+}
+
+export function formatAnswersForDisplay(schema, answers, formatters) {
+  return _formatFor(schema, answers, formatters, 'display');
+}
