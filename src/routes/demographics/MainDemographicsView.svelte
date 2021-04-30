@@ -43,7 +43,7 @@ $: console.log(intermediateResults)
                 dispatch("redirect-to", {view: "current-studies", suppressNotifications: true});
             }}>Save Changes</Button>
             <Button size="lg" product disabled={!validated} secondary on:click={() => {
-                intermediateResults = $store.demographicsData;
+                intermediateResults = formatAnswersForDisplay(schema, { ...$store.demographicsData }, inputFormatters);
                 dispatch("redirect-to", {view: "current-studies"});
             }}>Cancel</Button>
         </div>

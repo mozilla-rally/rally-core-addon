@@ -104,7 +104,7 @@ export class FieldFormatter {
       // handle the v1 schema and transform it to an empty string.
       // Note: this handling will not scale over time.
       if (typeof intermediateValue === 'string' && intermediateValue.includes('_')) {
-        intermediateValue = '';
+        return '';
       }
       // handle the case of the response value being a number that neesd to be 
       // turned into a number-string first.
@@ -116,7 +116,7 @@ export class FieldFormatter {
         // for this field.
         intermediateValue = '';
       }
-      var toCurrency = new Intl.NumberFormat('en-US', {
+      const toCurrency = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         maximumFractionDigits: 0,
@@ -130,7 +130,7 @@ export class FieldFormatter {
     currency.formatForEditing(formatCurrencyInput);
   
     currency.formatForResponse((value) => {
-      return +formatCurrencyInput(value);
+      return value.length ? +formatCurrencyInput(value) : undefined;
     })
   
     return currency;
