@@ -1,6 +1,4 @@
 <script>
-import { tick } from "svelte";
-
   /* This Source Code Form is subject to the terms of the Mozilla Public
    * License, v. 2.0. If a copy of the MPL was not distributed with this
    * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -8,9 +6,12 @@ import { tick } from "svelte";
   import { fly } from "svelte/transition";
   import ClearAnswerButton from './ClearAnswerButton.svelte';
   import schema from './survey-schema';
-  import { questionIsAnswered, clearAnswer,  createResultObject, inputFormatters } from './survey-tools';
+  import { questionIsAnswered, clearAnswer,  createResultObject } from './survey-tools';
+  import { formatInput, createInputFormatters } from "./formatters";
 
   export let results = createResultObject(schema);
+  const inputFormatters = createInputFormatters(schema);
+
 </script>
 
 <style>
@@ -167,35 +168,17 @@ import { tick } from "svelte";
             <div
               class="mzp-c-choice mzp-c-choice-text"
               class:mzp-is-error={
-                inputFormatters.showErrors(question) && // only show errors if explicitly told, e.g. on blur
-                inputFormatters.hasValidator(question) && // only show errors if there's even a validator
-                inputFormatters[question].isInvalid(results[question] // only show errors if the input is invalid
-            )}>
+                inputFormatters.showErrors(question) &&
+                inputFormatters.hasValidator(question) &&
+                inputFormatters[question].isInvalid(results[question])
+            }>
               <input
                 type="text"
+                use:formatInput={inputFormatters[question]}
                 class:right={inputFormatters[question].alignRight}
-                on:blur={(event) => {
-                  if (inputFormatters[question] && inputFormatters[question].blur) {
-                    results[question] = inputFormatters[question].blur(event);
-                  }
-                }}
-                on:focus={(event) => {
-                  if (inputFormatters[question] && inputFormatters[question].focus) {
-                    results[question] = inputFormatters[question].focus(event);
-                  }
-                }}
-                on:input={async (event) => {
-                  let value;
-                  if (inputFormatters[question] && inputFormatters[question].input) {
-                    value = inputFormatters[question].input(event);
-                    event.target.value = value;
-                  } else {
-                    value = event.target.value;
-                  }
-                  
-                  results[question] = value;
-                  await tick();
-                }}
+                on:blur={(event) => { results[question] = event.target.value; }}
+                on:focus={(event) => { results[question] = event.target.value; }}
+                on:input={(event) => { results[question] = event.target.value; }}
                 value={results[question]}
                 />
                 <span style="min-height: 24px; display: block;">
@@ -211,16 +194,6 @@ import { tick } from "svelte";
                 </span>
               {/if}
               </span>
-              <!-- show validation errors here -->
-              <!-- <span style="min-height: 24px; display: block;">
-                {#if $zipValidity.dirty && !$zipValidity.valid}
-                  <span
-                    class="mzp-c-fieldnote"
-                    transition:fly={{ duration: 300, y: 5 }}>
-                    {$zipValidity.message}
-                  </span>
-                {/if}
-              </span> -->
             </div>
           {:else}
             {#each schema[question].values as answer}

@@ -103,10 +103,12 @@ export default {
         "6. What is your household's combined annual income during the past 12 months?",
       sublabel: "Please provide an approximate estimate in US Dollars:",
       type: "text",
+      formatter: "currency"
     },
     zipcode: {
       key: "zipcode",
       label: "7. What is your zip code?",
       type: "text",
+      formatter: "zipcode"
     },
   };
