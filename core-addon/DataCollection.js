@@ -28,7 +28,7 @@ export default class DataCollection {
    *        Whether or not user has enrolled in the platform.
    */
   initialize(userEnrolled) {
-    if (!__ENABLE_GLEAN__) {
+    if (!__ENABLE_DATA_SUBMISSION__ || !__ENABLE_GLEAN__) {
       console.warn("DataCollection - Glean disabled by the build configuration.");
       return;
     }
