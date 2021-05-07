@@ -37,6 +37,7 @@ export default class DataCollection {
     // consented to join Rally. Upload is always enabled unless the web-extension
     // is uninstalled.
     Glean.initialize("rally-core", userEnrolled, {
+        appDisplayVersion: browser.runtime.getManifest().version,
         plugins: [
           new PingEncryptionPlugin(CORE_ENCRYPTION_JWK)
         ]
