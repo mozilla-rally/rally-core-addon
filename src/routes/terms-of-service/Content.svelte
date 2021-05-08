@@ -211,7 +211,7 @@
       <h4>Our Research Collaborators</h4>
 
       <div>
-        Rally collaborators with trusted third parties to build and release studies. 
+        Rally collaborates with trusted third parties to build and release studies. 
         For any studies you join, we may ask you to share the data collected
         under <b>this Privacy Notice</b> with third party researcher(s)
         administering the study. Our research collaborators are under contracts
