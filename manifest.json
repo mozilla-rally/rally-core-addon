@@ -22,7 +22,8 @@
     "management",
     "telemetry",
     "storage",
-    "https://firefox.settings.services.mozilla.com/"
+    "https://firefox.settings.services.mozilla.com/",
+    "https://incoming.telemetry.mozilla.org/"
   ],
 
   "telemetry": {

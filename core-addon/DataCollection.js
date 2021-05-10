@@ -28,7 +28,7 @@ export default class DataCollection {
    *        Whether or not user has enrolled in the platform.
    */
   initialize(userEnrolled) {
-    if (!__ENABLE_GLEAN__) {
+    if (!__ENABLE_DATA_SUBMISSION__ || !__ENABLE_GLEAN__) {
       console.warn("DataCollection - Glean disabled by the build configuration.");
       return;
     }
@@ -37,6 +37,7 @@ export default class DataCollection {
     // consented to join Rally. Upload is always enabled unless the web-extension
     // is uninstalled.
     Glean.initialize("rally-core", userEnrolled, {
+        appDisplayVersion: browser.runtime.getManifest().version,
         plugins: [
           new PingEncryptionPlugin(CORE_ENCRYPTION_JWK)
         ]
