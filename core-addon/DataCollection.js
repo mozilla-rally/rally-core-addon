@@ -20,6 +20,14 @@ const CORE_ENCRYPTION_JWK = {
   "y": "xrLUev8_yUrSFAlabnHInvU4JKc6Ew3YXaaoDloQxw8",
 };
 
+const GLEAN_ENCRYPTION_JWK = {
+  "crv": "P-256",
+  "kid": "rally-core",
+  "kty": "EC",
+  "x": "m7Gi2YD8DgPg3zxora5iwf0DFL0JFIhjoD2BRLpg7kI",
+  "y": "zo35XIQME7Ct01uHK_LrMi5pZCuYDMhv8MUsSu7Eq08",
+};
+
 export default class DataCollection {
   /**
    * Initializes the data collection engine.
@@ -39,7 +47,7 @@ export default class DataCollection {
     Glean.initialize("rally-core", userEnrolled, {
         appDisplayVersion: browser.runtime.getManifest().version,
         plugins: [
-          new PingEncryptionPlugin(CORE_ENCRYPTION_JWK)
+          new PingEncryptionPlugin(GLEAN_ENCRYPTION_JWK)
         ]
       }
     );
