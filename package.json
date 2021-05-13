@@ -28,7 +28,7 @@
     "watch-webext": "web-ext --config=web-ext-config.cjs run --watch-file public/build/build.js --watch-file public/addon-build/background.js --watch-file public/addon-build/content-script.js"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.10",
+    "@babel/core": "^7.14.2",
     "@mozilla-protocol/core": "^12.1.0",
     "@mozilla/glean": "^0.12.0",
     "@rollup/plugin-commonjs": "^18.0.0",
@@ -62,7 +62,7 @@
     "sinon-chrome": "^3.0.1",
     "stylelint": "^13.12.0",
     "stylelint-config-standard": "^21.0.0",
-    "svelte": "^3.35.0",
+    "svelte": "^3.38.2",
     "svelte-accessible-dialog": "^2.1.2",
     "svelte-loader": "^3.0.0",
     "web-ext": "^6.0.0",
