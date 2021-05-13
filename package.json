@@ -60,11 +60,11 @@
     "rollup-plugin-terser": "^7.0.0",
     "selenium-webdriver": "^4.0.0-beta.3",
     "sinon-chrome": "^3.0.1",
-    "stylelint": "^13.12.0",
+    "stylelint": "^13.13.1",
     "stylelint-config-standard": "^21.0.0",
     "svelte": "^3.38.2",
     "svelte-accessible-dialog": "^2.1.2",
-    "svelte-loader": "^3.0.0",
+    "svelte-loader": "^3.1.1",
     "web-ext": "^6.0.0",
     "webextension-polyfill": "^0.8.0"
   },
