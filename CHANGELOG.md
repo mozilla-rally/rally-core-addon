@@ -2,6 +2,8 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.1...master)
 
+* [#601](https://github.com/mozilla-rally/rally-core-addon/pull/601): Enable submitting data with Glean in addition to the legacy collection.
+
 # v1.2.1 (2021-04-27)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.0...v1.2.1)
