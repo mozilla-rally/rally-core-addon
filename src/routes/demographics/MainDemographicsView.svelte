@@ -23,7 +23,6 @@ let intermediateResults;
 $: if ($store && $store.demographicsData) {
     intermediateResults = formatAnswersForDisplay(schema, { ...$store.demographicsData }, inputFormatters);
 }
-$: console.log(intermediateResults)
 </script>
 
 <Demographics results={intermediateResults}>
