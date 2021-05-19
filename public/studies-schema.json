@@ -1,90 +1,89 @@
 {
-  "type": "array",
-  "items": [
-    {
+  "type": "object",
+  "required": [
+    "name",
+    "icons",
+    "authors",
+    "version",
+    "addonId",
+    "downloadLink",
+    "studyEnded",
+    "studyPaused",
+    "description",
+    "dataCollectionDetails"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "icons": {
       "type": "object",
+      "required": [
+        "32",
+        "64",
+        "128"
+      ],
       "properties": {
+        "32": {
+          "type": "string"
+        },
+        "64": {
+          "type": "string"
+        },
+        "128": {
+          "type": "string"
+        }
+      }
+    },
+    "addonId": {
+      "type": "string"
+    },
+    "authors": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "url": {
+          "type": "string"
+        },
         "name": {
           "type": "string"
-        },
-        "icons": {
-          "type": "object",
-          "properties": {
-            "32": {
-              "type": "string"
-            },
-            "64": {
-              "type": "string"
-            },
-            "128": {
-              "type": "string"
-            }
-          },
-          "required": ["32", "64", "128"]
-        },
-        "authors": {
-          "type": "object",
-          "properties": {
-            "url": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            }
-          },
-          "required": ["url", "name"]
-        },
-        "version": {
-          "type": "string"
-        },
-        "addonId": {
-          "type": "string"
-        },
-        "downloadLink": {
-          "type": "string"
-        },
-        "studyEnded": {
-          "type": "boolean"
-        },
-        "studyPaused": {
-          "type": "boolean"
-        },
-        "description": {
-          "type": "string"
-        },
-        "privacyPolicyLink": {
-          "type": "string"
-        },
-        "joinStudyConsent": {
-          "type": "string"
-        },
-        "leaveStudyConsent": {
-          "type": "string"
-        },
-        "dataCollectionDetails": {
-          "type": "array",
-          "items": [
-            {
-              "type": "string"
-            }
-          ]
         }
-      },
-      "required": [
-        "name",
-        "icons",
-        "authors",
-        "version",
-        "addonId",
-        "downloadLink",
-        "studyEnded",
-        "studyPaused",
-        "description",
-        "privacyPolicyLink",
-        "joinStudyConsent",
-        "leaveStudyConsent",
-        "dataCollectionDetails"
-      ]
+      }
+    },
+    "version": {
+      "type": "string"
+    },
+    "studyEnded": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "string"
+    },
+    "studyPaused": {
+      "type": "boolean"
+    },
+    "downloadLink": {
+      "type": "string"
+    },
+    "schemaNamespace": {
+      "type": "string"
+    },
+    "joinStudyConsent": {
+      "type": "string"
+    },
+    "leaveStudyConsent": {
+      "type": "string"
+    },
+    "privacyPolicyLink": {
+      "type": "string"
+    },
+    "dataCollectionDetails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
-  ]
+  }
 }
