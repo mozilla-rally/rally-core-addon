@@ -3,7 +3,7 @@
   "author": "Mozilla",
   "manifest_version": 2,
   "name": "Mozilla Rally",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "homepage_url": "https://github.com/mozilla-rally/rally-core-addon",
 
   "icons": {
