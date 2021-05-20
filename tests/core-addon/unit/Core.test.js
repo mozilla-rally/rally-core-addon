@@ -57,6 +57,7 @@ describe('Core', function () {
       .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
       .resolves();
     chrome.runtime.sendMessage.yields();
+    chrome.runtime.getManifest.returns({version: "1.2.3"});
 
     // NodeJS doesn't support "fetch" so we need to mock it
     // manually (or use a third party package). This isn't too

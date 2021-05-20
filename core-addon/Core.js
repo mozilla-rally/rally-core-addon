@@ -414,6 +414,10 @@ export default class Core {
     await this._storage.setRallyID(rallyId);
     await this._storage.setDeletionID(deletionId);
 
+    // We enrolled in the Rally platform, we're now good
+    // to start uploading data if needed.
+    Glean.setUploadEnabled(true);
+
     rallyMetrics.id.set(rallyId);
 
     // Override the uninstall URL to include the rallyID, for deleting data without exposing the Rally ID.

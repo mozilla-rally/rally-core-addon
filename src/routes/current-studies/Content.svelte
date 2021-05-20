@@ -34,8 +34,6 @@ function parseDateIfNeeded(date) {
     }
 }
 
-$: console.log(studies)
-
 </script>
 
 <style>

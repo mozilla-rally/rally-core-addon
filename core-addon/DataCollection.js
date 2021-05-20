@@ -20,6 +20,14 @@ const CORE_ENCRYPTION_JWK = {
   "y": "xrLUev8_yUrSFAlabnHInvU4JKc6Ew3YXaaoDloQxw8",
 };
 
+const GLEAN_ENCRYPTION_JWK = {
+  "crv": "P-256",
+  "kid": "rally-core",
+  "kty": "EC",
+  "x": "m7Gi2YD8DgPg3zxora5iwf0DFL0JFIhjoD2BRLpg7kI",
+  "y": "zo35XIQME7Ct01uHK_LrMi5pZCuYDMhv8MUsSu7Eq08",
+};
+
 export default class DataCollection {
   /**
    * Initializes the data collection engine.
@@ -28,7 +36,7 @@ export default class DataCollection {
    *        Whether or not user has enrolled in the platform.
    */
   initialize(userEnrolled) {
-    if (!__ENABLE_GLEAN__) {
+    if (!__ENABLE_DATA_SUBMISSION__ || !__ENABLE_GLEAN__) {
       console.warn("DataCollection - Glean disabled by the build configuration.");
       return;
     }
@@ -37,8 +45,9 @@ export default class DataCollection {
     // consented to join Rally. Upload is always enabled unless the web-extension
     // is uninstalled.
     Glean.initialize("rally-core", userEnrolled, {
+        appDisplayVersion: browser.runtime.getManifest().version,
         plugins: [
-          new PingEncryptionPlugin(CORE_ENCRYPTION_JWK)
+          new PingEncryptionPlugin(GLEAN_ENCRYPTION_JWK)
         ]
       }
     );

@@ -5,12 +5,14 @@
 
   import { fly } from "svelte/transition";
   import ClearAnswerButton from './ClearAnswerButton.svelte';
-  import schema from './survey-schema';
-  import { questionIsAnswered, clearAnswer, createFieldValidator, zipcodeIsValid, createResultObject } from './survey-tools';
-
-  const [zipValidity, validateZip] = createFieldValidator(zipcodeIsValid());
+  import { schema, inputFormatters } from './survey-schema';
+  import { questionIsAnswered, clearAnswer,  createResultObject } from './survey-tools';
+  import { formatInput, formatAnswersForResponse } from "./formatters";
 
   export let results = createResultObject(schema);
+  // create the outputted formatted results.
+  export let formattedResults = formatAnswersForResponse(schema, results, inputFormatters);
+  $: formattedResults = formatAnswersForResponse(schema, results, inputFormatters);
 </script>
 
 <style>
@@ -20,6 +22,18 @@
     align-items: center;
     cursor: pointer;
     gap: 1rem;
+  }
+
+  .mzp-c-choice-text {
+    min-height: 1rem;
+  }
+
+  .mzp-c-field-set-text {
+    padding-bottom: 0;
+  }
+
+  .mzp-c-field-label.remove-bottom-margin {
+    padding-bottom: 0;
   }
 
   .mzp-c-choice {
@@ -44,6 +58,9 @@
     transition: border-color 200ms;
   }
 
+  input[type="text"].right {
+    text-align: right;
+  }
   input[type="text"]:focus {
     border-color: #0250bb;
     box-shadow: 0 0 0 2px #0250bb;
@@ -125,8 +142,11 @@
 
   <form class="mzp-c-form">
     {#each Object.keys(results) as question}
-      <fieldset class="mzp-c-field-set">
-        <legend class="mzp-c-field-label" for={schema[question].key}>
+      <fieldset class="mzp-c-field-set" class:mzp-c-field-set-text={schema[question].type === 'text'}>
+        <legend class="mzp-c-field-label"
+          for={schema[question].key}
+          class:remove-bottom-margin={schema[question].sublabel}
+        >
           {schema[question].label}
           {#if questionIsAnswered(results[question], schema[question].type)}
             <ClearAnswerButton on:click={(e) => {
@@ -135,6 +155,11 @@
             }} />
           {/if}
         </legend>
+        {#if schema[question].sublabel}
+        <div style="padding-top: -8px; padding-bottom: 20px;">
+          {schema[question].sublabel}
+        </div>
+      {/if}
 
         <div
           class="mzp-c-choices"
@@ -143,20 +168,32 @@
           {#if schema[question].type === 'text'}
             <div
               class="mzp-c-choice mzp-c-choice-text"
-              class:mzp-is-error={!$zipValidity.valid}>
+              class:mzp-is-error={
+                inputFormatters.showErrors(question) &&
+                inputFormatters.hasValidator(question) &&
+                inputFormatters[question].isInvalid(results[question])
+            }>
               <input
-                use:validateZip={results[question]}
                 type="text"
-                bind:value={results[question]} />
-              <!-- show validation errors here -->
-              <span style="min-height: 24px; display: block;">
-                {#if $zipValidity.dirty && !$zipValidity.valid}
-                  <span
-                    class="mzp-c-fieldnote"
-                    transition:fly={{ duration: 300, y: 5 }}>
-                    {$zipValidity.message}
-                  </span>
-                {/if}
+                use:formatInput={inputFormatters[question]}
+                class:right={inputFormatters[question].alignRight}
+                on:blur={(event) => { results[question] = event.target.value; }}
+                on:focus={(event) => { results[question] = event.target.value; }}
+                on:input={(event) => { results[question] = event.target.value; }}
+                value={results[question]}
+                />
+                <span style="min-height: 24px; display: block;">
+              {#if 
+                  inputFormatters.showErrors(question) && // show errors if blurred
+                  inputFormatters.hasValidator(question) && // show errors if there's a validator for this question
+                  inputFormatters[question].isInvalid(results[question])
+                }
+                <span
+                  class="mzp-c-fieldnote"
+                  transition:fly={{ duration: 300, y: 5 }}>
+                  {inputFormatters[question].isInvalid(results[question])}
+                </span>
+              {/if}
               </span>
             </div>
           {:else}
@@ -188,5 +225,5 @@
     {/each}
   </form>
   <!-- Add a slot to aid in  -->
-  <slot name='call-to-action' results={results} validated={!($zipValidity.dirty && !$zipValidity.valid)}></slot>
+  <slot name='call-to-action' formattedResults={formatAnswersForResponse(schema, results, inputFormatters)} validated={inputFormatters.validateAllQuestions(schema, results)}></slot>
 </div>

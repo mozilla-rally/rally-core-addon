@@ -1,7 +1,9 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-export default {
+import { createInputFormatters } from './formatters';
+
+export const schema = {
     age: {
       key: "age",
       label: "1. What is your age?",
@@ -101,20 +103,16 @@ export default {
       key: "income",
       label:
         "6. What is your household's combined annual income during the past 12 months?",
-      type: "single",
-      columns: 3,
-      values: [
-        { key: "0_24999", label: "$0 - $24,999" },
-        { key: "25000_49999", label: "$25,000 - $49,999" },
-        { key: "50000_74999", label: "$50,000 - $74,999" },
-        { key: "75000_99999", label: "$75,000 - $99,999" },
-        { key: "100000_149999", label: "$100,000 - $149,999" },
-        { key: "ge_150000", label: "$150,000 or more" },
-      ],
+      sublabel: "Please provide an approximate estimate in US Dollars:",
+      type: "text",
+      formatter: "currency"
     },
     zipcode: {
       key: "zipcode",
       label: "7. What is your zip code?",
       type: "text",
+      formatter: "zipcode"
     },
   };
+
+export const inputFormatters = createInputFormatters(schema);
