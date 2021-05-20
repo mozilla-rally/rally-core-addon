@@ -10,7 +10,8 @@ import Demographics from './demographics/MainDemographicsView.svelte';
 import StudyBackgroundElement from './current-studies/Background.svelte';
 import MainContent from '../components/layouts/MainContent.svelte';
 
-import demographicsSchema from './demographics/survey-schema';
+import { schema as demographicsSchema, inputFormatters } from './demographics/survey-schema';
+import { formatAnswersForDisplay } from './demographics/formatters'
 import { questionIsAnswered } from './demographics/survey-tools';
 
 const store = getContext("rally:store");
@@ -29,11 +30,15 @@ function joinStudy(studyID) { store.updateStudyEnrollment(studyID, true); notifi
 function leaveStudy(studyID) { store.updateStudyEnrollment(studyID, false); notification.send({code: "SUCCESSFULLY_LEFT_STUDY"}); }
 
 /* ------------------------------ PROFILE COMPLETION ------------------------------ */
-// get the number of profile questions answered
-$: profileQuestionsAnswered = $store.demographicsData  ? Object.keys(demographicsSchema)
-    .filter(key => questionIsAnswered($store.demographicsData[key], demographicsSchema[key].type)).length : 0;
+// Get the number of profile questions answered and format the numerator and denominator accordingly.
+// For now, we should expect that the profile questions are the same set as for the demographic survey.
+// Before we can count the answered questions, let's transform them back into their display version (the format we use
+// for the literal inputs) and then use the questionIsAnswered function to check how many have in fact been answered.
+$: formattedDemographicsData = $store.demographicsData ? formatAnswersForDisplay(demographicsSchema, { ...$store.demographicsData }, inputFormatters) : undefined;
+$: profileQuestionsAnswered = formattedDemographicsData ? Object.keys(demographicsSchema)
+    .filter(key => questionIsAnswered(formattedDemographicsData[key], demographicsSchema[key].type)).length : 0;
 // get the total number of available profile questions
-$: totalProfileQuestions = $store.demographicsData ? Object.keys($store.demographicsData).length : 7;
+$: totalProfileQuestions = Object.keys(demographicsSchema).length;
 
 let mounted = false;
 onMount(() => { mounted = true; })

@@ -15,18 +15,18 @@
     mounted = true;
   });
 
-  let results;
+  let formattedResults;
 </script>
 
 {#if mounted}
   <div>
     <Layout>
       <Body padForOnboarding>
-        <Demographics bind:results />
+        <Demographics bind:formattedResults />
       </Body>
       <OnboardingCTAContainer step={3}>
         <CallToAction
-          on:save={() => console.log('save', results)}
+          on:save={() => console.log('save', formattedResults)}
           on:skip={() => console.log('skip')} />
       </OnboardingCTAContainer>
     </Layout>

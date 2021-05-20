@@ -8,14 +8,21 @@ import { getContext, createEventDispatcher } from "svelte";
 import Demographics from "./Content.svelte";
 import Button from "../../components/Button.svelte";
 import { notification } from "../../notification-store";
+import { schema, inputFormatters } from "./survey-schema";
+import { formatAnswersForDisplay } from "./formatters";
 
 const store = getContext('rally:store');
 const dispatch = createEventDispatcher();
 // Create a deep copy of $store.demographicsData for the "manage profile" view.
 // Only update the store when the submit button is explicitly clicked;
 // update the intermediate copy when $store.demographicsData changes.
+// This is additionally where we transform from the _response_ format -
+// what we will send to the server - to the _display_ format -
+// what is displayed to the user in the input fields.
 let intermediateResults;
-$: if ($store && $store.demographicsData) intermediateResults = { ...$store.demographicsData };
+$: if ($store && $store.demographicsData) {
+    intermediateResults = formatAnswersForDisplay(schema, { ...$store.demographicsData }, inputFormatters);
+}
 </script>
 
 <Demographics results={intermediateResults}>
@@ -25,16 +32,17 @@ $: if ($store && $store.demographicsData) intermediateResults = { ...$store.demo
         you see fit. Just a reminder, this info helps us better understand the representitivity of our study
         participants, and we'll always ask before we share this data with a research collaborator.
     </p>
-    <div slot="call-to-action" let:results let:validated>
+    <!-- note -->
+    <div slot="call-to-action" let:formattedResults let:validated>
         <hr />
         <div style="display: grid; grid-auto-flow: column; grid-column-gap: 12px; width: max-content;">
             <Button size="lg" product leave={!validated} disabled={!validated} on:click={() => {
-                store.updateDemographicSurvey(results);
+                store.updateDemographicSurvey(formattedResults);
                 notification.send({code: "SUCCESSFULLY_UPDATED_PROFILE"});
                 dispatch("redirect-to", {view: "current-studies", suppressNotifications: true});
             }}>Save Changes</Button>
             <Button size="lg" product disabled={!validated} secondary on:click={() => {
-                intermediateResults = $store.demographicsData;
+                intermediateResults = formatAnswersForDisplay(schema, { ...$store.demographicsData }, inputFormatters);
                 dispatch("redirect-to", {view: "current-studies"});
             }}>Cancel</Button>
         </div>
