@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.1...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.0...master)
+
+# v1.3.0 (2021-05-19)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.2.1...v1.3.0)
 
 * [#555](https://github.com/mozilla-rally/rally-core-addon/pull/555): Update the income question in the demographic survey to take in an integer.
 * [#601](https://github.com/mozilla-rally/rally-core-addon/pull/601): Enable submitting data with Glean in addition to the legacy collection.
