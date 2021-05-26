@@ -43,7 +43,7 @@
     "babel-loader": "^8.2.2",
     "core-js": "^3.12.1",
     "eslint": "^7.26.0",
-    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-mocha": "^8.1.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-notice": "^0.9.10",
