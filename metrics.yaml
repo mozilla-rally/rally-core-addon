@@ -23,6 +23,7 @@ rally:
       - study-enrollment
       - study-unenrollment
       - demographics
+      - uninstall-deletion
     description: |
       The id of the Rally client.
     bugs:
