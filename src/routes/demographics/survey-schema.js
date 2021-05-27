@@ -101,7 +101,7 @@ export const schema = {
     },
     // the income question requires a key name change to land in legacy telemetry.
     // Glean does not have these requirements.
-    income02: {
+    incomeExact: {
       key: "incomeExact",
       label:
         "6. What is your household's combined annual income during the past 12 months?",
