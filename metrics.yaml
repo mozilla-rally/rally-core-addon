@@ -180,7 +180,7 @@ user:
       - than@mozilla.com
     expires: never
 
-  income:
+  exact_income:
     type: quantity
     lifetime: ping
     unit: US Dollars

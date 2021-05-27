@@ -271,8 +271,8 @@ export default class DataCollection {
       userMetrics.school[label].set(true);
     }
 
-    if ("income" in data) {
-      userMetrics.income[`band_${data["income"]}`].set(true);
+    if ("exactIncome" in data) {
+      userMetrics.exactIncome.set(data['exactIncome']);
     }
 
     if ("zipcode" in data) {
@@ -300,8 +300,7 @@ export default class DataCollection {
       "age": "age",
       "gender": "gender",
       "hispanicLatinxSpanishOrigin": "origin",
-      "school": "education",
-      "income": "income",
+      "school": "education"
     };
 
     // Important: the following code flattens out arrays and nested
@@ -337,6 +336,10 @@ export default class DataCollection {
     // assigned a value.
     if ("zipcode" in data) {
       processed["zipCode"] = data["zipcode"];
+    }
+
+    if ("exactIncome" in data) {
+      processed['exactIncome'] = data["exactIncome"];
     }
 
     return await this.sendPing(
