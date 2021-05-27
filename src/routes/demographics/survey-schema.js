@@ -99,8 +99,6 @@ export const schema = {
         },
       ],
     },
-    // the income question requires a key name change to land in legacy telemetry.
-    // Glean does not have these requirements.
     incomeExact: {
       key: "incomeExact",
       label:
