@@ -183,6 +183,7 @@ user:
   income:
     type: quantity
     lifetime: ping
+    unit: US Dollars
     send_in_pings:
       - demographics
     description: |
