@@ -2,7 +2,7 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.1...master)
 
-* [#624](https://github.com/mozilla-rally/rally-core-addon/pull/624): Update the `income` field to use the key `incomeExact`; update `metrics.yaml` to change `income` to `quantity`.
+* [#624](https://github.com/mozilla-rally/rally-core-addon/pull/624): Update the `income` field to use the key `exactIncome`; update `metrics.yaml` to change `income` to `exact_income` of type `quantity`.
 
 # v1.3.1 (2021-05-20)
 
