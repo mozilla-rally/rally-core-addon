@@ -2,12 +2,13 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.1...master)
 
+* [#624](https://github.com/mozilla-rally/rally-core-addon/pull/624): Update the `income` field to use the key `incomeExact`; update `metrics.yaml` to change `income` to `quantity`.
+
 # v1.3.1 (2021-05-20)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.0...v1.3.1)
 
 * [#610](https://github.com/mozilla-rally/rally-core-addon/pull/610): Downgrade protocol, not working on taskcluster.
-* [#624](https://github.com/mozilla-rally/rally-core-addon/pull/624): Update the `income` field to use the key `incomeExact`; update `metrics.yaml` to change `income` to `quantity`.
 
 # v1.3.0 (2021-05-19)
 
