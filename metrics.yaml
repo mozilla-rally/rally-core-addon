@@ -192,7 +192,7 @@ user:
     bugs:
       - https://github.com/mozilla-rally/rally-core-addon/issues/621
     data_reviews:
-      - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
+      - https://github.com/mozilla-rally/rally-core-addon/pull/624#issuecomment-850479051
     notification_emails:
       - than@mozilla.com
     expires: never
