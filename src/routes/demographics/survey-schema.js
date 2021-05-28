@@ -78,7 +78,7 @@ export const schema = {
         { key: "some_high_school", label: "Some high school" },
         {
           key: "high_school_graduate_or_equivalent",
-          label: "High school grduate or equivalent (for example GED)",
+          label: "High school graduate or equivalent (for example GED)",
         },
         {
           key: "some_college_but_no_degree_or_in_progress",
