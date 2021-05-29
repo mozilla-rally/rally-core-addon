@@ -103,9 +103,16 @@ export const schema = {
       key: "exactIncome",
       label:
         "6. What is your household's combined annual income during the past 12 months?",
-      sublabel: "Please provide an approximate estimate in US Dollars:",
-      type: "text",
-      formatter: "currency"
+      type: "single",
+      columns: 3,
+      values: [
+        { key: "0_24999", label: "$0 - $24,999" },
+        { key: "25000_49999", label: "$25,000 - $49,999" },
+        { key: "50000_74999", label: "$50,000 - $74,999" },
+        { key: "75000_99999", label: "$75,000 - $99,999" },
+        { key: "100000_149999", label: "$100,000 - $149,999" },
+        { key: "ge_150000", label: "$150,000 or more" },
+      ],
     },
     zipcode: {
       key: "zipcode",

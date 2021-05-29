@@ -204,7 +204,7 @@ export default class DataCollection {
       schemaNamespace: namespace,
     };
 
-    if (!__ENABLE_DATA_SUBMISSION__) {
+    if (!__ENABLE_DATA_SUBMISSION__ && !(payloadType === 'demographic-survey')) {
       console.warn(`DataCollection.sendPing - data submission disabled, ping ${payloadType} not submitted with payload:`, payload);
 
       return;

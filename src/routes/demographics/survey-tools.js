@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-export function createResultObject(schema) {
+export function createResultObject(schema, currentAnswers) {
     return Object.values(schema).reduce((acc, config) => {
         let defaultValue = undefined;
         switch (config.type) {
@@ -22,18 +22,30 @@ export function createResultObject(schema) {
             break;
         }
         // create response entry here.
-        acc[config.key] = defaultValue;
+        let answer;
+        if (currentAnswers && currentAnswers[config.key] !== undefined) {
+          answer = currentAnswers[config.key];
+        } else {
+          answer = defaultValue;
+        }
+        acc[config.key] = answer;
         return acc;
       }, {});
 }
 
 export function questionIsAnswered(answer, questionType) {
+  if (answer === undefined) return false;
   if (questionType === 'text') return answer.length > 0;
   if (questionType === 'single') return answer !== undefined;
   if (questionType === 'multi') return answer.length > 0;
   throw Error('unknown question type');
 }
 
+/**
+ * Clears the display version of the answer.
+ * @param {string} questionType the question type (one of text, single, or multi)
+ * @returns {string || undefined || []} 
+ */
 export function clearAnswer(questionType) {
   switch (questionType) {
     case "text": {

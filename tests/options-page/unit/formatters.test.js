@@ -157,5 +157,13 @@
                 otherMulti: ["1", "3"]
             })
         });
+
+        it("formats a typical payload for response, removing unanswered questions", function() {
+            const answers = { income: undefined, zipcode: "90210", other: undefined, otherMulti: []};
+            const formattedAnswers = _formatFor(schema, answers, formatters, "response", true);
+            assert.deepEqual(formattedAnswers, {
+                zipcode: "90210",
+            })
+        });
     })
  })

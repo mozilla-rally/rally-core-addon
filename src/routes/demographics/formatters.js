@@ -1,9 +1,9 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
- 
- 
- 
+
+import { questionIsAnswered } from "./survey-tools.js";
+
  /** This Svelte action will format an input element on input, focus, and blur events. 
   * It takes in a formatter below of type FieldFormatter.
  */
@@ -93,6 +93,9 @@ export class FieldFormatter {
     
   export function currencyFormatter() {
     const formatCurrencyInput = (value) => {
+      if (value === undefined) {
+        return '';
+      }
       const r = /^\d/;
       return value.split('').filter(a => r.test(a)).join('');
     }
@@ -138,6 +141,9 @@ export class FieldFormatter {
   
   export function zipcodeFormatter() {
     const formatZipcodeInput = (value) => {
+      if (value === undefined) {
+        return '';
+      }
       const r = /^\d/;
       return value.split('').filter(a => r.test(a)).join('').slice(0,5);
     }
@@ -214,11 +220,12 @@ export function createInputFormatters(schema) {
   }
 }
   
-export function _formatFor(schema, answers, formatters, formatType) {
+export function _formatFor(schema, answers, formatters, formatType, removeUnanswered = false) {
   const transformedAnswers = {};
   Object.keys(schema).forEach(key => {
     const answer = answers[key];
-    // currently, only text fields can have response transformations.
+    
+    if (!removeUnanswered || questionIsAnswered(answer, schema[key].type))
     if (schema[key].type === 'text') {
       if (formatters.has(key, formatType)) {
         transformedAnswers[key] = formatters[key][formatType](answer);
@@ -226,7 +233,7 @@ export function _formatFor(schema, answers, formatters, formatType) {
         transformedAnswers[key] = answer;
       }
     } else if (schema[key].type === 'multi') {
-      transformedAnswers[key] = [...answer];
+      transformedAnswers[key] = answer ? [...answer] : [];
     } else if (schema[key].type === 'single') {
       transformedAnswers[key] = answer;
     }
@@ -235,7 +242,7 @@ export function _formatFor(schema, answers, formatters, formatType) {
 }
 
 export function formatAnswersForResponse(schema, answers, formatters) {
-  return _formatFor(schema, answers, formatters, 'response');
+  return _formatFor(schema, answers, formatters, 'response', true);
 }
 
 export function formatAnswersForDisplay(schema, answers, formatters) {
