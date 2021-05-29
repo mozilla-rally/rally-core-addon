@@ -188,10 +188,12 @@ user:
       - demographics
     description: |
       The user household's combined annual income during the
-      past 12 months.
+      past 12 months. This field replaces the previous income field.
     bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
       - https://github.com/mozilla-rally/rally-core-addon/issues/621
     data_reviews:
+      - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
       - https://github.com/mozilla-rally/rally-core-addon/pull/624#issuecomment-850479051
     notification_emails:
       - than@mozilla.com
