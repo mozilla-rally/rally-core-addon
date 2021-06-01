@@ -57,9 +57,9 @@ dd {
 
 <dl>
     <dt>Academic Institution</dt>
-    <dd>Stanford Graduate School of Business</dd>
+    <dd>Stanford GSB</dd>
     <dt>Study Name</dt>
-    <dd>Online News Consumption</dd>
+    <dd>Beyond the Paywall</dd>
     <dt>Principal Investigator</dt>
     <dd>
         Gregory John Martin
