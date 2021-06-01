@@ -154,6 +154,7 @@ export class FieldFormatter {
     zipcode.formatForEditing(formatZipcodeInput);
     zipcode.formatForResponse(formatZipcodeInput);
     zipcode.setValidator((text) => {
+        if (text === undefined) return false;
         const number = Number(text);
         if (text.length > 0 && text.length < 5) return 'zipcode must be a five-digit number';
         if (Number.isNaN(number)) return 'zipcode must be a five-digit number';

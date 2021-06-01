@@ -87,14 +87,17 @@
             // We get RangeError: maximumFractionDigits value is out of range.
             assert.equal(formatter.display("90210"), "90210");
             assert.equal(formatter.display("90210abcd"), "90210");
+            assert.equal(formatter.display(undefined), "");
         })
         it("sets the response value to be a numeric string", function() {
             assert.equal(formatter.response("90210"), "90210");
             assert.equal(formatter.response("90210abcd!!!!"), "90210");
+            assert.equal(formatter.response(undefined), "");
         })
         it("properly validates a zipcode string", function() {
             assert.equal(formatter.isInvalid("90210"), false);
             assert.equal(formatter.isInvalid("90"), 'zipcode must be a five-digit number');
+            assert.equal(formatter.isInvalid(undefined), false);
         })
     })
     describe("_formatFor", function() {
