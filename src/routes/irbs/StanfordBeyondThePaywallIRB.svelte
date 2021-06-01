@@ -55,7 +55,7 @@ dd {
     <div>You are invited to participate in a <b>research study</b>.</div>
 </div>
 
-<dl>
+<!-- <dl>
     <dt>Academic Institution</dt>
     <dd>Stanford GSB</dd>
     <dt>Study Name</dt>
@@ -64,12 +64,7 @@ dd {
     <dd>
         Gregory John Martin
     </dd>
-    </dl>
-
-<h2>IRB Approval</h2>
-<p>
-    This study has been approved by the Institutional Review Board for Human Subjects at Princeton University.
-</p>
+    </dl> -->
 
 <h2>Research Question</h2>
 <p>
