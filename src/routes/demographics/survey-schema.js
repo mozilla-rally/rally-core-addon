@@ -99,8 +99,8 @@ export const schema = {
         },
       ],
     },
-    income: {
-      key: "income",
+    exactIncome: {
+      key: "exactIncome",
       label:
         "6. What is your household's combined annual income during the past 12 months?",
       sublabel: "Please provide an approximate estimate in US Dollars:",

@@ -180,25 +180,21 @@ user:
       - than@mozilla.com
     expires: never
 
-  income:
-    type: labeled_boolean
+  exact_income:
+    type: quantity
     lifetime: ping
+    unit: US Dollars
     send_in_pings:
       - demographics
-    labels:
-      - band_0_24999
-      - band_25000_49999
-      - band_50000_74999
-      - band_75000_99999
-      - band_100000_149999
-      - band_ge_150000
     description: |
       The user household's combined annual income during the
-      past 12 months.
+      past 12 months. This field replaces the previous income field.
     bugs:
       - https://github.com/mozilla-rally/rally-core-addon/issues/545
+      - https://github.com/mozilla-rally/rally-core-addon/issues/621
     data_reviews:
       - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
+      - https://github.com/mozilla-rally/rally-core-addon/pull/624#issuecomment-850479051
     notification_emails:
       - than@mozilla.com
     expires: never
