@@ -53,5 +53,13 @@
                 otherMulti: ["1", "3"]
             })
         })
+        it("ignores any extraneous pre-existing answers passed in and only constructs based on the schema keys", function() {
+            assert.deepEqual(createResultObject(schema, {income: '10000', otherMulti: ["1", "3"], whateverValue: "test value that won't appear"}), {
+                income: '10000',
+                zipcode: '',
+                other: undefined,
+                otherMulti: ["1", "3"]
+            })
+        })
      })
  })

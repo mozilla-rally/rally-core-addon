@@ -2,6 +2,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+ /**
+  * Constructs an answer object based on the schema & any pre-existing answers.
+  * @param {object} schema 
+  * @param {object} currentAnswers the current survey answers, if any. If there is an entry in currentAnswers
+  * that does not exist in the schema, will ignore the value and only impute values outlined in the schema.
+  * This ensures that the working answer object will always be up-to-date with the latest schema.
+  * @returns {object} the schema with default answers to questions, and any additional 
+  * pre-existing answers from currentAnswers.
+  */
 export function createResultObject(schema, currentAnswers) {
     return Object.values(schema).reduce((acc, config) => {
         let defaultValue = undefined;
