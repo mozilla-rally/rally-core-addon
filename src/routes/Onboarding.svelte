@@ -49,7 +49,6 @@
   }
 
   let results;
-  let formattedResults;
 </script>
 
 {#if mounted}
@@ -65,7 +64,7 @@
         {:else if view === 'terms'}
           <TermsOfService />
         {:else if view === 'demographics'}
-          <Demographics bind:results bind:formattedResults />
+          <Demographics bind:results />
         {/if}
       </Main>
       <OnboardingCTAContainer
@@ -85,7 +84,7 @@
           <DemographicsCallToAction
             on:save={() => {
               // Submit Demographics here.
-              store.updateDemographicSurvey(formattedResults);
+              store.updateDemographicSurvey(results);
               // move to the main view.
               finishOnboarding();
             }}
