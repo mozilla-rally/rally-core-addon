@@ -48,7 +48,6 @@
     dispatch("onboarding-complete");
   }
 
-  let results;
   let formattedResults;
 </script>
 
@@ -65,7 +64,7 @@
         {:else if view === 'terms'}
           <TermsOfService />
         {:else if view === 'demographics'}
-          <Demographics bind:results bind:formattedResults />
+          <Demographics bind:formattedResults />
         {/if}
       </Main>
       <OnboardingCTAContainer
