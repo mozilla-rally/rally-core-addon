@@ -5,6 +5,6 @@ import PrincetonCovidDisinformationIRB from "./PrincetonCovidDisinformationIRB.s
 import RS01Consent from "./RS01Consent.svelte";
 
 export default {
-    "rally.news.study@princeton.edu": PrincetonCovidDisinformationIRB,
+    "princeton-news-study@rally.mozilla.org": PrincetonCovidDisinformationIRB,
     "rally-study-01@mozilla.org": RS01Consent
 }
