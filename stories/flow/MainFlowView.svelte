@@ -91,7 +91,7 @@ const additionalMockPartnerStudy = {
         64: undefined
     },
     endDate: new Date('2021-07-03'),
-    tags: ['social media', 'quantified self'],
+    tags: ['advertising', 'news'],
     privacyPolicy: {spec: 'https://example.com'},
 
     description: `This is another mock study that utilizes the 'Beyond the Paywall' IRB consent.`,
