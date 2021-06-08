@@ -4,6 +4,7 @@
 
 * [#624](https://github.com/mozilla-rally/rally-core-addon/pull/624): Update the `income` field to use the key `exactIncome`; update `metrics.yaml` to change `income` to `exact_income` of type `quantity`.
 * [#636](https://github.com/mozilla-rally/rally-core-addon/pull/636): Remove undefined values from demographic survey submission.
+* [#643](https://github.com/mozilla-rally/rally-core-addon/pull/643): Update the CITP study id to `princeton-news-study@rally.mozilla.org`.
 
 # v1.3.1 (2021-05-20)
 
