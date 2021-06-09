@@ -63,9 +63,7 @@ This is an example of the data that will be sent in the `encryptedData` field:
   "education": {
     "lessThanHighSchool": true
   },
-  "income": {
-    "0_24999": true
-  },
+  "exactIncome": 85000,
   "zipCode": "00123"
 }
 ```
@@ -77,7 +75,7 @@ All the sections in this encrypted payload are optional and some of them can con
 - `origin`: whether or not user is of Hispanic, Latinx, Spanish or other origin (if `hispanicLatinxSpanish` is `true`); if `other` in this section is `true`, then user is neither of Hispanic, Latinx or Spanish origins.
 - `race`: the races user identifies with; this can contain multiple entries.
 - `education`: the user education level.
-- `income`: the income-group of the user.
+- `exactIncome`: the income of the household, in US dollars.
 - `zipCode`: the user's zip code.
 
 > **Important:** this payload uses the `core` value for `payload.encryptionKeyId`, since these pings are routed to the `pioneer-core` environment.

@@ -13,6 +13,7 @@ This means you might have to go searching through the dependency tree to get a f
 - [enrollment](#enrollment)
 - [study-enrollment](#study-enrollment)
 - [study-unenrollment](#study-unenrollment)
+- [uninstall-deletion](#uninstall-deletion)
 
 ## deletion-request
 
@@ -54,8 +55,8 @@ In addition to those built-in metrics, the following metrics are added to the pi
 | --- | --- | --- | --- | --- | --- | --- |
 | rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
 | user.age |[labeled_boolean](https://mozilla.github.io/glean/book/user/metrics/labeled_booleans.html) |The user age.  |[mozilla-rally/rally-core-addon#139](https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232)|<ul><li>band_19_24</li><li>band_25_34</li><li>band_35_44</li><li>band_45_54</li><li>band_55_64</li><li>band_over_65</li></ul>|never | |
+| user.exact_income |[quantity](https://mozilla.github.io/glean/book/user/metrics/quantity.html) |The user household's combined annual income during the past 12 months. This field replaces the previous income field.  |[mozilla-rally/rally-core-addon#139](https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232), [mozilla-rally/rally-core-addon#624](https://github.com/mozilla-rally/rally-core-addon/pull/624#issuecomment-850479051)|<ul><li>unit: US Dollars</li></ul>|never | |
 | user.gender |[labeled_boolean](https://mozilla.github.io/glean/book/user/metrics/labeled_booleans.html) |The user gender.  |[mozilla-rally/rally-core-addon#139](https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232)|<ul><li>male</li><li>female</li><li>neither</li><li>decline</li></ul>|never | |
-| user.income |[labeled_boolean](https://mozilla.github.io/glean/book/user/metrics/labeled_booleans.html) |The user household's combined annual income during the past 12 months.  |[mozilla-rally/rally-core-addon#139](https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232)|<ul><li>band_0_24999</li><li>band_25000_49999</li><li>band_50000_74999</li><li>band_75000_99999</li><li>band_100000_149999</li><li>band_ge_150000</li></ul>|never | |
 | user.origin |[labeled_boolean](https://mozilla.github.io/glean/book/user/metrics/labeled_booleans.html) |The user origin: Hispanic, Latinx, Spanish or other.  |[mozilla-rally/rally-core-addon#139](https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232)|<ul><li>hispanic_latinx_spanish</li><li>other</li></ul>|never | |
 | user.races |[labeled_boolean](https://mozilla.github.io/glean/book/user/metrics/labeled_booleans.html) |The user race / ethnicity.  |[mozilla-rally/rally-core-addon#139](https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232)|<ul><li>am_indian_or_alaska_native</li><li>asian_indian</li><li>black_or_african_american</li><li>chamorro</li><li>chinese</li><li>filipino</li><li>japanese</li><li>korean</li><li>native_hawaiian</li><li>samoan</li><li>vietnamese</li><li>white</li><li>other_asian</li><li>other_pacific_islander</li><li>some_other_race</li></ul>|never | |
 | user.school |[labeled_boolean](https://mozilla.github.io/glean/book/user/metrics/labeled_booleans.html) |The highest level of school user has completed.  |[mozilla-rally/rally-core-addon#139](https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232)|<ul><li>less_than_high_school</li><li>some_high_school</li><li>high_school_grad_or_eq</li><li>college_degree_in_progress</li><li>associates_degree</li><li>bachelors_degree</li><li>graduate_degree</li></ul>|never | |
@@ -133,6 +134,33 @@ In addition to those built-in metrics, the following metrics are added to the pi
 | --- | --- | --- | --- | --- | --- | --- |
 | rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
 | unenrollment.study_id |[string](https://mozilla.github.io/glean/book/user/metrics/string.html) |The id of the study user has left.  |[Bug 1646151](https://bugzilla.mozilla.org/show_bug.cgi?id=1646151#c32)||never | |
+
+## uninstall-deletion
+
+This ping is not directly sent by this add-on. However its
+submission is triggered when hitting the offboarding page,
+after the Core Add-on is removed, to make sure a data deletion
+request is sent even when uninstalling from the Browser UI,
+without going through the Rally UI.
+
+
+This ping is sent if empty.
+
+**Data reviews for this ping:**
+
+- <https://bugzilla.mozilla.org/show_bug.cgi?id=1663857#c5>
+
+**Bugs related to this ping:**
+
+- <https://bugzilla.mozilla.org/show_bug.cgi?id=1698934>
+
+All Glean pings contain built-in metrics in the [`ping_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section) and [`client_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section) sections.
+
+In addition to those built-in metrics, the following metrics are added to the ping:
+
+| Name | Type | Description | Data reviews | Extras | Expiration | [Data Sensitivity](https://wiki.mozilla.org/Firefox/Data_Collection) |
+| --- | --- | --- | --- | --- | --- | --- |
+| rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
 
 Data categories are [defined here](https://wiki.mozilla.org/Firefox/Data_Collection).
 

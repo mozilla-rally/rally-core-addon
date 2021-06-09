@@ -10,9 +10,11 @@
   import { formatInput, formatAnswersForResponse } from "./formatters";
 
   export let results = createResultObject(schema);
-  // create the outputted formatted results.
-  export let formattedResults = formatAnswersForResponse(schema, results, inputFormatters);
-  $: formattedResults = formatAnswersForResponse(schema, results, inputFormatters);
+  export let workingResults = createResultObject(schema, results);
+  $: workingResults = createResultObject(schema, workingResults);
+  // create the outputted formatted workingResults.
+  export let formattedResults = formatAnswersForResponse(schema, workingResults, inputFormatters);
+  $: formattedResults = formatAnswersForResponse(schema, workingResults, inputFormatters);
 </script>
 
 <style>
@@ -141,17 +143,17 @@
   <hr />
 
   <form class="mzp-c-form">
-    {#each Object.keys(results) as question}
+    {#each Object.keys(workingResults) as question}
       <fieldset class="mzp-c-field-set" class:mzp-c-field-set-text={schema[question].type === 'text'}>
         <legend class="mzp-c-field-label"
           for={schema[question].key}
           class:remove-bottom-margin={schema[question].sublabel}
         >
           {schema[question].label}
-          {#if questionIsAnswered(results[question], schema[question].type)}
+          {#if questionIsAnswered(workingResults[question], schema[question].type)}
             <ClearAnswerButton on:click={(e) => {
               e.preventDefault();
-              results[question] = clearAnswer(schema[question].type);
+              workingResults[question] = clearAnswer(schema[question].type);
             }} />
           {/if}
         </legend>
@@ -171,27 +173,27 @@
               class:mzp-is-error={
                 inputFormatters.showErrors(question) &&
                 inputFormatters.hasValidator(question) &&
-                inputFormatters[question].isInvalid(results[question])
+                inputFormatters[question].isInvalid(workingResults[question])
             }>
               <input
                 type="text"
                 use:formatInput={inputFormatters[question]}
                 class:right={inputFormatters[question].alignRight}
-                on:blur={(event) => { results[question] = event.target.value; }}
-                on:focus={(event) => { results[question] = event.target.value; }}
-                on:input={(event) => { results[question] = event.target.value; }}
-                value={results[question]}
+                on:blur={(event) => { workingResults[question] = event.target.value; }}
+                on:focus={(event) => { workingResults[question] = event.target.value; }}
+                on:input={(event) => { workingResults[question] = event.target.value; }}
+                value={workingResults[question]}
                 />
                 <span style="min-height: 24px; display: block;">
               {#if 
                   inputFormatters.showErrors(question) && // show errors if blurred
                   inputFormatters.hasValidator(question) && // show errors if there's a validator for this question
-                  inputFormatters[question].isInvalid(results[question])
+                  inputFormatters[question].isInvalid(workingResults[question])
                 }
                 <span
                   class="mzp-c-fieldnote"
                   transition:fly={{ duration: 300, y: 5 }}>
-                  {inputFormatters[question].isInvalid(results[question])}
+                  {inputFormatters[question].isInvalid(workingResults[question])}
                 </span>
               {/if}
               </span>
@@ -204,14 +206,14 @@
                     class="mzp-c-choice-control"
                     type="radio"
                     id="answer-{answer.key}"
-                    bind:group={results[question]}
+                    bind:group={workingResults[question]}
                     value={answer.key} />
                 {:else if schema[question].type === 'multi'}
                   <input
                     class="mzp-c-choice-control"
                     type="checkbox"
                     id="answer-{answer.key}"
-                    bind:group={results[question]}
+                    bind:group={workingResults[question]}
                     value={answer.key} />
                 {/if}
                 <label class="mzp-c-choice-label" for="answer-{answer.key}">
@@ -225,5 +227,5 @@
     {/each}
   </form>
   <!-- Add a slot to aid in  -->
-  <slot name='call-to-action' formattedResults={formatAnswersForResponse(schema, results, inputFormatters)} validated={inputFormatters.validateAllQuestions(schema, results)}></slot>
+  <slot name='call-to-action' formattedResults={formatAnswersForResponse(schema, workingResults, inputFormatters)} validated={inputFormatters.validateAllQuestions(schema, workingResults)}></slot>
 </div>

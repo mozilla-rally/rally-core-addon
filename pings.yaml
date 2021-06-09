@@ -61,3 +61,19 @@ demographics:
     - https://github.com/mozilla-rally/rally-core-addon/pull/139#issuecomment-736024232
   notification_emails:
     - than@mozilla.com
+
+uninstall-deletion:
+  description: |
+    This ping is not directly sent by this add-on. However its
+    submission is triggered when hitting the offboarding page,
+    after the Core Add-on is removed, to make sure a data deletion
+    request is sent even when uninstalling from the Browser UI,
+    without going through the Rally UI.
+  include_client_id: false
+  send_if_empty: true
+  bugs:
+    - https://bugzilla.mozilla.org/show_bug.cgi?id=1698934
+  data_reviews:
+    - https://bugzilla.mozilla.org/show_bug.cgi?id=1663857#c5
+  notification_emails:
+    - than@mozilla.com
