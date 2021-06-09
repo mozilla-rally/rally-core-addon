@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.1...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.2...master)
+
+# v1.3.2 (2021-06-08)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.1...v1.3.2)
 
 * [#624](https://github.com/mozilla-rally/rally-core-addon/pull/624): Update the `income` field to use the key `exactIncome`; update `metrics.yaml` to change `income` to `exact_income` of type `quantity`.
 * [#636](https://github.com/mozilla-rally/rally-core-addon/pull/636): Remove undefined values from demographic survey submission.
