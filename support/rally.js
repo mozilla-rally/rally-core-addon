@@ -55,6 +55,7 @@ export class Rally {
     this._keyId = key.kid;
     this._key = key;
     this._enableDevMode = Boolean(enableDevMode);
+    this._rallyId = null;
 
     let hasRally = await this._checkRallyCore().then(() => {
       console.debug("Rally.initialize - Found the Core Add-on.");
@@ -107,13 +108,24 @@ export class Rally {
       let response =
         await browser.runtime.sendMessage(CORE_ADDON_ID, msg, {});
 
-      if (!response
-          || response.type !== "core-check-response"
-          || response.data.enrolled !== true) {
-        throw new Error(`Rally._checkRallyCore - unexpected response returned ${response}`);
-      }
+      if (response
+          && response.type == "core-check-response") {
+            if (response.data
+                && "enrolled" in response.data
+                && response.data.enrolled === true
+                && "rallyId" in response.data
+                && response.data.rallyId !== null) {
+                 this._rallyId = response.data.rallyId;
+                 console.debug("rhelmer debug Set rally ID:", this._rallyId);
+            } else {
+              throw new Error(`Rally._checkRallyCore - core addon present, but not enrolled in Rally`);
+            }
+          } else{
+            throw new Error(`Rally._checkRallyCore - unexpected response returned ${response}`);
+          }
+
     } catch (ex) {
-      throw new Error("Rally._checkRallyCore - core addon not found");
+      throw new Error(`Rally._checkRallyCore - core addon check failed with: ${ex}`);
     }
   }
 
