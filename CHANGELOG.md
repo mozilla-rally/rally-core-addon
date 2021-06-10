@@ -1,6 +1,7 @@
 # Unreleased changes
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.2...master)
+* [#651](https://github.com/mozilla-rally/rally-core-addon/pull/651): Pass Rally ID during core-check response, for use by glean in studies.
 
 # v1.3.2 (2021-06-08)
 

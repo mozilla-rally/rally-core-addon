@@ -306,10 +306,13 @@ export default class Core {
 
     switch (message.type) {
       case "core-check": {
-        let enrolled = !!(await this._storage.getRallyID());
+        let rallyId = await this._storage.getRallyID();
+        let enrolled = !!(rallyId);
+
         return {
           type: "core-check-response",
           data: {
+            rallyId,
             enrolled
           }
         };
