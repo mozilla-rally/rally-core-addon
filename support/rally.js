@@ -116,7 +116,6 @@ export class Rally {
                 && "rallyId" in response.data
                 && response.data.rallyId !== null) {
                  this._rallyId = response.data.rallyId;
-                 console.debug("rhelmer debug Set rally ID:", this._rallyId);
             } else {
               throw new Error(`Rally._checkRallyCore - core addon present, but not enrolled in Rally`);
             }
