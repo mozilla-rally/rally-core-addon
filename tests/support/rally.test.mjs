@@ -93,13 +93,23 @@ describe('Rally', function () {
 
       assert.rejects(
         this.rally._checkRallyCore(),
-        {message: "Rally._checkRallyCore - core addon not found"}
+        {message: "Rally._checkRallyCore - core addon check failed with: Error: No addon makes this API reject"}
+      );
+    });
+
+    it('must fail if the core addon is installed, but user is not enrolled in Rally', async function () {
+      chrome.runtime.sendMessage.yields(
+        {type: "core-check-response", data: {rallyId: null, enrolled: false}});
+
+      assert.rejects(
+        this.rally._checkRallyCore(),
+        {message: "Rally._checkRallyCore - core addon check failed with: Error: Rally._checkRallyCore - core addon present, but not enrolled in Rally"}
       );
     });
 
     it('must succeed if the core addon is installed', async function () {
       chrome.runtime.sendMessage.yields(
-        {type: "core-check-response", data: {enrolled: true}});
+        {type: "core-check-response", data: {rallyId: "fakeRallyId", enrolled: true}});
 
       await this.rally._checkRallyCore();
     });
