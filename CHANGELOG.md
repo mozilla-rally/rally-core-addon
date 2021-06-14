@@ -2,6 +2,7 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.2...master)
 
+* [#656](https://github.com/mozilla-rally/rally-core-addon/pull/656): Pre-format manifest.json in a way AMO likes, to work around AMO bug.
 * [#653](https://github.com/mozilla-rally/rally-core-addon/pull/653): Bump rally.js version to 0.7.0
 * [#651](https://github.com/mozilla-rally/rally-core-addon/pull/651): Pass Rally ID during core-check response, for use by glean in studies.
 
