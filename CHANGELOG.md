@@ -1,8 +1,18 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.1...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.2...master)
+
+* [#656](https://github.com/mozilla-rally/rally-core-addon/pull/656): Pre-format manifest.json in a way AMO likes, to work around AMO bug.
+* [#653](https://github.com/mozilla-rally/rally-core-addon/pull/653): Bump rally.js version to 0.7.0
+* [#651](https://github.com/mozilla-rally/rally-core-addon/pull/651): Pass Rally ID during core-check response, for use by glean in studies.
+
+# v1.3.2 (2021-06-08)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.1...v1.3.2)
 
 * [#624](https://github.com/mozilla-rally/rally-core-addon/pull/624): Update the `income` field to use the key `exactIncome`; update `metrics.yaml` to change `income` to `exact_income` of type `quantity`.
+* [#636](https://github.com/mozilla-rally/rally-core-addon/pull/636): Remove undefined values from demographic survey submission.
+* [#643](https://github.com/mozilla-rally/rally-core-addon/pull/643): Update the CITP study id to `princeton-news-study@rally.mozilla.org`.
 
 # v1.3.1 (2021-05-20)
 

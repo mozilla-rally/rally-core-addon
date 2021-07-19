@@ -63,7 +63,7 @@ const nicerStudy = {
 }
 
 const mockAcademicPartnerStudy = {
-    addonId: 'rally.news.study@princeton.edu',
+    addonId: 'princeton-news-study@rally.mozilla.org',
     name: "Generic Collaborator Study",
     authors: {
         name: "Generic Collaborator University"
