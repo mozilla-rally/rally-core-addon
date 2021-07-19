@@ -13,7 +13,6 @@ import * as rallyMetrics from "../../../public/generated/rally.js";
 import * as enrollmentMetrics from "../../../public/generated/enrollment.js";
 import * as rallyPings from "../../../public/generated/pings.js";
 
-
 // The website to post deletion IDs to.
 const OFFBOARD_URL = "https://production.rally.mozilla.org/offboard";
 
@@ -36,12 +35,50 @@ const FAKE_STUDY_LIST = [
 const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
 const FAKE_WEBSITE = "https://test.website";
 
+class TestGleanHttpClient {
+  /**
+   * Returns a promise that resolves once a ping is submitted
+   * or times out after a 5s wait.
+   *
+   * @param name The name of the ping to wait for.
+   * @returns A promise that resolves once a ping is submitted
+   *          or times out after a 5s wait.
+   */
+  waitForPingSubmission(name) {
+    this.waitingFor = name;
+    return new Promise((resolve, reject) => {
+      this.waitResolver = (pingBody) => {
+        this.waitingFor = undefined;
+        // Uncomment for debugging the ping payload.
+        console.log(JSON.stringify(pingBody, null, 2));
+        resolve(pingBody);
+      };
+
+      setTimeout(() => reject(), 5000);
+    });
+  }
+
+  post(url, body) {
+    if (this.waitingFor && url.includes(this.waitingFor)) {
+      this.waitResolver?.(body);
+    }
+
+    return Promise.resolve({
+      result: 2,
+      status: 200
+    });
+  }
+}
+
+
+
 describe('Core', function () {
   // eslint-disable-next-line mocha/no-setup-in-describe
   const testAppId = `core.test.${this.title}`;
+  const mockGleanHttpClient = new TestGleanHttpClient();
 
   beforeEach(async function() {
-    await Glean.testResetGlean(testAppId);
+    await Glean.testResetGlean(testAppId, true, { httpClient: mockGleanHttpClient  });
 
     // Force the sinon-chrome stubbed API to resolve its promise
     // in tests. Without the next two lines, tests querying the
@@ -682,6 +719,78 @@ describe('Core', function () {
               sinon.match(SENT_PING.key)
             ).notCalled
       );
+    });
+
+    // Control test, check that enrollment pings are sent normally.
+    it('enrollment pings are sent by Glean on enrollment', async function () {
+      // Mock the URL of the options page.
+      const TEST_OPTIONS_URL = "install.sample.html";
+      chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
+
+      // Return an empty object from the local storage. Note that this
+      // needs to use `browser` and must use `callsArgWith` to guarantee
+      // that the promise resolves, due to a bug in sinon-chrome. See
+      // acvetkov/sinon-chrome#101 and acvetkov/sinon-chrome#106.
+      browser.storage.local.get.callsArgWith(1, {}).resolves();
+      // Make sure to mock the local storage calls as well.
+      browser.storage.local.set.yields();
+
+      // Do not wait on this._availableStudies
+      this.core._sendStateUpdateToUI = async () => {};
+
+      sinon.spy(this.core._dataCollection, "sendEnrollmentPing");
+      sinon.spy(this.core._storage, "setRallyID");
+
+      // Create promise that will wait for deletion-request ping.
+      const enrollmentPingBody = mockGleanHttpClient.waitForPingSubmission("enrollment");
+
+      // Provide a valid enrollment message.
+      await this.core._handleMessage(
+        {type: "enrollment", data: {}}
+      );
+
+      // Wait for enrollment ping to be sent.
+      await enrollmentPingBody;
+    });
+
+    // Actual test, check that deletion-request is not sent before uninstall.
+    it('deletion-request are sent byt Glean.js on unenroll', async function () {
+      // Mock the URL of the options page.
+      const TEST_OPTIONS_URL = "install.sample.html";
+      chrome.runtime.getURL.returns(TEST_OPTIONS_URL);
+
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      this.core._storage = {
+        getActivatedStudies: async function() { return [FAKE_STUDY_ID]; },
+        clearActivatedStudies: async function() {},
+        getRallyID: async function() { return FAKE_UUID; },
+        clearRallyID: async function() {},
+        clearDeletionID: async function() {},
+      };
+
+      sinon.spy(this.core._dataCollection, "sendDeletionPing");
+      sinon.spy(this.core._storage, "clearRallyID");
+      sinon.spy(this.core._storage, "clearDeletionID");
+
+
+      chrome.runtime.sendMessage.yields();
+      browser.management.uninstallSelf.yields();
+
+      // Create promise that will wait for deletion-request ping.
+      const deletionRequestBody = mockGleanHttpClient.waitForPingSubmission("deletion-request");
+
+      // Provide a valid study enrollment message.
+      await this.core._handleMessage(
+        {type: "unenrollment", data: {}}
+      );
+
+      // We expect the deletion-request ping to be sent before uninstall
+      //
+      // This will throw in case a deletion-request ping is never sent.
+      await deletionRequestBody;
+
+      // We expect the core addon to uninstall itself.
+      assert.ok(browser.management.uninstallSelf.calledOnce);
     });
   });
 
