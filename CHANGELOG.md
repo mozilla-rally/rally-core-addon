@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.2...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.3...master)
+
+# v1.3.3 (2021-06-14)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.2...v1.3.3)
 
 * [#656](https://github.com/mozilla-rally/rally-core-addon/pull/656): Pre-format manifest.json in a way AMO likes, to work around AMO bug.
 * [#653](https://github.com/mozilla-rally/rally-core-addon/pull/653): Bump rally.js version to 0.7.0
