@@ -567,6 +567,9 @@ export default class Core {
     // deletion-request.
     Glean.setUploadEnabled(false);
 
+    // Wait for Glean to finish sending pending pings.
+    await Glean.shutdown();
+
     // Finally, uninstall the addon.
     await browser.management.uninstallSelf({ showConfirmDialog: false });
   }
