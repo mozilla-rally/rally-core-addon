@@ -491,21 +491,21 @@ export default class Core {
     try {
       await this._sendMessageToStudy(studyAddonId, "uninstall", {});
     } catch (e) {
-      console.error(`Core._unenroll - Unable to uninstall ${studyAddonId}`, e);
+      console.error(`Core._unenrollStudy - Unable to uninstall ${studyAddonId}`, e);
     }
 
     await this._storage.removeActivatedStudy(studyAddonId);
 
     const endedStudies = knownStudies.filter(s => s.studyEnded);
     if (endedStudies.map(s => s.addonId).includes(studyAddonId)) {
-      console.debug("Unenrolling study which has ended, not sending deletion pings:", studyAddonId);
-      return;
+      return Promise.reject(
+        new Error(`Core._unenrollStudy - Unenrolling study which has ended, not sending deletion pings for ${studyAddonId}`));
     }
 
     const knownStudy = knownStudies.find(s => s.addonId == studyAddonId);
     if (!("schemaNamespace" in knownStudy)) {
       return Promise.reject(
-        new Error(`Core._enrollStudy - No schema namespace specified in remote settings for ${studyAddonId}`));
+        new Error(`Core._unenrollStudy - No schema namespace specified in remote settings for ${studyAddonId}`));
     }
 
     unenrollmentMetrics.studyId.set(studyAddonId);
