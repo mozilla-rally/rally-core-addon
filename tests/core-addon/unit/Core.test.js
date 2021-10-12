@@ -725,7 +725,7 @@ describe('Core', function () {
       await this.core._sendRunState(FAKE_STUDY_LIST, [FAKE_STUDY_ID]);
 
       const unenrollmentPingMock = sinon.mock(rallyPings.studyUnenrollment);
-      unenrollmentPingMock.expects("submit").once();
+      unenrollmentPingMock.expects("submit").never();
 
       // Mock the storage to provide a fake rally id.
       const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
