@@ -484,12 +484,6 @@ export default class Core {
         new Error(`Core._unenrollStudy - Unknown study ${studyAddonId}`));
     }
 
-    const knownStudy = knownStudies.find(s => s.addonId == studyAddonId);
-    if (!("schemaNamespace" in knownStudy)) {
-      return Promise.reject(
-        new Error(`Core._enrollStudy - No schema namespace specified in remote settings for ${studyAddonId}`));
-    }
-
     // Attempt to send an uninstall message, but move on if the
     // delivery fails: studies will not be able to send anything
     // without the Core Add-on anyway. Moreover, they might have been
@@ -501,6 +495,18 @@ export default class Core {
     }
 
     await this._storage.removeActivatedStudy(studyAddonId);
+
+    const endedStudies = knownStudies.filter(s => s.studyEnded);
+    if (endedStudies.map(s => s.addonId).includes(studyAddonId)) {
+      console.debug("Unenrolling study which has ended, not sending deletion pings:", studyAddonId);
+      return;
+    }
+
+    const knownStudy = knownStudies.find(s => s.addonId == studyAddonId);
+    if (!("schemaNamespace" in knownStudy)) {
+      return Promise.reject(
+        new Error(`Core._enrollStudy - No schema namespace specified in remote settings for ${studyAddonId}`));
+    }
 
     unenrollmentMetrics.studyId.set(studyAddonId);
     rallyPings.studyUnenrollment.submit();
