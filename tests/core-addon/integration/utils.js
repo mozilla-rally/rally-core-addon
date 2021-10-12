@@ -250,12 +250,8 @@ async function installRally(driver) {
   await findAndAct(driver, By.css(`[label="Okay"]`), e => e.click());
 
   // We expect the extension to load its options page in a new tab.
-  await driver.wait(async () => {
-    return (await driver.getAllWindowHandles()).length === 2;
-  }, WAIT_FOR_PROPERTY);
+  const newTab = (await driver.getAllWindowHandles())[0];
 
-  // Selenium is still focused on the old tab, so switch to the new window handle.
-  const newTab = (await driver.getAllWindowHandles())[1];
   await driver.switchTo().window(newTab);
 
   // Switch back to web content context.
