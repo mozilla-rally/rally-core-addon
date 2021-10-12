@@ -67,7 +67,7 @@ jobs:
           command: npm run build-addon
       - run:
           name: Run Selenium tests
-          command: export PATH=.:$PATH # && npm run test-integration
+          command: export PATH=.:$PATH && npm run test-integration
 
 workflows:
   version: 2
