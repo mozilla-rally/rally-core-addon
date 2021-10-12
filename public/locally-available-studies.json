@@ -12,7 +12,7 @@
     },
     "version": "0.3.1",
     "addonId": "ion-basic-study@mozilla.org",
-    "downloadLink": "https://addons.mozilla.org/firefox/downloads/latest/ion-basic-study",
+    "downloadLink": "http://localhost:8000/ion_basic_study-0.3.1-fx.xpi",
     "endDate": "2022-04-04",
     "studyEnded": false,
     "studyPaused": false,
