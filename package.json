@@ -22,7 +22,7 @@
     "test-addon": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.cjs\" \"./tests/core-addon/unit/*.js\")",
     "test-options-page": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict \"./tests/options-page/unit/*.js\")",
     "test-integration": "npm run --silent skip-taskcluster || (npm run test-integration-webserver & npm run build && mocha --unhandled-rejections=strict --timeout 30000 \"./tests/core-addon/integration/*.js\")",
-    "test-integration-webserver": "cd tests/core-addon/integration && ws",
+    "test-integration-webserver": "npm run --silent skip-taskcluster || (cd tests/core-addon/integration && ws)",
     "test-support-library": "npm run --silent skip-taskcluster || (mocha --unhandled-rejections=strict --require  \"./tests/hooks.cjs\" \"./tests/support/*.mjs\")",
     "watch": "npm-run-all --parallel watch-ui watch-addon watch-webext",
     "watch-ui": "rollup -c -w",
