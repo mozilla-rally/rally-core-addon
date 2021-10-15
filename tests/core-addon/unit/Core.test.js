@@ -11,6 +11,7 @@ import Glean from "@mozilla/glean/webext";
 import Core from '../../../core-addon/Core.js';
 import * as rallyMetrics from "../../../public/generated/rally.js";
 import * as enrollmentMetrics from "../../../public/generated/enrollment.js";
+import * as unenrollmentMetrics from "../../../public/generated/unenrollment.js";
 import * as rallyPings from "../../../public/generated/pings.js";
 
 
@@ -682,6 +683,66 @@ describe('Core', function () {
               sinon.match(SENT_PING.key)
             ).notCalled
       );
+    });
+
+    it('send unenrollment pings when study is uninstalled', async function () {
+      // Make sure the functions yield during tests!
+      browser.storage.local.get
+        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
+        .resolves();
+      chrome.runtime.sendMessage.yields();
+
+      const fakeStudy = FAKE_STUDY_LIST[0];
+      fakeStudy.studyEnded = false;
+      await this.core._sendRunState(FAKE_STUDY_LIST, [FAKE_STUDY_ID]);
+
+      const unenrollmentPingMock = sinon.mock(rallyPings.studyUnenrollment);
+      unenrollmentPingMock.expects("submit").once();
+
+      // Mock the storage to provide a fake rally id.
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      browser.storage.local.get
+        .callsArgWith(1, {rallyId: FAKE_UUID})
+        .resolves();
+      chrome.storage.local.get.yields(FAKE_UUID);
+
+      // Attempt to unenroll from the study.
+      await this.core._unenrollStudy(FAKE_STUDY_ID);
+
+      assert.equal(await unenrollmentMetrics.studyId.testGetValue("study-unenrollment"), FAKE_STUDY_ID);
+      unenrollmentPingMock.verify();
+    });
+
+    it('handles studyEnded properly', async function () {
+      // Make sure the functions yield during tests!
+      browser.storage.local.get
+        .callsArgWith(1, {activatedStudies: [FAKE_STUDY_ID]})
+        .resolves();
+      chrome.runtime.sendMessage.yields();
+
+      const fakeStudy = FAKE_STUDY_LIST[0];
+      fakeStudy.studyEnded = true;
+      await this.core._sendRunState(FAKE_STUDY_LIST, [FAKE_STUDY_ID]);
+
+      const unenrollmentPingMock = sinon.mock(rallyPings.studyUnenrollment);
+      unenrollmentPingMock.expects("submit").never();
+
+      // Mock the storage to provide a fake rally id.
+      const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";
+      browser.storage.local.get
+        .callsArgWith(1, {rallyId: FAKE_UUID})
+        .resolves();
+      chrome.storage.local.get.yields(FAKE_UUID);
+
+      // Attempt to unenroll from the study.
+      assert.rejects(
+        this.core._unenrollStudy(FAKE_STUDY_ID),
+        { message: "Core._unenrollStudy - Unenrolling study which has ended, not sending deletion pings for test@ion-studies.com"}
+      );
+
+      // No unenrollment pings are sent.
+      assert.equal(await unenrollmentMetrics.studyId.testGetValue("study-unenrollment"), undefined);
+      unenrollmentPingMock.verify();
     });
   });
 
