@@ -1,7 +1,13 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.3...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.4...master)
+
 * [#730](https://github.com/mozilla-rally/rally-core-addon/pull/730): Add support for ending studies with `studyEnded` remote settings.
+
+# v1.3.4 (2021-07-20)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.3...v1.3.4)
+
 * [#682](https://github.com/mozilla-rally/rally-core-addon/pull/682): Add latest Stanford IRB changes.
 
 # v1.3.3 (2021-06-14)
