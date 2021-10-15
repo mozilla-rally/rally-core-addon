@@ -49,7 +49,7 @@
       ],
       "js": [
         "public/addon-build/content-script.js"
-      ]s
+      ]
     }
   ],
   "browser_action": {
