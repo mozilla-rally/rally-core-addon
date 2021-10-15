@@ -37,13 +37,7 @@ describe("Core-Addon", function () {
     await utils.findAndAct(this.driver, By.id("rally-core_mozilla_org-browser-action"), e => e.click());
 
     // We expect the extension to load its options page in a new tab.
-    await this.driver.wait(async () => {
-      return (await this.driver.getAllWindowHandles()).length >= 2;
-    }, utils.WAIT_FOR_PROPERTY);
-
-    // Selenium is still focused on the old tab, so switch to the new window handle.
-    let latestTab = (await this.driver.getAllWindowHandles()).length - 1;
-    const newOptionsTab = (await this.driver.getAllWindowHandles())[latestTab];
+    const newOptionsTab = (await this.driver.getAllWindowHandles())[0];
     await this.driver.switchTo().window(newOptionsTab);
 
     // Switch context to web content to interact with options page.

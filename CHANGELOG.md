@@ -2,6 +2,11 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.4...master)
 
+# v1.3.5 (2021-10-15)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.4...v1.3.5)
+* [#730](https://github.com/mozilla-rally/rally-core-addon/pull/730): Add support for ending studies with `studyEnded` remote settings.
+
 # v1.3.4 (2021-07-20)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.3...v1.3.4)
