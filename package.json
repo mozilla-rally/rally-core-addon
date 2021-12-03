@@ -11,7 +11,7 @@
     "glean": "npm run glean-metrics && npm run glean-docs",
     "glean-metrics": "glean translate ./metrics.yaml ./pings.yaml -f javascript -o public/generated",
     "glean-docs": "glean translate ./metrics.yaml ./pings.yaml -f markdown -o docs",
-    "lint": "npm run build && npm-run-all lint-*",
+    "lint": "npm run --silent skip-taskcluster || (npm run build && npm-run-all lint-*)",
     "lint-addon": "web-ext --config=web-ext-config.cjs lint",
     "lint-css": "stylelint 'public/*.css' '.storybook/*.css' 'src/**/*.svelte' 'stories/**/*.svelte'",
     "lint-glean": "glean glinter ./metrics.yaml ./pings.yaml",
