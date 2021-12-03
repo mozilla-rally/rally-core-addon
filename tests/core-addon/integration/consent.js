@@ -34,22 +34,11 @@ describe("side-loaded studies found before Rally installs", function () {
     let studyInstalled = await utils.isAddonInstalled(this.driver, studyInstallId);
     assert.ok(studyInstalled);
 
-    // Installing the study will open an "Install Rally" page.
-    // Once it's opened, close it.
-    await this.driver.wait(async () => {
-      return (await this.driver.getAllWindowHandles()).length === 2;
-    }, utils.WAIT_FOR_PROPERTY);
-    const openedTabs = await this.driver.getAllWindowHandles();
-    await this.driver.switchTo().window(openedTabs[1]);
-    await this.driver.close();
-    await this.driver.switchTo().window(openedTabs[0]);
-
     await utils.installRally(this.driver);
     await utils.joinRally(this.driver);
-
     await this.driver.wait(until.elementLocated(By.css("button")));
     await utils.findAndAct(this.driver, By.xpath(`//button[text()="Join Study"]`), e => e.click());
-  
+
     // The following operation will reject because we cannot install
     // an add-on, through a link, from the disk. It's fine, we don't
     // care about this problem in this test, so just catch the network
@@ -57,9 +46,9 @@ describe("side-loaded studies found before Rally installs", function () {
     assert.rejects(
       utils.findAndAct(this.driver, By.xpath(`(//button[text()="Join Study"])[2]`), e => e.click())
     );
-    
+
     await this.driver.uninstallAddon(studyInstallId);
-    
+
     // Clicking "Join" must have triggered the uninstallation of
     // the existing study.
     studyInstalled = await utils.isAddonInstalled(this.driver, studyInstallId);
@@ -96,22 +85,10 @@ describe("side-loaded studies found before Rally installs", function () {
     let studyInstalled = await utils.isAddonInstalled(this.driver, studyInstallId);
     assert.ok(studyInstalled);
 
-    // Installing the study will open an "Install Rally" page.
-    // Even though the Rally Core Add-on is installed, the study
-    // is not joined.
-    // Once it's opened, close it.
-    await this.driver.wait(async () => {
-      return (await this.driver.getAllWindowHandles()).length === 3;
-    }, utils.WAIT_FOR_PROPERTY);
-    const openedTabs = await this.driver.getAllWindowHandles();
-    await this.driver.switchTo().window(openedTabs[2]);
-    await this.driver.close();
-    await this.driver.switchTo().window(openedTabs[1]);
-
     // Make sure to find the "join" button on the study page.
     await this.driver.wait(until.elementLocated(By.css("button")));
     await utils.findAndAct(this.driver, By.xpath(`//button[text()="Join Study"]`), e => e.click());
-   
+
     await this.driver.quit();
   });
 });

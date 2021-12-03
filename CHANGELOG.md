@@ -1,6 +1,7 @@
 # Unreleased changes
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.5...master)
+* [#752](https://github.com/mozilla-rally/rally-core-addon/pull/752): Stop prompting for onboarding when studies are side-loaded.
 
 # v1.3.5 (2021-10-15)
 

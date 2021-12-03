@@ -3,7 +3,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 const CORE_ADDON_ID = "rally-core@mozilla.org";
-const SIGNUP_URL = "https://rally.mozilla.org/rally-required";
 
 export const runStates = {
 	RUNNING: "running",
@@ -71,7 +70,6 @@ export class Rally {
 
       // The Core Add-on was not found and we're not in developer
       // mode.
-      await browser.tabs.create({ url: SIGNUP_URL });
       return false;
     });
 
