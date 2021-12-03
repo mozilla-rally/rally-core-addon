@@ -1,5 +1,11 @@
 # Unreleased changes
 
+* [#752](https://github.com/mozilla-rally/rally-core-addon/pull/752): Stop prompting for onboarding when studies are side-loaded.
+
+# v0.7.0 (2021-06-13)
+
+* [#656] Pre-format manifest.json in a way AMO is happy with.
+
 # v0.6.0 (2021-04-20)
 
 * [550](https://github.com/mozilla-rally/rally-core-addon/pull/550): Do not use extension ID as namespace, breaks the `rally.js` API (constructor arg change)
