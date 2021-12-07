@@ -2,9 +2,7 @@
 * License, v. 2.0. If a copy of the MPL was not distributed with this
 * file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 
-<h1>Facebook Pixel Hunt</h1>
-
-<p>You are joining the Facebook Pixel Hunt, a study by The Markup.</p>
+<p>You are joining the Facebook Pixel Hunt, a study by Mozilla Rally and The Markup.</p>
 
 <p>
   The Markup will use the browsing data collected in this study to map
