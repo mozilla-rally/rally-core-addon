@@ -2,6 +2,7 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.5...master)
 * [#752](https://github.com/mozilla-rally/rally-core-addon/pull/752): Stop prompting for onboarding when studies are side-loaded.
+* [#753](https://github.com/mozilla-rally/rally-core-addon/pull/753): Add consent form for themarkup Facebook Pixel Hunt extension
 
 # v1.3.5 (2021-10-15)
 
