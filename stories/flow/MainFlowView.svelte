@@ -100,10 +100,29 @@ const additionalMockPartnerStudy = {
     studyDetailsLink: '/'
 }
 
+const anotherMockPartnerStudy = {
+    addonId: 'facebook-pixel-hunt@rally.mozilla.org',
+    name: "Yet Another Collaborator Study",
+    authors: {
+        name: "A Partner"
+    },
+    icons: {
+        64: undefined
+    },
+    endDate: new Date('2021-07-03'),
+    tags: ['advertising', 'news'],
+    privacyPolicy: {spec: 'https://example.com'},
+
+    description: `This is another mock study that utilizes the 'Facebook Pixel Hunts' IRB consent.`,
+    dataCollectionDetails: ['page views', 'time and date of joining study', 'etc.'],
+    detailsDirectName: "Rally Website",
+    studyDetailsLink: '/'
+}
+
 fetch('locally-available-studies.json')
     .then(r => r.json())
     .then(s => {
-        mockStore.set({...get(mockStore), availableStudies: [nicerStudy, mockAcademicPartnerStudy, additionalMockPartnerStudy, ...s]});
+        mockStore.set({...get(mockStore), availableStudies: [nicerStudy, mockAcademicPartnerStudy, additionalMockPartnerStudy, anotherMockPartnerStudy, ...s]});
 });
 
 setContext("rally:store", mockStore);
