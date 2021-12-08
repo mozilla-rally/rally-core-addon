@@ -68,8 +68,6 @@ describe('Rally', function () {
           () => {},
         )
       );
-
-      assert.ok(chrome.tabs.create.calledOnce);
     });
 
     it('must export the list of valid run states', function () {
