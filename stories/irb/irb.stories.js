@@ -5,6 +5,7 @@
 import PrincetonIRBStory from './PrincetonIRB.svelte';
 import StanfordBeyondThePaywallIRBStory from "./StanfordBeyondThePaywallIRB.svelte"
 import RS01ConsentStory from './RS01Consent.svelte';
+import FacebookPixelHuntStory from './FacebookPixelHuntConsent.svelte';
 export default {
   title: "IRB Components",
 };
@@ -19,4 +20,8 @@ export const StanfordBeyondThePaywallIRB = () => ({
 
 export const RS01Consent = () => ({
   Component: RS01ConsentStory,
+});
+
+export const FacebookPixelHunt = () => ({
+  Component: FacebookPixelHuntStory,
 });
