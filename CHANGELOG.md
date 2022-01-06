@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.6...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.7...master)
+
+# v1.3.7 (2022-01-05)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.6...v1.3.7)
 * [#761](https://github.com/mozilla-rally/rally-core-addon/pull/761): Add consent form for the CITP Search Study extension
 
 # v1.3.6 (2021-12-08)
