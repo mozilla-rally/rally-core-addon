@@ -5,7 +5,8 @@
 # v1.3.7 (2022-01-05)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.6...v1.3.7)
-* [#761](https://github.com/mozilla-rally/rally-core-addon/pull/761): Add consent form for the CITP Search Study extension
+* [#761](https://github.com/mozilla-rally/rally-core-addon/pull/761): Add consent form for the CITP Search Study extension.
+* [#764](https://github.com/mozilla-rally/rally-core-addon/pull/764): Re-use consent form for news-disinfo study relaunch.
 
 # v1.3.6 (2021-12-08)
 
