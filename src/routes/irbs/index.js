@@ -13,4 +13,5 @@ export default {
     "beyond-the-paywall@rally.mozilla.org": StanfordBeyondThePaywallIRB,
     "facebook-pixel-hunt@rally.mozilla.org": FacebookPixelHuntConsent,
     "search-engine-usage@rally.mozilla.org": PrincetonSearchUsageIRB,
+    "princeton-political-and-covid-19-news-study@rally.mozilla.org": PrincetonCovidDisinformationIRB,
 }
