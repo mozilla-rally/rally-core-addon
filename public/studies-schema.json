@@ -84,6 +84,9 @@
       "items": {
         "type": "string"
       }
+    },
+    "order": {
+      "type": "number"
     }
   }
 }
