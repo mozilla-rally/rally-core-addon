@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.7...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.9...master)
+
+# v1.3.9 (2022-01-10)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.7...v1.3.9)
 * [#769](https://github.com/mozilla-rally/rally-core-addon/pull/769): Sort studies using order property, if present.
 
 # v1.3.7 (2022-01-05)
