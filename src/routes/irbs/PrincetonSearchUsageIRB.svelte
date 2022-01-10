@@ -56,19 +56,23 @@
         Your responses to survey questions about web search and your
         demographics.
     </li>
-    <li>Information about how you use general-purpose web search engines.</li>
+    <li>How you use general-purpose web search engines.</li>
     <li>Information about the search engine result pages that you navigate.</li>
+    <li>
+        How often you used web search engines prior to joining the study, 
+        going back up to 30 days in your browser’s history.
+    </li>
     <li>
         If we prompt you to consider your choice of web search engine,
         information about how you interact with that prompt.
     </li>
     <li>
-        Information about how you interact with other online services offered by
-        a general-purpose web search engine company.
+        How you interact with other online services offered by a general-purpose 
+        web search engine company.
     </li>
     <li>
-        Information about how you interact with online services that compete
-        with services offered by a general-purpose web search engine.
+        How you interact with online services that compete with services offered by 
+        a general-purpose web search engine company.
     </li>
 
     If you would like further detail about the data collected in this study, the
@@ -121,8 +125,10 @@
         your study data.
     </li>
     <li>
-        We will discard participant-level study data no later than six months
-        after we complete the study.
+        We will end data collection for this study no later than December 31, 2022.
+    </li>
+    <li>
+        We will discard participant-level study data no later than June 30, 2023.
     </li>
 </ul>
 
@@ -192,7 +198,7 @@
     <em>Questions</em>: If you have any questions, concerns or complaints about
     this research, its procedures, risks and benefits, please contact the
     Principal Investigator, Jonathan Mayer, by email at
-    web-search-study@lists.cs.princeton.edu.
+    <a href="mailto:web-search-study@lists.cs.princeton.edu">web-search-study@lists.cs.princeton.edu</a>.
 </p>
 
 <p>

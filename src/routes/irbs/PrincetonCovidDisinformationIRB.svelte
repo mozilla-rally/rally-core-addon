@@ -66,7 +66,7 @@ dd {
     <dt>Academic Institution</dt>
     <dd>Princeton University</dd>
     <dt>Study Name</dt>
-    <dd>COVID-19 and Political Information Flows</dd>
+    <dd>Political and COVID-19 News</dd>
     <dt>Principal Investigator</dt>
     <dd>
       Jonathan Mayer, Assistant Professor of Computer Science and Public
@@ -83,6 +83,11 @@ dd {
 <p>
     The study assesses how individuals are exposed to, consuming, sharing, and acting on health and political 
     information and misinformation during the COVID-19 pandemic.
+</p>
+
+<h2>Study Eligibility</h2>
+<p>
+    In order to participate in this study, you must be at least 18 years old and located in the United States.
 </p>
 
 <h2>Study Benefits to Society</h2>
@@ -103,25 +108,20 @@ dd {
 <p>
     Your participation in the study will conclude when data collection is completed or, 
     if you choose to discontinue participation, when you make that choice. 
-    Data collection will last no longer than 6 months, 
-    and we will not retain data that is linkable to your browser for longer than 6 months.
+    Data collection will last no longer than December 31, 2022, 
+    and we will not retain data that is linkable to your browser after June 30, 2023.
 </p>
 
 <h2>Leaving the Study</h2>
 <p>
-    You can leave the study at any time from the Mozilla Rally options page. 
-    To access the page, click on the Rally button <img style="padding: 0 4px;" width="18" src="img/rally-toolbar-icon.svg" alt="rally icon" /> in your browser toolbar. 
-    The button is usually near the top right of the browser window. 
-    If you have removed the Rally button from your toolbar, 
-    you can also access the Rally options page from the browser’s Add-ons settings. 
-    The Rally options page will show you a list of studies that you are currently enrolled in. 
-    You can leave this study by clicking the “Leave Study” button on the associated study card.  
-    If you leave the study, the study’s browser extension will be automatically uninstalled, 
-    removing the study code and data from your browser. 
-    We will also automatically delete the data that your browser has submitted for the study, 
-    unless you allow us to retain that data.
-    You may not be able to rejoin the study if you leave. 
-    If you leave Rally, you will also leave the studies that you are enrolled in, including this study.
+    You can leave the study at any time from the Mozilla Rally options page, which lists the studies that you are currently enrolled in. If you leave the study, the study’s browser extension will be automatically uninstalled, removing the study code and data from your browser. 
+    We will also automatically delete the data that your browser has submitted for the study, unless you allow us to retain that data. You may not be able to rejoin the study if you leave. If you leave Rally, you will also leave the studies that you are enrolled in, including this study.</p>
+
+<p>
+    If you joined the study by installing the Mozilla Rally extension, you can access the options page by clicking on the Rally button <img style="padding: 0 4px;" width="18" src="img/rally-toolbar-icon.svg" alt="rally icon" /> in your browser toolbar. The button is usually near the top right of the browser window. If you have removed the Rally button from your toolbar, you can also access the Rally options page from the browser’s Add-ons settings.
+</p>
+<p>
+    If you joined the study without installing the Mozilla Rally extension, you can access the options page by navigating to https://rally.mozilla.org/. 
 </p>
 
 <h2>Study Risks and Alternative Procedures</h2>
@@ -164,8 +164,8 @@ dd {
 <h2>Who to Contact with Questions</h2>
 <p>
     Please contact the Principal Investigator, Jonathan Mayer (<a
-    href="mailto:covid-19-study@lists.cs.princeton.edu"
-    >covid-19-study@lists.cs.princeton.edu</a
+    href="mailto:political-and-covid-19-news-study@lists.cs.princeton.edu"
+    >political-and-covid-19-news-study@lists.cs.princeton.edu</a
     >), with any questions about the study.
 </p>
 
