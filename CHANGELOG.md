@@ -5,6 +5,7 @@
 # v1.3.8 (2022-01-10)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.7...v1.3.8)
+* [#765](https://github.com/mozilla-rally/rally-core-addon/pull/765): Updates to CITP consent/IRB notices.
 
 # v1.3.7 (2022-01-05)
 
