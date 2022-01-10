@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.6...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.7...master)
+
+# v1.3.7 (2022-01-05)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.6...v1.3.7)
 * [#761](https://github.com/mozilla-rally/rally-core-addon/pull/761): Add consent form for the CITP Search Study extension.
 * [#764](https://github.com/mozilla-rally/rally-core-addon/pull/764): Re-use consent form for news-disinfo study relaunch.
 
@@ -8,7 +12,7 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.5...v1.3.6)
 * [#752](https://github.com/mozilla-rally/rally-core-addon/pull/752): Stop prompting for onboarding when studies are side-loaded.
-* [#753](https://github.com/mozilla-rally/rally-core-addon/pull/753): Add consent form for themarkup Facebook Pixel Hunt extension.
+* [#753](https://github.com/mozilla-rally/rally-core-addon/pull/753): Add consent form for themarkup Facebook Pixel Hunt extension
 
 # v1.3.5 (2021-10-15)
 
