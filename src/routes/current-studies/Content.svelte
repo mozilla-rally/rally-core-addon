@@ -34,6 +34,8 @@ function parseDateIfNeeded(date) {
     }
 }
 
+studies.sort((a, b) => a.order - b.order);
+
 </script>
 
 <style>
