@@ -7,18 +7,20 @@ tasks:
     - $let:
           # XXX Set to `true` for private repos
           privateRepo: false
-          # XXX use "privileged", "system", or "mozillaonline-privileged" to
-          #     enable signing on push/PR. Note, this only works for public
-          #     repos for now. Release builds off shipit will get signing for
-          #     both public and private repos.
+          # XXX Use
+          # `system` for system add-on,
+          # `privileged` for AMO or self-hosted privileged add-on,
+          # `mozillaonline-privileged` for Mozilla China add-on,
+          # `normandy-privileged` for normandy add-on
+          # to enable siging on push/PR.
           xpiSigningType: "privileged"
           # The below doesn't need changing on initial repo setup
           taskgraph:
               branch: taskgraph
-              revision: 7dde9ce7740068d7b73218976343a28fc99be847
+              revision: b6ecb0fd4e7e36437520f7359ab5b3ff59494c44
           template:
               repo: https://github.com/mozilla-extensions/xpi-template
-              branch: master
+              branch: main
           trustDomain: xpi
       in:
           $if: 'tasks_for in ["github-pull-request", "github-push", "action", "cron"]'
@@ -142,8 +144,6 @@ tasks:
                                 then:
                                     source: '${repoUrl}/raw/${head_sha}/.taskcluster.yml'
                                 else:
-                                    # XXX revisit after https://github.com/taskcluster/taskcluster/pull/2812
-                                    #     is deployed to the firefoxci cluster.
                                     source: 'ssh://github.com/${repoUrl[15:-4]}/raw/${head_sha}/.taskcluster.yml'
                               - $if: 'tasks_for in ["github-push", "github-pull-request"]'
                                 then:
@@ -179,7 +179,6 @@ tasks:
                                     - "index.${trustDomain}.v2.${project}.revision.${head_sha}.taskgraph.decision"
                                 else: []
                       scopes:
-                          # `https://` is 8 characters so, ${repoUrl[8:]} is the repository without the protocol.
                           $if: 'tasks_for == "github-push"'
                           then:
                               $let:
@@ -251,8 +250,8 @@ tasks:
                               chainOfTrust: true
                           # Note: This task is built server side without the context or tooling that
                           # exist in tree so we must hard code the hash
-                          image:
-                              mozillareleases/taskgraph:decision-21bef1bc0f11e62c7a23384584f9f8f0d96e95eef192e5bb599fc82ba55c81a7@sha256:d29af306b09cd00a63f982e8caeb53dbec7efd7bb3ae64ce3cef9cd889b750e6
+                          image: mozillareleases/taskgraph:decision-e035c4bb24e3a05bcd666518756aa69fac302ed1e73fd39d39cd182fc4470818@sha256:7cfb913bee636f1ab1477a09f8ad746e1f8c68fab0e2a3e1408c985d2ddc27f7
+
 
                           maxRunTime: 1800
 
@@ -270,14 +269,14 @@ tasks:
                                 in:
                                     $if: 'tasks_for == "action"'
                                     then: >
-                                        PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph &&
+                                        PIP_IGNORE_INSTALLED=0 pip3 install --user /builds/worker/checkouts/taskgraph &&
                                         cd /builds/worker/checkouts/src &&
                                         rm -rf taskcluster &&
                                         ln -s /builds/worker/checkouts/template/taskcluster taskcluster &&
                                         ln -s /builds/worker/artifacts artifacts &&
                                         ~/.local/bin/taskgraph action-callback
                                     else: >
-                                        PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph &&
+                                        PIP_IGNORE_INSTALLED=0 pip3 install --user /builds/worker/checkouts/taskgraph &&
                                         rm -rf taskcluster &&
                                         ln -s /builds/worker/checkouts/template/taskcluster taskcluster &&
                                         ln -s /builds/worker/artifacts artifacts &&
