@@ -20,6 +20,7 @@
     "studyDetailsLink": "https://addons.mozilla.org/en-US/firefox/addon/ion-basic-study/",
     "dataCollectionDetails": ["The date and time"],
     "tags": ["misinformation", "social media", "demo"],
-    "schemaNamespace": "rally-basic-study-template"
+    "schemaNamespace": "rally-basic-study-template",
+    "minimumCoreVersion": "1.3.8"
   }
 ]

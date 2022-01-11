@@ -270,7 +270,7 @@ async function installRally(driver) {
  */
 async function initRemoteSettings(testStudy, timestamp) {
   const { RemoteSettings } = ChromeUtils.import("resource://services-settings/remote-settings.js");
-  const remoteSettingsKey = "rally-studies-v1";
+  const remoteSettingsKey = "rally-studies-v2";
 
   const db = await RemoteSettings(remoteSettingsKey).db;
   await db.create(testStudy);
@@ -284,7 +284,7 @@ async function initRemoteSettings(testStudy, timestamp) {
  */
 async function updateRemoteSettings(modifiedTestStudy, timestamp) {
   const { RemoteSettings } = ChromeUtils.import("resource://services-settings/remote-settings.js");
-  const remoteSettingsKey = "rally-studies-v1";
+  const remoteSettingsKey = "rally-studies-v2";
 
   await RemoteSettings(remoteSettingsKey).emit("sync", { data: { current: [modifiedTestStudy] } });
 }

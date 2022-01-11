@@ -34,6 +34,7 @@ function parseDateIfNeeded(date) {
     }
 }
 
+// Sort studies using order property, if set.
 studies.sort((a, b) => a.order - b.order);
 
 </script>
