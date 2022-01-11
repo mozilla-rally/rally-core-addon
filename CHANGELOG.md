@@ -1,5 +1,15 @@
 # Unreleased changes
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.8...master)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.1...master)
+
+# v1.4.1 (2022-01-11)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.0...v1.4.1)
+
+* (hotfix) allow anything after core version number regex, catch and log any match errors
+
+# v1.4.0 (2022-01-10)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.8...v1.4.0)
 
 * [#771](https://github.com/mozilla-rally/rally-core-addon/pull/771): Switch to rally-studies-v2 remote-settings collection, and add `minimumCoreVersion` gate.
 * [#769](https://github.com/mozilla-rally/rally-core-addon/pull/769): Sort studies using order property, if present.
