@@ -90,7 +90,7 @@
       "type": "number"
     },
     "minimumCoreVersion": {
-      "type": "number"
+      "type": "string"
     }
   }
 }

@@ -760,7 +760,7 @@ export default class Core {
 
     // Match the version number used by the core add-on, such as "1.3.7buildid20220107.052711".
     // this uses capture groups to isolate the part before the build ID, the semantic version number "1.3.7".
-    const versionRegex = /^([0-9]+)\.([0-9]+)\.([0-9])s*/;
+    const versionRegex = /^([0-9]+)\.([0-9]+)\.([0-9])s*$/;
     const [fullCore, majorCore, minorCore, patchCore] = coreVersion.match(versionRegex);
 
     // Filter out any studies that are unsupported on this version of the core add-on.
@@ -784,7 +784,6 @@ export default class Core {
       }
       return study;
     });
-    console.debug("availableStudies:", availableStudies);
 
     const newState = {
       enrolled,
