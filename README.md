@@ -4,7 +4,7 @@ This is the Core Add-on for the Rally platform. It is implemented as a cross-bro
 
 Rally studies are implemented as Add-ons. A [study template](https://github.com/mozilla-rally/study-template) is provided to help study authors start writing their study. A [demo website landing page](https://mozilla-rally.github.io/core-addon) is also available for testing the Core Add-on.
 
-The "source of truth" for Rally study metadata is on the [Firefox remote settings server](https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/rally-study-addons-v1/records).
+The "source of truth" for Rally study metadata is on the [Firefox remote settings server](https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/rally-study-addons-v2/records).
 
 ## Get started
 
@@ -105,10 +105,10 @@ const { RemoteSettings } = ChromeUtils.import(
   "resource://services-settings/remote-settings.js"
 );
 ```
-3. Then, disable signature checking and fetch the latest `rally-studies-v1` collection:
+3. Then, disable signature checking and fetch the latest `rally-studies-v2` collection:
 ```js
-RemoteSettings("rally-studies-v1").verifySignature = false;
-await RemoteSettings("rally-studies-v1").get();
+RemoteSettings("rally-studies-v2").verifySignature = false;
+await RemoteSettings("rally-studies-v2").get();
 ```
 4. The UI for the core add-on options page should respond immediately. After making changes to the RS server, you can either wait or explicitly poll for updates:
 ```js

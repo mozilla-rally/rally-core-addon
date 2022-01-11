@@ -26,7 +26,7 @@ XPCOMUtils.defineLazyServiceGetters(this, {
  * NOTE - we cannot control which Remote Settings server that Firefox uses, so we assume that this
  * is a global key that will be correct no matter which server is used (dev, staging, release, etc.)
  */
-const STUDY_COLLECTION_KEY = "rally-studies-v1";
+const STUDY_COLLECTION_KEY = "rally-studies-v2";
 
 this.firefoxPrivilegedApi = class extends ExtensionAPI {
   getAPI(context) {
