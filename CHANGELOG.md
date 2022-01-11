@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.0...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.1...master)
+
+# v1.4.1 (2022-01-11)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.0...v1.4.1)
 
 # v1.4.0 (2022-01-10)
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.3.8...v1.4.0)
