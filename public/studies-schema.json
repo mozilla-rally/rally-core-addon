@@ -10,7 +10,8 @@
     "studyEnded",
     "studyPaused",
     "description",
-    "dataCollectionDetails"
+    "dataCollectionDetails",
+    "minimumCoreVersion"
   ],
   "properties": {
     "name": {
@@ -86,6 +87,9 @@
       }
     },
     "order": {
+      "type": "number"
+    },
+    "minimumCoreVersion": {
       "type": "number"
     }
   }
