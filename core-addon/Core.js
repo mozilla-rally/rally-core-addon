@@ -785,6 +785,9 @@ export default class Core {
       return study;
     });
 
+    // Sort studies using order property, if set.
+    availableStudies.sort((a, b) => a.order - b.order);
+
     const newState = {
       enrolled,
       firstRunCompleted,
