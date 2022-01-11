@@ -27,11 +27,13 @@ const FAKE_STUDY_NOT_INSTALLED_NAMESPACE = "fake-study-not-installed-namespace"
 const FAKE_STUDY_LIST = [
   {
     "addonId": FAKE_STUDY_ID,
-    "schemaNamespace": FAKE_STUDY_NAMESPACE
+    "schemaNamespace": FAKE_STUDY_NAMESPACE,
+    "minimumCoreVersion": "0.0.1"
   },
   {
     "addonId": FAKE_STUDY_ID_NOT_INSTALLED,
-    "schemaNamespace": FAKE_STUDY_NOT_INSTALLED_NAMESPACE
+    "schemaNamespace": FAKE_STUDY_NOT_INSTALLED_NAMESPACE,
+    "minimumCoreVersion": "0.0.1"
   }
 ];
 const FAKE_UUID = "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0";

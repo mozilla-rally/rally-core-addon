@@ -22,7 +22,7 @@ export default (cliArgs) => {
         // the permissions in manifest.json.
         __STUDIES_LIST__: cliArgs['config-studies-list-url'] ?
           `'${cliArgs['config-studies-list-url']}'` :
-          "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/rally-studies-v1/records'",
+          "'https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/rally-studies-v2/records'",
         __DISABLE_REMOTE_SETTINGS__: !!cliArgs["config-disable-remote-settings"],
         __BASE_SITE__: "https://rally.mozilla.org",
         // Data submission is disabled by default. Use this option via the CLI
