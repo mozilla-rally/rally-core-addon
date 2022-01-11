@@ -196,4 +196,55 @@ describe("Core-Addon", function () {
 
     await this.driver.quit();
   });
+
+  it("Should filter out studies that are too old for core add-on", async function () {
+    this.driver = await utils.getFirefoxDriver(true, {});
+
+    // Switch to browser UI context, so we can inject script to set up Remote Settings.
+    await this.driver.setContext(firefox.Context.CHROME);
+    await this.driver.executeScript(utils.initRemoteSettings, utils.RALLY_TEST_STUDY_REGISTRY, 1234567);
+    // Switch back to web content context (options page).
+    await this.driver.setContext(firefox.Context.CONTENT);
+
+    await utils.installRally(this.driver);
+    await utils.joinRally(this.driver);
+
+    // Switch to browser UI context, so we can inject script to modify Remote Settings.
+    const modifiedTestStudy = Object.assign({}, utils.RALLY_TEST_STUDY_REGISTRY);
+    // Mark study as paused.
+    // Check that a far future version of the core add-on is incompatible.
+    modifiedTestStudy.minimumCoreVersion = "1000.0.1";
+    await this.driver.setContext(firefox.Context.CHROME);
+    await this.driver.executeScript(utils.updateRemoteSettings, modifiedTestStudy, 1234567);
+    // Switch back to web content context (options page).
+    await this.driver.setContext(firefox.Context.CONTENT);
+
+    // Check that no studies are displayed.
+    const noStudySelector = By.xpath(`//div[text()="No available studies"]`);
+    await this.driver.wait(until.elementLocated(noStudySelector), utils.WAIT_FOR_PROPERTY);
+
+    // Switch to browser UI context, so we can inject script to modify Remote Settings.
+    await this.driver.setContext(firefox.Context.CHROME);
+    // Check that a far past version of the core add-on is compatible.
+    modifiedTestStudy.minimumCoreVersion = "0.0.1";
+    await this.driver.executeScript(utils.updateRemoteSettings, modifiedTestStudy, (1234567 + 2));
+    // Switch back to web content context (options page).
+    await this.driver.setContext(firefox.Context.CONTENT);
+
+    // Ensure that the study card for the base study is displayed.
+    const baseStudySelector = By.xpath(`//span[text()="Rally Base Study"]`);
+    await this.driver.wait(until.elementLocated(baseStudySelector), utils.WAIT_FOR_PROPERTY);
+    await this.driver.findElement(baseStudySelector);
+
+    // Install study, so we can ensure that marking it paused does not hide the "leave" functionality.
+    await utils.findAndAct(this.driver, By.xpath(`//button[text()="Join Study"]`), e => e.click());
+    await utils.findAndAct(this.driver, By.xpath(`(//button[text()="Accept & Enroll"])`), e => e.click());
+
+    // Switch to browser UI context, to interact with Firefox add-on install prompts.
+    await this.driver.setContext(firefox.Context.CHROME);
+    await utils.findAndAct(this.driver, By.css(`[label="Add"]`), e => e.click());
+    await utils.findAndAct(this.driver, By.css(`[label="Okay"]`), e => e.click());
+
+    await this.driver.quit();
+  });
 });
