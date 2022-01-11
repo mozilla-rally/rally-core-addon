@@ -73,7 +73,7 @@
     "webextension-polyfill": "^0.8.0"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.12"
+    "sirv-cli": "^2.0.1"
   },
   "engines": {
     "node": ">=14.0.0"
