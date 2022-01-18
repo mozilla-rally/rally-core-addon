@@ -91,6 +91,9 @@
     },
     "minimumCoreVersion": {
       "type": "string"
+    },
+    "useLegacyTelemetry": {
+      "type": "boolean"
     }
   }
 }

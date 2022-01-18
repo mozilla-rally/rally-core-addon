@@ -50,6 +50,21 @@ enrollment:
       - than@mozilla.com
     expires: never
 
+  schema_namespace:
+    type: string
+    lifetime: ping
+    send_in_pings:
+      - study-enrollment
+    description: |
+      The schema namespace for the study the user has joined.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://bugzilla.mozilla.org/show_bug.cgi?id=1663857#c5
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
 unenrollment:
   study_id:
     type: string
@@ -58,6 +73,21 @@ unenrollment:
       - study-unenrollment
     description: |
       The id of the study user has left.
+    bugs:
+      - https://github.com/mozilla-rally/rally-core-addon/issues/545
+    data_reviews:
+      - https://bugzilla.mozilla.org/show_bug.cgi?id=1646151#c32
+    notification_emails:
+      - than@mozilla.com
+    expires: never
+
+  schema_namespace:
+    type: string
+    lifetime: ping
+    send_in_pings:
+      - study-unenrollment
+    description: |
+      The schema namespace for the study the user has left.
     bugs:
       - https://github.com/mozilla-rally/rally-core-addon/issues/545
     data_reviews:
