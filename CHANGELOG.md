@@ -2,6 +2,8 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.1...master)
 
+* [#782](https://github.com/mozilla-rally/rally-core-addon/pull/782): Optional legacy telemetry and send schema namespace in glean
+
 # v1.4.1 (2022-01-11)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.0...v1.4.1)
