@@ -456,7 +456,7 @@ describe('Core', function () {
           {type: "telemetry-ping", data: {}},
           {id: FAKE_STUDY_ID}
         ),
-        { message: "Core._handleExternalMessage - test@rally-studies.com not joined"}
+        { message: `Core._handleExternalMessage - ${FAKE_STUDY_ID} not joined`}
       );
     });
   });
@@ -549,7 +549,7 @@ describe('Core', function () {
     it('rejects on target study ids', async function () {
       assert.rejects(
         this.core._sendMessageToStudy(FAKE_STUDY_ID, "unknown-type-test", {}),
-        { message: "Core._sendMessageToStudy - unexpected message \"unknown-type-test\" to study \"test@rally-studies.com\""}
+        { message: `Core._sendMessageToStudy - unexpected message "unknown-type-test" to study "${FAKE_STUDY_ID}"`}
       );
     });
 
@@ -714,7 +714,7 @@ describe('Core', function () {
           {type: "telemetry-ping", data: SENT_PING},
           {id: FAKE_STUDY_ID}
         ),
-        { message: "Core._handleExternalMessage - test@rally-studies.com is paused and may not send data"}
+        { message: `Core._handleExternalMessage - ${FAKE_STUDY_ID} is paused and may not send data`}
       );
 
       assert.ok(
