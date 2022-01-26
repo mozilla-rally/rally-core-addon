@@ -458,12 +458,16 @@ export default class Core {
     await this._storage.appendActivatedStudy(studyAddonId);
 
     enrollmentMetrics.studyId.set(studyAddonId);
+    enrollmentMetrics.schemaNamespace.set(knownStudy.schemaNamespace);
     rallyPings.studyEnrollment.submit();
 
-    // Finally send the ping. Important: remove this line once the migration
+    // Finally send the ping. Important: remove this block once the migration
     // to Glean.js is finally complete.
-    let rallyId = await this._storage.getRallyID();
-    await this._dataCollection.sendEnrollmentPing(rallyId, knownStudy.schemaNamespace);
+    if ("useLegacyTelemetry" in knownStudy && knownStudy.useLegacyTelemetry === true) {
+      console.warn("Sending study enrollment ping using legacy telemetry");
+      let rallyId = await this._storage.getRallyID();
+      await this._dataCollection.sendEnrollmentPing(rallyId, knownStudy.schemaNamespace);
+    }
   }
 
   /**
@@ -509,12 +513,16 @@ export default class Core {
     }
 
     unenrollmentMetrics.studyId.set(studyAddonId);
+    unenrollmentMetrics.schemaNamespace.set(knownStudy.schemaNamespace);
     rallyPings.studyUnenrollment.submit();
 
-    // Important: remove these lines once the migration
+    // Important: remove these block once the migration
     // to Glean.js is finally complete.
-    let rallyId = await this._storage.getRallyID();
-    await this._dataCollection.sendDeletionPing(rallyId, knownStudy.schemaNamespace);
+    if ("useLegacyTelemetry" in knownStudy && knownStudy.useLegacyTelemetry === true) {
+      console.warn("Sending study unenrollment ping using legacy telemetry");
+      let rallyId = await this._storage.getRallyID();
+      await this._dataCollection.sendDeletionPing(rallyId, knownStudy.schemaNamespace);
+    }
   }
 
   /**
@@ -760,7 +768,7 @@ export default class Core {
 
     // Match the version number used by the core add-on, such as "1.3.7buildid20220107.052711".
     // this uses capture groups to isolate the part before the build ID, the semantic version number "1.3.7".
-    const versionRegex = /^([0-9]+)\.([0-9]+)\.([0-9]).*/;
+    const versionRegex = /^([0-9]+)\.([0-9]+)\.([0-9]+).*/;
 
     try {
       const [fullCore, majorCore, minorCore, patchCore] = coreVersion.match(versionRegex);

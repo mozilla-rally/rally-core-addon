@@ -10,7 +10,7 @@ import DataCollection from '../../../core-addon/DataCollection.js';
 
 // A fake study id to use in the tests when looking for a
 // "known" study.
-const FAKE_STUDY_ID = "test@ion-studies.com";
+const FAKE_STUDY_ID = "test@rally-studies.com";
 
 describe('DataCollection', function () {
   beforeEach(function () {

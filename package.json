@@ -1,6 +1,10 @@
 {
   "name": "rally_core",
+<<<<<<< HEAD
   "version": "1.4.1",
+=======
+  "version": "1.4.2",
+>>>>>>> release-v1.4.2
   "type": "module",
   "scripts": {
     "prebuild": "node scripts/setupTaskcluster.js",
