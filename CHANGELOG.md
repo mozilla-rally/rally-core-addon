@@ -2,6 +2,9 @@
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.2...master)
 
+* [#788](https://github.com/mozilla-rally/rally-core-addon/pull/788): Ensure that data collection is always enabled in core add-on
+when user is enrolled
+
 # v1.4.2 (2022-01-26)
 
 [Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.1...v1.4.2)
