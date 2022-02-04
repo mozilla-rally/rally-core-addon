@@ -34,8 +34,12 @@ export default class Core {
 
     // Initialize the collection engine once we know if
     // user is enrolled or not.
-    this._storage.getRallyID().finally(id =>
-      this._dataCollection.initialize(id !== undefined));
+    this._storage.getRallyID().then(id => {
+      this._dataCollection.initialize(id !== undefined)
+    }).catch(err => {
+      console.error("No Rally ID, initializing data collection in unenrolled state", err);
+      this._dataCollection.initialize(false);
+    });
 
     // Asynchronously get the available studies. We don't need to wait
     // for this to finish, the UI can handle the wait.
