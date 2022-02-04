@@ -49,7 +49,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-notice": "^0.9.10",
     "eslint-plugin-svelte3": "^3.2.0",
-    "geckodriver": "^2.0.0",
+    "geckodriver": "^3.0.1",
     "local-web-server": "^5.1.1",
     "micromodal": "^0.4.6",
     "mocha": "^9.2.0",
