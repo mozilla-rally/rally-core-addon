@@ -247,7 +247,7 @@ export default class DataCollection {
 
     if ("hispanicLatinxSpanishOrigin" in data) {
       const label = (data["hispanicLatinxSpanishOrigin"] === "other")
-        ? "other" : "hispanicLatinxSpanish";
+        ? "other" : "hispanic_latinx_spanish";
       userMetrics.origin[label].set(true);
     }
 
