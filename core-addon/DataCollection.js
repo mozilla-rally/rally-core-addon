@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import Glean from "@mozilla/glean/webext";
-import PingEncryptionPlugin from "@mozilla/glean/webext/plugins/encryption";
+import PingEncryptionPlugin from "@mozilla/glean/plugins/encryption";
 
 import * as userMetrics from "../public/generated/user.js";
 import * as rallyPings from "../public/generated/pings.js";
