@@ -11,6 +11,7 @@ This means you might have to go searching through the dependency tree to get a f
 - [deletion-request](#deletion-request)
 - [demographics](#demographics)
 - [enrollment](#enrollment)
+- [events](#events)
 - [study-enrollment](#study-enrollment)
 - [study-unenrollment](#study-unenrollment)
 - [uninstall-deletion](#uninstall-deletion)
@@ -86,6 +87,20 @@ In addition to those built-in metrics, the following metrics are added to the pi
 | --- | --- | --- | --- | --- | --- | --- |
 | rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
 
+## events
+
+This is a built-in ping that is assembled out of the box by the Glean SDK.
+
+See the Glean SDK documentation for the [`events` ping](https://mozilla.github.io/glean/book/user/pings/events.html).
+
+All Glean pings contain built-in metrics in the [`ping_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section) and [`client_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section) sections.
+
+In addition to those built-in metrics, the following metrics are added to the ping:
+
+| Name | Type | Description | Data reviews | Extras | Expiration | [Data Sensitivity](https://wiki.mozilla.org/Firefox/Data_Collection) |
+| --- | --- | --- | --- | --- | --- | --- |
+| rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
+
 ## study-enrollment
 
 This ping is sent when user clicks the Join button for a study
@@ -108,7 +123,7 @@ In addition to those built-in metrics, the following metrics are added to the pi
 
 | Name | Type | Description | Data reviews | Extras | Expiration | [Data Sensitivity](https://wiki.mozilla.org/Firefox/Data_Collection) |
 | --- | --- | --- | --- | --- | --- | --- |
-| enrollment.schema_namespace |[string](https://mozilla.github.io/glean/book/user/metrics/string.html) |The schema namespace for the study the user has joined.  |[Review 1](TODO)||never | |
+| enrollment.schema_namespace |[string](https://mozilla.github.io/glean/book/user/metrics/string.html) |The schema namespace for the study the user has joined.  |[Bug 1663857](https://bugzilla.mozilla.org/show_bug.cgi?id=1663857#c5)||never | |
 | enrollment.study_id |[string](https://mozilla.github.io/glean/book/user/metrics/string.html) |The id of the study user has joined.  |[Bug 1663857](https://bugzilla.mozilla.org/show_bug.cgi?id=1663857#c5)||never | |
 | rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
 
@@ -134,7 +149,7 @@ In addition to those built-in metrics, the following metrics are added to the pi
 | Name | Type | Description | Data reviews | Extras | Expiration | [Data Sensitivity](https://wiki.mozilla.org/Firefox/Data_Collection) |
 | --- | --- | --- | --- | --- | --- | --- |
 | rally.id |[uuid](https://mozilla.github.io/glean/book/user/metrics/uuid.html) |The id of the Rally client.  |[mozilla-rally/rally-core-addon#505](https://github.com/mozilla-rally/rally-core-addon/pull/505#issuecomment-815826426)||never | |
-| unenrollment.schema_namespace |[string](https://mozilla.github.io/glean/book/user/metrics/string.html) |The schema namespace for the study the user has left.  |[Review 1](TODO)||never | |
+| unenrollment.schema_namespace |[string](https://mozilla.github.io/glean/book/user/metrics/string.html) |The schema namespace for the study the user has left.  |[Bug 1646151](https://bugzilla.mozilla.org/show_bug.cgi?id=1646151#c32)||never | |
 | unenrollment.study_id |[string](https://mozilla.github.io/glean/book/user/metrics/string.html) |The id of the study user has left.  |[Bug 1646151](https://bugzilla.mozilla.org/show_bug.cgi?id=1646151#c32)||never | |
 
 ## uninstall-deletion
