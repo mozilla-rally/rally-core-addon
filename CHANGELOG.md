@@ -1,6 +1,10 @@
 # Unreleased changes
 
-[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.3...master)
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.4...master)
+
+# v1.4.4 (2022-04-07)
+
+[Full changelog](https://github.com/mozilla-rally/core-addon/compare/v1.4.3...v1.4.4)
 
 * [804](https://github.com/mozilla-rally/rally-core-addon/pull/804): Bug 1760255 - add rally ID to events pings
 * [808](https://github.com/mozilla-rally/rally-core-addon/pull/808): Use correct dynamic label for demographics survey
