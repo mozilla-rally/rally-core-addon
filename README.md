@@ -1,4 +1,4 @@
-# Rally
+# Rally [DECOMMISSIONED]
 
 This is the Core Add-on for the Rally platform. It is implemented as a cross-browser WebExtension, using Svelte for the UI.
 

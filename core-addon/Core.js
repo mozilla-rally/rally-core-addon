@@ -85,6 +85,12 @@ export default class Core {
     browser.browserAction.onClicked.addListener(this._openControlPanel);
     // After installing the addon, make sure to show the control page.
     browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
+      // If core-addon is to be revived, then remove lines starting here...
+      console.log("Mozilla Core AddOn has been decommissioned. Uninstalling self...");
+      browser.management.uninstallSelf();
+      return;
+      // Until here...
+
       if (reason !== "install") {
         // We're only showing this when the addon is installed!
         return;

@@ -6,7 +6,7 @@ import { strict as assert } from 'assert';
 // eslint-disable-next-line  node/no-extraneous-import
 import sinon from 'sinon';
 
-import { testResetGlean } from "@mozilla/glean/testing";
+import Glean from "@mozilla/glean/webext";
 
 import Core from '../../../core-addon/Core.js';
 import * as rallyMetrics from "../../../public/generated/rally.js";
@@ -54,7 +54,7 @@ describe('Core', function () {
   const testAppId = `core.test.${this.title}`;
 
   beforeEach(async function() {
-    await testResetGlean(testAppId);
+    await Glean.testResetGlean(testAppId);
 
     // Force the sinon-chrome stubbed API to resolve its promise
     // in tests. Without the next two lines, tests querying the
